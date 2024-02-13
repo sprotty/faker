@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "properties": {
-        "Class": {
+        "classes": {
             "type": "array",
             "items": {
                 "$ref": "#/$defs/ClassType"
@@ -34,7 +34,7 @@
                 "name": {
                     "type": "string"
                 },
-                "description": {
+                "descriptions": {
                     "$ref": "#/$defs/DescriptionType"
                 },
                 "classes": {
@@ -52,11 +52,11 @@
                                 "type": "string",
                                 "description": "The name of the function as it is used internally (snake case). Plaform implementaions can convert these to suit there convensions."
                             },
-                            "return-type": {
+                            "return_type": {
                                 "type": "string",
                                 "description": "The return type of the function. String, Integer, Float, Boolean, or something defined in types"
                             },
-                            "description": {
+                            "descriptions": {
                                 "$ref": "#/$defs/DescriptionType"
                             },
                             "hidden": {
@@ -81,7 +81,7 @@
                                             "type": "string",
                                             "description": "The default value of the argument if not explicitly specified."
                                         },
-                                        "description": {
+                                        "descriptions": {
                                             "$ref": "#/$defs/DescriptionType"
                                         }
                                     },
@@ -112,32 +112,35 @@
                                 }
                             },
                             "implementations": {
-                                "type": "object",
-                                "properties": {
-                                    "platform": {
-                                        "type": "string"
-                                    },
-                                    "type": {
-                                        "type": "string",
-                                        "description": "How the method is implemented.\nExpression - An expression that will be evaluated directly (i.e. #{random_float '-180..180'})\nResolve - The value is resolved from the YAML files.\nNative - The function has a native implementation (platform must be set, translate, digiSubst, charSubst are ignored. If data is set it is assumed to be the native implementation. If data is not set then the function must be implemented within the code). "
-                                    },
-                                    "translate": {
-                                        "type": "boolean",
-                                        "description": "Indicates if ther evaluated expression should be translated",
-                                        "default": false
-                                    },
-                                    "digitSubst": {
-                                        "type": "boolean",
-                                        "description": "Indicates if numericsubstitutions will be applied to the evaluated value (# becomes [0-9])",
-                                        "default": false
-                                    },
-                                    "charSubst": {
-                                        "type": "boolean",
-                                        "description": "Indicates if character substitutions will be applied to the evaluated value (? becomes [A-Z|a-z])",
-                                        "default": false
-                                    },
-                                    "data": {
-                                        "type": "string"
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "platform": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "description": "How the method is implemented.\nExpression - An expression that will be evaluated directly (i.e. #{random_float '-180..180'})\nResolve - The value is resolved from the YAML files.\nNative - The function has a native implementation (platform must be set, translate, digiSubst, charSubst are ignored. If data is set it is assumed to be the native implementation. If data is not set then the function must be implemented within the code)."
+                                        },
+                                        "translate": {
+                                            "type": "boolean",
+                                            "description": "Indicates if ther evaluated expression should be translated",
+                                            "default": false
+                                        },
+                                        "digitSubst": {
+                                            "type": "boolean",
+                                            "description": "Indicates if numericsubstitutions will be applied to the evaluated value (# becomes [0-9])",
+                                            "default": false
+                                        },
+                                        "charSubst": {
+                                            "type": "boolean",
+                                            "description": "Indicates if character substitutions will be applied to the evaluated value (? becomes [A-Z|a-z])",
+                                            "default": false
+                                        },
+                                        "data": {
+                                            "type": "string"
+                                        }
                                     }
                                 },
                                 "required": [
@@ -148,7 +151,7 @@
                         "additionalProperties": false,
                         "required": [
                             "name",
-                            "return-type"
+                            "return_type"
                         ]
                     }
                 }

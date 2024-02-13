@@ -1,0 +1,22 @@
+﻿<Application x:Class="Faker.Api.UI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Faker.Api.UI"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <local:DescriptionConverter x:Key="DescriptionConverter" x:Shared="False" />
+        <local:NullVisibilityConverter x:Key="NullVisibilityConverter" />
+        <local:IsNullConverter x:Key="IsNullConverter" />
+        <local:IsNotNullConverter x:Key="IsNotNullConverter" />
+        <local:DisplayTextConverter x:Key="DisplayTextConverter" />
+        <local:EqualsVisibilityConverter x:Key="EqualsVisibilityConverter" />
+        <local:NotEqualsVisibilityConverter x:Key="NotEqualsVisibilityConverter" />
+        <local:IsNullOrWhiteSpaceVisibilityConverter x:Key="IsNullOrWhiteSpaceVisibilityConverter"/>
+
+        <sys:String x:Key="NullPlatformText">All Platforms</sys:String>
+        <sys:String x:Key="ImplementationTypeResolve">Resolve</sys:String>
+        <sys:String x:Key="ImplementationTypeNative">Native</sys:String>
+        <sys:String x:Key="ImplementationTypeExpression">Expression</sys:String>
+    </Application.Resources>
+</Application>

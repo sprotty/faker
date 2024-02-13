@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="Faker.Api.UI.ArgumentsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Faker.Api.UI"
+             mc:Ignorable="d" 
+             x:Name="control"
+             xmlns:api="clr-namespace:Faker.Api" xmlns:sys="clr-namespace:System;assembly=netstandard"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DockPanel>
+        <StackPanel Orientation="Vertical" DockPanel.Dock="Right">
+            <Button Name="AddBtn" Margin="5,0,5,5" Click="AddBtn_Click">Add</Button>
+            <Button Name="EditBtn" Margin="5,0,5,5" IsEnabled="{Binding ElementName=ArgumentsList, Path=SelectedValue, Converter={StaticResource IsNotNullConverter}}" Click="EditBtn_Click">Edit</Button>
+            <Button Name="DeleteBtn" Margin="5,0,5,5" IsEnabled="{Binding ElementName=ArgumentsList, Path=SelectedValue, Converter={StaticResource IsNotNullConverter}}" Click="DeleteBtn_Click">Delete</Button>
+        </StackPanel>
+
+        <ListBox Name="ArgumentsList" ItemsSource="{Binding ElementName=control, Path=Arguments}" MouseDoubleClick="ArgumentsList_MouseDoubleClick">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="LightBlue" BorderThickness="1">
+                        <StackPanel Orientation="Vertical" Margin="5" >
+                            <TextBlock>
+                                <TextBlock Text="{Binding Type}" />
+                                <TextBlock FontWeight="Bold" Text="{Binding Name}" />
+                                <TextBlock Visibility="{Binding Default, Converter={StaticResource IsNullOrWhiteSpaceVisibilityConverter}}" > = <TextBlock Text="{Binding Default}" /></TextBlock>
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+</UserControl>

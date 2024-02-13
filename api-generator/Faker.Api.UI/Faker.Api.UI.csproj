@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ArgumentsControlCrap.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="ArgumentsControlCrap.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <Content Include="..\faker_api_metadata.json" Link="faker_api_metadata.json" />
+	  <Content Include="..\faker_api_metadata.schema.json" Link="faker_api_metadata.schema.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NJsonSchema.CodeGeneration.CSharp" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ArgumentsControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ArgumentEditorWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ImplementationEditorWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ImplementationsControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+</Project>
