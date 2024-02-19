@@ -44,13 +44,13 @@ namespace Faker.Api.UI
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
             var example = new Example();
-            if (ExampleEditorWindow.Edit(new string?[] { "All Platforms", CurrentPlatform }, example, true))
+            if (ExampleEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, example, true))
                 this.Examples.Add(example);
         }
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-            ExampleEditorWindow.Edit(new string?[] { "All Platforms", CurrentPlatform }, (Example)ExamplesList.SelectedValue, true);
+            ExampleEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, (Example)ExamplesList.SelectedValue, true);
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
@@ -60,7 +60,7 @@ namespace Faker.Api.UI
 
         private void ExamplesList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ExampleEditorWindow.Edit(new string?[] { "All Platforms", CurrentPlatform }, (Example)ExamplesList.SelectedValue, true);
+            ExampleEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, (Example)ExamplesList.SelectedValue, true);
         }
     }
 }

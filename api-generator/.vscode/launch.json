@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "type": "node-terminal",
+            "name": "Debug C# Generator",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/DotNet",
+            "command": "node GenerateApi.js"
+        },
+        {
+            "type": "node-terminal",
+            "name": "Debug C# NUnit Generator",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/DotNet",
+            "command": "node GenerateNUnit.js"
+        },
+        {
+            "type": "node-terminal",
+            "name": "Debug Ruby Generator",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/Ruby",
+            "command": "node GenerateApi.js"
+        }
+    ]
+}

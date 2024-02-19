@@ -1,0 +1,332 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core" #>    
+<#@ assembly name="System.Xml" #>    
+<#@ assembly name="System.Xml.Linq" #>    
+<#@ assembly name="System.Linq" #>    
+<#@ assembly name="System.Data.Linq" #>
+<#@ assembly name="System.Text.RegularExpressions" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+
+namespace FakerNet
+{
+<#
+	XElement xFaker = XElement.Load(@"C:\SourceCode\faker\FakerApiBody.xml");
+	 
+	foreach(var xCls in xFaker.Elements("Class")) 
+	{ 
+		WriteClass(xCls);
+	}
+#> 
+
+	partial class Faker
+	{
+	<#foreach(var xCls in xFaker.Elements("Class")){#> 
+		[FakerMethod("<#=xCls.Attribute("name")?.Value#>")]
+		public <#=xCls.Attribute("name")?.Value#>Generator <#=xCls.Attribute("name")?.Value#> { get; }
+	<#}#> 
+		
+        public Faker(CultureInfo locale, RandomService random)
+		{
+			this.randomService = random;
+
+			// Create the Faker Generators
+<#foreach(var xCls in xFaker.Elements("Class")){#>
+			<#=xCls.Attribute("name")?.Value#> = new <#=xCls.Attribute("name")?.Value#>Generator(this);
+<#}#> 
+
+			Init(locale);
+		}
+	}
+}
+ 
+<#+
+void WriteClass(XElement xCls)
+{
+string className = xCls.Attribute("name")?.Value;
+	PushIndent("\t");
+	WriteDocumentation(xCls);
+#>
+public class <#=className#>Generator
+{
+	private Faker _faker;
+
+	internal <#=className#>Generator(Faker faker)
+	{
+		_faker = faker;
+	}
+
+<#+	foreach(var xSubCls in xCls.Elements("Class")) WriteClass(xSubCls); #>
+<#+	foreach(var xMethod in xCls.Elements("Method")) 
+	{
+		if (string.IsNullOrWhiteSpace(xMethod.Attribute("name")?.Value) || string.IsNullOrWhiteSpace(xMethod.Attribute("return_type")?.Value))
+		{#>
+	#warning Failed processing class <#=className#> method <#=xMethod.Attribute("name")?.Value#>
+<#+	continue;
+		}
+ 
+		PushIndent("\t");
+		string fakerName = xMethod.Attribute("name").Value;
+		string methodName = GetMethodName(fakerName);
+		string rubyMethodType = xMethod.Attribute("return_type").Value;
+		string methodType = GetNativeType(rubyMethodType);
+
+		WriteDocumentation(xMethod);#>
+<#=GetMethodArgDocs(xMethod)#>[FakerMethod("<#=fakerName#>")]
+public <#=methodType#> <#=methodName#>(<#=GetMethodArgs(xMethod)#>)
+{
+<#=GetMethodDefaultInits(xMethod)#><#+		
+
+		string implType =xMethod.Attribute("implType")?.Value??"NONE";
+
+		switch(implType)
+		{
+		case "NativeFunction":	
+			var csImpl = xMethod.Elements("implData").FirstOrDefault(i=>i.Attribute("platform")?.Value == "C#")?.Value;
+			if (csImpl != null)
+			{#>
+	<#=csImpl#>
+			<#+ }
+			else
+			{#>
+	/*
+	<#=xMethod.Element("implData").Value.Replace("\n", "\r\n")#>
+	*/
+	throw new NotSupportedException("Needs porting");
+<#+			}
+		break;
+		case "InternalFunction":#>
+	/*
+	<#=xMethod.Element("implData").Value.Replace("\n", "\r\n")#>
+	*/
+	throw new NotSupportedException("Needs porting");
+<#+		break;
+		case "Expression":
+		case "Parse":
+		case "Fetch":
+		case "FetchAll":
+			string impl = xMethod.Element("implData").Value;
+			foreach(var xArg in xMethod.Elements("Argument"))
+			{
+				string rubyArgName = xArg.Attribute("name").Value;
+				string nativeArgName = GetArgumentName(rubyArgName); 
+				impl = impl.Replace("#{" + rubyArgName + "}", $"\" + {nativeArgName} + \""); 
+			}
+
+			string expr; 
+			if (implType == "Expression")
+				expr = $"_faker.Expression(\"{impl}\", this)"; 
+			else 
+				expr = $"_faker.Resolve(\"{impl}\", this)"; 
+
+			if (xMethod.Attribute("charSubst")?.Value == "true")
+				expr = $"_faker.Letterify({expr})";
+			if (xMethod.Attribute("digitSubst")?.Value == "true")
+				expr = $"_faker.Numerify({expr})"; 
+			if (xMethod.Attribute("translate")?.Value == "true")
+				expr = $"_faker.Translate({expr})"; 
+			expr = StringToValueCode(expr, rubyMethodType);
+			#>
+	return <#=expr#>; // <#=implType#>
+<#+		break;
+		default:#>
+	throw new NotImplementedException("Unknown implementation type " + <#=implType#>);
+<#+			break;
+		}
+#>
+}
+
+<#+	
+		PopIndent();
+	}#>
+}
+<#+
+	PopIndent();
+} 
+#>
+
+
+<#+
+void WriteDocumentation(XElement xDoc)
+{
+	var xDesc = xDoc.Element("Description");
+	if (xDesc != null && string.IsNullOrWhiteSpace(xDesc.Value) == false)
+	{
+#>
+/// <Summary><#=string.Join("\r\n/// ", InnerXml(xDesc).Split('\n').Select(c=>c.Trim()))#></Summary>
+<#+ }
+
+	foreach (var xExample in xDoc.Elements("Example"))
+    {
+		string desc= xExample.Element("Description") == null?"":InnerXml(xExample.Element("Description"));
+		string code= xExample.Element("Code") == null?"":InnerXml(xExample.Element("Code"));
+		if (string.IsNullOrWhiteSpace(desc) ==false || string.IsNullOrWhiteSpace(code) ==false)
+        {
+#>
+/// <Example>
+<#+if (string.IsNullOrWhiteSpace(desc) ==false) 
+	{#>
+/// <#=string.Join("\r\n/// ", desc.Split('\n').Select(c=>c.Trim()))#>
+<#+	}
+if (string.IsNullOrWhiteSpace(code) ==false) 
+	{#>
+/// <code><#=string.Join("\r\n/// ", code.Split('\n').Select(c=>c.Trim()))#></code>
+<#+	}#>
+/// </Example>
+<#+ 
+        }
+	} 
+}#>
+
+
+<#+string InnerXml(XElement xElm)
+{
+	var xReader = xElm.CreateReader();
+	xReader.MoveToContent();
+	return xReader.ReadInnerXml();
+ }
+ 
+string GetNativeType(string rubyType)
+{
+	if (rubyType.StartsWith("Array<") && rubyType.EndsWith(">"))
+		return $"List<{GetNativeType(rubyType.Substring(6, rubyType.Length-7))}>";
+	else if (rubyType == "Boolean")
+		return "bool";
+	else if (rubyType == "Date")
+		return "DateOnly";
+	else if (rubyType == "Float")
+		return "double";
+	else if (rubyType == "Integer")
+		return "long";
+	else if (rubyType == "IntegerRange")
+		return "IntegerRange";
+	else if (rubyType == "String")
+		return "string";
+	else if (rubyType == "")
+		return "String"; // Assume string???
+	else
+		return "UNKNWON_" + rubyType;
+}
+bool CanDefaultValueType(string rubyType)
+{
+	if (rubyType.StartsWith("Array<") && rubyType.EndsWith(">"))
+		return false;
+	else if (rubyType == "Boolean")
+		return true;
+	else if (rubyType == "Date")
+		return false;
+	else if (rubyType == "Float")
+		return true;
+	else if (rubyType == "Integer")
+		return true;
+	else if (rubyType == "IntegerRange")
+		return false;
+	else if (rubyType == "String")
+		return true;
+	else if (rubyType == "")
+		return true; // Assume string???
+	else
+		return false;
+}
+string StringToValueCode(string strExpr, string rubyType)
+{
+	if (rubyType.StartsWith("Array<") && rubyType.EndsWith(">"))
+		throw new Exception("Arrays are not supported as parameters");
+	else if (rubyType == "Boolean")
+		return $"bool.Parse({strExpr})";
+	else if (rubyType == "Date")
+		return $"DateOnly.Parse({strExpr})";
+	else if (rubyType == "Float")
+		return $"double.Parse({strExpr})";
+	else if (rubyType == "Integer")
+		return $"long.Parse({strExpr})";
+	else if (rubyType == "IntegerRange")
+		return $"IntegerRange.Parse({strExpr})";
+	else if (rubyType == "String")
+		return strExpr;
+//	else if (rubyType == "")
+//		return strExpr; // Assume string???
+	else
+		throw new Exception($"Unknown type {rubyType}");
+}
+
+string GetMethodName(string rubyName)
+{
+	return string.Concat(rubyName.Split('_').Select(n=>n.Substring(0,1).ToUpper() + n.Substring(1)));
+}
+string GetArgumentName(string rubyName)
+{
+	return rubyName.Split('_').First().ToLower() + string.Concat(rubyName.Split('_').Skip(1).Select(n=>n.Substring(0,1).ToUpper() + n.Substring(1)));
+}
+string GetMethodArgs(XElement xMethod)
+{
+	return string.Join(", ", xMethod.Elements("Argument").Where(a=>a.Attribute("inApi")?.Value != "false").Select(a=>GetMethodArg(a)));
+}
+string GetMethodArg(XElement xArg)
+{
+	string argName = GetArgumentName(xArg.Attribute("name").Value);
+	string argType = GetNativeType(xArg.Attribute("type").Value);
+	bool canDefault = CanDefaultValueType(xArg.Attribute("type").Value);
+	string? argDefault = xArg.Attribute("default")?.Value;
+	if (string.IsNullOrWhiteSpace(argDefault) == false)
+	{
+		if (argDefault == "nil")
+		{
+			argDefault = "null";
+			argType += "?";
+		}
+		else if (argType == "string" && argDefault.StartsWith("'") && argDefault.EndsWith("'"))
+		{
+			argDefault = "\"" + argDefault.Substring(1, argDefault.Length - 2) + "\"";
+		}
+		else if (canDefault == false)
+		{
+			argDefault = "null";
+			argType += "?";
+		} 
+		argDefault = " = " + argDefault;
+	}
+
+	string arg = argType + " " + argName + argDefault;
+	return arg;
+}
+string GetMethodDefaultInits(XElement xMethod)
+{
+	return string.Join("\r\n", xMethod.Elements("Argument").Where(a=>a.Attribute("inApi")?.Value != "false").Select(a=>GetMethodDefaultInit(a)));
+}
+string GetMethodDefaultInit(XElement xArg)
+{
+	string argName = GetArgumentName(xArg.Attribute("name").Value);
+	string argType = GetNativeType(xArg.Attribute("type").Value);
+	bool canDefault = CanDefaultValueType(xArg.Attribute("type").Value);
+	string? argDefault = xArg.Attribute("default")?.Value;
+
+	if (string.IsNullOrWhiteSpace(argDefault) == false && canDefault == false)
+	{
+		if (argType == "IntegerRange")
+			return  $"    {argName} ??= IntegerRange.Parse(\"{argDefault}\");";
+	}
+	return "";
+}
+string GetMethodArgDocs(XElement xMethod)
+{
+	return string.Join("\r\n", xMethod.Elements("Argument").Where(a=>a.Attribute("inApi")?.Value != "false").Select(a=>GetMethodArgDoc(a)));
+}
+string GetMethodArgDoc(XElement xArg)
+{
+	string[] docs = (xArg.Element("Docs")?.Value??"").Split('\n');
+	string result = "/// <param name=\"" + GetArgumentName(xArg.Attribute("name").Value) + "\">";
+	result += string.Join("\r\n/// ", docs);
+	result += "</param>\r\n";
+	return result;
+}
+ #>

@@ -24,9 +24,9 @@
                 <MenuItem Header="Validate" Click="Menu_Validate_Click" />
             </MenuItem>
         </Menu>
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <TextBlock >Platform</TextBlock>
-            <ComboBox Name="PlatformCmb" ItemsSource="{Binding ElementName=window, Path=AllPlatforms}" SelectedIndex="0"/>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <TextBlock Margin="5" >Platform</TextBlock>
+            <ComboBox Name="PlatformCmb" Width="100" ItemsSource="{Binding ElementName=window, Path=AllPlatforms}" SelectedIndex="0"/>
         </StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -41,7 +41,7 @@
             </Grid.RowDefinitions>
 
             <DockPanel Grid.Column="0" >
-                <TextBlock DockPanel.Dock="Top">Classes</TextBlock>
+                <TextBlock DockPanel.Dock="Top" FontSize="15" FontWeight="Bold">Classes</TextBlock>
                 <TreeView Name="ClassTree" ItemsSource="{Binding Path=Classes}">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type api:ClassElement}" ItemsSource="{Binding Classes}">
@@ -57,7 +57,7 @@
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 
             <DockPanel Grid.Column="2" >
-                <TextBlock DockPanel.Dock="Top">Methods</TextBlock>
+                <TextBlock DockPanel.Dock="Top" FontSize="15" FontWeight="Bold">Methods</TextBlock>
                 <ListBox Name="MethodList" ItemsSource="{Binding ElementName=ClassTree, Path=SelectedValue.Methods}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -69,18 +69,20 @@
 
             <GridSplitter Grid.Column="3" Width="5" HorizontalAlignment="Stretch" />
 
-
             <DockPanel Grid.Column="4" 
-                       Margin="10" 
+                       Margin="5"
                        Visibility="{Binding ElementName=MethodList, Path=SelectedValue, Converter={StaticResource NullVisibilityConverter}}" >
-                <TextBlock DockPanel.Dock="Top">Method Definition</TextBlock>
+                <TextBlock DockPanel.Dock="Top" FontSize="15" FontWeight="Bold">Method Definition</TextBlock>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical" Margin="10" >
 
                         <TextBlock>Name</TextBlock>
                         <TextBox  Margin="15,3,0,7" Text="{Binding ElementName=MethodList,Path=SelectedValue.Name, Mode=TwoWay}"></TextBox>
+                        
+                        <TextBlock>New in Version</TextBlock>
+                        <TextBox  Margin="15,3,0,7" Text="{Binding ElementName=MethodList,Path=SelectedValue.Version, Mode=TwoWay}"></TextBox>
 
-                        <TextBlock >Default Description</TextBlock>
+                        <TextBlock >Method Description (All Platforms)</TextBlock>
                         <TextBox  Margin="15,3,0,7"
                          TextWrapping="Wrap" Height="60" AcceptsReturn="True" >
                             <TextBox.Text>
@@ -91,7 +93,7 @@
                             </TextBox.Text>
                         </TextBox>
 
-                        <TextBlock><TextBlock Text="{Binding ElementName=PlatformCmb, Path=SelectedValue}"/> Description</TextBlock>
+                        <TextBlock>Method Description (<TextBlock Text="{Binding ElementName=PlatformCmb, Path=SelectedValue}"/>)</TextBlock>
                         <Grid Margin="15,3,0,7">
                             <TextBox Name="PlatformDesc"
                              Padding="5"
@@ -120,12 +122,16 @@
                             </TextBlock>
                         </Grid>
 
-                        <TextBlock>Return Type</TextBlock>
+                        <TextBlock>Return Value Type</TextBlock>
                         <ComboBox Margin="15,3,0,7"
                           ItemsSource="{Binding ElementName=window, Path=AllTypes}" 
                           SelectedValue="{Binding ElementName=MethodList, Path=SelectedValue.ReturnType, Mode=TwoWay}">
                         </ComboBox>
-
+                        
+                        <TextBlock >Return Description</TextBlock>
+                        <TextBox Margin="15,3,0,7"
+                                 Text="{Binding ElementName=MethodList, Path=SelectedValue.ReturnDesc, Mode=TwoWay}"
+                                 TextWrapping="Wrap" Height="60" AcceptsReturn="True" />
 
                         <CheckBox Margin="0,3,0,7" IsChecked="{Binding ElementName=MethodList, Path=SelectedValue.Hidden, Mode=TwoWay, TargetNullValue=false}">
                             Hide in public API

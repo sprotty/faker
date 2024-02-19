@@ -3,4 +3,5 @@
 --exclude lib/faker/deprecate/
 --exclude lib/faker/default/string.rb
 --output-dir yard_docs
+--plugin yard-xml
 lib/**/*.rb

@@ -1,180 +1,188 @@
 ﻿{
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "type": "object",
-    "properties": {
-        "classes": {
-            "type": "array",
-            "items": {
-                "$ref": "#/$defs/ClassType"
-            }
-        },
-        "types": {
-            "type": "array",
-            "items": {
-                "$ref": "#/$defs/TypeDefType"
-            }
-        }
-    },
-    "additionalProperties": false,
-    "required": [],
-    "$defs": {
-        "TypeDefType": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                }
-            },
-            "additionalProperties": false,
-            "required": []
-        },
-        "ClassType": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "descriptions": {
-                    "$ref": "#/$defs/DescriptionType"
-                },
-                "classes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/ClassType"
-                    }
-                },
-                "methods": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string",
-                                "description": "The name of the function as it is used internally (snake case). Plaform implementaions can convert these to suit there convensions."
-                            },
-                            "return_type": {
-                                "type": "string",
-                                "description": "The return type of the function. String, Integer, Float, Boolean, or something defined in types"
-                            },
-                            "descriptions": {
-                                "$ref": "#/$defs/DescriptionType"
-                            },
-                            "hidden": {
-                                "type": "boolean",
-                                "description": "Indicates the method is used internally, but is not part of the interface.",
-                                "default": "false"
-                            },
-                            "arguments": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "name": {
-                                            "type": "string",
-                                            "description": "The name (snake case) of the argument (may appear in the implmentation, so platform implementations should take this into account when renaming it to suit naming convensions)."
-                                        },
-                                        "type": {
-                                            "type": "string",
-                                            "title": "The type of the argument. String, Integer, Float, Boolean, or something defined in types"
-                                        },
-                                        "default": {
-                                            "type": "string",
-                                            "description": "The default value of the argument if not explicitly specified."
-                                        },
-                                        "descriptions": {
-                                            "$ref": "#/$defs/DescriptionType"
-                                        }
-                                    },
-                                    "additionalProperties": false,
-                                    "required": [
-                                        "type",
-                                        "name"
-                                    ]
-                                }
-                            },
-                            "examples": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "platform": {
-                                            "type": "string"
-                                        },
-                                        "description": {
-                                            "type": "string"
-                                        },
-                                        "code": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "additionalProperties": false,
-                                    "required": []
-                                }
-                            },
-                            "implementations": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "platform": {
-                                            "type": "string"
-                                        },
-                                        "type": {
-                                            "type": "string",
-                                            "description": "How the method is implemented.\nExpression - An expression that will be evaluated directly (i.e. #{random_float '-180..180'})\nResolve - The value is resolved from the YAML files.\nNative - The function has a native implementation (platform must be set, translate, digiSubst, charSubst are ignored. If data is set it is assumed to be the native implementation. If data is not set then the function must be implemented within the code)."
-                                        },
-                                        "translate": {
-                                            "type": "boolean",
-                                            "description": "Indicates if ther evaluated expression should be translated",
-                                            "default": false
-                                        },
-                                        "digitSubst": {
-                                            "type": "boolean",
-                                            "description": "Indicates if numericsubstitutions will be applied to the evaluated value (# becomes [0-9])",
-                                            "default": false
-                                        },
-                                        "charSubst": {
-                                            "type": "boolean",
-                                            "description": "Indicates if character substitutions will be applied to the evaluated value (? becomes [A-Z|a-z])",
-                                            "default": false
-                                        },
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                },
-                                "required": [
-                                    "type"
-                                ]
-                            }
-                        },
-                        "additionalProperties": false,
-                        "required": [
-                            "name",
-                            "return_type"
-                        ]
-                    }
-                }
-            },
-            "additionalProperties": false,
-            "required": [
-                "name"
-            ]
-        },
-        "DescriptionType": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "platform": {
-                        "type": "string"
-                    },
-                    "text": {
-                        "type": "string"
-                    }
-                },
-                "additionalProperties": true
-            }
-        }
-    }
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"type": "object",
+	"properties": {
+		"classes": {
+			"type": "array",
+			"items": {
+				"$ref": "#/$defs/ClassType"
+			}
+		},
+		"types": {
+			"type": "array",
+			"items": {
+				"$ref": "#/$defs/TypeDefType"
+			}
+		}
+	},
+	"additionalProperties": false,
+	"required": [],
+	"$defs": {
+		"TypeDefType": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false,
+			"required": []
+		},
+		"ClassType": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"descriptions": {
+					"$ref": "#/$defs/DescriptionType"
+				},
+				"classes": {
+					"type": "array",
+					"items": {
+						"$ref": "#/$defs/ClassType"
+					}
+				},
+				"methods": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"name": {
+								"type": "string",
+								"description": "The name of the function as it is used internally (snake case). Plaform implementaions can convert these to suit there convensions."
+							},
+							"return_type": {
+								"type": "string",
+								"description": "The return type of the function. String, Integer, Float, Boolean, or something defined in types"
+							},
+							"return_desc": {
+								"type": "string",
+								"description": "The description of the return value"
+							},
+							"descriptions": {
+								"$ref": "#/$defs/DescriptionType"
+							},
+							"hidden": {
+								"type": "boolean",
+								"description": "Indicates the method is used internally, but is not part of the interface.",
+								"default": "false"
+							},
+							"arguments": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string",
+											"description": "The name (snake case) of the argument (may appear in the implmentation, so platform implementations should take this into account when renaming it to suit naming convensions)."
+										},
+										"type": {
+											"type": "string",
+											"title": "The type of the argument. String, Integer, Float, Boolean, or something defined in types"
+										},
+										"default": {
+											"type": "string",
+											"description": "The default value of the argument if not explicitly specified."
+										},
+										"descriptions": {
+											"$ref": "#/$defs/DescriptionType"
+										}
+									},
+									"additionalProperties": false,
+									"required": [
+										"type",
+										"name"
+									]
+								}
+							},
+							"examples": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"platform": {
+											"type": "string"
+										},
+										"description": {
+											"type": "string"
+										},
+										"code": {
+											"type": "string"
+										}
+									},
+									"additionalProperties": false,
+									"required": []
+								}
+							},
+							"implementations": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"platform": {
+											"type": "string"
+										},
+										"type": {
+											"type": "string",
+											"description": "How the method is implemented.\nExpression - An expression that will be evaluated directly (i.e. #{random_float '-180..180'})\nResolve - The value is resolved from the YAML files.\nNative - The function has a native implementation (platform must be set, translate, digiSubst, charSubst are ignored. If data is set it is assumed to be the native implementation. If data is not set then the function must be implemented within the code)."
+										},
+										"translate": {
+											"type": "boolean",
+											"description": "Indicates if ther evaluated expression should be translated",
+											"default": false
+										},
+										"digitSubst": {
+											"type": "boolean",
+											"description": "Indicates if numericsubstitutions will be applied to the evaluated value (# becomes [0-9])",
+											"default": false
+										},
+										"charSubst": {
+											"type": "boolean",
+											"description": "Indicates if character substitutions will be applied to the evaluated value (? becomes [A-Z|a-z])",
+											"default": false
+										},
+										"data": {
+											"type": "string"
+										}
+									}
+								},
+								"required": [
+									"type"
+								]
+							}
+						},
+						"additionalProperties": false,
+						"required": [
+							"name",
+							"return_type"
+						]
+					}
+				},
+				"version": {
+					"type": "string",
+					"description": "The version this method was introduced in"
+				}
+			},
+			"additionalProperties": false,
+			"required": [
+				"name"
+			]
+		},
+		"DescriptionType": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"platform": {
+						"type": "string"
+					},
+					"text": {
+						"type": "string"
+					}
+				},
+				"additionalProperties": true
+			}
+		}
+	}
 }

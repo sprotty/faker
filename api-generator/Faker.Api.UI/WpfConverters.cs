@@ -155,7 +155,7 @@ namespace Faker.Api.UI
             Debug.Assert(_descriptions != null && _platform != null);
             string text = (string)value;
 
-            var entry = _descriptions.FirstOrDefault(t => (t.Platform ?? "All Platforms") == _platform);
+            var entry = _descriptions.FirstOrDefault(t => (t.Platform ?? FakerModel.AllPlatformsLiteral) == _platform);
             if (entry == null && string.IsNullOrWhiteSpace(text) == false)
             {
                 // create entry

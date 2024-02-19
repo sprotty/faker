@@ -16,6 +16,8 @@ namespace Faker.Api
 
     public class FakerModel : INotifyPropertyChanged
     {
+        public const string AllPlatformsLiteral = "All Platforms";
+
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
@@ -77,8 +79,8 @@ namespace Faker.Api
         [JsonIgnore]
         public virtual string Platform
         {
-            get => _platform ?? "All Platforms";
-            set { InternalPlatform = (value == "All Platforms") ? null : value; }
+            get => _platform ?? FakerModel.AllPlatformsLiteral;
+            set { InternalPlatform = (value == FakerModel.AllPlatformsLiteral) ? null : value; }
         }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
@@ -90,7 +92,8 @@ namespace Faker.Api
     public partial class Method : FakerModel
     {
         private string _name = "";
-        private string _ReturnType = "String";
+        private string _returnType = "String";
+        private string _returnDesc = "";
         /// <summary>
         /// The name of the function as it is used internally (snake case). Plaform implementaions
         /// can convert these to suit there convensions.
@@ -109,7 +112,15 @@ namespace Faker.Api
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [JsonPropertyName("return_type")]
-        public virtual string ReturnType { get => _ReturnType; set { _ReturnType = value; OnPropertyChanged(); } }
+        public virtual string ReturnType { get => _returnType; set { _returnType = value; OnPropertyChanged(); } }
+
+        /// <summary>
+        /// The description of the return value
+        /// types
+        /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("return_desc")]
+        public virtual string ReturnDesc { get => _returnDesc; set { _returnDesc = value; OnPropertyChanged(); } }
 
         /// <summary>
         /// Indicates the method is used internally, but is not part of the interface.
@@ -210,8 +221,8 @@ namespace Faker.Api
         [JsonIgnore]
         public virtual string Platform
         {
-            get => _platform ?? "All Platforms";
-            set { InternalPlatform = (value == "All Platforms") ? null : value; }
+            get => _platform ?? FakerModel.AllPlatformsLiteral;
+            set { InternalPlatform = (value == FakerModel.AllPlatformsLiteral) ? null : value; }
         }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -265,8 +276,8 @@ namespace Faker.Api
         [JsonIgnore]
         public virtual string Platform
         {
-            get => _platform ?? "All Platforms";
-            set { InternalPlatform = (value == "All Platforms") ? null : value; }
+            get => _platform ?? FakerModel.AllPlatformsLiteral;
+            set { InternalPlatform = (value == FakerModel.AllPlatformsLiteral) ? null : value; }
         }
 
 

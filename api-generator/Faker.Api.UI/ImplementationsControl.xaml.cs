@@ -24,7 +24,7 @@ namespace Faker.Api.UI
         public ImplementationsControl()
         {
             InitializeComponent();
-            ImplementationsList.Items.Filter = (o) => o is Implementation ex && (ex.Platform == null || ex.Platform == CurrentPlatform);
+            ImplementationsList.Items.Filter = (o) => o is Implementation ex && (ex.Platform == FakerModel.AllPlatformsLiteral || ex.Platform == CurrentPlatform);
         }
 
         public static readonly DependencyProperty ImplementationsProperty = DependencyProperty.Register(nameof(Implementations), typeof(ObservableCollection<Implementation>), typeof(ImplementationsControl));
@@ -44,13 +44,13 @@ namespace Faker.Api.UI
         private void AddBnt_Click(object sender, RoutedEventArgs e)
         {
             var implementation = new Implementation();
-            if (ImplementationEditorWindow.Edit(new string?[] { "All Platforms", CurrentPlatform }, implementation, true))
+            if (ImplementationEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, implementation, true))
                 this.Implementations.Add(implementation);
         }
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-            ImplementationEditorWindow.Edit(new string?[] { "All Platforms", CurrentPlatform }, (Implementation)ImplementationsList.SelectedValue, true);
+            ImplementationEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, (Implementation)ImplementationsList.SelectedValue, true);
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
@@ -60,7 +60,7 @@ namespace Faker.Api.UI
 
         private void ImplementationsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ImplementationEditorWindow.Edit(new string?[] { "All Platforms", CurrentPlatform }, (Implementation)ImplementationsList.SelectedValue, true);
+            ImplementationEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, (Implementation)ImplementationsList.SelectedValue, true);
         }
     }
 }

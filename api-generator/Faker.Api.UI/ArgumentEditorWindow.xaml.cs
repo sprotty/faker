@@ -53,7 +53,7 @@ namespace Faker.Api.UI
         {
             var frm = new ArgumentEditorWindow();
             frm.DataContext = new Argument(argument);
-            frm.AllPlatforms = new string[] { "All Platforms", currentPlatform }; ;
+            frm.AllPlatforms = new string[] { FakerModel.AllPlatformsLiteral, currentPlatform }; ;
             frm.AllTypes = allTypes;
             frm.CurrentPlatform = currentPlatform;
             if (frm.ShowDialog() != true)
