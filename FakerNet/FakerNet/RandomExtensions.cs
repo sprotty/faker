@@ -6,41 +6,23 @@ using System.Threading.Tasks;
 
 namespace FakerNet
 {
-    public class RandomService
+    internal static class RandomExtensions
     {
-        private static Random SHARED_RANDOM = new Random();
-        private Random random;
-
-        /// <summary>
-        /// Uses a default shared random.
-        /// </summary>
-        public RandomService()
-            : this(SHARED_RANDOM)
-        {
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="random">If null is passed in, a default Random is assigned</param>
-        public RandomService(Random random)
-        {
-            this.random = random != null ? random : SHARED_RANDOM;
-        }
-
-        public int nextInt(int n)
+        public static int NextInt32(this Random random, int n)
         {
             return random.Next(n);
         }
-
-        public long nextLong()
+        public static int NextInt32(this Random random, int min, int max)
         {
-            return random.NextInt64();
+            return random.Next((max - min) + 1) + min;
         }
 
+        public static long NextInt64(this Random random, long min, long max)
+        {
+            return (Math.Abs(random.NextInt64() % (max - min)) + min);
+        }
         // lifted from http://stackoverflow.com/questions/2546078/java-random-long-number-in-0-x-n-range
-        public long nextLong(long n)
+        public static long NextInt64(this Random random, long n)
         {
             if (n <= 0)
             {
@@ -57,34 +39,20 @@ namespace FakerNet
             return val;
         }
 
-        public double nextDouble(double min , double max )
+        public static double NextDouble(this Random random, double min, double max)
         {
-            return (random.NextDouble() * (max-min)) + min;
+            return (random.NextDouble() * (max - min)) + min;
         }
-
-        public bool nextBoolean()
+        public static bool NextBoolean(this Random random)
         {
             return random.Next(2) == 0;
         }
 
-        public int nextInt(int min, int max)
-        {
-            return random.Next((max - min) + 1) + min;
-        }
-
-        public string hex()
-        {
-            return hex(8);
-        }
-
-        public T Item<T>(IList<T> lst)
+        public static T NextItem<T>(this Random random, IList<T> lst)
         {
             return lst[random.Next(lst.Count)];
         }
-
-        public Random Random => this.random;
-
-        public string hex(int length)
+        public static string NextHex(this Random random, int length)
         {
             if (length <= 0)
             {
@@ -93,7 +61,7 @@ namespace FakerNet
             char[] hexChars = new char[length];
             for (int i = 0; i < length; i++)
             {
-                int nextHex = nextInt(16);
+                int nextHex = random.NextInt32(16);
                 if (nextHex < 10)
                 {
                     hexChars[i] = (char)('0' + nextHex);

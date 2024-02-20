@@ -32,11 +32,11 @@ outputIndentPush();
             output('public ' + cls.name + 'Generator ' + cls.name + ' { get; }\n');
         }
         output('\n');
-        output('public Faker(CultureInfo locale, RandomService random)\n');
+        output('public Faker(CultureInfo locale, Random random)\n');
         output('{\n');
         outputIndentPush();
         {
-            output('this.randomService = random;\n');
+            output('this.Random = random;\n');
             output('\n');
             output('// Create the Faker Generators\n');
             for (const cls of config.classes) {

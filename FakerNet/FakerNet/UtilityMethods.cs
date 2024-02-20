@@ -68,14 +68,19 @@ namespace FakerNet
     public class UNKNWON_Symbol { }
     public class IntegerRange
     {
+        public IntegerRange(long min, long max)
+        {
+            Min = min;
+            Max = max;
+        }
         public IntegerRange(int min, int max)
         {
             Min = min;
             Max = max;
         }
 
-        public int Min { get; }
-        public int Max { get; }
+        public long Min { get; }
+        public long Max { get; }
 
         public static IntegerRange Parse(string numericRange)
         {
@@ -83,8 +88,8 @@ namespace FakerNet
             if (indexOfSep <= 0 || indexOfSep >= numericRange.Length - 1)
                 throw new ArgumentException("Expected form is '0..1'");
 
-            int min = int.Parse(numericRange.Substring(0, indexOfSep));
-            int max = int.Parse(numericRange.Substring(indexOfSep + 2));
+            long min = long.Parse(numericRange.Substring(0, indexOfSep));
+            long max = long.Parse(numericRange.Substring(indexOfSep + 2));
             return new IntegerRange(min, max);
         }
 

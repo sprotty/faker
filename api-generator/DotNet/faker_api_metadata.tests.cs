@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-
+[assembly: Parallelize(Workers = 0, Scope = ExecutionScope.ClassLevel)]
 namespace FakerNet.NUnit
 {
     [TestClass]
@@ -20,11 +20,6 @@ namespace FakerNet.NUnit
         public void Test_CityWithState_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Address.CityWithState());
-        }
-        [TestMethod()]
-        public void Test_CityName_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.CityName());
         }
         [TestMethod()]
         public void Test_CityPrefix_Execute()

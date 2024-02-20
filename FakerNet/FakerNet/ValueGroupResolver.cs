@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace FakerNet
 {
-    public class FakeValuesGrouping : FakeValuesInterface
+    public class ValueGroupResolver : IValueResolver
     {
 
-        private List<FakeValues> fakeValuesList = new List<FakeValues>();
+        private List<YamlValueResolver> fakeValuesList = new List<YamlValueResolver>();
 
-        public void add(FakeValues fakeValues)
+        public void add(YamlValueResolver fakeValues)
         {
             fakeValuesList.Add(fakeValues);
         }
@@ -21,7 +21,7 @@ namespace FakerNet
             get
             {
                 Dictionary<object, object>? result = null;
-                foreach (FakeValues fakeValues in fakeValuesList)
+                foreach (YamlValueResolver fakeValues in fakeValuesList)
                 {
                     if (fakeValues.SupportsPath(key))
                     {

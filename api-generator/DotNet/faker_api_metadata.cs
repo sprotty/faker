@@ -45,17 +45,6 @@ namespace FakerNet
             return this.Resolve("address.city", this);
         }
         /// <summary>
-        /// Produces a city name.
-        /// </summary>
-        /// <example>
-        /// <code>Faker::Address.city_name #=> "New York"</code>
-        /// </example>
-        [FakerMethod("city_name")]
-        public string CityName()
-        {
-            return this.Resolve("address.city_name", this);
-        }
-        /// <summary>
         /// Produces a city prefix.
         /// </summary>
         /// <example>
@@ -578,7 +567,7 @@ namespace FakerNet
         [FakerMethod("iban")]
         public string Iban(string countryCode = "GB")
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("bank.iban_details.#{country_code.downcase}.bban_pattern", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.Resolve("bank.iban_details.#{string.lower '#{country_code}}.bban_pattern", this))));
         }
         #warning Failed processing method iban_checksum
         #warning No implementation defined for method iban_country_code();
@@ -13612,9 +13601,9 @@ namespace FakerNet
         [FakerMethod("Bible")]
         public BibleGenerator Bible { get; }
         
-        public Faker(CultureInfo locale, RandomService random)
+        public Faker(CultureInfo locale, Random random)
         {
-            this.randomService = random;
+            this.Random = random;
             
             // Create the Faker Generators
             Address = new AddressGenerator(this);

@@ -64,6 +64,11 @@
                             <TextBlock Text="{Binding Name}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Delete" Click="MethodsMenuItem_Delete_Click" IsEnabled="{Binding ElementName=MethodList, Path=SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
                 </ListBox>
             </DockPanel>
 

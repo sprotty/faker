@@ -10,18 +10,23 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace FakerNet
 {
-    public class FakeValues : FakeValuesInterface
+    /// <summary>
+    /// Resolves values from YAML Files
+    /// </summary>
+    [DebuggerDisplay("YAML Resolver {_locale.Name,nq} ({_path,nq} {_filename,nq})")]
+    public class YamlValueResolver : IValueResolver
     {
         private CultureInfo _locale;
         private string _filename;
         private string _path;
         private Dictionary<object, object>? _values;
 
-        internal FakeValues(CultureInfo locale)
+        internal YamlValueResolver(CultureInfo locale)
             : this(locale, getFilename(locale), getFilename(locale))
         {
 
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -52,7 +57,7 @@ namespace FakerNet
             return l.GetLanguage();
         }
 
-        internal FakeValues(CultureInfo locale, string filename, string path)
+        internal YamlValueResolver(CultureInfo locale, string filename, string path)
         {
             this._locale = locale;
             this._filename = filename;
@@ -64,19 +69,18 @@ namespace FakerNet
             get
             {
                 if (_values == null)
-                    _values = loadValues();
+                    _values = LoadValuesFromYaml();
                 if (_values?.TryGetValue(key, out var map) == true && map is Dictionary<object, object> dic)
                     return dic;
 
                 return null;
             }
         }
-        private Dictionary<object, object>? loadValues()
+        private Dictionary<object, object>? LoadValuesFromYaml()
         {
             TextReader? stream = null;
             try
             {
-                //throw new TodoException();
                 string pathWithLocaleAndFilename = "/" + _locale.GetLanguage() + "/" + this._filename;
                 string pathWithFilename = "/" + _filename + ".yml";
                 string pathWithLocale = "/" + _locale.GetLanguage() + ".yml";
@@ -87,6 +91,7 @@ namespace FakerNet
                     stream = FindResourceTextFile(path);
                     if (stream != null)
                     {
+                        Debug.WriteLine($"Loaded : {path}");
                         break;
                     }
                 }
@@ -126,15 +131,6 @@ namespace FakerNet
             resourceName = resourceName.Replace("/", ".");
             Stream? stream = GetType().Assembly.GetManifestResourceStream(resourceName);
             return stream == null ? null : new StreamReader(stream);
-            //        if (stream == null) th
-            //        }
-
-            //        Stream streamOnClass = getClass().getResourceAsStream(filename);
-            //if (streamOnClass != null)
-            //{
-            //    return streamOnClass;
-            //}
-            //return getClass().getClassLoader().getResourceAsStream(filename);
         }
 
         internal bool SupportsPath(string path)

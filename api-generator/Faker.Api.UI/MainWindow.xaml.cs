@@ -372,6 +372,14 @@ namespace Faker.Api.UI
             }
         }
 
+        private void MethodsMenuItem_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.MethodList.SelectedItem is Method methodToDelete && this.ClassTree.SelectedItem is ClassElement parentClass)
+            {
+                parentClass.Methods.Remove(methodToDelete);
+            }
+
+        }
     }
 
     public class TestRoot : Root
