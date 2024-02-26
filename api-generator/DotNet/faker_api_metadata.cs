@@ -1,10 +1,38 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.CodeDom.Compiler;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Diagnostics;
 
 namespace FakerNet
 {
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
+    /// <summary>
+    /// </summary>
+    public enum MimeTypeMedia
+    {
+        [Display(Name = "application")]
+        Application,
+        [Display(Name = "audio")]
+        Audio,
+        [Display(Name = "image")]
+        Image,
+        [Display(Name = "message")]
+        Message,
+        [Display(Name = "model")]
+        Model,
+        [Display(Name = "multipart")]
+        Multipart,
+        [Display(Name = "text")]
+        Text,
+        [Display(Name = "video")]
+        Video,
+    }
+    
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Address")]
-    public class AddressGenerator : GeneratorBase
+    public partial class AddressGenerator : GeneratorBase
     {
         internal AddressGenerator(Faker faker)
                  : base(faker)
@@ -20,7 +48,7 @@ namespace FakerNet
         [FakerMethod("building_number")]
         public string BuildingNumber()
         {
-            return this.Resolve("address.building_number", this);
+            return this.ResolveYamlValue("address.building_number", this);
         }
         /// <summary>
         /// Produces the name of a city.
@@ -31,18 +59,7 @@ namespace FakerNet
         [FakerMethod("city")]
         public string City()
         {
-            return this.Resolve("address.city", this);
-        }
-        /// <summary>
-        /// Produces the name of a city with the state.
-        /// </summary>
-        /// <example>
-        /// <code>Faker::Address.city_with_state #=> "Northfort, California"</code>
-        /// </example>
-        [FakerMethod("city_with_state")]
-        public string CityWithState()
-        {
-            return this.Resolve("address.city", this);
+            return this.ResolveYamlValue("address.city", this);
         }
         /// <summary>
         /// Produces a city prefix.
@@ -53,7 +70,7 @@ namespace FakerNet
         [FakerMethod("city_prefix")]
         public string CityPrefix()
         {
-            return this.Resolve("address.city_prefix", this);
+            return this.ResolveYamlValue("address.city_prefix", this);
         }
         /// <summary>
         /// Produces a city suffix.
@@ -64,7 +81,18 @@ namespace FakerNet
         [FakerMethod("city_suffix")]
         public string CitySuffix()
         {
-            return this.Resolve("address.city_suffix", this);
+            return this.ResolveYamlValue("address.city_suffix", this);
+        }
+        /// <summary>
+        /// Produces the name of a city with the state.
+        /// </summary>
+        /// <example>
+        /// <code>Faker::Address.city_with_state #=> "Northfort, California"</code>
+        /// </example>
+        [FakerMethod("city_with_state")]
+        public string CityWithState()
+        {
+            return this.ResolveYamlValue("address.city", this);
         }
         /// <summary>
         /// Produces the name of a community.
@@ -75,7 +103,7 @@ namespace FakerNet
         [FakerMethod("community")]
         public string Community()
         {
-            return this.Resolve("address.community", this);
+            return this.ResolveYamlValue("address.community", this);
         }
         /// <summary>
         /// Produces the name of a country.
@@ -86,7 +114,7 @@ namespace FakerNet
         [FakerMethod("country")]
         public string Country()
         {
-            return this.Translate(this.Resolve("address.country", this));
+            return this.Translate(this.ResolveYamlValue("address.country", this));
         }
         /// <summary>
         /// Produces a country by ISO country code.
@@ -102,7 +130,7 @@ namespace FakerNet
         [FakerMethod("country_by_code")]
         public string CountryByCode(string code = "US")
         {
-            return this.Resolve("address.country_by_code." + code + "", this);
+            return this.ResolveYamlValue("address.country_by_code." + code + "", this);
         }
         /// <summary>
         /// Produces an ISO 3166 country code.
@@ -113,7 +141,7 @@ namespace FakerNet
         [FakerMethod("country_code")]
         public string CountryCode()
         {
-            return this.Resolve("address.country_code", this);
+            return this.ResolveYamlValue("address.country_code", this);
         }
         /// <summary>
         /// Produces a long (alpha-3) ISO 3166 country code.
@@ -124,13 +152,13 @@ namespace FakerNet
         [FakerMethod("country_code_long")]
         public string CountryCodeLong()
         {
-            return this.Resolve("address.country_code_long", this);
+            return this.ResolveYamlValue("address.country_code_long", this);
         }
         /// <summary>
         /// Produces an ISO 3166 country code when given a country name.
         /// </summary>
         /// <param name="name">
-        /// <p>Country name in snake_case format.</p>
+        /// Country name in snake_case format.
         /// (default value "'United States'")
         /// </param>
         /// <return>
@@ -142,7 +170,7 @@ namespace FakerNet
         [FakerMethod("country_name_to_code")]
         public string CountryNameToCode(string name = "United States")
         {
-            return this.Resolve("address.country_by_name.#{String.lower '" + name + "'}", this);
+            return this.ResolveYamlValue("address.country_by_name.#{String.lower '" + name + "'}", this);
         }
         /// <summary>
         /// Produces a latitude.
@@ -153,7 +181,7 @@ namespace FakerNet
         [FakerMethod("latitude")]
         public double Latitude()
         {
-            return double.Parse(this.Expression("#{random_float '-180..180'}", this));
+            return double.Parse(this.EvaluateExpression("#{random_float '-180..180'}", this));
         }
         /// <summary>
         /// Produces a longitude.
@@ -164,7 +192,7 @@ namespace FakerNet
         [FakerMethod("longitude")]
         public double Longitude()
         {
-            return double.Parse(this.Expression("#{random_float '-180..180'}", this));
+            return double.Parse(this.EvaluateExpression("#{random_float '-180..180'}", this));
         }
         /// <summary>
         /// Produces a mail box number.
@@ -175,7 +203,18 @@ namespace FakerNet
         [FakerMethod("mail_box")]
         public string MailBox()
         {
-            return this.Numerify(this.Letterify(this.Resolve("address.mail_box", this)));
+            return this.Numerify(this.Letterify(this.ResolveYamlValue("address.mail_box", this)));
+        }
+        /// <summary>
+        /// Produces a postcode/zipcode.
+        /// </summary>
+        /// <example>
+        /// <code>Faker::Address.zip_code #=> "58517"</code>
+        /// </example>
+        [FakerMethod("postcode")]
+        public string Postcode()
+        {
+            return this.Numerify(this.Letterify(this.ResolveYamlValue("address.postcode", this)));
         }
         /// <summary>
         /// Produces a secondary address.
@@ -186,7 +225,7 @@ namespace FakerNet
         [FakerMethod("secondary_address")]
         public string SecondaryAddress()
         {
-            return this.Resolve("address.secondary_address", this);
+            return this.ResolveYamlValue("address.secondary_address", this);
         }
         /// <summary>
         /// Produces the name of a state.
@@ -197,7 +236,7 @@ namespace FakerNet
         [FakerMethod("state")]
         public string State()
         {
-            return this.Resolve("address.state", this);
+            return this.ResolveYamlValue("address.state", this);
         }
         /// <summary>
         /// Produces a state abbreviation.
@@ -208,7 +247,7 @@ namespace FakerNet
         [FakerMethod("state_abbr")]
         public string StateAbbr()
         {
-            return this.Resolve("address.state_abbr", this);
+            return this.ResolveYamlValue("address.state_abbr", this);
         }
         /// <summary>
         /// Produces a street address.
@@ -223,7 +262,7 @@ namespace FakerNet
         [FakerMethod("street_address")]
         public string StreetAddress(bool includeSecondary = false)
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("address.street_address", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("address.street_address", this))));
         }
         /// <summary>
         /// Produces a street name.
@@ -234,7 +273,7 @@ namespace FakerNet
         [FakerMethod("street_name")]
         public string StreetName()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("address.street_name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("address.street_name", this))));
         }
         /// <summary>
         /// Produces a street suffix.
@@ -245,7 +284,7 @@ namespace FakerNet
         [FakerMethod("street_suffix")]
         public string StreetSuffix()
         {
-            return this.Resolve("address.street_suffix", this);
+            return this.ResolveYamlValue("address.street_suffix", this);
         }
         /// <summary>
         /// Produces the name of a time zone.
@@ -256,7 +295,7 @@ namespace FakerNet
         [FakerMethod("time_zone")]
         public string TimeZone()
         {
-            return this.Resolve("address.time_zone", this);
+            return this.ResolveYamlValue("address.time_zone", this);
         }
         /// <summary>
         /// Produces a Zip Code/Postocde.
@@ -268,23 +307,13 @@ namespace FakerNet
         [FakerMethod("zip_code")]
         public string ZipCode()
         {
-            return this.Numerify(this.Letterify(this.Resolve("address.postcode", this)));
-        }
-        /// <summary>
-        /// Produces a postcode/zipcode.
-        /// </summary>
-        /// <example>
-        /// <code>Faker::Address.zip_code #=> "58517"</code>
-        /// </example>
-        [FakerMethod("postcode")]
-        public string Postcode()
-        {
-            return this.Numerify(this.Letterify(this.Resolve("address.postcode", this)));
+            return this.Numerify(this.Letterify(this.ResolveYamlValue("address.postcode", this)));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Adjective")]
-    public class AdjectiveGenerator : GeneratorBase
+    public partial class AdjectiveGenerator : GeneratorBase
     {
         internal AdjectiveGenerator(Faker faker)
                  : base(faker)
@@ -300,7 +329,7 @@ namespace FakerNet
         [FakerMethod("negative")]
         public string Negative()
         {
-            return this.Translate(this.Resolve("adjective.negative", this));
+            return this.Translate(this.ResolveYamlValue("adjective.negative", this));
         }
         /// <summary>
         /// Produces a positive adjective.
@@ -311,24 +340,54 @@ namespace FakerNet
         [FakerMethod("positive")]
         public string Positive()
         {
-            return this.Translate(this.Resolve("adjective.positive", this));
+            return this.Translate(this.ResolveYamlValue("adjective.positive", this));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Alphanumeric")]
-    public class AlphanumericGenerator : GeneratorBase
+    public partial class AlphanumericGenerator : GeneratorBase
     {
         internal AlphanumericGenerator(Faker faker)
                  : base(faker)
         {
         }
         
-        #warning No implementation defined for method alpha(long number = 32);
-        #warning No implementation defined for method alpha_numeric(long number, long minAlpha, long minNumeric = 0);
+        /// <summary>
+        /// Produces a random string of alphabetic characters (no digits).
+        /// </summary>
+        /// <param name="number">
+        /// The length of the string to generate
+        /// (default value "32")
+        /// </param>
+        /// <example>
+        /// <code>Faker::Alphanumeric.alpha(number: 10) #=> "zlvubkrwga"</code>
+        /// </example>
+        [FakerMethod("alpha")]
+        public string Alpha(long number = 32)
+        {
+            return this.EvaluateExpression("#{RandomString " + number + "," + number + ",'abcdefghijklmnopqrstuvwxyz'}", this);
+        }
+        /// <summary>
+        /// Produces a random string of alphanumeric characters.
+        /// </summary>
+        /// <param name="number">
+        /// The number of characters to generate
+        /// (default value "32")
+        /// </param>
+        /// <example>
+        /// <code>Faker::Alphanumeric.alphanumeric(number: 10) #=> "3yfq2phxtb"</code>
+        /// </example>
+        [FakerMethod("alpha_numeric")]
+        public string AlphaNumeric(long number = 32)
+        {
+            return this.EvaluateExpression("#{RandomString " + number + "," + number + ",'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'}", this);
+        }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Ancient")]
-    public class AncientGenerator : GeneratorBase
+    public partial class AncientGenerator : GeneratorBase
     {
         internal AncientGenerator(Faker faker)
                  : base(faker)
@@ -344,7 +403,7 @@ namespace FakerNet
         [FakerMethod("god")]
         public string God()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("ancient.god", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("ancient.god", this))));
         }
         /// <summary>
         /// Produces a hero from ancient mythology.
@@ -355,7 +414,7 @@ namespace FakerNet
         [FakerMethod("hero")]
         public string Hero()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("ancient.hero", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("ancient.hero", this))));
         }
         /// <summary>
         /// Produces a primordial from ancient mythology.
@@ -366,7 +425,7 @@ namespace FakerNet
         [FakerMethod("primordial")]
         public string Primordial()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("ancient.primordial", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("ancient.primordial", this))));
         }
         /// <summary>
         /// Produces a titan from ancient mythology.
@@ -377,12 +436,13 @@ namespace FakerNet
         [FakerMethod("titan")]
         public string Titan()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("ancient.titan", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("ancient.titan", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("App")]
-    public class AppGenerator : GeneratorBase
+    public partial class AppGenerator : GeneratorBase
     {
         internal AppGenerator(Faker faker)
                  : base(faker)
@@ -398,7 +458,7 @@ namespace FakerNet
         [FakerMethod("author")]
         public string Author()
         {
-            return this.Numerify(this.Letterify(this.Resolve("app.author", this)));
+            return this.Numerify(this.Letterify(this.ResolveYamlValue("app.author", this)));
         }
         /// <summary>
         /// Produces an app name.
@@ -409,7 +469,7 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Numerify(this.Letterify(this.Resolve("app.name", this)));
+            return this.Numerify(this.Letterify(this.ResolveYamlValue("app.name", this)));
         }
         #warning No implementation defined for method semantic_version(IntegerRange? major = null, IntegerRange? minor = null, IntegerRange? patch = null);
         /// <summary>
@@ -421,12 +481,13 @@ namespace FakerNet
         [FakerMethod("version")]
         public string Version()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("app.version", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("app.version", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Appliance")]
-    public class ApplianceGenerator : GeneratorBase
+    public partial class ApplianceGenerator : GeneratorBase
     {
         internal ApplianceGenerator(Faker faker)
                  : base(faker)
@@ -442,7 +503,7 @@ namespace FakerNet
         [FakerMethod("brand")]
         public string Brand()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("appliance.brand", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("appliance.brand", this))));
         }
         /// <summary>
         /// Produces the name of a type of appliance equipment.
@@ -453,12 +514,13 @@ namespace FakerNet
         [FakerMethod("equipment")]
         public string Equipment()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("appliance.equipment", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("appliance.equipment", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Artist")]
-    public class ArtistGenerator : GeneratorBase
+    public partial class ArtistGenerator : GeneratorBase
     {
         internal ArtistGenerator(Faker faker)
                  : base(faker)
@@ -474,12 +536,13 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("artist.names", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("artist.names", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Australia")]
-    public class AustraliaGenerator : GeneratorBase
+    public partial class AustraliaGenerator : GeneratorBase
     {
         internal AustraliaGenerator(Faker faker)
                  : base(faker)
@@ -488,7 +551,6 @@ namespace FakerNet
         
         /// <summary>
         /// Produces an Australian animal.
-        /// <p>Produces an Australian animal</p>
         /// </summary>
         /// <example>
         /// <code>Faker::Australia.animal
@@ -497,11 +559,10 @@ namespace FakerNet
         [FakerMethod("animal")]
         public string Animal()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("australia.animals", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("australia.animals", this))));
         }
         /// <summary>
         /// Produces a location in Australia.
-        /// <p>Produces a location in Australia</p>
         /// </summary>
         /// <example>
         /// <code>Faker::Australia.location
@@ -510,11 +571,10 @@ namespace FakerNet
         [FakerMethod("location")]
         public string Location()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("australia.locations", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("australia.locations", this))));
         }
         /// <summary>
         /// Produces an Australian State or Territory.
-        /// <p>Produces an Australian State or Territory</p>
         /// </summary>
         /// <example>
         /// <code>Faker::Australia.state
@@ -523,12 +583,13 @@ namespace FakerNet
         [FakerMethod("state")]
         public string State()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("australia.states", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("australia.states", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Avatar")]
-    public class AvatarGenerator : GeneratorBase
+    public partial class AvatarGenerator : GeneratorBase
     {
         internal AvatarGenerator(Faker faker)
                  : base(faker)
@@ -538,39 +599,37 @@ namespace FakerNet
         #warning No implementation defined for method image(string slug, string size, string format, string set, string? bgset = null);
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Bank")]
-    public class BankGenerator : GeneratorBase
+    public partial class BankGenerator : GeneratorBase
     {
         internal BankGenerator(Faker faker)
                  : base(faker)
         {
         }
         
-        #warning No implementation defined for method account_number(long digits = 10);
-        #warning No implementation defined for method bsb_number();
-        #warning Failed processing method checksum
-        #warning Failed processing method compile_bsb_number
-        #warning Failed processing method compile_fraction
-        #warning Failed processing method compile_routing_number
         /// <summary>
-        /// Produces a bank iban number.
+        /// Produces a bank account number.
         /// </summary>
-        /// <param name="countryCode">
-        /// <p>Specifies what country prefix is used to generate the iban code. Providing ‘nil` will use a random country.</p>
-        /// (default value "'GB'")
+        /// <param name="digits">
+        /// Number of digits that the generated account number should have.
+        /// (default value "10")
         /// </param>
         /// <example>
-        /// <code>Faker::Bank.iban #=> "GB76DZJM33188515981979"
-        /// Faker::Bank.iban(country_code: "be") #=> "BE6375388567752043"
-        /// Faker::Bank.iban(country_code: nil) #=> "DE45186738071857270067"</code>
+        /// <code>Faker::Bank.account_number #=> 6738582379
+        /// Faker::Bank.account_number(digits: 13) #=> 673858237902</code>
         /// </example>
-        [FakerMethod("iban")]
-        public string Iban(string countryCode = "GB")
+        [FakerMethod("account_number")]
+        public string AccountNumber(long digits = 10)
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("bank.iban_details.#{string.lower '#{country_code}}.bban_pattern", this))));
+            return this.EvaluateExpression("#{RandomString " + digits + "," + digits + ",'0123456789'}", this);
         }
-        #warning Failed processing method iban_checksum
-        #warning No implementation defined for method iban_country_code();
+        // Expecting native implementation of
+        //      public string BsbNumber()
+        // Expecting native implementation of
+        //      public string Iban(string countryCode = "GB")
+        // Expecting native implementation of
+        //      public string IbanCountryCode()
         /// <summary>
         /// Produces a bank name.
         /// </summary>
@@ -580,11 +639,12 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("bank.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("bank.name", this))));
         }
-        #warning Failed processing method rand_numstring
-        #warning No implementation defined for method routing_number();
-        #warning No implementation defined for method routing_number_with_format();
+        // Expecting native implementation of
+        //      public string RoutingNumber()
+        // Expecting native implementation of
+        //      public string RoutingNumberWithFormat()
         /// <summary>
         /// Produces a swift / bic number.
         /// </summary>
@@ -594,14 +654,13 @@ namespace FakerNet
         [FakerMethod("swift_bic")]
         public string SwiftBic()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("bank.swift_bic", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("bank.swift_bic", this))));
         }
-        #warning No implementation defined for method valid_checksum();
-        #warning Failed processing method valid_routing_number
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Barcode")]
-    public class BarcodeGenerator : GeneratorBase
+    public partial class BarcodeGenerator : GeneratorBase
     {
         internal BarcodeGenerator(Faker faker)
                  : base(faker)
@@ -622,8 +681,9 @@ namespace FakerNet
         #warning Failed processing method upc_e_with_composite_symbology
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Beer")]
-    public class BeerGenerator : GeneratorBase
+    public partial class BeerGenerator : GeneratorBase
     {
         internal BeerGenerator(Faker faker)
                  : base(faker)
@@ -639,7 +699,7 @@ namespace FakerNet
         [FakerMethod("alcohol")]
         public string Alcohol()
         {
-            return this.Expression("#{rand(2.0..10.0).round(1)}%", this);
+            return this.EvaluateExpression("#{rand(2.0..10.0).round(1)}%", this);
         }
         /// <summary>
         /// Produces a random beer blg level.
@@ -650,7 +710,7 @@ namespace FakerNet
         [FakerMethod("blg")]
         public string Blg()
         {
-            return this.Expression("#{rand(5.0..20.0).round(1)}°Blg", this);
+            return this.EvaluateExpression("#{rand(5.0..20.0).round(1)}°Blg", this);
         }
         /// <summary>
         /// Produces a random beer hops.
@@ -661,7 +721,7 @@ namespace FakerNet
         [FakerMethod("hop")]
         public string Hop()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("beer.hop", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("beer.hop", this))));
         }
         /// <summary>
         /// Produces a random beer IBU.
@@ -672,7 +732,7 @@ namespace FakerNet
         [FakerMethod("ibu")]
         public string Ibu()
         {
-            return this.Expression("#{rand(10..100)} IBU", this);
+            return this.EvaluateExpression("#{rand(10..100)} IBU", this);
         }
         /// <summary>
         /// Produces a random beer malt.
@@ -683,7 +743,7 @@ namespace FakerNet
         [FakerMethod("malts")]
         public string Malts()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("beer.malt", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("beer.malt", this))));
         }
         /// <summary>
         /// Produces a random beer name.
@@ -694,7 +754,7 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("beer.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("beer.name", this))));
         }
         /// <summary>
         /// Produces a random beer style.
@@ -705,7 +765,7 @@ namespace FakerNet
         [FakerMethod("style")]
         public string Style()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("beer.style", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("beer.style", this))));
         }
         /// <summary>
         /// Produces a random beer yeast.
@@ -716,12 +776,39 @@ namespace FakerNet
         [FakerMethod("yeast")]
         public string Yeast()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("beer.yeast", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("beer.yeast", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
+    [FakerGenerator("Bible")]
+    public partial class BibleGenerator : GeneratorBase
+    {
+        internal BibleGenerator(Faker faker)
+                 : base(faker)
+        {
+        }
+        
+        [FakerMethod("character")]
+        public string Character()
+        {
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("bible.character", this))));
+        }
+        [FakerMethod("location")]
+        public string Location()
+        {
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("bible.location", this))));
+        }
+        [FakerMethod("quote")]
+        public string Quote()
+        {
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("bible.quote", this))));
+        }
+    }
+    
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Blockchain")]
-    public class BlockchainGenerator : GeneratorBase
+    public partial class BlockchainGenerator : GeneratorBase
     {
         [FakerMethod("Aeternity")]
         public AeternityGenerator Aeternity { get; }
@@ -734,14 +821,15 @@ namespace FakerNet
         internal BlockchainGenerator(Faker faker)
                  : base(faker)
         {
-            Aeternity = new AeternityGenerator(_faker);
-            Bitcoin = new BitcoinGenerator(_faker);
-            Ethereum = new EthereumGenerator(_faker);
-            Tezos = new TezosGenerator(_faker);
+            Aeternity = new AeternityGenerator(this.Faker);
+            Bitcoin = new BitcoinGenerator(this.Faker);
+            Ethereum = new EthereumGenerator(this.Faker);
+            Tezos = new TezosGenerator(this.Faker);
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Aeternity")]
-        public class AeternityGenerator : GeneratorBase
+        public partial class AeternityGenerator : GeneratorBase
         {
             internal AeternityGenerator(Faker faker)
                      : base(faker)
@@ -750,7 +838,6 @@ namespace FakerNet
             
             /// <summary>
             /// Produces a random Aeternity wallet address.
-            /// <p>Produces a random Aeternity wallet address</p>
             /// </summary>
             /// <example>
             /// <code>Faker::Blockchain::Aeternity.address
@@ -759,11 +846,10 @@ namespace FakerNet
             [FakerMethod("address")]
             public string Address()
             {
-                return this.Expression("ak_#{rand_strings}", this);
+                return this.EvaluateExpression("ak_#{String.random_string}", this);
             }
             /// <summary>
             /// Produces a random Aeternity contract.
-            /// <p>Produces a random Aeternity contract</p>
             /// </summary>
             /// <example>
             /// <code>Faker::Blockchain::Aeternity.contract
@@ -772,11 +858,10 @@ namespace FakerNet
             [FakerMethod("contract")]
             public string Contract()
             {
-                return this.Expression("ct_#{rand_strings}", this);
+                return this.EvaluateExpression("ct_#{String.random_string}", this);
             }
             /// <summary>
             /// Produces a random Aeternity oracle.
-            /// <p>Produces a random Aeternity oracle</p>
             /// </summary>
             /// <example>
             /// <code>Faker::Blockchain::Aeternity.oracle
@@ -785,11 +870,10 @@ namespace FakerNet
             [FakerMethod("oracle")]
             public string Oracle()
             {
-                return this.Expression("ok_#{rand_strings(51)}", this);
+                return this.EvaluateExpression("ok_#{String.random_string '51','51'}", this);
             }
             /// <summary>
             /// Produces a random Aeternity transaction.
-            /// <p>Produces a random Aeternity transaction</p>
             /// </summary>
             /// <example>
             /// <code>Faker::Blockchain::Aeternity.transaction
@@ -798,25 +882,68 @@ namespace FakerNet
             [FakerMethod("transaction")]
             public string Transaction()
             {
-                return this.Expression("th_#{rand_strings(51)}", this);
+                return this.EvaluateExpression("th_#{String.random_string '51','51'}", this);
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Bitcoin")]
-        public class BitcoinGenerator : GeneratorBase
+        public partial class BitcoinGenerator : GeneratorBase
         {
             internal BitcoinGenerator(Faker faker)
                      : base(faker)
             {
             }
             
-            #warning No implementation defined for method address();
-            #warning No implementation defined for method address_for(UNKNOWN_Symbol network);
-            #warning No implementation defined for method testnet_address();
+            /// <summary>
+            /// Produces a Bitcoin wallet address.
+            /// </summary>
+            /// <example>
+            /// <code>Faker::Blockchain::Bitcoin.address
+            /// #=> "147nDP22h3pHrLt2qykTH4txUwQh1ccaXp"</code>
+            /// </example>
+            [FakerMethod("address")]
+            public string Address()
+            {
+                return this.EvaluateExpression("#{address_for '0'}", this);
+            }
+            /// <summary>
+            /// Generates a random Bitcoin address for the given network.
+            /// </summary>
+            /// <param name="networkByte">
+            /// The name of network protocol to generate an address for,  mainnet (0x00), testnet (0x6f).
+            /// (default value "0")
+            /// </param>
+            [FakerMethod("address_for")]
+            public string AddressFor(long networkByte = 0)
+            {
+                byte[] packed = new byte[25];
+                packed[0] = (byte)(networkByte & 0x0FF);
+                CreateRandomBytes(20, 20).CopyTo(packed, 1);
+                byte[] hash = BinaryHelper.CreateSHA256Digest(BinaryHelper.CreateSHA256Digest(packed));
+                packed[21] = hash[0];
+                packed[22] = hash[1];
+                packed[23] = hash[2];
+                packed[24] = hash[3];
+                return BinaryHelper.Base58Encode(packed);
+            }
+            /// <summary>
+            /// Produces a Bitcoin testnet address.
+            /// </summary>
+            /// <example>
+            /// <code>Faker::Blockchain::Bitcoin.testnet_address
+            /// #=> "n4YjRyYD6V6zREpk6opqESDqD3KYnMdVEB"</code>
+            /// </example>
+            [FakerMethod("testnet_address")]
+            public string TestnetAddress()
+            {
+                return this.EvaluateExpression("#{address_for '111'}", this);
+            }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Ethereum")]
-        public class EthereumGenerator : GeneratorBase
+        public partial class EthereumGenerator : GeneratorBase
         {
             internal EthereumGenerator(Faker faker)
                      : base(faker)
@@ -826,8 +953,9 @@ namespace FakerNet
             #warning No implementation defined for method address();
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Tezos")]
-        public class TezosGenerator : GeneratorBase
+        public partial class TezosGenerator : GeneratorBase
         {
             internal TezosGenerator(Faker faker)
                      : base(faker)
@@ -846,8 +974,9 @@ namespace FakerNet
         
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Blood")]
-    public class BloodGenerator : GeneratorBase
+    public partial class BloodGenerator : GeneratorBase
     {
         internal BloodGenerator(Faker faker)
                  : base(faker)
@@ -863,7 +992,7 @@ namespace FakerNet
         [FakerMethod("group")]
         public string Group()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("blood.group", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("blood.group", this))));
         }
         /// <summary>
         /// Produces a random blood RH-Factor.
@@ -874,7 +1003,7 @@ namespace FakerNet
         [FakerMethod("rh_factor")]
         public string RhFactor()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("blood.rh_factor", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("blood.rh_factor", this))));
         }
         /// <summary>
         /// Produces a random blood type.
@@ -885,12 +1014,13 @@ namespace FakerNet
         [FakerMethod("type")]
         public string Type()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("blood.type", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("blood.type", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Book")]
-    public class BookGenerator : GeneratorBase
+    public partial class BookGenerator : GeneratorBase
     {
         internal BookGenerator(Faker faker)
                  : base(faker)
@@ -899,7 +1029,6 @@ namespace FakerNet
         
         /// <summary>
         /// Produces a random book author.
-        /// <p>Produces a random book author</p>
         /// </summary>
         /// <example>
         /// <code>Faker::Book.author #=> "Alysha Olsen"</code>
@@ -907,11 +1036,10 @@ namespace FakerNet
         [FakerMethod("author")]
         public string Author()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("book.author", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("book.author", this))));
         }
         /// <summary>
         /// Produces a random genre.
-        /// <p>Produces a random genre</p>
         /// </summary>
         /// <example>
         /// <code>Faker::Book.genre #=> "Mystery"</code>
@@ -919,11 +1047,10 @@ namespace FakerNet
         [FakerMethod("genre")]
         public string Genre()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("book.genre", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("book.genre", this))));
         }
         /// <summary>
         /// Produces a random book publisher.
-        /// <p>Produces a random book publisher</p>
         /// </summary>
         /// <example>
         /// <code>Faker::Book.publisher #=> "Opus Reader"</code>
@@ -931,11 +1058,10 @@ namespace FakerNet
         [FakerMethod("publisher")]
         public string Publisher()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("book.publisher", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("book.publisher", this))));
         }
         /// <summary>
         /// Produces a random book title.
-        /// <p>Produces a random book title</p>
         /// </summary>
         /// <example>
         /// <code>Faker::Book.title #=> "The Odd Sister"</code>
@@ -943,12 +1069,13 @@ namespace FakerNet
         [FakerMethod("title")]
         public string Title()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("book.title", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("book.title", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Books")]
-    public class BooksGenerator : GeneratorBase
+    public partial class BooksGenerator : GeneratorBase
     {
         [FakerMethod("CultureSeries")]
         public CultureSeriesGenerator CultureSeries { get; }
@@ -961,14 +1088,15 @@ namespace FakerNet
         internal BooksGenerator(Faker faker)
                  : base(faker)
         {
-            CultureSeries = new CultureSeriesGenerator(_faker);
-            Dune = new DuneGenerator(_faker);
-            Lovecraft = new LovecraftGenerator(_faker);
-            TheKingkillerChronicle = new TheKingkillerChronicleGenerator(_faker);
+            CultureSeries = new CultureSeriesGenerator(this.Faker);
+            Dune = new DuneGenerator(this.Faker);
+            Lovecraft = new LovecraftGenerator(this.Faker);
+            TheKingkillerChronicle = new TheKingkillerChronicleGenerator(this.Faker);
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("CultureSeries")]
-        public class CultureSeriesGenerator : GeneratorBase
+        public partial class CultureSeriesGenerator : GeneratorBase
         {
             internal CultureSeriesGenerator(Faker faker)
                      : base(faker)
@@ -982,7 +1110,7 @@ namespace FakerNet
             [FakerMethod("book")]
             public string Book()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("culture_series.books", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("culture_series.books", this))));
             }
             /// <example>
             /// <code>Faker::Books::CultureSeries.civ
@@ -991,7 +1119,7 @@ namespace FakerNet
             [FakerMethod("civ")]
             public string Civ()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("culture_series.civs", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("culture_series.civs", this))));
             }
             /// <example>
             /// <code>Faker::Books::CultureSeries.culture_ship
@@ -1000,7 +1128,7 @@ namespace FakerNet
             [FakerMethod("culture_ship")]
             public string CultureShip()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("culture_series.culture_ships", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("culture_series.culture_ships", this))));
             }
             /// <example>
             /// <code>Faker::Books::CultureSeries.culture_ship_class
@@ -1009,7 +1137,7 @@ namespace FakerNet
             [FakerMethod("culture_ship_class")]
             public string CultureShipClass()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("culture_series.culture_ship_classes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("culture_series.culture_ship_classes", this))));
             }
             /// <example>
             /// <code>Faker::Books::CultureSeries.culture_ship_class_abv
@@ -1018,7 +1146,7 @@ namespace FakerNet
             [FakerMethod("culture_ship_class_abv")]
             public string CultureShipClassAbv()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("culture_series.culture_ship_class_abvs", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("culture_series.culture_ship_class_abvs", this))));
             }
             /// <example>
             /// <code>Faker::Books::CultureSeries.planet
@@ -1027,7 +1155,7 @@ namespace FakerNet
             [FakerMethod("planet")]
             public string Planet()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("culture_series.planets", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("culture_series.planets", this))));
             }
         }
         
@@ -1037,8 +1165,9 @@ namespace FakerNet
         /// 				<p>A Faker module beyond your dreams, test data beyond your imagination.</p>
         /// 			
         /// </summary>
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Dune")]
-        public class DuneGenerator : GeneratorBase
+        public partial class DuneGenerator : GeneratorBase
         {
             internal DuneGenerator(Faker faker)
                      : base(faker)
@@ -1047,7 +1176,6 @@ namespace FakerNet
             
             /// <summary>
             /// Produces the name of a character from Dune.
-            /// <p>Produces the name of a character from Dune</p>
             /// </summary>
             /// <example>
             /// <code>Faker::Books::Dune.character #=> "Leto Atreides"</code>
@@ -1055,11 +1183,10 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dune.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dune.characters", this))));
             }
             /// <summary>
             /// Produces the name of a city from Dune.
-            /// <p>Produces the name of a city from Dune</p>
             /// </summary>
             /// <example>
             /// <code>Faker::Books::Dune.city #=> "Arrakeen"</code>
@@ -1067,11 +1194,10 @@ namespace FakerNet
             [FakerMethod("city")]
             public string City()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dune.cities", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dune.cities", this))));
             }
             /// <summary>
             /// Produces the name of a planet from Dune.
-            /// <p>Produces the name of a planet from Dune</p>
             /// </summary>
             /// <example>
             /// <code>Faker::Books::Dune.planet #=> "Caladan"</code>
@@ -1079,7 +1205,7 @@ namespace FakerNet
             [FakerMethod("planet")]
             public string Planet()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dune.planets", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dune.planets", this))));
             }
             #warning No implementation defined for method quote(string? character = null);
             #warning No implementation defined for method saying(string? source = null);
@@ -1089,12 +1215,13 @@ namespace FakerNet
             [FakerMethod("title")]
             public string Title()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dune.titles", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dune.titles", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Lovecraft")]
-        public class LovecraftGenerator : GeneratorBase
+        public partial class LovecraftGenerator : GeneratorBase
         {
             internal LovecraftGenerator(Faker faker)
                      : base(faker)
@@ -1103,7 +1230,6 @@ namespace FakerNet
             
             /// <summary>
             /// Produces the name of a deity.
-            /// <p>Produces the name of a deity</p>
             /// </summary>
             /// <example>
             /// <code>Faker::Books::Lovecraft.deity #=> "Shub-Niggurath"</code>
@@ -1111,10 +1237,10 @@ namespace FakerNet
             [FakerMethod("deity")]
             public string Deity()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("lovecraft.deity", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("lovecraft.deity", this))));
             }
             /// <param name="number">
-            /// <p>The number of times to repeat the chant</p>
+            /// The number of times to repeat the chant
             /// (default value "1")
             /// </param>
             /// <example>
@@ -1124,11 +1250,10 @@ namespace FakerNet
             [FakerMethod("fhtagn")]
             public string Fhtagn(long number = 1)
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("lovecraft.fhtagn", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("lovecraft.fhtagn", this))));
             }
             /// <summary>
             /// Produces the name of a location.
-            /// <p>Produces the name of a location</p>
             /// </summary>
             /// <example>
             /// <code>Faker::Books::Lovecraft.location #=> "Kingsport"</code>
@@ -1136,7 +1261,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("lovecraft.location", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("lovecraft.location", this))));
             }
             #warning No implementation defined for method paragraph(long sentenceCount, long randomSentencesToAdd = 3);
             #warning No implementation defined for method paragraph_by_chars(long characters = 256);
@@ -1145,7 +1270,6 @@ namespace FakerNet
             #warning No implementation defined for method sentences(long number = 3);
             /// <summary>
             /// Produces the name of a tome.
-            /// <p>Produces the name of a tome</p>
             /// </summary>
             /// <example>
             /// <code>Faker::Books::Lovecraft.tome #=> "Book of Eibon"</code>
@@ -1153,14 +1277,15 @@ namespace FakerNet
             [FakerMethod("tome")]
             public string Tome()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("lovecraft.tome", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("lovecraft.tome", this))));
             }
             #warning No implementation defined for method word();
             #warning No implementation defined for method words(long number, bool spacesAllowed = false);
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("TheKingkillerChronicle")]
-        public class TheKingkillerChronicleGenerator : GeneratorBase
+        public partial class TheKingkillerChronicleGenerator : GeneratorBase
         {
             internal TheKingkillerChronicleGenerator(Faker faker)
                      : base(faker)
@@ -1176,7 +1301,7 @@ namespace FakerNet
             [FakerMethod("book")]
             public string Book()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("books.the_kingkiller_chronicle.books", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("books.the_kingkiller_chronicle.books", this))));
             }
             /// <summary>
             /// Produces the name of a The Kingkiller Chronicle character.
@@ -1187,7 +1312,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("books.the_kingkiller_chronicle.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("books.the_kingkiller_chronicle.characters", this))));
             }
             /// <summary>
             /// Produces the name of a The Kingkiller Chronicle creature.
@@ -1198,7 +1323,7 @@ namespace FakerNet
             [FakerMethod("creature")]
             public string Creature()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("books.the_kingkiller_chronicle.creatures", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("books.the_kingkiller_chronicle.creatures", this))));
             }
             /// <summary>
             /// Produces the name of a The Kingkiller Chronicle location.
@@ -1209,14 +1334,15 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("books.the_kingkiller_chronicle.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("books.the_kingkiller_chronicle.locations", this))));
             }
         }
         
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Boolean")]
-    public class BooleanGenerator : GeneratorBase
+    public partial class BooleanGenerator : GeneratorBase
     {
         internal BooleanGenerator(Faker faker)
                  : base(faker)
@@ -1226,8 +1352,9 @@ namespace FakerNet
         #warning No implementation defined for method get_boolean(double trueRatio = 0.5);
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("BossaNova")]
-    public class BossaNovaGenerator : GeneratorBase
+    public partial class BossaNovaGenerator : GeneratorBase
     {
         internal BossaNovaGenerator(Faker faker)
                  : base(faker)
@@ -1243,7 +1370,7 @@ namespace FakerNet
         [FakerMethod("artist")]
         public string Artist()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("bossa_nova.artists", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("bossa_nova.artists", this))));
         }
         /// <summary>
         /// Produces a bossa nova song.
@@ -1254,12 +1381,13 @@ namespace FakerNet
         [FakerMethod("song")]
         public string Song()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("bossa_nova.songs", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("bossa_nova.songs", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Business")]
-    public class BusinessGenerator : GeneratorBase
+    public partial class BusinessGenerator : GeneratorBase
     {
         internal BusinessGenerator(Faker faker)
                  : base(faker)
@@ -1276,7 +1404,7 @@ namespace FakerNet
         [FakerMethod("credit_card_number")]
         public string CreditCardNumber()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("business.credit_card_numbers", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("business.credit_card_numbers", this))));
         }
         /// <summary>
         /// Produces a type of credit card.
@@ -1287,12 +1415,13 @@ namespace FakerNet
         [FakerMethod("credit_card_type")]
         public string CreditCardType()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("business.credit_card_types", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("business.credit_card_types", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Camera")]
-    public class CameraGenerator : GeneratorBase
+    public partial class CameraGenerator : GeneratorBase
     {
         internal CameraGenerator(Faker faker)
                  : base(faker)
@@ -1301,7 +1430,6 @@ namespace FakerNet
         
         /// <summary>
         /// Produces a brand of a camera.
-        /// <p>Produces a brand of a camera</p>
         /// </summary>
         /// <example>
         /// <code>Faker::Camera.brand #=> "Canon"</code>
@@ -1309,11 +1437,10 @@ namespace FakerNet
         [FakerMethod("brand")]
         public string Brand()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("camera.brand", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("camera.brand", this))));
         }
         /// <summary>
         /// Produces a brand with model.
-        /// <p>Produces a brand with model</p>
         /// </summary>
         /// <example>
         /// <code>Faker::Camera.brand_with_model #=> "Canon 450D"</code>
@@ -1321,11 +1448,10 @@ namespace FakerNet
         [FakerMethod("brand_with_model")]
         public string BrandWithModel()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("camera.brand_with_model", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("camera.brand_with_model", this))));
         }
         /// <summary>
         /// Produces a model of camera.
-        /// <p>Produces a model of camera</p>
         /// </summary>
         /// <example>
         /// <code>Faker::Camera.model #=> "450D"</code>
@@ -1333,12 +1459,13 @@ namespace FakerNet
         [FakerMethod("model")]
         public string Model()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("camera.model", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("camera.model", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Cannabis")]
-    public class CannabisGenerator : GeneratorBase
+    public partial class CannabisGenerator : GeneratorBase
     {
         internal CannabisGenerator(Faker faker)
                  : base(faker)
@@ -1354,7 +1481,7 @@ namespace FakerNet
         [FakerMethod("brand")]
         public string Brand()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("cannabis.brands", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cannabis.brands", this))));
         }
         /// <summary>
         /// Produces a random buzzword.
@@ -1365,7 +1492,7 @@ namespace FakerNet
         [FakerMethod("buzzword")]
         public string Buzzword()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("cannabis.buzzwords", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cannabis.buzzwords", this))));
         }
         /// <summary>
         /// Produces a random cannabinoid type.
@@ -1376,7 +1503,7 @@ namespace FakerNet
         [FakerMethod("cannabinoid")]
         public string Cannabinoid()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("cannabis.cannabinoids", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cannabis.cannabinoids", this))));
         }
         /// <summary>
         /// Produces a random abbreviation.
@@ -1387,7 +1514,7 @@ namespace FakerNet
         [FakerMethod("cannabinoid_abbreviation")]
         public string CannabinoidAbbreviation()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("cannabis.cannabinoid_abbreviations", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cannabis.cannabinoid_abbreviations", this))));
         }
         /// <summary>
         /// Produces a random category.
@@ -1398,7 +1525,7 @@ namespace FakerNet
         [FakerMethod("category")]
         public string Category()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("cannabis.categories", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cannabis.categories", this))));
         }
         /// <summary>
         /// Produces a random health benefit.
@@ -1409,7 +1536,7 @@ namespace FakerNet
         [FakerMethod("health_benefit")]
         public string HealthBenefit()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("cannabis.health_benefits", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cannabis.health_benefits", this))));
         }
         /// <summary>
         /// Produces a random kind of medical use.
@@ -1420,7 +1547,7 @@ namespace FakerNet
         [FakerMethod("medical_use")]
         public string MedicalUse()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("cannabis.medical_uses", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cannabis.medical_uses", this))));
         }
         /// <summary>
         /// Produces a random strain.
@@ -1431,7 +1558,7 @@ namespace FakerNet
         [FakerMethod("strain")]
         public string Strain()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("cannabis.strains", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cannabis.strains", this))));
         }
         /// <summary>
         /// Produces a random terpene type.
@@ -1442,7 +1569,7 @@ namespace FakerNet
         [FakerMethod("terpene")]
         public string Terpene()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("cannabis.terpenes", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cannabis.terpenes", this))));
         }
         /// <summary>
         /// Produces a random type.
@@ -1453,12 +1580,13 @@ namespace FakerNet
         [FakerMethod("type")]
         public string Type()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("cannabis.types", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cannabis.types", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("ChileRut")]
-    public class ChileRutGenerator : GeneratorBase
+    public partial class ChileRutGenerator : GeneratorBase
     {
         internal ChileRutGenerator(Faker faker)
                  : base(faker)
@@ -1473,8 +1601,9 @@ namespace FakerNet
         #warning No implementation defined for method rut(long minRut, long maxRut, bool isFixed = false);
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("ChuckNorris")]
-    public class ChuckNorrisGenerator : GeneratorBase
+    public partial class ChuckNorrisGenerator : GeneratorBase
     {
         internal ChuckNorrisGenerator(Faker faker)
                  : base(faker)
@@ -1492,12 +1621,13 @@ namespace FakerNet
         [FakerMethod("fact")]
         public string Fact()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("chuck_norris.fact", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("chuck_norris.fact", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Code")]
-    public class CodeGenerator : GeneratorBase
+    public partial class CodeGenerator : GeneratorBase
     {
         internal CodeGenerator(Faker faker)
                  : base(faker)
@@ -1514,28 +1644,59 @@ namespace FakerNet
         [FakerMethod("asin")]
         public string Asin()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("code.asin", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("code.asin", this))));
         }
-        #warning No implementation defined for method ean(long digits = 13);
-        #warning Failed processing method generate_base10_isbn
-        #warning Failed processing method generate_base13_ean
-        #warning Failed processing method generate_base13_isbn
-        #warning Failed processing method generate_base8_ean
-        #warning Failed processing method generate_imei
-        #warning Failed processing method generate_nric_check_alphabet
-        #warning Failed processing method generate_sin_check_digit
-        #warning No implementation defined for method imei();
-        #warning No implementation defined for method isbn(long digits = 10);
-        #warning No implementation defined for method npi();
-        #warning No implementation defined for method nric(long minAge, long maxAge = 65);
-        #warning No implementation defined for method rut();
-        #warning Failed processing method rut_verificator_digit
-        #warning No implementation defined for method sin();
-        #warning Failed processing method sum
+        // Expecting native implementation of
+        //      public string Ean(long digits = 13)
+        // Expecting native implementation of
+        //      public string Imei()
+        // Expecting native implementation of
+        //      public string Isbn(long digits = 10, bool separator = true)
+        // Expecting native implementation of
+        //      public string Npi()
+        // Expecting native implementation of
+        //      public string Nric(long minAge = 18, long maxAge = 65)
+        // Expecting native implementation of
+        //      public string Rut()
+        // Expecting native implementation of
+        //      public string Sin()
+        /// <summary>
+        /// Produces a random EAN (European Article Number) 8 digit code.
+        /// </summary>
+        [FakerMethod("ean8")]
+        public string Ean8()
+        {
+            return this.EvaluateExpression("#{code.ean '8'}", this);
+        }
+        /// <summary>
+        /// Produces a random EAN (European Article Number) 13 digit code.
+        /// </summary>
+        [FakerMethod("ean13")]
+        public string Ean13()
+        {
+            return this.EvaluateExpression("#{code.ean '13'}", this);
+        }
+        /// <summary>
+        /// Produces a random ISBN (International Standard Book Number) 10 digit code.
+        /// </summary>
+        [FakerMethod("isbn10")]
+        public string Isbn10()
+        {
+            return this.EvaluateExpression("#{code.isbn '10'}", this);
+        }
+        /// <summary>
+        /// Produces a random ISBN (International Standard Book Number) 13 digit code.
+        /// </summary>
+        [FakerMethod("isbn13")]
+        public string Isbn13()
+        {
+            return this.EvaluateExpression("#{code.isbn '13'}", this);
+        }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Coffee")]
-    public class CoffeeGenerator : GeneratorBase
+    public partial class CoffeeGenerator : GeneratorBase
     {
         internal CoffeeGenerator(Faker faker)
                  : base(faker)
@@ -1551,7 +1712,7 @@ namespace FakerNet
         [FakerMethod("blend_name")]
         public string BlendName()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("coffee.blend_name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("coffee.blend_name", this))));
         }
         /// <summary>
         /// Produces a random coffee taste intensity.
@@ -1562,7 +1723,7 @@ namespace FakerNet
         [FakerMethod("intensifier")]
         public string Intensifier()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("coffee.intensifier", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("coffee.intensifier", this))));
         }
         /// <summary>
         /// Produces a string containing a random description of a coffee's taste.
@@ -1573,7 +1734,7 @@ namespace FakerNet
         [FakerMethod("notes")]
         public string Notes()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("coffee.notes", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("coffee.notes", this))));
         }
         /// <summary>
         /// Produces a random coffee origin place.
@@ -1584,7 +1745,7 @@ namespace FakerNet
         [FakerMethod("origin")]
         public string Origin()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("coffee.country", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("coffee.country", this))));
         }
         #warning Failed processing method search_format
         /// <summary>
@@ -1596,12 +1757,13 @@ namespace FakerNet
         [FakerMethod("variety")]
         public string Variety()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("coffee.variety", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("coffee.variety", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Coin")]
-    public class CoinGenerator : GeneratorBase
+    public partial class CoinGenerator : GeneratorBase
     {
         internal CoinGenerator(Faker faker)
                  : base(faker)
@@ -1610,7 +1772,6 @@ namespace FakerNet
         
         /// <summary>
         /// Retrieves a face to a flipped coin.
-        /// <p>Retrieves a face to a flipped coin</p>
         /// </summary>
         /// <example>
         /// <code>Faker::Coin.flip #=> "Heads"</code>
@@ -1618,7 +1779,7 @@ namespace FakerNet
         [FakerMethod("flip")]
         public string Flip()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("coin.flip", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("coin.flip", this))));
         }
         /// <summary>
         /// Retrieves a random coin from any country.
@@ -1629,12 +1790,13 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("currency.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("currency.name", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Color")]
-    public class ColorGenerator : GeneratorBase
+    public partial class ColorGenerator : GeneratorBase
     {
         internal ColorGenerator(Faker faker)
                  : base(faker)
@@ -1650,7 +1812,7 @@ namespace FakerNet
         [FakerMethod("color_name")]
         public string ColorName()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("color.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("color.name", this))));
         }
         #warning No implementation defined for method hex_color(UNKNOWN_Hash? args = null);
         #warning No implementation defined for method hsl_color(UNKNOWN_FLoat hue, double saturation, double? lightness = null);
@@ -1660,8 +1822,9 @@ namespace FakerNet
         #warning Failed processing method single_rgb_color
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Commerce")]
-    public class CommerceGenerator : GeneratorBase
+    public partial class CommerceGenerator : GeneratorBase
     {
         internal CommerceGenerator(Faker faker)
                  : base(faker)
@@ -1670,8 +1833,6 @@ namespace FakerNet
         
         /// <summary>
         /// Produces a randomized string of a brand name.
-        ///                             <p>Produces a randomized string of a brand name</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Commerce.brand #=> 'Apple'</code>
@@ -1679,7 +1840,7 @@ namespace FakerNet
         [FakerMethod("brand")]
         public string Brand()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("commerce.brand", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("commerce.brand", this))));
         }
         #warning Failed processing method categories
         /// <summary>
@@ -1691,7 +1852,7 @@ namespace FakerNet
         [FakerMethod("color")]
         public string Color()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("color.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("color.name", this))));
         }
         #warning No implementation defined for method department(long max, bool fixedAmount = false);
         /// <summary>
@@ -1703,7 +1864,7 @@ namespace FakerNet
         [FakerMethod("material")]
         public string Material()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("commerce.product_name.material", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("commerce.product_name.material", this))));
         }
         #warning Failed processing method merge_categories
         #warning No implementation defined for method price(UNKNOWN_Range range, bool asString = false);
@@ -1716,15 +1877,13 @@ namespace FakerNet
         [FakerMethod("product_name")]
         public string ProductName()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("commerce.product_name.adjective", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("commerce.product_name.adjective", this))));
         }
         /// <summary>
         /// Produces a random promotion code.
         /// </summary>
         /// <param name="digits">
-        /// 
-        /// <p>Updates the number of numerical digits used to generate the promotion code.</p>
-        /// 
+        /// Updates the number of numerical digits used to generate the promotion code.
         /// (default value "6")
         /// </param>
         /// <example>
@@ -1734,12 +1893,10 @@ namespace FakerNet
         [FakerMethod("promotion_code")]
         public string PromotionCode(long digits = 6)
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("commerce.promotion_code.adjective", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("commerce.promotion_code.adjective", this))));
         }
         /// <summary>
         /// Produces a randomized string of a vendor name.
-        ///                             <p>Produces a randomized string of a vendor name</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Commerce.vendor #=> 'Dollar General'</code>
@@ -1747,12 +1904,13 @@ namespace FakerNet
         [FakerMethod("vendor")]
         public string Vendor()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("commerce.vendor", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("commerce.vendor", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Company")]
-    public class CompanyGenerator : GeneratorBase
+    public partial class CompanyGenerator : GeneratorBase
     {
         internal CompanyGenerator(Faker faker)
                  : base(faker)
@@ -1777,7 +1935,7 @@ namespace FakerNet
         [FakerMethod("department")]
         public string Department()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("company.department", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("company.department", this))));
         }
         #warning No implementation defined for method duns_number();
         #warning No implementation defined for method ein();
@@ -1793,7 +1951,7 @@ namespace FakerNet
         [FakerMethod("industry")]
         public string Industry()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("company.industry", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("company.industry", this))));
         }
         #warning Failed processing method inn_checksum
         #warning No implementation defined for method inn_number(UNKNOWN_Symbol type);
@@ -1809,7 +1967,7 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("company.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("company.name", this))));
         }
         #warning No implementation defined for method norwegian_organisation_number();
         #warning No implementation defined for method polish_register_of_national_economy();
@@ -1823,7 +1981,7 @@ namespace FakerNet
         [FakerMethod("profession")]
         public string Profession()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("company.profession", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("company.profession", this))));
         }
         #warning No implementation defined for method russian_tax_number(string region, UNKNOWN_Symbol? type = null);
         /// <summary>
@@ -1835,7 +1993,7 @@ namespace FakerNet
         [FakerMethod("sic_code")]
         public string SicCode()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("company.sic_code", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("company.sic_code", this))));
         }
         #warning No implementation defined for method south_african_close_corporation_registration_number();
         #warning No implementation defined for method south_african_listed_company_registration_number();
@@ -1853,7 +2011,7 @@ namespace FakerNet
         [FakerMethod("suffix")]
         public string Suffix()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("company.suffix", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("company.suffix", this))));
         }
         #warning No implementation defined for method swedish_organisation_number();
         /// <summary>
@@ -1865,13 +2023,14 @@ namespace FakerNet
         [FakerMethod("type")]
         public string Type()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("company.type", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("company.type", this))));
         }
         #warning Failed processing method weight_sum
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Compass")]
-    public class CompassGenerator : GeneratorBase
+    public partial class CompassGenerator : GeneratorBase
     {
         internal CompassGenerator(Faker faker)
                  : base(faker)
@@ -1887,7 +2046,7 @@ namespace FakerNet
         [FakerMethod("abbreviation")]
         public string Abbreviation()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.abbreviation", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.abbreviation", this))));
         }
         /// <summary>
         /// Produces a random azimuth.
@@ -1898,7 +2057,7 @@ namespace FakerNet
         [FakerMethod("azimuth")]
         public string Azimuth()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.azimuth", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.azimuth", this))));
         }
         /// <summary>
         /// Produces a random cardinal.
@@ -1909,7 +2068,7 @@ namespace FakerNet
         [FakerMethod("cardinal")]
         public string Cardinal()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.cardinal.word", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.cardinal.word", this))));
         }
         /// <summary>
         /// Produces a random cardinal abbreviation.
@@ -1920,7 +2079,7 @@ namespace FakerNet
         [FakerMethod("cardinal_abbreviation")]
         public string CardinalAbbreviation()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.cardinal.abbreviation", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.cardinal.abbreviation", this))));
         }
         /// <summary>
         /// Produces a random cardinal azimuth.
@@ -1931,7 +2090,7 @@ namespace FakerNet
         [FakerMethod("cardinal_azimuth")]
         public string CardinalAzimuth()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.cardinal.azimuth", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.cardinal.azimuth", this))));
         }
         /// <summary>
         /// Produces a random direction.
@@ -1942,7 +2101,7 @@ namespace FakerNet
         [FakerMethod("direction")]
         public string Direction()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.direction", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.direction", this))));
         }
         /// <summary>
         /// Produces a random half wind.
@@ -1953,7 +2112,7 @@ namespace FakerNet
         [FakerMethod("half_wind")]
         public string HalfWind()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.half-wind.word", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.half-wind.word", this))));
         }
         /// <summary>
         /// Produces a random half wind abbreviation.
@@ -1964,7 +2123,7 @@ namespace FakerNet
         [FakerMethod("half_wind_abbreviation")]
         public string HalfWindAbbreviation()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.half-wind.abbreviation", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.half-wind.abbreviation", this))));
         }
         /// <summary>
         /// Produces a random half wind azimuth.
@@ -1975,7 +2134,7 @@ namespace FakerNet
         [FakerMethod("half_wind_azimuth")]
         public string HalfWindAzimuth()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.half-wind.azimuth", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.half-wind.azimuth", this))));
         }
         /// <summary>
         /// Produces a random ordinal.
@@ -1986,7 +2145,7 @@ namespace FakerNet
         [FakerMethod("ordinal")]
         public string Ordinal()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.ordinal.word", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.ordinal.word", this))));
         }
         /// <summary>
         /// Produces a random ordinal abbreviation.
@@ -1997,7 +2156,7 @@ namespace FakerNet
         [FakerMethod("ordinal_abbreviation")]
         public string OrdinalAbbreviation()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.ordinal.abbreviation", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.ordinal.abbreviation", this))));
         }
         /// <summary>
         /// Produces a random ordinal azimuth.
@@ -2008,7 +2167,7 @@ namespace FakerNet
         [FakerMethod("ordinal_azimuth")]
         public string OrdinalAzimuth()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.ordinal.azimuth", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.ordinal.azimuth", this))));
         }
         /// <summary>
         /// Produces a random quarter wind.
@@ -2019,7 +2178,7 @@ namespace FakerNet
         [FakerMethod("quarter_wind")]
         public string QuarterWind()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.quarter-wind.word", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.quarter-wind.word", this))));
         }
         /// <summary>
         /// Produces a random quarter wind abbreviation.
@@ -2030,12 +2189,10 @@ namespace FakerNet
         [FakerMethod("quarter_wind_abbreviation")]
         public string QuarterWindAbbreviation()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.quarter-wind.abbreviation", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.quarter-wind.abbreviation", this))));
         }
         /// <summary>
         /// Produces a random quarter wind azimuth.
-        ///                             <p>Produces a random quarter wind azimuth</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Compass.quarter_wind_azimuth #=> "56.25"</code>
@@ -2043,12 +2200,13 @@ namespace FakerNet
         [FakerMethod("quarter_wind_azimuth")]
         public string QuarterWindAzimuth()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("compass.quarter-wind.azimuth", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("compass.quarter-wind.azimuth", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Computer")]
-    public class ComputerGenerator : GeneratorBase
+    public partial class ComputerGenerator : GeneratorBase
     {
         internal ComputerGenerator(Faker faker)
                  : base(faker)
@@ -2059,7 +2217,7 @@ namespace FakerNet
         /// Produces the name of a computer os.
         /// </summary>
         /// <param name="platform">
-        /// <p>optionally specify the platform ‘linux`, `macos`, or `windows`.</p>
+        /// optionally specify the platform ‘linux`, `macos`, or `windows`.
         /// (default value "'linux'")
         /// </param>
         /// <example>
@@ -2068,7 +2226,7 @@ namespace FakerNet
         [FakerMethod("os")]
         public string Os(string platform = "linux")
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("computer.os.#{String.lower '" + platform + "'}", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("computer.os.#{String.lower '" + platform + "'}", this))));
         }
         /// <summary>
         /// Produces the name of a computer platform.
@@ -2079,10 +2237,10 @@ namespace FakerNet
         [FakerMethod("platform")]
         public string Platform()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("computer.platform", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("computer.platform", this))));
         }
         /// <summary>
-        /// Produces a string with computer platform and os.                        
+        /// Produces a string with computer platform and os.
         /// </summary>
         /// <example>
         /// <code>Faker::Computer.stack #=> "Linux, RHEL 6.10"</code>
@@ -2090,7 +2248,7 @@ namespace FakerNet
         [FakerMethod("stack")]
         public string Stack()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("computer.os.#{String.lower '#{platform}'}", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("computer.os.#{String.lower '#{platform}'}", this))));
         }
         /// <summary>
         /// Produces the name of a computer type.
@@ -2101,12 +2259,13 @@ namespace FakerNet
         [FakerMethod("type")]
         public string Type()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("computer.type", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("computer.type", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Construction")]
-    public class ConstructionGenerator : GeneratorBase
+    public partial class ConstructionGenerator : GeneratorBase
     {
         internal ConstructionGenerator(Faker faker)
                  : base(faker)
@@ -2122,7 +2281,7 @@ namespace FakerNet
         [FakerMethod("heavy_equipment")]
         public string HeavyEquipment()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("construction.heavy_equipment", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("construction.heavy_equipment", this))));
         }
         /// <summary>
         /// Produces a random material.
@@ -2133,7 +2292,7 @@ namespace FakerNet
         [FakerMethod("material")]
         public string Material()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("construction.materials", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("construction.materials", this))));
         }
         /// <summary>
         /// Produces a random role.
@@ -2144,7 +2303,7 @@ namespace FakerNet
         [FakerMethod("role")]
         public string Role()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("construction.roles", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("construction.roles", this))));
         }
         /// <summary>
         /// Produces a random standard cost code.
@@ -2155,7 +2314,7 @@ namespace FakerNet
         [FakerMethod("standard_cost_code")]
         public string StandardCostCode()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("construction.standard_cost_codes", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("construction.standard_cost_codes", this))));
         }
         /// <summary>
         /// Produces a random subcontract category.
@@ -2166,7 +2325,7 @@ namespace FakerNet
         [FakerMethod("subcontract_category")]
         public string SubcontractCategory()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("construction.subcontract_categories", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("construction.subcontract_categories", this))));
         }
         /// <summary>
         /// Produces a random trade.
@@ -2177,12 +2336,13 @@ namespace FakerNet
         [FakerMethod("trade")]
         public string Trade()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("construction.trades", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("construction.trades", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Cosmere")]
-    public class CosmereGenerator : GeneratorBase
+    public partial class CosmereGenerator : GeneratorBase
     {
         internal CosmereGenerator(Faker faker)
                  : base(faker)
@@ -2201,8 +2361,9 @@ namespace FakerNet
         #warning No implementation defined for method surge();
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Creature")]
-    public class CreatureGenerator : GeneratorBase
+    public partial class CreatureGenerator : GeneratorBase
     {
         [FakerMethod("Animal")]
         public AnimalGenerator Animal { get; }
@@ -2217,15 +2378,16 @@ namespace FakerNet
         internal CreatureGenerator(Faker faker)
                  : base(faker)
         {
-            Animal = new AnimalGenerator(_faker);
-            Bird = new BirdGenerator(_faker);
-            Cat = new CatGenerator(_faker);
-            Dog = new DogGenerator(_faker);
-            Horse = new HorseGenerator(_faker);
+            Animal = new AnimalGenerator(this.Faker);
+            Bird = new BirdGenerator(this.Faker);
+            Cat = new CatGenerator(this.Faker);
+            Dog = new DogGenerator(this.Faker);
+            Horse = new HorseGenerator(this.Faker);
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Animal")]
-        public class AnimalGenerator : GeneratorBase
+        public partial class AnimalGenerator : GeneratorBase
         {
             internal AnimalGenerator(Faker faker)
                      : base(faker)
@@ -2234,8 +2396,6 @@ namespace FakerNet
             
             /// <summary>
             /// Produces a random animal name.
-            ///                                 <p>Produces a random animal name</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Animal.name #=> "fly"</code>
@@ -2243,12 +2403,13 @@ namespace FakerNet
             [FakerMethod("name")]
             public string Name()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.animal.name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.animal.name", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Bird")]
-        public class BirdGenerator : GeneratorBase
+        public partial class BirdGenerator : GeneratorBase
         {
             internal BirdGenerator(Faker faker)
                      : base(faker)
@@ -2257,8 +2418,6 @@ namespace FakerNet
             
             /// <summary>
             /// Produces a random adjective used to described birds.
-            ///                                 <p>Produces a random adjective used to described birds</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Bird.adjective #=> 'common'</code>
@@ -2266,12 +2425,10 @@ namespace FakerNet
             [FakerMethod("adjective")]
             public string Adjective()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.bird.adjectives", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.bird.adjectives", this))));
             }
             /// <summary>
             /// Produces a random bird anatomy word.
-            ///                                 <p>Produces a random bird anatomy word</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Bird.anatomy #=> "rump"</code>
@@ -2279,12 +2436,10 @@ namespace FakerNet
             [FakerMethod("anatomy")]
             public string Anatomy()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.bird.anatomy", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.bird.anatomy", this))));
             }
             /// <summary>
             /// Produces a random, past tensed bird anatomy word.
-            ///                                 <p>Produces a random, past tensed bird anatomy word</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Bird.anatomy #=> "breasted"</code>
@@ -2292,12 +2447,10 @@ namespace FakerNet
             [FakerMethod("anatomy_past_tense")]
             public string AnatomyPastTense()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.bird.anatomy_past_tense", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.bird.anatomy_past_tense", this))));
             }
             /// <summary>
             /// Produces a random color word used in describing birds.
-            ///                                 <p>Produces a random color word used in describing birds</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Bird.color #=> "ferruginous"</code>
@@ -2305,7 +2458,7 @@ namespace FakerNet
             [FakerMethod("color")]
             public string Color()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.bird.colors", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.bird.colors", this))));
             }
             /// <summary>
             /// Produces a random common family name of a bird.
@@ -2316,13 +2469,40 @@ namespace FakerNet
             [FakerMethod("common_family_name")]
             public string CommonFamilyName()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.bird.common_family_name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.bird.common_family_name", this))));
             }
-            #warning No implementation defined for method common_name(UNKNOWN_String | Symbol | nil? taxOrder = null);
+            /// <summary>
+            /// Produces a random common name for a bird.
+            /// </summary>
+            /// <param name="taxOrder">
+            /// taxonomic order
+            /// (default value "nil")
+            /// </param>
+            /// <example>
+            /// <code>Faker::Creature::Bird.common_name #=> 'wren'</code>
+            /// </example>
+            [FakerMethod("common_name")]
+            public string CommonName(string? taxOrder = null)
+            {
+                var taxOrderMap = this.Faker.FetchYamlMap("creature.bird.order_common_map");
+                var allTaxOrders = taxOrderMap.Keys.OfType<string>().ToList();
+                
+                if (taxOrder == null)
+                {
+                taxOrder = this.Random.NextItem(allTaxOrders);
+                }
+                else
+                {
+                if (allTaxOrders.Contains(taxOrder) == false)
+                    throw new ArgumentException($"Invalid taxonomic order. Valid values are {string.Join(", ", allTaxOrders)}.");
+                }
+                
+                var commonName = this.Translate(this.Faker.FetchYamlValue($"creature.bird.order_common_map.{taxOrder}"));
+                return commonName;
+            }
             /// <summary>
             /// Produces a random emotional adjective NOT used to described birds ...but could be.
             ///                                 <p>Produces a random emotional adjective NOT used to described birds …but could be</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Bird.emotional_adjective #=> 'cantankerous'</code>
@@ -2330,12 +2510,10 @@ namespace FakerNet
             [FakerMethod("emotional_adjective")]
             public string EmotionalAdjective()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.bird.emotional_adjectives", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.bird.emotional_adjectives", this))));
             }
             /// <summary>
             /// Produces a random geographical word used in describing birds.
-            ///                                 <p>Produces a random geographical word used in describing birds</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Bird.geo #=> "Eurasian"</code>
@@ -2343,12 +2521,10 @@ namespace FakerNet
             [FakerMethod("geo")]
             public string Geo()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.bird.geo", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.bird.geo", this))));
             }
             /// <summary>
             /// Produces a random and IMplausible common name for a bird.
-            ///                                 <p>Produces a random and IMplausible common name for a bird</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Bird.implausible_common_name #=> 'Hellinger's Cantankerous Chickadee'</code>
@@ -2356,14 +2532,12 @@ namespace FakerNet
             [FakerMethod("implausible_common_name")]
             public string ImplausibleCommonName()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.bird.implausible_common_names", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.bird.implausible_common_names", this))));
             }
             #warning No implementation defined for method order();
             #warning No implementation defined for method order_with_common_name();
             /// <summary>
             /// Produces a random and plausible common name for a bird.
-            ///                                 <p>Produces a random and plausible common name for a bird</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Bird.plausible_common_name #=> 'Hellinger's Wren'</code>
@@ -2371,12 +2545,11 @@ namespace FakerNet
             [FakerMethod("plausible_common_name")]
             public string PlausibleCommonName()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.bird.plausible_common_names", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.bird.plausible_common_names", this))));
             }
             /// <summary>
             /// Produces a random adjective NOT used to described birds ...but probably shouldn't.
             ///                                 <p>Produces a random adjective NOT used to described birds …but probably shouldn’t</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Bird.silly_adjective #=> 'drunk'</code>
@@ -2384,12 +2557,13 @@ namespace FakerNet
             [FakerMethod("silly_adjective")]
             public string SillyAdjective()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.bird.silly_adjectives", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.bird.silly_adjectives", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Cat")]
-        public class CatGenerator : GeneratorBase
+        public partial class CatGenerator : GeneratorBase
         {
             internal CatGenerator(Faker faker)
                      : base(faker)
@@ -2398,8 +2572,6 @@ namespace FakerNet
             
             /// <summary>
             /// Produces a random cat breed.
-            ///                                 <p>Produces a random cat breed</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Cat.breed #=> "Scottish Fold"</code>
@@ -2407,12 +2579,10 @@ namespace FakerNet
             [FakerMethod("breed")]
             public string Breed()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.cat.breed", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.cat.breed", this))));
             }
             /// <summary>
             /// Produces a random name for a cat.
-            ///                                 <p>Produces a random name for a cat</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Cat.name #=> "Felix"</code>
@@ -2420,12 +2590,10 @@ namespace FakerNet
             [FakerMethod("name")]
             public string Name()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.cat.name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.cat.name", this))));
             }
             /// <summary>
             /// Produces a random cat breed registry.
-            ///                                 <p>Produces a random cat breed registry</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Cat.registry #=> "Fancy Southern Africa Cat Council"</code>
@@ -2433,12 +2601,13 @@ namespace FakerNet
             [FakerMethod("registry")]
             public string Registry()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.cat.registry", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.cat.registry", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Dog")]
-        public class DogGenerator : GeneratorBase
+        public partial class DogGenerator : GeneratorBase
         {
             internal DogGenerator(Faker faker)
                      : base(faker)
@@ -2447,8 +2616,6 @@ namespace FakerNet
             
             /// <summary>
             /// Produces a random dog age.
-            ///                                 <p>Produces a random dog age</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Dog.age #=> "puppy"</code>
@@ -2456,12 +2623,10 @@ namespace FakerNet
             [FakerMethod("age")]
             public string Age()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.dog.age", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.dog.age", this))));
             }
             /// <summary>
             /// Produces a random dog breed.
-            ///                                 <p>Produces a random dog breed</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Dog.breed #=> "Yorkshire Terrier"</code>
@@ -2469,12 +2634,10 @@ namespace FakerNet
             [FakerMethod("breed")]
             public string Breed()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.dog.breed", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.dog.breed", this))));
             }
             /// <summary>
             /// Produces a random coat length.
-            ///                                 <p>Produces a random coat length</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Dog.coat_length #=> "short"</code>
@@ -2482,13 +2645,11 @@ namespace FakerNet
             [FakerMethod("coat_length")]
             public string CoatLength()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.dog.coat_length", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.dog.coat_length", this))));
             }
             #warning No implementation defined for method gender();
             /// <summary>
             /// Produces a random dog meme phrase.
-            ///                                 <p>Produces a random dog meme phrase</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Dog.meme_phrase #=> "smol pupperino"</code>
@@ -2496,12 +2657,10 @@ namespace FakerNet
             [FakerMethod("meme_phrase")]
             public string MemePhrase()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.dog.meme_phrase", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.dog.meme_phrase", this))));
             }
             /// <summary>
             /// Produces a random name for a dog.
-            ///                                 <p>Produces a random name for a dog</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Dog.name #=> "Spike"</code>
@@ -2509,12 +2668,10 @@ namespace FakerNet
             [FakerMethod("name")]
             public string Name()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.dog.name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.dog.name", this))));
             }
             /// <summary>
             /// Produces a random size of a dog.
-            ///                                 <p>Produces a random size of a dog</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Dog.size #=> "small"</code>
@@ -2522,12 +2679,10 @@ namespace FakerNet
             [FakerMethod("size")]
             public string Size()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.dog.size", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.dog.size", this))));
             }
             /// <summary>
             /// Produces a random sound made by a dog.
-            ///                                 <p>Produces a random sound made by a dog</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Dog.sound #=> "woof woof"</code>
@@ -2535,12 +2690,13 @@ namespace FakerNet
             [FakerMethod("sound")]
             public string Sound()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.dog.sound", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.dog.sound", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Horse")]
-        public class HorseGenerator : GeneratorBase
+        public partial class HorseGenerator : GeneratorBase
         {
             internal HorseGenerator(Faker faker)
                      : base(faker)
@@ -2549,8 +2705,6 @@ namespace FakerNet
             
             /// <summary>
             /// Produces a random horse breed.
-            ///                                 <p>Produces a random horse breed</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Horse.breed #=> "Spanish Barb see Barb Horse"</code>
@@ -2558,12 +2712,10 @@ namespace FakerNet
             [FakerMethod("breed")]
             public string Breed()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.horse.breed", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.horse.breed", this))));
             }
             /// <summary>
             /// Produces a random name for a horse.
-            ///                                 <p>Produces a random name for a horse</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Creature::Horse.name #=> "Noir"</code>
@@ -2571,14 +2723,15 @@ namespace FakerNet
             [FakerMethod("name")]
             public string Name()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("creature.horse.name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("creature.horse.name", this))));
             }
         }
         
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Crypto")]
-    public class CryptoGenerator : GeneratorBase
+    public partial class CryptoGenerator : GeneratorBase
     {
         internal CryptoGenerator(Faker faker)
                  : base(faker)
@@ -2591,8 +2744,9 @@ namespace FakerNet
         #warning No implementation defined for method sha512();
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("CryptoCoin")]
-    public class CryptoCoinGenerator : GeneratorBase
+    public partial class CryptoCoinGenerator : GeneratorBase
     {
         internal CryptoCoinGenerator(Faker faker)
                  : base(faker)
@@ -2609,15 +2763,16 @@ namespace FakerNet
         [FakerMethod("coin_array")]
         public List<string> CoinArray()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("crypto_coin.coin", this)))).Split(',').Select(item => item).ToList();
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("crypto_coin.coin", this)))).Split(',').Select(item => item).ToList();
         }
         #warning No implementation defined for method coin_hash();
         #warning No implementation defined for method coin_name();
         #warning No implementation defined for method url_logo();
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Currency")]
-    public class CurrencyGenerator : GeneratorBase
+    public partial class CurrencyGenerator : GeneratorBase
     {
         internal CurrencyGenerator(Faker faker)
                  : base(faker)
@@ -2633,7 +2788,7 @@ namespace FakerNet
         [FakerMethod("code")]
         public string Code()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("currency.code", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("currency.code", this))));
         }
         /// <summary>
         /// Produces the name of a currency.
@@ -2644,7 +2799,7 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("currency.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("currency.name", this))));
         }
         /// <summary>
         /// Produces a currency symbol.
@@ -2655,12 +2810,13 @@ namespace FakerNet
         [FakerMethod("symbol")]
         public string Symbol()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("currency.symbol", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("currency.symbol", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Date")]
-    public class DateGenerator : GeneratorBase
+    public partial class DateGenerator : GeneratorBase
     {
         internal DateGenerator(Faker faker)
                  : base(faker)
@@ -2678,8 +2834,9 @@ namespace FakerNet
         #warning No implementation defined for method on_day_of_week_between(UNKNOWN_Symbol day, DateOnly from, DateOnly to);
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("DcComics")]
-    public class DcComicsGenerator : GeneratorBase
+    public partial class DcComicsGenerator : GeneratorBase
     {
         internal DcComicsGenerator(Faker faker)
                  : base(faker)
@@ -2688,8 +2845,6 @@ namespace FakerNet
         
         /// <summary>
         /// Produces a hero name from DC Comics.
-        ///                             <p>Produces a hero name from DC Comics</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::DcComics.hero #=> "Batman"</code>
@@ -2697,12 +2852,10 @@ namespace FakerNet
         [FakerMethod("hero")]
         public string Hero()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("dc_comics.hero", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dc_comics.hero", this))));
         }
         /// <summary>
         /// Produces a heroine name from DC Comics.
-        ///                             <p>Produces a heroine name from DC Comics</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::DcComics.heroine #=> "Supergirl"</code>
@@ -2710,12 +2863,10 @@ namespace FakerNet
         [FakerMethod("heroine")]
         public string Heroine()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("dc_comics.heroine", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dc_comics.heroine", this))));
         }
         /// <summary>
         /// Produces a character name from DC Comics.
-        ///                             <p>Produces a character name from DC Comics</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::DcComics.name #=> "Clark Kent"</code>
@@ -2723,12 +2874,10 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("dc_comics.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dc_comics.name", this))));
         }
         /// <summary>
         /// Produces a comic book title from DC Comics.
-        ///                             <p>Produces a comic book title from DC Comics</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::DcComics.title #=> "Batman: The Long Halloween"</code>
@@ -2736,12 +2885,10 @@ namespace FakerNet
         [FakerMethod("title")]
         public string Title()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("dc_comics.title", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dc_comics.title", this))));
         }
         /// <summary>
         /// Produces a villain name from DC Comics.
-        ///                             <p>Produces a villain name from DC Comics</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::DcComics.villain #=> "The Joker"</code>
@@ -2749,12 +2896,13 @@ namespace FakerNet
         [FakerMethod("villain")]
         public string Villain()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("dc_comics.villain", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dc_comics.villain", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Demographic")]
-    public class DemographicGenerator : GeneratorBase
+    public partial class DemographicGenerator : GeneratorBase
     {
         internal DemographicGenerator(Faker faker)
                  : base(faker)
@@ -2770,7 +2918,7 @@ namespace FakerNet
         [FakerMethod("demonym")]
         public string Demonym()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("demographic.demonym", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("demographic.demonym", this))));
         }
         /// <summary>
         /// Produces a level of educational attainment.
@@ -2781,7 +2929,7 @@ namespace FakerNet
         [FakerMethod("educational_attainment")]
         public string EducationalAttainment()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("demographic.educational_attainment", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("demographic.educational_attainment", this))));
         }
         #warning No implementation defined for method height(UNKNOWN_Symbol? unit = null);
         /// <summary>
@@ -2793,7 +2941,7 @@ namespace FakerNet
         [FakerMethod("marital_status")]
         public string MaritalStatus()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("demographic.marital_status", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("demographic.marital_status", this))));
         }
         /// <summary>
         /// Produces the name of a race.
@@ -2804,7 +2952,7 @@ namespace FakerNet
         [FakerMethod("race")]
         public string Race()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("demographic.race", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("demographic.race", this))));
         }
         /// <summary>
         /// Produces a sex for demographic purposes.
@@ -2815,12 +2963,13 @@ namespace FakerNet
         [FakerMethod("sex")]
         public string Sex()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("demographic.sex", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("demographic.sex", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Dessert")]
-    public class DessertGenerator : GeneratorBase
+    public partial class DessertGenerator : GeneratorBase
     {
         internal DessertGenerator(Faker faker)
                  : base(faker)
@@ -2836,7 +2985,7 @@ namespace FakerNet
         [FakerMethod("flavor")]
         public string Flavor()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("dessert.flavor", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dessert.flavor", this))));
         }
         /// <summary>
         /// Produces the name of a dessert topping.
@@ -2847,7 +2996,7 @@ namespace FakerNet
         [FakerMethod("topping")]
         public string Topping()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("dessert.topping", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dessert.topping", this))));
         }
         /// <summary>
         /// Produces the name of a dessert variety.
@@ -2858,12 +3007,13 @@ namespace FakerNet
         [FakerMethod("variety")]
         public string Variety()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("dessert.variety", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dessert.variety", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Device")]
-    public class DeviceGenerator : GeneratorBase
+    public partial class DeviceGenerator : GeneratorBase
     {
         internal DeviceGenerator(Faker faker)
                  : base(faker)
@@ -2880,7 +3030,7 @@ namespace FakerNet
         [FakerMethod("manufacturer")]
         public string Manufacturer()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("device.manufacturer", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("device.manufacturer", this))));
         }
         /// <summary>
         /// Produces a model name for a device.
@@ -2891,7 +3041,7 @@ namespace FakerNet
         [FakerMethod("model_name")]
         public string ModelName()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("device.model_name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("device.model_name", this))));
         }
         /// <summary>
         /// Produces the name of a platform for a device.
@@ -2902,7 +3052,7 @@ namespace FakerNet
         [FakerMethod("platform")]
         public string Platform()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("device.platform", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("device.platform", this))));
         }
         /// <summary>
         /// Produces a serial code for a device.
@@ -2913,13 +3063,14 @@ namespace FakerNet
         [FakerMethod("serial")]
         public string Serial()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("device.serial", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("device.serial", this))));
         }
         #warning No implementation defined for method version();
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("DrivingLicence")]
-    public class DrivingLicenceGenerator : GeneratorBase
+    public partial class DrivingLicenceGenerator : GeneratorBase
     {
         internal DrivingLicenceGenerator(Faker faker)
                  : base(faker)
@@ -2930,27 +3081,32 @@ namespace FakerNet
         #warning Failed processing method gb_licence_checksum
         #warning Failed processing method gb_licence_padding
         #warning Failed processing method gb_licence_year
+        #warning No implementation defined for method initialize();
         #warning No implementation defined for method northern_irish_driving_licence();
         #warning Failed processing method random_gender
         #warning Failed processing method uk_driving_licence
         /// <summary>
         /// Produces a random USA driving licence number by state code passed.
         /// </summary>
+        /// <param name="state">
+        /// The name of the state to create a driving license number for
+        /// (default value ""California"")
+        /// </param>
         /// <example>
         /// <code>Faker::DrivingLicence.usa_driving_licence                 #=> "V5598249"
         /// Faker::DrivingLicence.usa_driving_licence('new mexico')   #=> "270692028"
         /// Faker::DrivingLicence.usa_driving_licence('New Mexico')   #=> "68178637"</code>
         /// </example>
         [FakerMethod("usa_driving_licence")]
-        public string UsaDrivingLicence()
+        public string UsaDrivingLicence(string state = "California")
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("driving_licence.usa.#{state.to_s.strip.downcase.gsub(' ', '_')}", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("driving_licence.usa.#{state.to_s.strip.downcase.gsub(' ', '_')}", this))));
         }
-        #warning No implementation defined for method initialize();
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Drone")]
-    public class DroneGenerator : GeneratorBase
+    public partial class DroneGenerator : GeneratorBase
     {
         internal DroneGenerator(Faker faker)
                  : base(faker)
@@ -2959,8 +3115,6 @@ namespace FakerNet
         
         /// <summary>
         /// Returns the drone battery capacity.
-        ///                             <p>Returns the drone battery capacity</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.battery_capacity #=> "3500 mAh"</code>
@@ -2968,12 +3122,10 @@ namespace FakerNet
         [FakerMethod("battery_capacity")]
         public string BatteryCapacity()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.battery_capacity", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.battery_capacity", this))));
         }
         /// <summary>
         /// Returns the battery type.
-        ///                             <p>Returns the battery type</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.battery_type #=> "LiPo 4S"</code>
@@ -2981,12 +3133,10 @@ namespace FakerNet
         [FakerMethod("battery_type")]
         public string BatteryType()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.battery_type", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.battery_type", this))));
         }
         /// <summary>
         /// Returns battery voltage.
-        ///                             <p>Returns battery voltage</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.battery_voltage #=> "13.2V"</code>
@@ -2994,12 +3144,10 @@ namespace FakerNet
         [FakerMethod("battery_voltage")]
         public string BatteryVoltage()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.battery_voltage", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.battery_voltage", this))));
         }
         /// <summary>
         /// Returns total battery weight in grams.
-        ///                             <p>Returns total battery weight in grams</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.battery_weight #=> "198 g"</code>
@@ -3007,12 +3155,10 @@ namespace FakerNet
         [FakerMethod("battery_weight")]
         public string BatteryWeight()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.battery_weight", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.battery_weight", this))));
         }
         /// <summary>
         /// Returns charging temperature for battery in Fahrenheit.
-        ///                             <p>Returns charging temperature for battery in Fahrenheit</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.charging_temperature #=> "41-104F"</code>
@@ -3020,12 +3166,10 @@ namespace FakerNet
         [FakerMethod("charging_temperature")]
         public string ChargingTemperature()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.charging_temperature", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.charging_temperature", this))));
         }
         /// <summary>
         /// Returns max flight time for drone in optimal conditions.
-        ///                             <p>Returns max flight time for drone in optimal conditions</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.flight_time #=> "34 min"</code>
@@ -3033,12 +3177,10 @@ namespace FakerNet
         [FakerMethod("flight_time")]
         public string FlightTime()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.flight_time", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.flight_time", this))));
         }
         /// <summary>
         /// Returns camera ISO range for drone.
-        ///                             <p>Returns camera ISO range for drone</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.iso #=> "100-3200"</code>
@@ -3046,12 +3188,10 @@ namespace FakerNet
         [FakerMethod("iso")]
         public string Iso()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.iso", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.iso", this))));
         }
         /// <summary>
         /// Returns max altitude drone can go above sea level in meters.
-        ///                             <p>Returns max altitude drone can go above sea level in meters</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.max_altitude #=> "5000 m"</code>
@@ -3059,12 +3199,10 @@ namespace FakerNet
         [FakerMethod("max_altitude")]
         public string MaxAltitude()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.max_altitude", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.max_altitude", this))));
         }
         /// <summary>
         /// Returns max angular velocity of drone in degrees/s.
-        ///                             <p>Returns max angular velocity of drone in degrees/s</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.max_angular_velocity #=> "250 degree/s"</code>
@@ -3072,12 +3210,10 @@ namespace FakerNet
         [FakerMethod("max_angular_velocity")]
         public string MaxAngularVelocity()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.max_angular_velocity", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.max_angular_velocity", this))));
         }
         /// <summary>
         /// Returns maximum ascent speed for drone in m/s.
-        ///                             <p>Returns maximum ascent speed for drone in m/s</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.max_ascent_speed #=> "4 m/s"</code>
@@ -3085,12 +3221,10 @@ namespace FakerNet
         [FakerMethod("max_ascent_speed")]
         public string MaxAscentSpeed()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.max_ascent_speed", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.max_ascent_speed", this))));
         }
         /// <summary>
         /// Returns max chargin power required for battery.
-        ///                             <p>Returns max chargin power required for battery</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.max_charging_power #=> "38W"</code>
@@ -3098,12 +3232,10 @@ namespace FakerNet
         [FakerMethod("max_charging_power")]
         public string MaxChargingPower()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.max_charging_power", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.max_charging_power", this))));
         }
         /// <summary>
         /// Returns maximum descent speed for drone in m/s.
-        ///                             <p>Returns maximum descent speed for drone in m/s</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.max_descent_speed #=> "4 m/s"</code>
@@ -3111,12 +3243,10 @@ namespace FakerNet
         [FakerMethod("max_descent_speed")]
         public string MaxDescentSpeed()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.max_descent_speed", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.max_descent_speed", this))));
         }
         /// <summary>
         /// Returns how far drone can go in optimal condition when full charged in meters.
-        ///                             <p>Returns how far drone can go in optimal condition when full charged in meters</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.max_flight_distance #=> "18500 m"</code>
@@ -3124,12 +3254,11 @@ namespace FakerNet
         [FakerMethod("max_flight_distance")]
         public string MaxFlightDistance()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.max_flight_distance", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.max_flight_distance", this))));
         }
         /// <summary>
         /// Returns max camera resolution in MP".
         ///                             <p>Returns max camera resolution in MP“</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.max_resolution #=> "48MP"</code>
@@ -3137,12 +3266,10 @@ namespace FakerNet
         [FakerMethod("max_resolution")]
         public string MaxResolution()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.max_resolution", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.max_resolution", this))));
         }
         /// <summary>
         /// Returns max shutter speed for camera.
-        ///                             <p>Returns max shutter speed for camera</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.max_shutter_speed #=> "60s"</code>
@@ -3150,12 +3277,10 @@ namespace FakerNet
         [FakerMethod("max_shutter_speed")]
         public string MaxShutterSpeed()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.max_shutter_speed", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.max_shutter_speed", this))));
         }
         /// <summary>
         /// Returns max horizontal speed by drone in m/s.
-        ///                             <p>Returns max horizontal speed by drone in m/s</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.max_speed #=> "19 m/s"</code>
@@ -3163,12 +3288,10 @@ namespace FakerNet
         [FakerMethod("max_speed")]
         public string MaxSpeed()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.max_speed", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.max_speed", this))));
         }
         /// <summary>
         /// Returns max tilt angle drone can go in degrees.
-        ///                             <p>Returns max tilt angle drone can go in degrees</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.max_tilt_angle #=> "35 degrees"</code>
@@ -3176,12 +3299,10 @@ namespace FakerNet
         [FakerMethod("max_tilt_angle")]
         public string MaxTiltAngle()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.max_tilt_angle", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.max_tilt_angle", this))));
         }
         /// <summary>
         /// Returns max wind resistance by drone in m/s.
-        ///                             <p>Returns max wind resistance by drone in m/s</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.max_wind_resistance #=> "10.5 m/s"</code>
@@ -3189,12 +3310,10 @@ namespace FakerNet
         [FakerMethod("max_wind_resistance")]
         public string MaxWindResistance()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.max_wind_resistance", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.max_wind_resistance", this))));
         }
         /// <summary>
         /// Returns min shutter speed for camera.
-        ///                             <p>Returns min shutter speed for camera</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.min_shutter_speed #=> "1/8000s"</code>
@@ -3202,12 +3321,10 @@ namespace FakerNet
         [FakerMethod("min_shutter_speed")]
         public string MinShutterSpeed()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.min_shutter_speed", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.min_shutter_speed", this))));
         }
         /// <summary>
         /// Returns random drone name with company.
-        ///                             <p>Returns random drone name with company</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.name #=> "DJI Mavic Air 2"</code>
@@ -3215,12 +3332,10 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.name", this))));
         }
         /// <summary>
         /// Returns operating temperature for drone in Fahrenheit.
-        ///                             <p>Returns operating temperature for drone in Fahrenheit</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.operating_temperature #=> "14-104F"</code>
@@ -3228,12 +3343,10 @@ namespace FakerNet
         [FakerMethod("operating_temperature")]
         public string OperatingTemperature()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.operating_temperature", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.operating_temperature", this))));
         }
         /// <summary>
         /// Returns photo format for drone.
-        ///                             <p>Returns photo format for drone</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.photo_format #=> "JPEG"</code>
@@ -3241,12 +3354,10 @@ namespace FakerNet
         [FakerMethod("photo_format")]
         public string PhotoFormat()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.photo_format", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.photo_format", this))));
         }
         /// <summary>
         /// Returns max and min shutter speed for camera.
-        ///                             <p>Returns max and min shutter speed for camera</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.shutter_speed_range #=> "8-1/8000s"</code>
@@ -3254,12 +3365,10 @@ namespace FakerNet
         [FakerMethod("shutter_speed_range")]
         public string ShutterSpeedRange()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.max_shutter_speed", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.max_shutter_speed", this))));
         }
         /// <summary>
         /// Returns video format.
-        ///                             <p>Returns video format</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.video_format #=> "MP4"</code>
@@ -3267,12 +3376,10 @@ namespace FakerNet
         [FakerMethod("video_format")]
         public string VideoFormat()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.video_format", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.video_format", this))));
         }
         /// <summary>
         /// Returns total drone weight in grams.
-        ///                             <p>Returns total drone weight in grams</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Drone.weight #=> "570 g"</code>
@@ -3280,12 +3387,13 @@ namespace FakerNet
         [FakerMethod("weight")]
         public string Weight()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("drone.weight", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("drone.weight", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Educator")]
-    public class EducatorGenerator : GeneratorBase
+    public partial class EducatorGenerator : GeneratorBase
     {
         internal EducatorGenerator(Faker faker)
                  : base(faker)
@@ -3301,7 +3409,7 @@ namespace FakerNet
         [FakerMethod("campus")]
         public string Campus()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("educator.campus", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("educator.campus", this))));
         }
         /// <summary>
         /// Produces a course name.
@@ -3312,7 +3420,7 @@ namespace FakerNet
         [FakerMethod("course_name")]
         public string CourseName()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("educator.course_name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("educator.course_name", this))));
         }
         /// <summary>
         /// Produces a university degree.
@@ -3323,7 +3431,7 @@ namespace FakerNet
         [FakerMethod("degree")]
         public string Degree()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("educator.degree", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("educator.degree", this))));
         }
         /// <summary>
         /// Produces a primary school.
@@ -3334,7 +3442,7 @@ namespace FakerNet
         [FakerMethod("primary_school")]
         public string PrimarySchool()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("educator.primary_school", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("educator.primary_school", this))));
         }
         /// <summary>
         /// Produces a secondary school.
@@ -3345,7 +3453,7 @@ namespace FakerNet
         [FakerMethod("secondary_school")]
         public string SecondarySchool()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("educator.secondary_school", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("educator.secondary_school", this))));
         }
         /// <summary>
         /// Produces a university subject.
@@ -3356,7 +3464,7 @@ namespace FakerNet
         [FakerMethod("subject")]
         public string Subject()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("educator.subject", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("educator.subject", this))));
         }
         /// <summary>
         /// Produces a university name.
@@ -3367,12 +3475,13 @@ namespace FakerNet
         [FakerMethod("university")]
         public string University()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("educator.university", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("educator.university", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("ElectricalComponents")]
-    public class ElectricalComponentsGenerator : GeneratorBase
+    public partial class ElectricalComponentsGenerator : GeneratorBase
     {
         internal ElectricalComponentsGenerator(Faker faker)
                  : base(faker)
@@ -3388,7 +3497,7 @@ namespace FakerNet
         [FakerMethod("active")]
         public string Active()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("electrical_components.active", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("electrical_components.active", this))));
         }
         /// <summary>
         /// Produces an electromechanical electrical component.
@@ -3399,7 +3508,7 @@ namespace FakerNet
         [FakerMethod("electromechanical")]
         public string Electromechanical()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("electrical_components.electromechanical", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("electrical_components.electromechanical", this))));
         }
         /// <summary>
         /// Produces a passive electrical component.
@@ -3410,12 +3519,13 @@ namespace FakerNet
         [FakerMethod("passive")]
         public string Passive()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("electrical_components.passive", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("electrical_components.passive", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Emotion")]
-    public class EmotionGenerator : GeneratorBase
+    public partial class EmotionGenerator : GeneratorBase
     {
         internal EmotionGenerator(Faker faker)
                  : base(faker)
@@ -3431,7 +3541,7 @@ namespace FakerNet
         [FakerMethod("adjective")]
         public string Adjective()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("emotion.adjective", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("emotion.adjective", this))));
         }
         /// <summary>
         /// Produces an emotion noun.
@@ -3442,12 +3552,13 @@ namespace FakerNet
         [FakerMethod("noun")]
         public string Noun()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("emotion.noun", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("emotion.noun", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Esport")]
-    public class EsportGenerator : GeneratorBase
+    public partial class EsportGenerator : GeneratorBase
     {
         internal EsportGenerator(Faker faker)
                  : base(faker)
@@ -3463,7 +3574,7 @@ namespace FakerNet
         [FakerMethod("event")]
         public string Event()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("esport.events", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("esport.events", this))));
         }
         /// <summary>
         /// Produces the name of a game played as an eSport.
@@ -3474,7 +3585,7 @@ namespace FakerNet
         [FakerMethod("game")]
         public string Game()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("esport.games", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("esport.games", this))));
         }
         /// <summary>
         /// Produces the name of an eSports league.
@@ -3485,7 +3596,7 @@ namespace FakerNet
         [FakerMethod("league")]
         public string League()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("esport.leagues", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("esport.leagues", this))));
         }
         /// <summary>
         /// Produces the name of a professional eSports player.
@@ -3496,7 +3607,7 @@ namespace FakerNet
         [FakerMethod("player")]
         public string Player()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("esport.players", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("esport.players", this))));
         }
         /// <summary>
         /// Produces the name of an eSports team.
@@ -3507,23 +3618,25 @@ namespace FakerNet
         [FakerMethod("team")]
         public string Team()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("esport.teams", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("esport.teams", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Fantasy")]
-    public class FantasyGenerator : GeneratorBase
+    public partial class FantasyGenerator : GeneratorBase
     {
         [FakerMethod("Tolkien")]
         public TolkienGenerator Tolkien { get; }
         internal FantasyGenerator(Faker faker)
                  : base(faker)
         {
-            Tolkien = new TolkienGenerator(_faker);
+            Tolkien = new TolkienGenerator(this.Faker);
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Tolkien")]
-        public class TolkienGenerator : GeneratorBase
+        public partial class TolkienGenerator : GeneratorBase
         {
             internal TolkienGenerator(Faker faker)
                      : base(faker)
@@ -3533,7 +3646,6 @@ namespace FakerNet
             /// <summary>
             /// Produces a character from Tolkien's legendarium.
             ///                                 <p>Produces a character from Tolkien’s legendarium</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Fantasy::Tolkien.character
@@ -3542,12 +3654,11 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tolkien.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tolkien.characters", this))));
             }
             /// <summary>
             /// Produces a location from Tolkien's legendarium.
             ///                                 <p>Produces a location from Tolkien’s legendarium</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Fantasy::Tolkien.location
@@ -3556,12 +3667,11 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tolkien.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tolkien.locations", this))));
             }
             /// <summary>
             /// Produces the name of a poem from Tolkien's legendarium.
             ///                                 <p>Produces the name of a poem from Tolkien’s legendarium</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Fantasy::Tolkien.poem
@@ -3570,12 +3680,11 @@ namespace FakerNet
             [FakerMethod("poem")]
             public string Poem()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tolkien.poems", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tolkien.poems", this))));
             }
             /// <summary>
             /// Produces a race from Tolkien's legendarium.
             ///                                 <p>Produces a race from Tolkien’s legendarium</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Fantasy::Tolkien.race
@@ -3584,21 +3693,50 @@ namespace FakerNet
             [FakerMethod("race")]
             public string Race()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tolkien.races", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tolkien.races", this))));
             }
         }
         
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("File")]
-    public class FileGenerator : GeneratorBase
+    public partial class FileGenerator : GeneratorBase
     {
         internal FileGenerator(Faker faker)
                  : base(faker)
         {
         }
         
-        #warning No implementation defined for method dir(long segmentCount, string root, string directorySeparator = ::File::Separator);
+        /// <summary>
+        /// Produces a random directory name.
+        /// </summary>
+        /// <param name="segmentCount">
+        /// Specifies the number of nested folders in the generated string.
+        /// (default value "3")
+        /// </param>
+        /// <param name="root">
+        /// Specifies the root of the generated string.
+        /// (default value "nil")
+        /// </param>
+        /// <param name="directorySeparator">
+        /// Specifies the separator between the segments.
+        /// (default value "'/'")
+        /// </param>
+        /// <example>
+        /// <code>Faker::File.dir #=> "et_error/sint_voluptas/quas_veritatis"
+        /// Faker::File.dir(segment_count: 2) #=> "ea-suscipit/ut-deleniti"
+        /// Faker::File.dir(segment_count: 3, root: nil, directory_separator: '/') #=> "est_porro/fugit_eveniet/incidunt-autem"
+        /// Faker::File.dir(segment_count: 3, root: nil, directory_separator: '\\') #=> "aut-ullam\\quia_quisquam\\ut-eos"</code>
+        /// </example>
+        [FakerMethod("dir")]
+        public string Dir(long segmentCount = 3, string? root = null, string directorySeparator = "/")
+        {
+            var parts = Enumerable.Range(0, (int)segmentCount).Select(i => this.Faker.Internet.Slug());
+            if (string.IsNullOrWhiteSpace(root) == false)
+                parts.Prepend(root);
+            return string.Join(directorySeparator, parts);
+        }
         /// <summary>
         /// Produces a random file extension.
         /// </summary>
@@ -3608,24 +3746,32 @@ namespace FakerNet
         [FakerMethod("extension")]
         public string Extension()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("file.extension", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("file.extension", this))));
         }
-        #warning No implementation defined for method file_name(string dir, string name, string ext, string directorySeparator = ::File::Separator);
+        #warning No implementation defined for method file_name(string? dir = null, string? name = null, string? ext = null, string directorySeparator = "/");
         /// <summary>
         /// Produces a random mime type.
         /// </summary>
+        /// <param name="mediaType">
+        /// The media type to get a mime type for. The default will return mime type from all the media types.
+        /// (default value "nil")
+        /// </param>
         /// <example>
         /// <code>Faker::File.mime_type #=> "application/pdf"</code>
         /// </example>
         [FakerMethod("mime_type")]
-        public string MimeType()
+        public string MimeType(MimeTypeMedia? mediaType = null)
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("file.mime_type.#{media_type}", this))));
+            if (mediaType.HasValue)
+                return this.Faker.FetchYamlValue($"file.mime_type.{UtilityMethods.GetEnumValue(mediaType)}");
+            else
+                return Random.NextItem(((List<object>)Random.NextItem(this.Faker.FetchYamlMap("file.mime_type"))).OfType<string>().ToList());
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Finance")]
-    public class FinanceGenerator : GeneratorBase
+    public partial class FinanceGenerator : GeneratorBase
     {
         internal FinanceGenerator(Faker faker)
                  : base(faker)
@@ -3636,9 +3782,7 @@ namespace FakerNet
         /// Returns a random condominium fiscal code.
         /// </summary>
         /// <param name="country">
-        /// 
-        /// <p>Two capital letter country code to use for the vat number.</p>
-        /// 
+        /// Two capital letter country code to use for the vat number.
         /// (default value "'IT'")
         /// </param>
         /// <example>
@@ -3647,15 +3791,13 @@ namespace FakerNet
         [FakerMethod("condominium_fiscal_code")]
         public string CondominiumFiscalCode(string country = "IT")
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("finance.condominium_fiscal_code." + country + "", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("finance.condominium_fiscal_code." + country + "", this))));
         }
         /// <summary>
         /// Produces a random credit card number.
         /// </summary>
         /// <param name="types">
-        /// 
-        /// <p>Specific credit card type.</p>
-        /// 
+        /// Specific credit card type.
         /// </param>
         /// <example>
         /// <code>Faker::Finance.credit_card #=> "3018-348979-1853"
@@ -3665,7 +3807,7 @@ namespace FakerNet
         [FakerMethod("credit_card")]
         public string CreditCard(string types)
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("finance.credit_card.#{type}", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("finance.credit_card.#{type}", this))));
         }
         /// <summary>
         /// Returns a randomly-selected stock market.
@@ -3676,15 +3818,13 @@ namespace FakerNet
         [FakerMethod("stock_market")]
         public string StockMarket()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("finance.stock_market", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("finance.stock_market", this))));
         }
         /// <summary>
         /// Returns a randomly-selected stock ticker from a specified market.
         /// </summary>
         /// <param name="markets">
-        /// 
-        /// <p>The name of the market to choose the ticker from (e.g. NYSE, NASDAQ)</p>
-        /// 
+        /// The name of the market to choose the ticker from (e.g. NYSE, NASDAQ)
         /// </param>
         /// <example>
         /// <code>Faker::Finance.ticker #=> 'AMZN'
@@ -3693,15 +3833,13 @@ namespace FakerNet
         [FakerMethod("ticker")]
         public string Ticker(string markets)
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("finance.ticker.#{market}", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("finance.ticker.#{market}", this))));
         }
         /// <summary>
         /// Produces a random vat number.
         /// </summary>
         /// <param name="country">
-        /// 
-        /// <p>Two capital letter country code to use for the vat number.</p>
-        /// 
+        /// Two capital letter country code to use for the vat number.
         /// (default value "'BR'")
         /// </param>
         /// <example>
@@ -3712,13 +3850,14 @@ namespace FakerNet
         [FakerMethod("vat_number")]
         public string VatNumber(string country = "BR")
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("finance.vat_number." + country + "", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("finance.vat_number." + country + "", this))));
         }
         #warning Failed processing method vat_number_keys
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Food")]
-    public class FoodGenerator : GeneratorBase
+    public partial class FoodGenerator : GeneratorBase
     {
         internal FoodGenerator(Faker faker)
                  : base(faker)
@@ -3734,12 +3873,10 @@ namespace FakerNet
         [FakerMethod("allergen")]
         public string Allergen()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("food.allergens", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("food.allergens", this))));
         }
         /// <summary>
         /// Retrieves a description about some dish.
-        ///                             <p>Retrieves a description about some dish</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Food.description #=> "Breaded fried chicken with waffles. Served with maple syrup."</code>
@@ -3747,7 +3884,7 @@ namespace FakerNet
         [FakerMethod("description")]
         public string Description()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("food.descriptions", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("food.descriptions", this))));
         }
         /// <summary>
         /// Retrieves a typical dish from each country.
@@ -3758,12 +3895,10 @@ namespace FakerNet
         [FakerMethod("dish")]
         public string Dish()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("food.dish", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("food.dish", this))));
         }
         /// <summary>
         /// Retrieves ethnic category.
-        ///                             <p>Retrieves ethnic category</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Food.ethnic_category #=> "Indian cuisine"</code>
@@ -3771,12 +3906,10 @@ namespace FakerNet
         [FakerMethod("ethnic_category")]
         public string EthnicCategory()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("food.ethnic_category", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("food.ethnic_category", this))));
         }
         /// <summary>
         /// Retrieves a fruit.
-        ///                             <p>Retrieves a fruit</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Food.fruits #=> "Papaya"</code>
@@ -3784,12 +3917,10 @@ namespace FakerNet
         [FakerMethod("fruits")]
         public string Fruits()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("food.fruits", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("food.fruits", this))));
         }
         /// <summary>
         /// Retrieves an ingredient.
-        ///                             <p>Retrieves an ingredient</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Food.ingredient #=> "Olives"</code>
@@ -3797,12 +3928,10 @@ namespace FakerNet
         [FakerMethod("ingredient")]
         public string Ingredient()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("food.ingredients", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("food.ingredients", this))));
         }
         /// <summary>
         /// Retrieves cooking measures.
-        ///                             <p>Retrieves cooking measures</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Food.measurement #=> "1/3"</code>
@@ -3810,12 +3939,10 @@ namespace FakerNet
         [FakerMethod("measurement")]
         public string Measurement()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("food.measurement_sizes", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("food.measurement_sizes", this))));
         }
         /// <summary>
         /// Retrieves metric measurements.
-        ///                             <p>Retrieves metric measurements</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Food.metric_measurement #=> "centiliter"</code>
@@ -3823,12 +3950,10 @@ namespace FakerNet
         [FakerMethod("metric_measurement")]
         public string MetricMeasurement()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("food.metric_measurements", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("food.metric_measurements", this))));
         }
         /// <summary>
         /// Retrieves some random spice.
-        ///                             <p>Retrieves some random spice</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Food.spice #=> "Garlic Chips"</code>
@@ -3836,12 +3961,10 @@ namespace FakerNet
         [FakerMethod("spice")]
         public string Spice()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("food.spices", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("food.spices", this))));
         }
         /// <summary>
         /// Retrieves a vegetable.
-        ///                             <p>Retrieves a vegetable</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Food.vegetables #=> "Broccolini"</code>
@@ -3849,12 +3972,13 @@ namespace FakerNet
         [FakerMethod("vegetables")]
         public string Vegetables()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("food.vegetables", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("food.vegetables", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("FunnyName")]
-    public class FunnyNameGenerator : GeneratorBase
+    public partial class FunnyNameGenerator : GeneratorBase
     {
         internal FunnyNameGenerator(Faker faker)
                  : base(faker)
@@ -3870,7 +3994,7 @@ namespace FakerNet
         [FakerMethod("four_word_name")]
         public string FourWordName()
         {
-            return this.Resolve("funny_name.name", this);
+            return this.ResolveYamlValue("funny_name.name", this);
         }
         /// <summary>
         /// Retrieves a funny name.
@@ -3881,7 +4005,7 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("funny_name.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("funny_name.name", this))));
         }
         /// <summary>
         /// Retrieves a funny name with an initial.
@@ -3892,7 +4016,7 @@ namespace FakerNet
         [FakerMethod("name_with_initial")]
         public string NameWithInitial()
         {
-            return this.Resolve("funny_name.name", this);
+            return this.ResolveYamlValue("funny_name.name", this);
         }
         /// <summary>
         /// Retrieves a funny three word name.
@@ -3903,7 +4027,7 @@ namespace FakerNet
         [FakerMethod("three_word_name")]
         public string ThreeWordName()
         {
-            return this.Resolve("funny_name.name", this);
+            return this.ResolveYamlValue("funny_name.name", this);
         }
         /// <summary>
         /// Retrieves a funny two word name.
@@ -3914,12 +4038,13 @@ namespace FakerNet
         [FakerMethod("two_word_name")]
         public string TwoWordName()
         {
-            return this.Resolve("funny_name.name", this);
+            return this.ResolveYamlValue("funny_name.name", this);
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Game")]
-    public class GameGenerator : GeneratorBase
+    public partial class GameGenerator : GeneratorBase
     {
         internal GameGenerator(Faker faker)
                  : base(faker)
@@ -3935,7 +4060,7 @@ namespace FakerNet
         [FakerMethod("genre")]
         public string Genre()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("game.genre", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("game.genre", this))));
         }
         /// <summary>
         /// Produces the name of a video game console or platform.
@@ -3946,7 +4071,7 @@ namespace FakerNet
         [FakerMethod("platform")]
         public string Platform()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("game.platform", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("game.platform", this))));
         }
         /// <summary>
         /// Produces the name of a video game.
@@ -3957,12 +4082,13 @@ namespace FakerNet
         [FakerMethod("title")]
         public string Title()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("game.title", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("game.title", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Games")]
-    public class GamesGenerator : GeneratorBase
+    public partial class GamesGenerator : GeneratorBase
     {
         [FakerMethod("ClashOfClans")]
         public ClashOfClansGenerator ClashOfClans { get; }
@@ -4017,35 +4143,36 @@ namespace FakerNet
         internal GamesGenerator(Faker faker)
                  : base(faker)
         {
-            ClashOfClans = new ClashOfClansGenerator(_faker);
-            Control = new ControlGenerator(_faker);
-            DnD = new DnDGenerator(_faker);
-            Dota = new DotaGenerator(_faker);
-            ElderScrolls = new ElderScrollsGenerator(_faker);
-            Fallout = new FalloutGenerator(_faker);
-            FinalFantasyXIV = new FinalFantasyXIVGenerator(_faker);
-            HalfLife = new HalfLifeGenerator(_faker);
-            Heroes = new HeroesGenerator(_faker);
-            HeroesOfTheStorm = new HeroesOfTheStormGenerator(_faker);
-            LeagueOfLegends = new LeagueOfLegendsGenerator(_faker);
-            Minecraft = new MinecraftGenerator(_faker);
-            Myst = new MystGenerator(_faker);
-            Overwatch = new OverwatchGenerator(_faker);
-            Pokemon = new PokemonGenerator(_faker);
-            SonicTheHedgehog = new SonicTheHedgehogGenerator(_faker);
-            StreetFighter = new StreetFighterGenerator(_faker);
-            SuperMario = new SuperMarioGenerator(_faker);
-            SuperSmashBros = new SuperSmashBrosGenerator(_faker);
-            Tarkov = new TarkovGenerator(_faker);
-            Touhou = new TouhouGenerator(_faker);
-            WarhammerFantasy = new WarhammerFantasyGenerator(_faker);
-            Witcher = new WitcherGenerator(_faker);
-            WorldOfWarcraft = new WorldOfWarcraftGenerator(_faker);
-            Zelda = new ZeldaGenerator(_faker);
+            ClashOfClans = new ClashOfClansGenerator(this.Faker);
+            Control = new ControlGenerator(this.Faker);
+            DnD = new DnDGenerator(this.Faker);
+            Dota = new DotaGenerator(this.Faker);
+            ElderScrolls = new ElderScrollsGenerator(this.Faker);
+            Fallout = new FalloutGenerator(this.Faker);
+            FinalFantasyXIV = new FinalFantasyXIVGenerator(this.Faker);
+            HalfLife = new HalfLifeGenerator(this.Faker);
+            Heroes = new HeroesGenerator(this.Faker);
+            HeroesOfTheStorm = new HeroesOfTheStormGenerator(this.Faker);
+            LeagueOfLegends = new LeagueOfLegendsGenerator(this.Faker);
+            Minecraft = new MinecraftGenerator(this.Faker);
+            Myst = new MystGenerator(this.Faker);
+            Overwatch = new OverwatchGenerator(this.Faker);
+            Pokemon = new PokemonGenerator(this.Faker);
+            SonicTheHedgehog = new SonicTheHedgehogGenerator(this.Faker);
+            StreetFighter = new StreetFighterGenerator(this.Faker);
+            SuperMario = new SuperMarioGenerator(this.Faker);
+            SuperSmashBros = new SuperSmashBrosGenerator(this.Faker);
+            Tarkov = new TarkovGenerator(this.Faker);
+            Touhou = new TouhouGenerator(this.Faker);
+            WarhammerFantasy = new WarhammerFantasyGenerator(this.Faker);
+            Witcher = new WitcherGenerator(this.Faker);
+            WorldOfWarcraft = new WorldOfWarcraftGenerator(this.Faker);
+            Zelda = new ZeldaGenerator(this.Faker);
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("ClashOfClans")]
-        public class ClashOfClansGenerator : GeneratorBase
+        public partial class ClashOfClansGenerator : GeneratorBase
         {
             internal ClashOfClansGenerator(Faker faker)
                      : base(faker)
@@ -4061,7 +4188,7 @@ namespace FakerNet
             [FakerMethod("defensive_building")]
             public string DefensiveBuilding()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.clash_of_clans.defensive_buildings", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.clash_of_clans.defensive_buildings", this))));
             }
             /// <summary>
             /// Produces the name of a rank from Clash Of Clans.
@@ -4072,7 +4199,7 @@ namespace FakerNet
             [FakerMethod("rank")]
             public string Rank()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.clash_of_clans.ranks", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.clash_of_clans.ranks", this))));
             }
             /// <summary>
             /// Produces the name of a troop from Clash of Clans.
@@ -4083,12 +4210,13 @@ namespace FakerNet
             [FakerMethod("troop")]
             public string Troop()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.clash_of_clans.troops", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.clash_of_clans.troops", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Control")]
-        public class ControlGenerator : GeneratorBase
+        public partial class ControlGenerator : GeneratorBase
         {
             internal ControlGenerator(Faker faker)
                      : base(faker)
@@ -4097,8 +4225,6 @@ namespace FakerNet
             
             /// <summary>
             /// Produces the name of an Altered Item.
-            ///                                 <p>Produces the name of an Altered Item</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Games::Control.altered_item #=> "Rubber Duck"</code>
@@ -4106,12 +4232,10 @@ namespace FakerNet
             [FakerMethod("altered_item")]
             public string AlteredItem()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.control.altered_item", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.control.altered_item", this))));
             }
             /// <summary>
             /// Produces the location of an Altered World Event (AWE).
-            ///                                 <p>Produces the location of an Altered World Event (AWE)</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Games::Control.altered_world_event #=> "Ordinary, Wisconsin"</code>
@@ -4119,7 +4243,7 @@ namespace FakerNet
             [FakerMethod("altered_world_event")]
             public string AlteredWorldEvent()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.control.altered_world_event", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.control.altered_world_event", this))));
             }
             /// <summary>
             /// Produces the name of a character from Control.
@@ -4130,12 +4254,10 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.control.character", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.control.character", this))));
             }
             /// <summary>
             /// Produces a line from the Hiss incantation.
-            ///                                 <p>Produces a line from the Hiss incantation</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Games::Control.hiss #=> "Push the fingers through the surface into the wet."</code>
@@ -4143,7 +4265,7 @@ namespace FakerNet
             [FakerMethod("hiss")]
             public string Hiss()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.control.hiss", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.control.hiss", this))));
             }
             /// <summary>
             /// Produces the name of a location from Control.
@@ -4154,12 +4276,10 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.control.location", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.control.location", this))));
             }
             /// <summary>
             /// Produces the name of an Object of Power (OoP).
-            ///                                 <p>Produces the name of an Object of Power (OoP)</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Games::Control.object_of_power #=> "Hotline"</code>
@@ -4167,12 +4287,10 @@ namespace FakerNet
             [FakerMethod("object_of_power")]
             public string ObjectOfPower()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.control.object_of_power", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.control.object_of_power", this))));
             }
             /// <summary>
             /// Produces a quote from Control.
-            ///                                 <p>Produces a quote from Control</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Games::Control.quote #=> "He never liked fridge duty"</code>
@@ -4180,12 +4298,11 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.control.quote", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.control.quote", this))));
             }
             /// <summary>
             /// < Produces a line/quote/message from The Board >.
             ///                                 <p>&lt; Produces a line/quote/message from The Board &gt;</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Games::Control.the_board #=> "< You/We wield the Gun/You. The Board appoints you. Congratulations, Director. >"</code>
@@ -4193,12 +4310,13 @@ namespace FakerNet
             [FakerMethod("the_board")]
             public string TheBoard()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.control.the_board", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.control.the_board", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("DnD")]
-        public class DnDGenerator : GeneratorBase
+        public partial class DnDGenerator : GeneratorBase
         {
             internal DnDGenerator(Faker faker)
                      : base(faker)
@@ -4214,7 +4332,7 @@ namespace FakerNet
             [FakerMethod("alignment")]
             public string Alignment()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dnd.alignments", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dnd.alignments", this))));
             }
             /// <summary>
             /// Produces the name of a background from Dungeons and Dragons (PHB).
@@ -4225,7 +4343,7 @@ namespace FakerNet
             [FakerMethod("background")]
             public string Background()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dnd.backgrounds", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dnd.backgrounds", this))));
             }
             /// <summary>
             /// Produces the name of a city from Dungeons and Dragons.
@@ -4236,7 +4354,7 @@ namespace FakerNet
             [FakerMethod("city")]
             public string City()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dnd.cities", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dnd.cities", this))));
             }
             /// <summary>
             /// Produces the first name of a character or monster from Dungeons and Dragons.
@@ -4247,7 +4365,7 @@ namespace FakerNet
             [FakerMethod("first_name")]
             public string FirstName()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dnd.name.first_name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dnd.name.first_name", this))));
             }
             /// <summary>
             /// Produces the name of a class from Dungeons and Dragons (PHB).
@@ -4258,7 +4376,7 @@ namespace FakerNet
             [FakerMethod("klass")]
             public string Klass()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dnd.klasses", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dnd.klasses", this))));
             }
             /// <summary>
             /// Produces the name of a language from Dungeons and Dragons.
@@ -4269,7 +4387,7 @@ namespace FakerNet
             [FakerMethod("language")]
             public string Language()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dnd.languages", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dnd.languages", this))));
             }
             /// <summary>
             /// Produces a last name from Dungeons and Dragons.
@@ -4280,7 +4398,7 @@ namespace FakerNet
             [FakerMethod("last_name")]
             public string LastName()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dnd.name.last_name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dnd.name.last_name", this))));
             }
             /// <summary>
             /// Produces the name of a melee weapon from Dungeons and Dragons.
@@ -4291,7 +4409,7 @@ namespace FakerNet
             [FakerMethod("melee_weapon")]
             public string MeleeWeapon()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dnd.melee_weapons", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dnd.melee_weapons", this))));
             }
             /// <summary>
             /// Produces the name of a monster from Dungeons and Dragons.
@@ -4302,7 +4420,7 @@ namespace FakerNet
             [FakerMethod("monster")]
             public string Monster()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dnd.monsters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dnd.monsters", this))));
             }
             /// <summary>
             /// Produces a full name from Dungeons and Dragons.
@@ -4313,7 +4431,7 @@ namespace FakerNet
             [FakerMethod("name")]
             public string Name()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dnd.name.first_name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dnd.name.first_name", this))));
             }
             /// <summary>
             /// Produces the name of a race from Dungeons and Dragons (PHB).
@@ -4324,7 +4442,7 @@ namespace FakerNet
             [FakerMethod("race")]
             public string Race()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dnd.races", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dnd.races", this))));
             }
             /// <summary>
             /// Produces the name of a ranged weapon from Dungeons and Dragons.
@@ -4335,7 +4453,7 @@ namespace FakerNet
             [FakerMethod("ranged_weapon")]
             public string RangedWeapon()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dnd.ranged_weapons", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dnd.ranged_weapons", this))));
             }
             /// <summary>
             /// Produces a last name from Dungeons and Dragons.
@@ -4346,12 +4464,13 @@ namespace FakerNet
             [FakerMethod("title_name")]
             public string TitleName()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dnd.name.first_name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dnd.name.first_name", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Dota")]
-        public class DotaGenerator : GeneratorBase
+        public partial class DotaGenerator : GeneratorBase
         {
             internal DotaGenerator(Faker faker)
                      : base(faker)
@@ -4367,7 +4486,7 @@ namespace FakerNet
             [FakerMethod("building")]
             public string Building()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.dota.building", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.dota.building", this))));
             }
             /// <summary>
             /// Produces the name of a hero from Dota.
@@ -4378,7 +4497,7 @@ namespace FakerNet
             [FakerMethod("hero")]
             public string Hero()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.dota.hero", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.dota.hero", this))));
             }
             /// <summary>
             /// Produces the name of an item from Dota.
@@ -4389,7 +4508,7 @@ namespace FakerNet
             [FakerMethod("item")]
             public string Item()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.dota.item", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.dota.item", this))));
             }
             /// <summary>
             /// Produces the name of a professional Dota player.
@@ -4400,15 +4519,13 @@ namespace FakerNet
             [FakerMethod("player")]
             public string Player()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.dota.player", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.dota.player", this))));
             }
             /// <summary>
             /// Produces the name of a hero from Dota.
             /// </summary>
             /// <param name="hero">
-            /// 
-            /// <p>The name of a Dota hero.</p>
-            /// 
+            /// The name of a Dota hero.
             /// (default value "'abaddon'")
             /// </param>
             /// <example>
@@ -4418,7 +4535,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote(string hero = "abaddon")
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.dota." + hero + ".quote", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.dota." + hero + ".quote", this))));
             }
             /// <summary>
             /// Produces the name of a professional Dota team.
@@ -4429,12 +4546,13 @@ namespace FakerNet
             [FakerMethod("team")]
             public string Team()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.dota.team", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.dota.team", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("ElderScrolls")]
-        public class ElderScrollsGenerator : GeneratorBase
+        public partial class ElderScrollsGenerator : GeneratorBase
         {
             internal ElderScrollsGenerator(Faker faker)
                      : base(faker)
@@ -4450,7 +4568,7 @@ namespace FakerNet
             [FakerMethod("city")]
             public string City()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.elder_scrolls.city", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.elder_scrolls.city", this))));
             }
             /// <summary>
             /// Produces the name of a creature from the Elder Scrolls universe.
@@ -4461,7 +4579,7 @@ namespace FakerNet
             [FakerMethod("creature")]
             public string Creature()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.elder_scrolls.creature", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.elder_scrolls.creature", this))));
             }
             /// <summary>
             /// Produces the name of a dragon from the Elder Scrolls universe.
@@ -4472,7 +4590,7 @@ namespace FakerNet
             [FakerMethod("dragon")]
             public string Dragon()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.elder_scrolls.dragon", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.elder_scrolls.dragon", this))));
             }
             /// <summary>
             /// Produces a first name from the Elder Scrolls universe.
@@ -4483,7 +4601,7 @@ namespace FakerNet
             [FakerMethod("first_name")]
             public string FirstName()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.elder_scrolls.first_name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.elder_scrolls.first_name", this))));
             }
             /// <summary>
             /// Produces a weapon from the Elder Scrolls universe.
@@ -4494,7 +4612,7 @@ namespace FakerNet
             [FakerMethod("jewelry")]
             public string Jewelry()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.elder_scrolls.jewelry", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.elder_scrolls.jewelry", this))));
             }
             /// <summary>
             /// Produces a last name from the Elder Scrolls universe.
@@ -4505,7 +4623,7 @@ namespace FakerNet
             [FakerMethod("last_name")]
             public string LastName()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.elder_scrolls.last_name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.elder_scrolls.last_name", this))));
             }
             /// <summary>
             /// Produces a randomly generated name from the Elder Scrolls universe.
@@ -4516,7 +4634,7 @@ namespace FakerNet
             [FakerMethod("name")]
             public string Name()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.elder_scrolls.first_name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.elder_scrolls.first_name", this))));
             }
             /// <summary>
             /// Produces the name of a race from the Elder Scrolls universe.
@@ -4527,7 +4645,7 @@ namespace FakerNet
             [FakerMethod("race")]
             public string Race()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.elder_scrolls.race", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.elder_scrolls.race", this))));
             }
             /// <summary>
             /// Produces the name of a region from the Elder Scrolls universe.
@@ -4538,7 +4656,7 @@ namespace FakerNet
             [FakerMethod("region")]
             public string Region()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.elder_scrolls.region", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.elder_scrolls.region", this))));
             }
             /// <summary>
             /// Produces a weapon from the Elder Scrolls universe.
@@ -4549,12 +4667,13 @@ namespace FakerNet
             [FakerMethod("weapon")]
             public string Weapon()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.elder_scrolls.weapon", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.elder_scrolls.weapon", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Fallout")]
-        public class FalloutGenerator : GeneratorBase
+        public partial class FalloutGenerator : GeneratorBase
         {
             internal FalloutGenerator(Faker faker)
                      : base(faker)
@@ -4570,7 +4689,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.fallout.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.fallout.characters", this))));
             }
             /// <summary>
             /// Produces the name of a faction from the Fallout games.
@@ -4581,7 +4700,7 @@ namespace FakerNet
             [FakerMethod("faction")]
             public string Faction()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.fallout.factions", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.fallout.factions", this))));
             }
             /// <summary>
             /// Produces the name of a location from the Fallout games.
@@ -4592,7 +4711,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.fallout.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.fallout.locations", this))));
             }
             /// <summary>
             /// Produces a quote from the Fallout games.
@@ -4604,12 +4723,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.fallout.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.fallout.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("FinalFantasyXIV")]
-        public class FinalFantasyXIVGenerator : GeneratorBase
+        public partial class FinalFantasyXIVGenerator : GeneratorBase
         {
             internal FinalFantasyXIVGenerator(Faker faker)
                      : base(faker)
@@ -4625,7 +4745,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.final_fantasy_xiv.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.final_fantasy_xiv.characters", this))));
             }
             /// <summary>
             /// Produces a data center from Final Fantasy XIV.
@@ -4636,12 +4756,11 @@ namespace FakerNet
             [FakerMethod("data_center")]
             public string DataCenter()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.final_fantasy_xiv.data_centers", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.final_fantasy_xiv.data_centers", this))));
             }
             /// <summary>
             /// Produces a job name from Final Fantasy XIV.
             ///                                 <p>Either a battle or non-battle playable job.</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Games::FinalFantasyXIV.job #=> "Paladin"</code>
@@ -4649,7 +4768,7 @@ namespace FakerNet
             [FakerMethod("job")]
             public string Job()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.final_fantasy_xiv.jobs", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.final_fantasy_xiv.jobs", this))));
             }
             /// <summary>
             /// Produces the name of a playable race from Final Fantasy XIV.
@@ -4660,7 +4779,7 @@ namespace FakerNet
             [FakerMethod("race")]
             public string Race()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.final_fantasy_xiv.races", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.final_fantasy_xiv.races", this))));
             }
             /// <summary>
             /// Produces a geographical zone from Final Fantasy XIV.
@@ -4671,12 +4790,13 @@ namespace FakerNet
             [FakerMethod("zone")]
             public string Zone()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.final_fantasy_xiv.zones", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.final_fantasy_xiv.zones", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("HalfLife")]
-        public class HalfLifeGenerator : GeneratorBase
+        public partial class HalfLifeGenerator : GeneratorBase
         {
             internal HalfLifeGenerator(Faker faker)
                      : base(faker)
@@ -4692,7 +4812,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.half_life.character", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.half_life.character", this))));
             }
             /// <summary>
             /// Produces the name of an enemy from the Half-Life games.
@@ -4703,7 +4823,7 @@ namespace FakerNet
             [FakerMethod("enemy")]
             public string Enemy()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.half_life.enemy", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.half_life.enemy", this))));
             }
             /// <summary>
             /// Produces the name of a location from the Half-Life games.
@@ -4714,12 +4834,13 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.half_life.location", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.half_life.location", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Heroes")]
-        public class HeroesGenerator : GeneratorBase
+        public partial class HeroesGenerator : GeneratorBase
         {
             internal HeroesGenerator(Faker faker)
                      : base(faker)
@@ -4735,7 +4856,7 @@ namespace FakerNet
             [FakerMethod("artifact")]
             public string Artifact()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("heroes.artifacts", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("heroes.artifacts", this))));
             }
             /// <summary>
             /// Produces the name of a class from Heroes 3.
@@ -4746,7 +4867,7 @@ namespace FakerNet
             [FakerMethod("klass")]
             public string Klass()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("heroes.klasses", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("heroes.klasses", this))));
             }
             /// <summary>
             /// Produces the name of a hero from Heroes 3.
@@ -4757,7 +4878,7 @@ namespace FakerNet
             [FakerMethod("name")]
             public string Name()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("heroes.names", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("heroes.names", this))));
             }
             /// <summary>
             /// Produces the name of a specialty from Heroes 3.
@@ -4768,12 +4889,13 @@ namespace FakerNet
             [FakerMethod("specialty")]
             public string Specialty()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("heroes.specialties", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("heroes.specialties", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("HeroesOfTheStorm")]
-        public class HeroesOfTheStormGenerator : GeneratorBase
+        public partial class HeroesOfTheStormGenerator : GeneratorBase
         {
             internal HeroesOfTheStormGenerator(Faker faker)
                      : base(faker)
@@ -4789,7 +4911,7 @@ namespace FakerNet
             [FakerMethod("battleground")]
             public string Battleground()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("heroes_of_the_storm.battlegrounds", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("heroes_of_the_storm.battlegrounds", this))));
             }
             #warning No implementation defined for method class();
             /// <summary>
@@ -4801,7 +4923,7 @@ namespace FakerNet
             [FakerMethod("class_name")]
             public string ClassName()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("heroes_of_the_storm.class_names", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("heroes_of_the_storm.class_names", this))));
             }
             /// <summary>
             /// Produces a hero from Heroes of the Storm.
@@ -4812,7 +4934,7 @@ namespace FakerNet
             [FakerMethod("hero")]
             public string Hero()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("heroes_of_the_storm.heroes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("heroes_of_the_storm.heroes", this))));
             }
             /// <summary>
             /// Produces a quote from Heroes of the Storm.
@@ -4823,12 +4945,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("heroes_of_the_storm.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("heroes_of_the_storm.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("LeagueOfLegends")]
-        public class LeagueOfLegendsGenerator : GeneratorBase
+        public partial class LeagueOfLegendsGenerator : GeneratorBase
         {
             internal LeagueOfLegendsGenerator(Faker faker)
                      : base(faker)
@@ -4844,7 +4967,7 @@ namespace FakerNet
             [FakerMethod("champion")]
             public string Champion()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.league_of_legends.champion", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.league_of_legends.champion", this))));
             }
             /// <summary>
             /// Produces a location from League of Legends.
@@ -4855,7 +4978,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.league_of_legends.location", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.league_of_legends.location", this))));
             }
             /// <summary>
             /// Produces a mastery from League of Legends.
@@ -4866,7 +4989,7 @@ namespace FakerNet
             [FakerMethod("masteries")]
             public string Masteries()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.league_of_legends.masteries", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.league_of_legends.masteries", this))));
             }
             /// <summary>
             /// Produces a quote from League of Legends.
@@ -4877,7 +5000,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.league_of_legends.quote", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.league_of_legends.quote", this))));
             }
             /// <summary>
             /// Produces a rank from League of Legends.
@@ -4888,7 +5011,7 @@ namespace FakerNet
             [FakerMethod("rank")]
             public string Rank()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.league_of_legends.rank", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.league_of_legends.rank", this))));
             }
             /// <summary>
             /// Produces a summoner spell from League of Legends.
@@ -4899,12 +5022,13 @@ namespace FakerNet
             [FakerMethod("summoner_spell")]
             public string SummonerSpell()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.league_of_legends.summoner_spell", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.league_of_legends.summoner_spell", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Minecraft")]
-        public class MinecraftGenerator : GeneratorBase
+        public partial class MinecraftGenerator : GeneratorBase
         {
             internal MinecraftGenerator(Faker faker)
                      : base(faker)
@@ -4920,7 +5044,7 @@ namespace FakerNet
             [FakerMethod("achievement")]
             public string Achievement()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.minecraft.achievement", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.minecraft.achievement", this))));
             }
             /// <summary>
             /// Produces the name of a biome from Minecraft.
@@ -4931,7 +5055,7 @@ namespace FakerNet
             [FakerMethod("biome")]
             public string Biome()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.minecraft.biome", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.minecraft.biome", this))));
             }
             /// <summary>
             /// Produces the name of a block from Minecraft.
@@ -4942,7 +5066,7 @@ namespace FakerNet
             [FakerMethod("block")]
             public string Block()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.minecraft.blocks", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.minecraft.blocks", this))));
             }
             /// <summary>
             /// Produces the name of a enchantment from Minecraft.
@@ -4953,7 +5077,7 @@ namespace FakerNet
             [FakerMethod("enchantment")]
             public string Enchantment()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.minecraft.enchantment", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.minecraft.enchantment", this))));
             }
             /// <summary>
             /// Produces the name of a game mode from Minecraft.
@@ -4964,7 +5088,7 @@ namespace FakerNet
             [FakerMethod("game_mode")]
             public string GameMode()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.minecraft.game_mode", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.minecraft.game_mode", this))));
             }
             /// <summary>
             /// Produces the name of an item from Minecraft.
@@ -4975,7 +5099,7 @@ namespace FakerNet
             [FakerMethod("item")]
             public string Item()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.minecraft.items", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.minecraft.items", this))));
             }
             /// <summary>
             /// Produces the name of a mob from Minecraft.
@@ -4986,7 +5110,7 @@ namespace FakerNet
             [FakerMethod("mob")]
             public string Mob()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.minecraft.mobs", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.minecraft.mobs", this))));
             }
             /// <summary>
             /// Produces the name of a status effect from Minecraft.
@@ -4997,12 +5121,13 @@ namespace FakerNet
             [FakerMethod("status_effect")]
             public string StatusEffect()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.minecraft.status_effect", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.minecraft.status_effect", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Myst")]
-        public class MystGenerator : GeneratorBase
+        public partial class MystGenerator : GeneratorBase
         {
             internal MystGenerator(Faker faker)
                      : base(faker)
@@ -5018,7 +5143,7 @@ namespace FakerNet
             [FakerMethod("age")]
             public string Age()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.myst.ages", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.myst.ages", this))));
             }
             /// <summary>
             /// Produces the name of a character from Myst.
@@ -5029,7 +5154,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.myst.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.myst.characters", this))));
             }
             /// <summary>
             /// Produces the name of a creature from Myst.
@@ -5040,7 +5165,7 @@ namespace FakerNet
             [FakerMethod("creature")]
             public string Creature()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.myst.creatures", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.myst.creatures", this))));
             }
             /// <summary>
             /// Produces the name of a game from the Myst series.
@@ -5051,7 +5176,7 @@ namespace FakerNet
             [FakerMethod("game")]
             public string Game()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.myst.games", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.myst.games", this))));
             }
             /// <summary>
             /// Produces a quote from Myst.
@@ -5062,12 +5187,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.myst.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.myst.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Overwatch")]
-        public class OverwatchGenerator : GeneratorBase
+        public partial class OverwatchGenerator : GeneratorBase
         {
             internal OverwatchGenerator(Faker faker)
                      : base(faker)
@@ -5083,7 +5209,7 @@ namespace FakerNet
             [FakerMethod("hero")]
             public string Hero()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.overwatch.heroes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.overwatch.heroes", this))));
             }
             /// <summary>
             /// Produces the name of a location from Overwatch.
@@ -5094,7 +5220,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.overwatch.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.overwatch.locations", this))));
             }
             /// <summary>
             /// Produces a quote from Overwatch.
@@ -5105,12 +5231,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.overwatch.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.overwatch.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Pokemon")]
-        public class PokemonGenerator : GeneratorBase
+        public partial class PokemonGenerator : GeneratorBase
         {
             internal PokemonGenerator(Faker faker)
                      : base(faker)
@@ -5126,7 +5253,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.pokemon.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.pokemon.locations", this))));
             }
             /// <summary>
             /// Produces a move from Pokemon.
@@ -5137,7 +5264,7 @@ namespace FakerNet
             [FakerMethod("move")]
             public string Move()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.pokemon.moves", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.pokemon.moves", this))));
             }
             /// <summary>
             /// Produces the name of a Pokemon.
@@ -5148,12 +5275,13 @@ namespace FakerNet
             [FakerMethod("name")]
             public string Name()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.pokemon.names", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.pokemon.names", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("SonicTheHedgehog")]
-        public class SonicTheHedgehogGenerator : GeneratorBase
+        public partial class SonicTheHedgehogGenerator : GeneratorBase
         {
             internal SonicTheHedgehogGenerator(Faker faker)
                      : base(faker)
@@ -5169,7 +5297,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.sonic_the_hedgehog.character", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.sonic_the_hedgehog.character", this))));
             }
             /// <summary>
             /// Produces the name of a game from the Sonic the Hedgehog series.
@@ -5180,7 +5308,7 @@ namespace FakerNet
             [FakerMethod("game")]
             public string Game()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.sonic_the_hedgehog.game", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.sonic_the_hedgehog.game", this))));
             }
             /// <summary>
             /// Produces the name of a zone from Sonic the Hedgehog.
@@ -5191,12 +5319,13 @@ namespace FakerNet
             [FakerMethod("zone")]
             public string Zone()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.sonic_the_hedgehog.zone", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.sonic_the_hedgehog.zone", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("StreetFighter")]
-        public class StreetFighterGenerator : GeneratorBase
+        public partial class StreetFighterGenerator : GeneratorBase
         {
             internal StreetFighterGenerator(Faker faker)
                      : base(faker)
@@ -5212,7 +5341,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.street_fighter.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.street_fighter.characters", this))));
             }
             /// <summary>
             /// Produces the name of a move from Street Fighter.
@@ -5223,7 +5352,7 @@ namespace FakerNet
             [FakerMethod("move")]
             public string Move()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.street_fighter.moves", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.street_fighter.moves", this))));
             }
             /// <summary>
             /// Produces a quote from Street Fighter.
@@ -5234,7 +5363,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.street_fighter.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.street_fighter.quotes", this))));
             }
             /// <summary>
             /// Produces the name of a stage from Street Fighter.
@@ -5245,12 +5374,13 @@ namespace FakerNet
             [FakerMethod("stage")]
             public string Stage()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.street_fighter.stages", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.street_fighter.stages", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("SuperMario")]
-        public class SuperMarioGenerator : GeneratorBase
+        public partial class SuperMarioGenerator : GeneratorBase
         {
             internal SuperMarioGenerator(Faker faker)
                      : base(faker)
@@ -5266,7 +5396,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.super_mario.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.super_mario.characters", this))));
             }
             /// <summary>
             /// Produces the name of a Super Mario game.
@@ -5277,7 +5407,7 @@ namespace FakerNet
             [FakerMethod("game")]
             public string Game()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.super_mario.games", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.super_mario.games", this))));
             }
             /// <summary>
             /// Produces the name of a Super Mario location.
@@ -5288,12 +5418,13 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.super_mario.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.super_mario.locations", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("SuperSmashBros")]
-        public class SuperSmashBrosGenerator : GeneratorBase
+        public partial class SuperSmashBrosGenerator : GeneratorBase
         {
             internal SuperSmashBrosGenerator(Faker faker)
                      : base(faker)
@@ -5309,7 +5440,7 @@ namespace FakerNet
             [FakerMethod("fighter")]
             public string Fighter()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.super_smash_bros.fighter", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.super_smash_bros.fighter", this))));
             }
             /// <summary>
             /// Produces the name of a stage from the Smash Bros games.
@@ -5320,12 +5451,13 @@ namespace FakerNet
             [FakerMethod("stage")]
             public string Stage()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.super_smash_bros.stage", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.super_smash_bros.stage", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Tarkov")]
-        public class TarkovGenerator : GeneratorBase
+        public partial class TarkovGenerator : GeneratorBase
         {
             internal TarkovGenerator(Faker faker)
                      : base(faker)
@@ -5341,7 +5473,7 @@ namespace FakerNet
             [FakerMethod("boss")]
             public string Boss()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.bosses", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.bosses", this))));
             }
             /// <summary>
             /// Produces a random faction from Escape from Tarkov.
@@ -5352,7 +5484,7 @@ namespace FakerNet
             [FakerMethod("faction")]
             public string Faction()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.factions", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.factions", this))));
             }
             /// <summary>
             /// Produces a random quest from Fence from Escape from Tarkov.
@@ -5363,7 +5495,7 @@ namespace FakerNet
             [FakerMethod("fence_quest")]
             public string FenceQuest()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.quests.fence", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.quests.fence", this))));
             }
             /// <summary>
             /// Produces a random item from Escape from Tarkov.
@@ -5374,7 +5506,7 @@ namespace FakerNet
             [FakerMethod("item")]
             public string Item()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.items", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.items", this))));
             }
             /// <summary>
             /// Produces a random quest from Jaeger from Escape from Tarkov.
@@ -5385,7 +5517,7 @@ namespace FakerNet
             [FakerMethod("jaeger_quest")]
             public string JaegerQuest()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.quests.jaeger", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.quests.jaeger", this))));
             }
             /// <summary>
             /// Produces a random location from Escape from Tarkov.
@@ -5396,7 +5528,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.locations", this))));
             }
             /// <summary>
             /// Produces a random quest from Mechanic from Escape from Tarkov.
@@ -5407,7 +5539,7 @@ namespace FakerNet
             [FakerMethod("mechanic_quest")]
             public string MechanicQuest()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.quests.mechanic", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.quests.mechanic", this))));
             }
             /// <summary>
             /// Produces a random quest from Peacekeeper from Escape from Tarkov.
@@ -5418,7 +5550,7 @@ namespace FakerNet
             [FakerMethod("peacekeeper_quest")]
             public string PeacekeeperQuest()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.quests.peacekeeper", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.quests.peacekeeper", this))));
             }
             /// <summary>
             /// Produces a random quest from Prapor from Escape from Tarkov.
@@ -5429,7 +5561,7 @@ namespace FakerNet
             [FakerMethod("prapor_quest")]
             public string PraporQuest()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.quests.prapor", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.quests.prapor", this))));
             }
             /// <summary>
             /// Produces a random quest from a random trader from Escape from Tarkov.
@@ -5440,7 +5572,7 @@ namespace FakerNet
             [FakerMethod("quest")]
             public string Quest()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.quests.#{@traders.sample}", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.quests.#{@traders.sample}", this))));
             }
             /// <summary>
             /// Produces a random quest from Ragman from Escape from Tarkov.
@@ -5451,7 +5583,7 @@ namespace FakerNet
             [FakerMethod("ragman_quest")]
             public string RagmanQuest()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.quests.ragman", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.quests.ragman", this))));
             }
             /// <summary>
             /// Produces a random quest from Skier from Escape from Tarkov.
@@ -5462,7 +5594,7 @@ namespace FakerNet
             [FakerMethod("skier_quest")]
             public string SkierQuest()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.quests.skier", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.quests.skier", this))));
             }
             /// <summary>
             /// Produces a random quest from Therapist from Escape from Tarkov.
@@ -5473,7 +5605,7 @@ namespace FakerNet
             [FakerMethod("therapist_quest")]
             public string TherapistQuest()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.quests.therapist", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.quests.therapist", this))));
             }
             /// <summary>
             /// Produces a random trader from Escape from Tarkov.
@@ -5484,7 +5616,7 @@ namespace FakerNet
             [FakerMethod("trader")]
             public string Trader()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.traders", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.traders", this))));
             }
             /// <summary>
             /// Produces a random weapon from Escape from Tarkov.
@@ -5495,12 +5627,13 @@ namespace FakerNet
             [FakerMethod("weapon")]
             public string Weapon()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tarkov.weapons", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tarkov.weapons", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Touhou")]
-        public class TouhouGenerator : GeneratorBase
+        public partial class TouhouGenerator : GeneratorBase
         {
             internal TouhouGenerator(Faker faker)
                      : base(faker)
@@ -5516,7 +5649,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.touhou.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.touhou.characters", this))));
             }
             /// <summary>
             /// Produces the name of a Touhou game.
@@ -5527,7 +5660,7 @@ namespace FakerNet
             [FakerMethod("game")]
             public string Game()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.touhou.games", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.touhou.games", this))));
             }
             /// <summary>
             /// Produces the name of a location from the Touhou games.
@@ -5538,7 +5671,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.touhou.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.touhou.locations", this))));
             }
             /// <summary>
             /// Produces the name of a song from the Touhou games.
@@ -5549,7 +5682,7 @@ namespace FakerNet
             [FakerMethod("song")]
             public string Song()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.touhou.songs", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.touhou.songs", this))));
             }
             /// <summary>
             /// Produces the name of a spell card from the Touhou games.
@@ -5560,12 +5693,13 @@ namespace FakerNet
             [FakerMethod("spell_card")]
             public string SpellCard()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.touhou.spell_cards", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.touhou.spell_cards", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("WarhammerFantasy")]
-        public class WarhammerFantasyGenerator : GeneratorBase
+        public partial class WarhammerFantasyGenerator : GeneratorBase
         {
             internal WarhammerFantasyGenerator(Faker faker)
                      : base(faker)
@@ -5581,7 +5715,7 @@ namespace FakerNet
             [FakerMethod("creature")]
             public string Creature()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.warhammer_fantasy.creatures", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.warhammer_fantasy.creatures", this))));
             }
             /// <summary>
             /// Produces a faction from the Warhammer Fantasy setting.
@@ -5592,7 +5726,7 @@ namespace FakerNet
             [FakerMethod("faction")]
             public string Faction()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.warhammer_fantasy.factions", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.warhammer_fantasy.factions", this))));
             }
             /// <summary>
             /// Produces the name of a hero from the Warhammer Fantasy setting.
@@ -5603,7 +5737,7 @@ namespace FakerNet
             [FakerMethod("hero")]
             public string Hero()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.warhammer_fantasy.heros", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.warhammer_fantasy.heros", this))));
             }
             /// <summary>
             /// Produces a location from the Warhammer Fantasy setting.
@@ -5614,7 +5748,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.warhammer_fantasy.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.warhammer_fantasy.locations", this))));
             }
             /// <summary>
             /// Produces a quote from the Warhammer Fantasy setting.
@@ -5625,12 +5759,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.warhammer_fantasy.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.warhammer_fantasy.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Witcher")]
-        public class WitcherGenerator : GeneratorBase
+        public partial class WitcherGenerator : GeneratorBase
         {
             internal WitcherGenerator(Faker faker)
                      : base(faker)
@@ -5646,7 +5781,7 @@ namespace FakerNet
             [FakerMethod("book")]
             public string Book()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.witcher.books", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.witcher.books", this))));
             }
             /// <summary>
             /// Produces the name of a character from The Witcher.
@@ -5657,7 +5792,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.witcher.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.witcher.characters", this))));
             }
             /// <summary>
             /// Produces the name of a location from The Witcher.
@@ -5668,7 +5803,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.witcher.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.witcher.locations", this))));
             }
             /// <summary>
             /// Produces the name of a monster from The Witcher.
@@ -5679,7 +5814,7 @@ namespace FakerNet
             [FakerMethod("monster")]
             public string Monster()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.witcher.monsters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.witcher.monsters", this))));
             }
             /// <summary>
             /// Produces the name of a potion from The Witcher.
@@ -5690,7 +5825,7 @@ namespace FakerNet
             [FakerMethod("potion")]
             public string Potion()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.witcher.potions", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.witcher.potions", this))));
             }
             /// <summary>
             /// Produces a quote from The Witcher.
@@ -5701,7 +5836,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.witcher.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.witcher.quotes", this))));
             }
             /// <summary>
             /// Produces the name of a school from The Witcher.
@@ -5712,7 +5847,7 @@ namespace FakerNet
             [FakerMethod("school")]
             public string School()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.witcher.schools", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.witcher.schools", this))));
             }
             /// <summary>
             /// Produces the name of a sign from The Witcher.
@@ -5723,7 +5858,7 @@ namespace FakerNet
             [FakerMethod("sign")]
             public string Sign()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.witcher.signs", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.witcher.signs", this))));
             }
             /// <summary>
             /// Produces the name of a witcher from The Witcher.
@@ -5734,12 +5869,13 @@ namespace FakerNet
             [FakerMethod("witcher")]
             public string Witcher()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.witcher.witchers", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.witcher.witchers", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("WorldOfWarcraft")]
-        public class WorldOfWarcraftGenerator : GeneratorBase
+        public partial class WorldOfWarcraftGenerator : GeneratorBase
         {
             internal WorldOfWarcraftGenerator(Faker faker)
                      : base(faker)
@@ -5755,7 +5891,7 @@ namespace FakerNet
             [FakerMethod("class_name")]
             public string ClassName()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.world_of_warcraft.class_names", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.world_of_warcraft.class_names", this))));
             }
             /// <summary>
             /// Produces the name of a hero from World of Warcraft.
@@ -5766,7 +5902,7 @@ namespace FakerNet
             [FakerMethod("hero")]
             public string Hero()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.world_of_warcraft.heros", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.world_of_warcraft.heros", this))));
             }
             /// <summary>
             /// Produces a quote from World of Warcraft.
@@ -5777,7 +5913,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.world_of_warcraft.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.world_of_warcraft.quotes", this))));
             }
             /// <summary>
             /// Produces the name of a race from World of Warcraft.
@@ -5788,12 +5924,13 @@ namespace FakerNet
             [FakerMethod("race")]
             public string Race()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.world_of_warcraft.races", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.world_of_warcraft.races", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Zelda")]
-        public class ZeldaGenerator : GeneratorBase
+        public partial class ZeldaGenerator : GeneratorBase
         {
             internal ZeldaGenerator(Faker faker)
                      : base(faker)
@@ -5809,7 +5946,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.zelda.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.zelda.characters", this))));
             }
             /// <summary>
             /// Produces the name of a Legend of Zelda game.
@@ -5820,7 +5957,7 @@ namespace FakerNet
             [FakerMethod("game")]
             public string Game()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.zelda.games", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.zelda.games", this))));
             }
             /// <summary>
             /// Produces the name of an item from the Legend of Zelda games.
@@ -5831,7 +5968,7 @@ namespace FakerNet
             [FakerMethod("item")]
             public string Item()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.zelda.items", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.zelda.items", this))));
             }
             /// <summary>
             /// Produces the name of a character from the Legend of Zelda games.
@@ -5842,14 +5979,15 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("games.zelda.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("games.zelda.locations", this))));
             }
         }
         
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Gender")]
-    public class GenderGenerator : GeneratorBase
+    public partial class GenderGenerator : GeneratorBase
     {
         internal GenderGenerator(Faker faker)
                  : base(faker)
@@ -5865,7 +6003,7 @@ namespace FakerNet
         [FakerMethod("binary_type")]
         public string BinaryType()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("gender.binary_types", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("gender.binary_types", this))));
         }
         /// <summary>
         /// Produces either 'f' or 'm'.
@@ -5876,7 +6014,7 @@ namespace FakerNet
         [FakerMethod("short_binary_type")]
         public string ShortBinaryType()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("gender.short_binary_types", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("gender.short_binary_types", this))));
         }
         /// <summary>
         /// Produces the name of a gender identity.
@@ -5887,12 +6025,13 @@ namespace FakerNet
         [FakerMethod("type")]
         public string Type()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("gender.types", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("gender.types", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("GreekPhilosophers")]
-    public class GreekPhilosophersGenerator : GeneratorBase
+    public partial class GreekPhilosophersGenerator : GeneratorBase
     {
         internal GreekPhilosophersGenerator(Faker faker)
                  : base(faker)
@@ -5908,7 +6047,7 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("greek_philosophers.names", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("greek_philosophers.names", this))));
         }
         /// <summary>
         /// Produces a quote from a Greek philosopher.
@@ -5919,12 +6058,159 @@ namespace FakerNet
         [FakerMethod("quote")]
         public string Quote()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("greek_philosophers.quotes", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("greek_philosophers.quotes", this))));
         }
     }
     
+    /// <summary>
+    /// Port of http://shinytoylabs.com/jargon/ Are you having trouble writing tech-savvy dialogue for your latest screenplay? Worry not! Hollywood-grade technical talk is ready to fill out any form where you need to look smart.
+    /// <p>Port of <a href="http://shinytoylabs.com/jargon">shinytoylabs.com/jargon</a>/ Are you having trouble writing tech-savvy dialogue for your latest screenplay? Worry not! Hollywood-grade technical talk is ready to fill out any form where you need to look smart.</p>
+    /// 
+    /// </summary>
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
+    [FakerGenerator("Hacker")]
+    public partial class HackerGenerator : GeneratorBase
+    {
+        internal HackerGenerator(Faker faker)
+                 : base(faker)
+        {
+        }
+        
+        /// <summary>
+        /// Short technical abbreviations.
+        /// </summary>
+        /// <example>
+        /// <code>Faker::Hacker.abbreviation #=> "RAM"</code>
+        /// </example>
+        [FakerMethod("abbreviation")]
+        public string Abbreviation()
+        {
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hacker.abbreviation", this))));
+        }
+        /// <summary>
+        /// Hacker-centric adjectives.
+        /// </summary>
+        /// <example>
+        /// <code>Faker::Hacker.adjective #=> "open-source"</code>
+        /// </example>
+        [FakerMethod("adjective")]
+        public string Adjective()
+        {
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hacker.adjective", this))));
+        }
+        /// <summary>
+        /// Produces a verb that ends with '-ing'.
+        /// </summary>
+        /// <example>
+        /// <code>Faker::Hacker.ingverb #=> "synthesizing"</code>
+        /// </example>
+        [FakerMethod("ingverb")]
+        public string Ingverb()
+        {
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hacker.ingverb", this))));
+        }
+        /// <summary>
+        /// Only the best hacker-related nouns.
+        /// </summary>
+        /// <example>
+        /// <code>Faker::Hacker.noun #=> "bandwidth"</code>
+        /// </example>
+        [FakerMethod("noun")]
+        public string Noun()
+        {
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hacker.noun", this))));
+        }
+        #warning Failed processing method phrases
+        #warning No implementation defined for method say_something_smart();
+        /// <summary>
+        /// Actions that hackers take.
+        /// </summary>
+        /// <example>
+        /// <code>Faker::Hacker.verb #=> "bypass"</code>
+        /// </example>
+        [FakerMethod("verb")]
+        public string Verb()
+        {
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hacker.verb", this))));
+        }
+    }
+    
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
+    [FakerGenerator("Hipster")]
+    public partial class HipsterGenerator : GeneratorBase
+    {
+        internal HipsterGenerator(Faker faker)
+                 : base(faker)
+        {
+        }
+        
+        #warning No implementation defined for method paragraph(long sentenceCount, bool supplemental, bool randomSentencesToAdd = 3);
+        #warning No implementation defined for method paragraph_by_chars(long characters, bool supplemental = false);
+        #warning No implementation defined for method paragraphs(long number, bool supplemental = false);
+        #warning No implementation defined for method sentence(long wordCount, bool supplemental, long randomWordsToAdd, bool openCompoundsAllowed = true);
+        #warning No implementation defined for method sentences(long number, bool supplemental = false);
+        #warning No implementation defined for method word();
+        #warning No implementation defined for method words(long number, bool supplemental, bool spacesAllowed = false);
+    }
+    
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
+    [FakerGenerator("Hobby")]
+    public partial class HobbyGenerator : GeneratorBase
+    {
+        internal HobbyGenerator(Faker faker)
+                 : base(faker)
+        {
+        }
+        
+        /// <summary>
+        /// Retrieves a typical hobby activity.
+        /// </summary>
+        /// <example>
+        /// <code>Faker::Hobby.activity #=> "Cooking"</code>
+        /// </example>
+        [FakerMethod("activity")]
+        public string Activity()
+        {
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hobby.activity", this))));
+        }
+    }
+    
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
+    [FakerGenerator("House")]
+    public partial class HouseGenerator : GeneratorBase
+    {
+        internal HouseGenerator(Faker faker)
+                 : base(faker)
+        {
+        }
+        
+        /// <summary>
+        /// Produces the name of a piece of furniture.
+        /// </summary>
+        /// <example>
+        /// <code>Faker::House.furniture #=> "chair"</code>
+        /// </example>
+        [FakerMethod("furniture")]
+        public string Furniture()
+        {
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("house.furniture", this))));
+        }
+        /// <summary>
+        /// Produces the name of a room in a house.
+        /// </summary>
+        /// <example>
+        /// <code>Faker::House.room #=> "kitchen"</code>
+        /// </example>
+        [FakerMethod("room")]
+        public string Room()
+        {
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("house.rooms", this))));
+        }
+    }
+    
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("HTML")]
-    public class HTMLGenerator : GeneratorBase
+    public partial class HTMLGenerator : GeneratorBase
     {
         internal HTMLGenerator(Faker faker)
                  : base(faker)
@@ -5941,7 +6227,7 @@ namespace FakerNet
         [FakerMethod("code")]
         public string Code()
         {
-            return this.Expression("<code>#{Lorem.sentence(word_count: 1)}</code>", this);
+            return this.EvaluateExpression("<code>#{Lorem.sentence(word_count: 1)}</code>", this);
         }
         #warning No implementation defined for method element(string tag, string content, UNKNOWN_Hash attributes);
         /// <summary>
@@ -5953,7 +6239,7 @@ namespace FakerNet
         [FakerMethod("emphasis")]
         public string Emphasis()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Expression("<em>#{Faker::Lorem.paragraph(sentence_count: 1)}</em>", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.EvaluateExpression("<em>#{Faker::Lorem.paragraph(sentence_count: 1)}</em>", this))));
         }
         #warning Failed processing method generate_table_row
         #warning No implementation defined for method heading();
@@ -5971,156 +6257,15 @@ namespace FakerNet
         [FakerMethod("script")]
         public string Script()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Expression("<script src=\"#{Faker::Internet.url}.js\"></script>", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.EvaluateExpression("<script src=\"#{Faker::Internet.url}.js\"></script>", this))));
         }
         #warning No implementation defined for method table();
         #warning No implementation defined for method unordered_list();
     }
     
-    /// <summary>
-    /// Port of http://shinytoylabs.com/jargon/ Are you having trouble writing tech-savvy dialogue for your latest screenplay? Worry not! Hollywood-grade technical talk is ready to fill out any form where you need to look smart.
-    /// <p>Port of <a href="http://shinytoylabs.com/jargon">shinytoylabs.com/jargon</a>/ Are you having trouble writing tech-savvy dialogue for your latest screenplay? Worry not! Hollywood-grade technical talk is ready to fill out any form where you need to look smart.</p>
-    /// 
-    /// </summary>
-    [FakerGenerator("Hacker")]
-    public class HackerGenerator : GeneratorBase
-    {
-        internal HackerGenerator(Faker faker)
-                 : base(faker)
-        {
-        }
-        
-        /// <summary>
-        /// Short technical abbreviations.
-        /// </summary>
-        /// <example>
-        /// <code>Faker::Hacker.abbreviation #=> "RAM"</code>
-        /// </example>
-        [FakerMethod("abbreviation")]
-        public string Abbreviation()
-        {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("hacker.abbreviation", this))));
-        }
-        /// <summary>
-        /// Hacker-centric adjectives.
-        /// </summary>
-        /// <example>
-        /// <code>Faker::Hacker.adjective #=> "open-source"</code>
-        /// </example>
-        [FakerMethod("adjective")]
-        public string Adjective()
-        {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("hacker.adjective", this))));
-        }
-        /// <summary>
-        /// Produces a verb that ends with '-ing'.
-        /// </summary>
-        /// <example>
-        /// <code>Faker::Hacker.ingverb #=> "synthesizing"</code>
-        /// </example>
-        [FakerMethod("ingverb")]
-        public string Ingverb()
-        {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("hacker.ingverb", this))));
-        }
-        /// <summary>
-        /// Only the best hacker-related nouns.
-        /// </summary>
-        /// <example>
-        /// <code>Faker::Hacker.noun #=> "bandwidth"</code>
-        /// </example>
-        [FakerMethod("noun")]
-        public string Noun()
-        {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("hacker.noun", this))));
-        }
-        #warning Failed processing method phrases
-        #warning No implementation defined for method say_something_smart();
-        /// <summary>
-        /// Actions that hackers take.
-        /// </summary>
-        /// <example>
-        /// <code>Faker::Hacker.verb #=> "bypass"</code>
-        /// </example>
-        [FakerMethod("verb")]
-        public string Verb()
-        {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("hacker.verb", this))));
-        }
-    }
-    
-    [FakerGenerator("Hipster")]
-    public class HipsterGenerator : GeneratorBase
-    {
-        internal HipsterGenerator(Faker faker)
-                 : base(faker)
-        {
-        }
-        
-        #warning No implementation defined for method paragraph(long sentenceCount, bool supplemental, bool randomSentencesToAdd = 3);
-        #warning No implementation defined for method paragraph_by_chars(long characters, bool supplemental = false);
-        #warning No implementation defined for method paragraphs(long number, bool supplemental = false);
-        #warning No implementation defined for method sentence(long wordCount, bool supplemental, long randomWordsToAdd, bool openCompoundsAllowed = true);
-        #warning No implementation defined for method sentences(long number, bool supplemental = false);
-        #warning No implementation defined for method word();
-        #warning No implementation defined for method words(long number, bool supplemental, bool spacesAllowed = false);
-    }
-    
-    [FakerGenerator("Hobby")]
-    public class HobbyGenerator : GeneratorBase
-    {
-        internal HobbyGenerator(Faker faker)
-                 : base(faker)
-        {
-        }
-        
-        /// <summary>
-        /// Retrieves a typical hobby activity.
-        /// </summary>
-        /// <example>
-        /// <code>Faker::Hobby.activity #=> "Cooking"</code>
-        /// </example>
-        [FakerMethod("activity")]
-        public string Activity()
-        {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("hobby.activity", this))));
-        }
-    }
-    
-    [FakerGenerator("House")]
-    public class HouseGenerator : GeneratorBase
-    {
-        internal HouseGenerator(Faker faker)
-                 : base(faker)
-        {
-        }
-        
-        /// <summary>
-        /// Produces the name of a piece of furniture.
-        /// </summary>
-        /// <example>
-        /// <code>Faker::House.furniture #=> "chair"</code>
-        /// </example>
-        [FakerMethod("furniture")]
-        public string Furniture()
-        {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("house.furniture", this))));
-        }
-        /// <summary>
-        /// Produces the name of a room in a house.
-        /// </summary>
-        /// <example>
-        /// <code>Faker::House.room #=> "kitchen"</code>
-        /// </example>
-        [FakerMethod("room")]
-        public string Room()
-        {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("house.rooms", this))));
-        }
-    }
-    
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("IDNumber")]
-    public class IDNumberGenerator : GeneratorBase
+    public partial class IDNumberGenerator : GeneratorBase
     {
         internal IDNumberGenerator(Faker faker)
                  : base(faker)
@@ -6153,8 +6298,9 @@ namespace FakerNet
         #warning No implementation defined for method valid_south_african_id_number();
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("IndustrySegments")]
-    public class IndustrySegmentsGenerator : GeneratorBase
+    public partial class IndustrySegmentsGenerator : GeneratorBase
     {
         internal IndustrySegmentsGenerator(Faker faker)
                  : base(faker)
@@ -6170,7 +6316,7 @@ namespace FakerNet
         [FakerMethod("industry")]
         public string Industry()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("industry_segments.industry", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("industry_segments.industry", this))));
         }
         /// <summary>
         /// Produces the name of a sector of an industry.
@@ -6181,7 +6327,7 @@ namespace FakerNet
         [FakerMethod("sector")]
         public string Sector()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("industry_segments.sector", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("industry_segments.sector", this))));
         }
         /// <summary>
         /// Produces the name of a subsector of an industry.
@@ -6192,7 +6338,7 @@ namespace FakerNet
         [FakerMethod("sub_sector")]
         public string SubSector()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("industry_segments.sub_sector", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("industry_segments.sub_sector", this))));
         }
         /// <summary>
         /// Produces the name of a super-sector of an industry.
@@ -6203,23 +6349,25 @@ namespace FakerNet
         [FakerMethod("super_sector")]
         public string SuperSector()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("industry_segments.super_sector", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("industry_segments.super_sector", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Internet")]
-    public class InternetGenerator : GeneratorBase
+    public partial class InternetGenerator : GeneratorBase
     {
         [FakerMethod("HTTP")]
         public HTTPGenerator HTTP { get; }
         internal InternetGenerator(Faker faker)
                  : base(faker)
         {
-            HTTP = new HTTPGenerator(_faker);
+            HTTP = new HTTPGenerator(this.Faker);
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("HTTP")]
-        public class HTTPGenerator : GeneratorBase
+        public partial class HTTPGenerator : GeneratorBase
         {
             internal HTTPGenerator(Faker faker)
                      : base(faker)
@@ -6229,35 +6377,33 @@ namespace FakerNet
             #warning No implementation defined for method status_code();
         }
         
-        #warning No implementation defined for method base64(long length, bool padding, bool urlsafe = true);
-        #warning No implementation defined for method bot_user_agent(string? vendor = null);
-        #warning Failed processing method construct_email
+        // Expecting native implementation of
+        //      public string Base64(long length = 16, bool padding = false, bool urlsafe = true)
+        // Expecting native implementation of
+        //      public string BotUserAgent(string? vendor = null)
         #warning Failed processing method device_token
-        #warning No implementation defined for method domain_name(UNKNOWN_Bool subdomain, string? domain = null);
+        // Expecting native implementation of
+        //      public string DomainName(bool subdomain = false, string? domain = null)
+        // Expecting native implementation of
+        //      public string DomainSuffix(bool safe = false)
+        // Expecting native implementation of
+        //      public string DomainWord()
+        // Expecting native implementation of
+        //      public string Email(string? name = null, string separators = "-_", string? domain = null)
+        #warning No implementation defined for method fix_umlauts(string @string = "");
         /// <summary>
-        /// Returns the domain suffix e.g.
-        ///                             <p>com, org, co, biz, info etc.</p>
-        ///                         
+        /// Returns the IPv4 address.
         /// </summary>
         /// <example>
-        /// <code>Faker::Internet.domain_suffix              #=> "com"
-        /// Faker::Internet.domain_suffix              #=> "biz"
-        /// Faker::Internet.domain_suffix(safe: true)  #=> "example"
-        /// Faker::Internet.domain_suffix(safe: true)  #=> "test"</code>
+        /// <code>Faker::Internet.ip_v4_address   #=> "97.117.128.93"</code>
         /// </example>
-        [FakerMethod("domain_suffix")]
-        public string DomainSuffix()
+        [FakerMethod("ip_v4_address")]
+        public string IpV4Address()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("internet.safe_domain_suffix", this))));
+            return this.EvaluateExpression("#{random_integer '0..255'}.#{random_integer '0..255'}.#{random_integer '0..255'}.#{random_integer '0..255'}", this);
         }
-        #warning No implementation defined for method domain_word();
-        #warning No implementation defined for method email(string name, List<string> separators, string? domain = null);
-        #warning No implementation defined for method fix_umlauts(string @string = "");
-        #warning No implementation defined for method ip_v4_address();
         /// <summary>
         /// Returns Ipv4 address with CIDR, range from 1 to 31.
-        ///                             <p>Returns Ipv4 address with CIDR, range from 1 to 31</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Internet.ip_v4_cidr  #=> "129.162.99.74/16"
@@ -6266,13 +6412,21 @@ namespace FakerNet
         [FakerMethod("ip_v4_cidr")]
         public string IpV4Cidr()
         {
-            return this.Expression("#{ip_v4_address}/#{rand(1..31)}", this);
+            return this.EvaluateExpression("#{ip_v4_address}/#{random_integer '1..31'}", this);
         }
-        #warning No implementation defined for method ip_v6_address();
         /// <summary>
-        /// Returns Ipv6 address with CIDR, range between 1 to 127.
-        ///                             <p>Returns Ipv6 address with CIDR, range between 1 to 127</p>
-        ///                         
+        /// Returns Ipv6 address.
+        /// </summary>
+        /// <example>
+        /// <code>Faker::Internet.ip_v6_address   #=> "7754:76d4:c7aa:7646:ea68:1abb:4055:4343"</code>
+        /// </example>
+        [FakerMethod("ip_v6_address")]
+        public string IpV6Address()
+        {
+            return this.EvaluateExpression("#{random_hex '4'}:#{random_hex '4'}:#{random_hex '4'}:#{random_hex '4'}:#{random_hex '4'}:#{random_hex '4'}:#{random_hex '4'}:#{random_hex '4'}", this);
+        }
+        /// <summary>
+        /// Returns Ipv6 address with CIDR, range between 1 to 127
         /// </summary>
         /// <example>
         /// <code>Faker::Internet.ip_v6_cidr  #=> "beca:9b99:4bb6:9712:af2f:516f:8507:96e1/99"</code>
@@ -6280,27 +6434,57 @@ namespace FakerNet
         [FakerMethod("ip_v6_cidr")]
         public string IpV6Cidr()
         {
-            return this.Expression("#{ip_v6_address}/#{rand(1..127)}", this);
+            return this.EvaluateExpression("#{ip_v6_address}/#{random_integer '1..127'}", this);
         }
-        #warning No implementation defined for method mac_address();
-        #warning No implementation defined for method password(long minLength, long maxLength, bool mixCase, bool specialCharacters = false);
-        #warning No implementation defined for method private_ip_v4_address();
+        /// <summary>
+        /// Returns the MAC address.
+        /// </summary>
+        /// <example>
+        /// <code>Faker::Internet.mac_address                   #=> "74:d0:c9:22:95:12"
+        /// Faker::Internet.mac_address(prefix: 'a')      #=> "0a:91:ce:24:89:3b"
+        /// Faker::Internet.mac_address(prefix: 'aa')     #=> "aa:38:a0:3e:e8:41"
+        /// Faker::Internet.mac_address(prefix: 'aa:44')  #=> "aa:44:30:88:6e:95"</code>
+        /// </example>
+        [FakerMethod("mac_address")]
+        public string MacAddress()
+        {
+            return this.EvaluateExpression("#{random_hex '2'}:#{random_hex '2'}:#{random_hex '2'}:#{random_hex '2'}:#{random_hex '2'}:#{random_hex '2'}", this);
+        }
+        // Expecting native implementation of
+        //      public string Password(long minLength = 8, long maxLength = 16, bool mixCase = true, bool specialCharacters = false)
+        // Expecting native implementation of
+        //      public string PrivateIpV4Address()
         #warning No implementation defined for method private_net_checker();
         #warning No implementation defined for method private_nets_regex();
-        #warning No implementation defined for method public_ip_v4_address();
+        // Expecting native implementation of
+        //      public string PublicIpV4Address()
         #warning No implementation defined for method reserved_net_checker();
         #warning No implementation defined for method reserved_nets_regex();
-        #warning Failed processing method sanitize_email_local_part
-        #warning No implementation defined for method slug(string words, string? glue = null);
-        #warning No implementation defined for method url(string host, string path, string scheme = "http");
+        // Expecting native implementation of
+        //      public string Slug(string? words = null, string? glue = null)
+        // Expecting native implementation of
+        //      public string Url(string? host = null, string? path = null, string scheme = "https")
         #warning No implementation defined for method user();
-        #warning No implementation defined for method user_agent(string? vendor = null);
-        #warning No implementation defined for method username(long specifier, List<string> separators);
-        #warning No implementation defined for method uuid();
+        // Expecting native implementation of
+        //      public string UserAgent(string? vendor = null)
+        // Expecting native implementation of
+        //      public string Username(IntegerRange? lengthRange = null, string separators = "._")
+        /// <summary>
+        /// Generated universally unique identifier.
+        /// </summary>
+        /// <example>
+        /// <code>Faker::Internet.uuid  #=> "8a6cdd40-6d78-4fdb-912b-190e3057197f"</code>
+        /// </example>
+        [FakerMethod("uuid")]
+        public string Uuid()
+        {
+            return this.EvaluateExpression("#{random_hex '8'}-#{random_hex '4'}-#{random_hex '4'}-#{random_hex '4'}-#{random_hex '4'}-#{random_hex '8'}", this);
+        }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Invoice")]
-    public class InvoiceGenerator : GeneratorBase
+    public partial class InvoiceGenerator : GeneratorBase
     {
         internal InvoiceGenerator(Faker faker)
                  : base(faker)
@@ -6317,8 +6501,9 @@ namespace FakerNet
         #warning No implementation defined for method reference(string @ref = "");
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("JapaneseMedia")]
-    public class JapaneseMediaGenerator : GeneratorBase
+    public partial class JapaneseMediaGenerator : GeneratorBase
     {
         [FakerMethod("Conan")]
         public ConanGenerator Conan { get; }
@@ -6343,20 +6528,21 @@ namespace FakerNet
         internal JapaneseMediaGenerator(Faker faker)
                  : base(faker)
         {
-            Conan = new ConanGenerator(_faker);
-            CowboyBebop = new CowboyBebopGenerator(_faker);
-            Doraemon = new DoraemonGenerator(_faker);
-            DragonBall = new DragonBallGenerator(_faker);
-            FmaBrotherhood = new FmaBrotherhoodGenerator(_faker);
-            KamenRider = new KamenRiderGenerator(_faker);
-            Naruto = new NarutoGenerator(_faker);
-            OnePiece = new OnePieceGenerator(_faker);
-            StudioGhibli = new StudioGhibliGenerator(_faker);
-            SwordArtOnline = new SwordArtOnlineGenerator(_faker);
+            Conan = new ConanGenerator(this.Faker);
+            CowboyBebop = new CowboyBebopGenerator(this.Faker);
+            Doraemon = new DoraemonGenerator(this.Faker);
+            DragonBall = new DragonBallGenerator(this.Faker);
+            FmaBrotherhood = new FmaBrotherhoodGenerator(this.Faker);
+            KamenRider = new KamenRiderGenerator(this.Faker);
+            Naruto = new NarutoGenerator(this.Faker);
+            OnePiece = new OnePieceGenerator(this.Faker);
+            StudioGhibli = new StudioGhibliGenerator(this.Faker);
+            SwordArtOnline = new SwordArtOnlineGenerator(this.Faker);
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Conan")]
-        public class ConanGenerator : GeneratorBase
+        public partial class ConanGenerator : GeneratorBase
         {
             internal ConanGenerator(Faker faker)
                      : base(faker)
@@ -6372,7 +6558,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("conan.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("conan.characters", this))));
             }
             /// <summary>
             /// Produces a gadget from Conan.
@@ -6383,7 +6569,7 @@ namespace FakerNet
             [FakerMethod("gadget")]
             public string Gadget()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("conan.gadgets", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("conan.gadgets", this))));
             }
             /// <summary>
             /// Produces a vehicle from Conan.
@@ -6394,12 +6580,13 @@ namespace FakerNet
             [FakerMethod("vehicle")]
             public string Vehicle()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("conan.vehicles", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("conan.vehicles", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("CowboyBebop")]
-        public class CowboyBebopGenerator : GeneratorBase
+        public partial class CowboyBebopGenerator : GeneratorBase
         {
             internal CowboyBebopGenerator(Faker faker)
                      : base(faker)
@@ -6415,7 +6602,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("cowboy_bebop.character", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cowboy_bebop.character", this))));
             }
             /// <summary>
             /// Produces an episode from Cowboy Bebop.
@@ -6426,7 +6613,7 @@ namespace FakerNet
             [FakerMethod("episode")]
             public string Episode()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("cowboy_bebop.episode", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cowboy_bebop.episode", this))));
             }
             /// <summary>
             /// Produces a quote from Cowboy Bebop.
@@ -6437,7 +6624,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("cowboy_bebop.quote", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cowboy_bebop.quote", this))));
             }
             /// <summary>
             /// Produces a song title from Cowboy Bebop.
@@ -6448,12 +6635,13 @@ namespace FakerNet
             [FakerMethod("song")]
             public string Song()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("cowboy_bebop.song", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cowboy_bebop.song", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Doraemon")]
-        public class DoraemonGenerator : GeneratorBase
+        public partial class DoraemonGenerator : GeneratorBase
         {
             internal DoraemonGenerator(Faker faker)
                      : base(faker)
@@ -6469,7 +6657,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("doraemon.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("doraemon.characters", this))));
             }
             /// <summary>
             /// Produces a gadget from Doraemon.
@@ -6480,7 +6668,7 @@ namespace FakerNet
             [FakerMethod("gadget")]
             public string Gadget()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("doraemon.gadgets", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("doraemon.gadgets", this))));
             }
             /// <summary>
             /// Produces a location from Doraemon.
@@ -6491,12 +6679,13 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("doraemon.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("doraemon.locations", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("DragonBall")]
-        public class DragonBallGenerator : GeneratorBase
+        public partial class DragonBallGenerator : GeneratorBase
         {
             internal DragonBallGenerator(Faker faker)
                      : base(faker)
@@ -6512,7 +6701,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dragon_ball.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dragon_ball.characters", this))));
             }
             /// <summary>
             /// Produces the name of a planet from Dragon Ball.
@@ -6523,7 +6712,7 @@ namespace FakerNet
             [FakerMethod("planet")]
             public string Planet()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dragon_ball.planets", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dragon_ball.planets", this))));
             }
             /// <summary>
             /// Produces the name of a race from Dragon Ball.
@@ -6534,12 +6723,13 @@ namespace FakerNet
             [FakerMethod("race")]
             public string Race()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dragon_ball.races", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dragon_ball.races", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("FmaBrotherhood")]
-        public class FmaBrotherhoodGenerator : GeneratorBase
+        public partial class FmaBrotherhoodGenerator : GeneratorBase
         {
             internal FmaBrotherhoodGenerator(Faker faker)
                      : base(faker)
@@ -6555,7 +6745,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("fma_brotherhood.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("fma_brotherhood.characters", this))));
             }
             /// <summary>
             /// Produces a cities from FmaBrotherhood.
@@ -6566,7 +6756,7 @@ namespace FakerNet
             [FakerMethod("city")]
             public string City()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("fma_brotherhood.cities", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("fma_brotherhood.cities", this))));
             }
             /// <summary>
             /// Produces a country from FmaBrotherhood.
@@ -6577,12 +6767,13 @@ namespace FakerNet
             [FakerMethod("country")]
             public string Country()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("fma_brotherhood.countries", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("fma_brotherhood.countries", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("KamenRider")]
-        public class KamenRiderGenerator : GeneratorBase
+        public partial class KamenRiderGenerator : GeneratorBase
         {
             internal KamenRiderGenerator(Faker faker)
                      : base(faker)
@@ -6595,7 +6786,7 @@ namespace FakerNet
             [FakerMethod("from_eras")]
             public string FromEras()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("kamen_rider.#{era}.#{field}", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("kamen_rider.#{era}.#{field}", this))));
             }
             #warning No implementation defined for method kamen_rider();
             #warning No implementation defined for method series();
@@ -6603,8 +6794,9 @@ namespace FakerNet
             #warning No implementation defined for method user();
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Naruto")]
-        public class NarutoGenerator : GeneratorBase
+        public partial class NarutoGenerator : GeneratorBase
         {
             internal NarutoGenerator(Faker faker)
                      : base(faker)
@@ -6620,7 +6812,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("naruto.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("naruto.characters", this))));
             }
             /// <summary>
             /// Produces a demon from Naruto.
@@ -6631,7 +6823,7 @@ namespace FakerNet
             [FakerMethod("demon")]
             public string Demon()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("naruto.demons", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("naruto.demons", this))));
             }
             /// <summary>
             /// Produces a eye from Naruto.
@@ -6642,7 +6834,7 @@ namespace FakerNet
             [FakerMethod("eye")]
             public string Eye()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("naruto.eyes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("naruto.eyes", this))));
             }
             /// <summary>
             /// Produces a village from Naruto.
@@ -6653,12 +6845,13 @@ namespace FakerNet
             [FakerMethod("village")]
             public string Village()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("naruto.villages", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("naruto.villages", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("OnePiece")]
-        public class OnePieceGenerator : GeneratorBase
+        public partial class OnePieceGenerator : GeneratorBase
         {
             internal OnePieceGenerator(Faker faker)
                      : base(faker)
@@ -6674,7 +6867,7 @@ namespace FakerNet
             [FakerMethod("akuma_no_mi")]
             public string AkumaNoMi()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("one_piece.akuma_no_mi", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("one_piece.akuma_no_mi", this))));
             }
             /// <summary>
             /// Produces a character from One Piece.
@@ -6685,7 +6878,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("one_piece.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("one_piece.characters", this))));
             }
             /// <summary>
             /// Produces an island from One Piece.
@@ -6696,7 +6889,7 @@ namespace FakerNet
             [FakerMethod("island")]
             public string Island()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("one_piece.islands", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("one_piece.islands", this))));
             }
             /// <summary>
             /// Produces a location from One Piece.
@@ -6707,7 +6900,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("one_piece.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("one_piece.locations", this))));
             }
             /// <summary>
             /// Produces a quote from One Piece.
@@ -6718,7 +6911,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("one_piece.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("one_piece.quotes", this))));
             }
             /// <summary>
             /// Produces a sea from One Piece.
@@ -6729,12 +6922,13 @@ namespace FakerNet
             [FakerMethod("sea")]
             public string Sea()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("one_piece.seas", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("one_piece.seas", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("StudioGhibli")]
-        public class StudioGhibliGenerator : GeneratorBase
+        public partial class StudioGhibliGenerator : GeneratorBase
         {
             internal StudioGhibliGenerator(Faker faker)
                      : base(faker)
@@ -6750,7 +6944,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("studio_ghibli.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("studio_ghibli.characters", this))));
             }
             /// <summary>
             /// Produces a movie from Studio Ghibli.
@@ -6761,7 +6955,7 @@ namespace FakerNet
             [FakerMethod("movie")]
             public string Movie()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("studio_ghibli.movies", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("studio_ghibli.movies", this))));
             }
             /// <summary>
             /// Produces a quote from Studio Ghibli's movies.
@@ -6772,12 +6966,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("studio_ghibli.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("studio_ghibli.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("SwordArtOnline")]
-        public class SwordArtOnlineGenerator : GeneratorBase
+        public partial class SwordArtOnlineGenerator : GeneratorBase
         {
             internal SwordArtOnlineGenerator(Faker faker)
                      : base(faker)
@@ -6793,7 +6988,7 @@ namespace FakerNet
             [FakerMethod("game_name")]
             public string GameName()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("sword_art_online.game_name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("sword_art_online.game_name", this))));
             }
             /// <summary>
             /// Produces the name of an item from Sword Art Online.
@@ -6804,7 +6999,7 @@ namespace FakerNet
             [FakerMethod("item")]
             public string Item()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("sword_art_online.item", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("sword_art_online.item", this))));
             }
             /// <summary>
             /// Produces the name of a location from Sword Art Online.
@@ -6815,7 +7010,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("sword_art_online.location", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("sword_art_online.location", this))));
             }
             /// <summary>
             /// Produces the real name of a character from Sword Art Online.
@@ -6826,14 +7021,15 @@ namespace FakerNet
             [FakerMethod("real_name")]
             public string RealName()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("sword_art_online.real_name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("sword_art_online.real_name", this))));
             }
         }
         
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Job")]
-    public class JobGenerator : GeneratorBase
+    public partial class JobGenerator : GeneratorBase
     {
         internal JobGenerator(Faker faker)
                  : base(faker)
@@ -6849,7 +7045,7 @@ namespace FakerNet
         [FakerMethod("field")]
         public string Field()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("job.field", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("job.field", this))));
         }
         /// <summary>
         /// Produces a random job skill.
@@ -6860,7 +7056,7 @@ namespace FakerNet
         [FakerMethod("key_skill")]
         public string KeySkill()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("job.key_skills", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("job.key_skills", this))));
         }
         /// <summary>
         /// Produces a random job position.
@@ -6871,7 +7067,7 @@ namespace FakerNet
         [FakerMethod("position")]
         public string Position()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("job.position", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("job.position", this))));
         }
         /// <summary>
         /// Produces a random job title.
@@ -6882,12 +7078,13 @@ namespace FakerNet
         [FakerMethod("title")]
         public string Title()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("job.title", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("job.title", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Json")]
-    public class JsonGenerator : GeneratorBase
+    public partial class JsonGenerator : GeneratorBase
     {
         internal JsonGenerator(Faker faker)
                  : base(faker)
@@ -6902,8 +7099,9 @@ namespace FakerNet
         #warning No implementation defined for method shallow_json(long width, UNKNOWN_Hash options);
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Kpop")]
-    public class KpopGenerator : GeneratorBase
+    public partial class KpopGenerator : GeneratorBase
     {
         internal KpopGenerator(Faker faker)
                  : base(faker)
@@ -6919,7 +7117,7 @@ namespace FakerNet
         [FakerMethod("boy_bands")]
         public string BoyBands()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("kpop.boy_bands", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("kpop.boy_bands", this))));
         }
         /// <summary>
         /// Produces the name of a K-Pop girl group.
@@ -6930,7 +7128,7 @@ namespace FakerNet
         [FakerMethod("girl_groups")]
         public string GirlGroups()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("kpop.girl_groups", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("kpop.girl_groups", this))));
         }
         /// <summary>
         /// Produces the name of a 1990's 'OG' K-Pop group.
@@ -6941,7 +7139,7 @@ namespace FakerNet
         [FakerMethod("i_groups")]
         public string IGroups()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("kpop.i_groups", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("kpop.i_groups", this))));
         }
         /// <summary>
         /// Produces the name of a 2000's K-Pop group.
@@ -6952,7 +7150,7 @@ namespace FakerNet
         [FakerMethod("ii_groups")]
         public string IiGroups()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("kpop.ii_groups", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("kpop.ii_groups", this))));
         }
         /// <summary>
         /// Produces the name of a 2010's K-Pop group.
@@ -6963,7 +7161,7 @@ namespace FakerNet
         [FakerMethod("iii_groups")]
         public string IiiGroups()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("kpop.iii_groups", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("kpop.iii_groups", this))));
         }
         /// <summary>
         /// Produces the name of a solo K-Pop artist.
@@ -6974,7 +7172,7 @@ namespace FakerNet
         [FakerMethod("solo")]
         public string Solo()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("kpop.solo", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("kpop.solo", this))));
         }
     }
     
@@ -6983,8 +7181,9 @@ namespace FakerNet
     /// <p>Based on Perl’s Text::Lorem</p>
     /// 
     /// </summary>
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Lorem")]
-    public class LoremGenerator : GeneratorBase
+    public partial class LoremGenerator : GeneratorBase
     {
         internal LoremGenerator(Faker faker)
                  : base(faker)
@@ -7008,8 +7207,9 @@ namespace FakerNet
         #warning No implementation defined for method words(long number, bool supplemental);
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("LoremFlickr")]
-    public class LoremFlickrGenerator : GeneratorBase
+    public partial class LoremFlickrGenerator : GeneratorBase
     {
         internal LoremFlickrGenerator(Faker faker)
                  : base(faker)
@@ -7023,8 +7223,9 @@ namespace FakerNet
         #warning No implementation defined for method pixelated_image(string size, List<string> searchTerms, bool matchAll = false);
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Markdown")]
-    public class MarkdownGenerator : GeneratorBase
+    public partial class MarkdownGenerator : GeneratorBase
     {
         internal MarkdownGenerator(Faker faker)
                  : base(faker)
@@ -7041,7 +7242,7 @@ namespace FakerNet
         [FakerMethod("block_code")]
         public string BlockCode()
         {
-            return this.Expression("```ruby\n#{Lorem.sentence(word_count: 1)}\n```", this);
+            return this.EvaluateExpression("```ruby\n#{Lorem.sentence(word_count: 1)}\n```", this);
         }
         /// <summary>
         /// Produces a random emphasis formatting on a random word in two sentences.
@@ -7052,7 +7253,7 @@ namespace FakerNet
         [FakerMethod("emphasis")]
         public string Emphasis()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("markdown.emphasis", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("markdown.emphasis", this))));
         }
         /// <summary>
         /// Produces a random header format.
@@ -7063,7 +7264,7 @@ namespace FakerNet
         [FakerMethod("headers")]
         public string Headers()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("markdown.headers", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("markdown.headers", this))));
         }
         /// <summary>
         /// Produces a random inline code snippet between two sentences.
@@ -7074,7 +7275,7 @@ namespace FakerNet
         [FakerMethod("inline_code")]
         public string InlineCode()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Expression("`#{Faker::Lorem.sentence(word_count: 1)}`", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.EvaluateExpression("`#{Faker::Lorem.sentence(word_count: 1)}`", this))));
         }
         #warning No implementation defined for method ordered_list();
         #warning Failed processing method random
@@ -7083,8 +7284,9 @@ namespace FakerNet
         #warning No implementation defined for method unordered_list();
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Marketing")]
-    public class MarketingGenerator : GeneratorBase
+    public partial class MarketingGenerator : GeneratorBase
     {
         internal MarketingGenerator(Faker faker)
                  : base(faker)
@@ -7100,12 +7302,13 @@ namespace FakerNet
         [FakerMethod("buzzwords")]
         public string Buzzwords()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("marketing.buzzwords", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("marketing.buzzwords", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Measurement")]
-    public class MeasurementGenerator : GeneratorBase
+    public partial class MeasurementGenerator : GeneratorBase
     {
         internal MeasurementGenerator(Faker faker)
                  : base(faker)
@@ -7126,8 +7329,9 @@ namespace FakerNet
         #warning No implementation defined for method weight(long amount = rand(10));
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Military")]
-    public class MilitaryGenerator : GeneratorBase
+    public partial class MilitaryGenerator : GeneratorBase
     {
         internal MilitaryGenerator(Faker faker)
                  : base(faker)
@@ -7137,7 +7341,6 @@ namespace FakerNet
         /// <summary>
         /// Produces a rank in the U.S.
         ///                             <p>Air Force.</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Military.air_force_rank #=> "Captain"</code>
@@ -7145,12 +7348,11 @@ namespace FakerNet
         [FakerMethod("air_force_rank")]
         public string AirForceRank()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("military.air_force_rank", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("military.air_force_rank", this))));
         }
         /// <summary>
         /// Produces a rank in the U.S.
         ///                             <p>Army.</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Military.army_rank #=> "Staff Sergeant"</code>
@@ -7158,12 +7360,11 @@ namespace FakerNet
         [FakerMethod("army_rank")]
         public string ArmyRank()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("military.army_rank", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("military.army_rank", this))));
         }
         /// <summary>
         /// Produces a rank in the U.S.
         ///                             <p>Coast Guard</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Military.coast_guard_rank #=> "Master Chief Petty Officer of the Coast Guard"</code>
@@ -7171,12 +7372,11 @@ namespace FakerNet
         [FakerMethod("coast_guard_rank")]
         public string CoastGuardRank()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("military.coast_guard_rank", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("military.coast_guard_rank", this))));
         }
         /// <summary>
         /// Produces a U.S.
         ///                             <p>Department of Defense Paygrade.</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Military.dod_paygrade #=> "E-6"</code>
@@ -7184,12 +7384,11 @@ namespace FakerNet
         [FakerMethod("dod_paygrade")]
         public string DodPaygrade()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("military.dod_paygrade", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("military.dod_paygrade", this))));
         }
         /// <summary>
         /// Produces a rank in the U.S.
         ///                             <p>Marines.</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Military.marines_rank #=> "Gunnery Sergeant"</code>
@@ -7197,12 +7396,11 @@ namespace FakerNet
         [FakerMethod("marines_rank")]
         public string MarinesRank()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("military.marines_rank", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("military.marines_rank", this))));
         }
         /// <summary>
         /// Produces a rank in the U.S.
         ///                             <p>Navy.</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Military.navy_rank #=> "Seaman"</code>
@@ -7210,12 +7408,11 @@ namespace FakerNet
         [FakerMethod("navy_rank")]
         public string NavyRank()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("military.navy_rank", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("military.navy_rank", this))));
         }
         /// <summary>
         /// Produces a rank in the U.S.
         ///                             <p>Space Force.</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Military.space_force_rank #=> "Senior Enlisted Advisor of the Space Force"</code>
@@ -7223,12 +7420,13 @@ namespace FakerNet
         [FakerMethod("space_force_rank")]
         public string SpaceForceRank()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("military.space_force_rank", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("military.space_force_rank", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Mountain")]
-    public class MountainGenerator : GeneratorBase
+    public partial class MountainGenerator : GeneratorBase
     {
         internal MountainGenerator(Faker faker)
                  : base(faker)
@@ -7237,11 +7435,10 @@ namespace FakerNet
         
         /// <summary>
         /// Produces a name of a mountain.
-        ///                             <p>Produces a name of a mountain</p>
+        ///                             
         /// 
         ///                             <pre><code>@faker.version next
         ///                             </code></pre>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Mountain.name #=> "Mount Everest"</code>
@@ -7249,12 +7446,10 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("mountain.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("mountain.name", this))));
         }
         /// <summary>
         /// Produces a name of a range.
-        ///                             <p>Produces a name of a range</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Mountain.range #=> "Dhaulagiri Himalaya"</code>
@@ -7262,12 +7457,13 @@ namespace FakerNet
         [FakerMethod("range")]
         public string Range()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("mountain.range", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("mountain.range", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Movie")]
-    public class MovieGenerator : GeneratorBase
+    public partial class MovieGenerator : GeneratorBase
     {
         internal MovieGenerator(Faker faker)
                  : base(faker)
@@ -7283,7 +7479,7 @@ namespace FakerNet
         [FakerMethod("quote")]
         public string Quote()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("movie.quote", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("movie.quote", this))));
         }
         /// <summary>
         /// Produces a title from a movie.
@@ -7294,12 +7490,13 @@ namespace FakerNet
         [FakerMethod("title")]
         public string Title()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("movie.title", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("movie.title", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Movies")]
-    public class MoviesGenerator : GeneratorBase
+    public partial class MoviesGenerator : GeneratorBase
     {
         [FakerMethod("Avatar")]
         public AvatarGenerator Avatar { get; }
@@ -7336,26 +7533,27 @@ namespace FakerNet
         internal MoviesGenerator(Faker faker)
                  : base(faker)
         {
-            Avatar = new AvatarGenerator(_faker);
-            BackToTheFuture = new BackToTheFutureGenerator(_faker);
-            Departed = new DepartedGenerator(_faker);
-            Ghostbusters = new GhostbustersGenerator(_faker);
-            Hackers = new HackersGenerator(_faker);
-            HarryPotter = new HarryPotterGenerator(_faker);
-            HitchhikersGuideToTheGalaxy = new HitchhikersGuideToTheGalaxyGenerator(_faker);
-            Hobbit = new HobbitGenerator(_faker);
-            HowToTrainYourDragon = new HowToTrainYourDragonGenerator(_faker);
-            Lebowski = new LebowskiGenerator(_faker);
-            LordOfTheRings = new LordOfTheRingsGenerator(_faker);
-            PrincessBride = new PrincessBrideGenerator(_faker);
-            StarWars = new StarWarsGenerator(_faker);
-            TheRoom = new TheRoomGenerator(_faker);
-            Tron = new TronGenerator(_faker);
-            VForVendetta = new VForVendettaGenerator(_faker);
+            Avatar = new AvatarGenerator(this.Faker);
+            BackToTheFuture = new BackToTheFutureGenerator(this.Faker);
+            Departed = new DepartedGenerator(this.Faker);
+            Ghostbusters = new GhostbustersGenerator(this.Faker);
+            Hackers = new HackersGenerator(this.Faker);
+            HarryPotter = new HarryPotterGenerator(this.Faker);
+            HitchhikersGuideToTheGalaxy = new HitchhikersGuideToTheGalaxyGenerator(this.Faker);
+            Hobbit = new HobbitGenerator(this.Faker);
+            HowToTrainYourDragon = new HowToTrainYourDragonGenerator(this.Faker);
+            Lebowski = new LebowskiGenerator(this.Faker);
+            LordOfTheRings = new LordOfTheRingsGenerator(this.Faker);
+            PrincessBride = new PrincessBrideGenerator(this.Faker);
+            StarWars = new StarWarsGenerator(this.Faker);
+            TheRoom = new TheRoomGenerator(this.Faker);
+            Tron = new TronGenerator(this.Faker);
+            VForVendetta = new VForVendettaGenerator(this.Faker);
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Avatar")]
-        public class AvatarGenerator : GeneratorBase
+        public partial class AvatarGenerator : GeneratorBase
         {
             internal AvatarGenerator(Faker faker)
                      : base(faker)
@@ -7371,7 +7569,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("avatar.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("avatar.characters", this))));
             }
             /// <summary>
             /// Produces a date from Avatar.
@@ -7382,7 +7580,7 @@ namespace FakerNet
             [FakerMethod("date")]
             public string Date()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("avatar.dates", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("avatar.dates", this))));
             }
             /// <summary>
             /// Produces a quote from Avatar.
@@ -7394,12 +7592,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("avatar.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("avatar.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("BackToTheFuture")]
-        public class BackToTheFutureGenerator : GeneratorBase
+        public partial class BackToTheFutureGenerator : GeneratorBase
         {
             internal BackToTheFutureGenerator(Faker faker)
                      : base(faker)
@@ -7415,7 +7614,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("back_to_the_future.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("back_to_the_future.characters", this))));
             }
             /// <summary>
             /// Produces a date from Back to the Future.
@@ -7426,7 +7625,7 @@ namespace FakerNet
             [FakerMethod("date")]
             public string Date()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("back_to_the_future.dates", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("back_to_the_future.dates", this))));
             }
             /// <summary>
             /// Produces a quote from Back to the Future.
@@ -7438,12 +7637,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("back_to_the_future.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("back_to_the_future.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Departed")]
-        public class DepartedGenerator : GeneratorBase
+        public partial class DepartedGenerator : GeneratorBase
         {
             internal DepartedGenerator(Faker faker)
                      : base(faker)
@@ -7459,7 +7659,7 @@ namespace FakerNet
             [FakerMethod("actor")]
             public string Actor()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("departed.actors", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("departed.actors", this))));
             }
             /// <summary>
             /// Produces a character from The Departed.
@@ -7470,7 +7670,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("departed.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("departed.characters", this))));
             }
             /// <summary>
             /// Produces a quote from The Departed.
@@ -7482,12 +7682,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("departed.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("departed.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Ghostbusters")]
-        public class GhostbustersGenerator : GeneratorBase
+        public partial class GhostbustersGenerator : GeneratorBase
         {
             internal GhostbustersGenerator(Faker faker)
                      : base(faker)
@@ -7503,7 +7704,7 @@ namespace FakerNet
             [FakerMethod("actor")]
             public string Actor()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("ghostbusters.actors", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("ghostbusters.actors", this))));
             }
             /// <summary>
             /// Produces a character from Ghostbusters.
@@ -7514,7 +7715,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("ghostbusters.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("ghostbusters.characters", this))));
             }
             /// <summary>
             /// Produces a quote from Ghostbusters.
@@ -7526,12 +7727,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("ghostbusters.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("ghostbusters.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Hackers")]
-        public class HackersGenerator : GeneratorBase
+        public partial class HackersGenerator : GeneratorBase
         {
             internal HackersGenerator(Faker faker)
                      : base(faker)
@@ -7547,7 +7749,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("hackers.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hackers.characters", this))));
             }
             /// <summary>
             /// Produces a character hacker "handle" from Hackers.
@@ -7558,7 +7760,7 @@ namespace FakerNet
             [FakerMethod("handle")]
             public string Handle()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("hackers.handles", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hackers.handles", this))));
             }
             /// <summary>
             /// Produces a quote from Hackers.
@@ -7569,12 +7771,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("hackers.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hackers.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("HarryPotter")]
-        public class HarryPotterGenerator : GeneratorBase
+        public partial class HarryPotterGenerator : GeneratorBase
         {
             internal HarryPotterGenerator(Faker faker)
                      : base(faker)
@@ -7590,7 +7793,7 @@ namespace FakerNet
             [FakerMethod("book")]
             public string Book()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("harry_potter.books", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("harry_potter.books", this))));
             }
             /// <summary>
             /// Produces a character from Harry Potter.
@@ -7601,7 +7804,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("harry_potter.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("harry_potter.characters", this))));
             }
             /// <summary>
             /// Produces a house from Harry Potter.
@@ -7612,7 +7815,7 @@ namespace FakerNet
             [FakerMethod("house")]
             public string House()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("harry_potter.houses", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("harry_potter.houses", this))));
             }
             /// <summary>
             /// Produces a location from Harry Potter.
@@ -7623,7 +7826,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("harry_potter.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("harry_potter.locations", this))));
             }
             /// <summary>
             /// Produces a quote from Harry Potter.
@@ -7634,7 +7837,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("harry_potter.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("harry_potter.quotes", this))));
             }
             /// <summary>
             /// Produces a spell from Harry Potter.
@@ -7645,12 +7848,13 @@ namespace FakerNet
             [FakerMethod("spell")]
             public string Spell()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("harry_potter.spells", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("harry_potter.spells", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("HitchhikersGuideToTheGalaxy")]
-        public class HitchhikersGuideToTheGalaxyGenerator : GeneratorBase
+        public partial class HitchhikersGuideToTheGalaxyGenerator : GeneratorBase
         {
             internal HitchhikersGuideToTheGalaxyGenerator(Faker faker)
                      : base(faker)
@@ -7666,7 +7870,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("hitchhikers_guide_to_the_galaxy.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hitchhikers_guide_to_the_galaxy.characters", this))));
             }
             /// <summary>
             /// Produces a location from The Hitchhiker's Guide to the Galaxy.
@@ -7678,7 +7882,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("hitchhikers_guide_to_the_galaxy.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hitchhikers_guide_to_the_galaxy.locations", this))));
             }
             /// <summary>
             /// Produces a Marvin quote from The Hitchhiker's Guide to the Galaxy.
@@ -7690,7 +7894,7 @@ namespace FakerNet
             [FakerMethod("marvin_quote")]
             public string MarvinQuote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("hitchhikers_guide_to_the_galaxy.marvin_quote", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hitchhikers_guide_to_the_galaxy.marvin_quote", this))));
             }
             /// <summary>
             /// Produces a planet from The Hitchhiker's Guide to the Galaxy.
@@ -7702,7 +7906,7 @@ namespace FakerNet
             [FakerMethod("planet")]
             public string Planet()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("hitchhikers_guide_to_the_galaxy.planets", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hitchhikers_guide_to_the_galaxy.planets", this))));
             }
             /// <summary>
             /// Produces a quote from The Hitchhiker's Guide to the Galaxy.
@@ -7714,7 +7918,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("hitchhikers_guide_to_the_galaxy.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hitchhikers_guide_to_the_galaxy.quotes", this))));
             }
             /// <summary>
             /// Produces a species from The Hitchhiker's Guide to the Galaxy.
@@ -7726,7 +7930,7 @@ namespace FakerNet
             [FakerMethod("specie")]
             public string Specie()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("hitchhikers_guide_to_the_galaxy.species", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hitchhikers_guide_to_the_galaxy.species", this))));
             }
             /// <summary>
             /// Produces a starship from The Hitchhiker's Guide to the Galaxy.
@@ -7738,12 +7942,13 @@ namespace FakerNet
             [FakerMethod("starship")]
             public string Starship()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("hitchhikers_guide_to_the_galaxy.starships", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hitchhikers_guide_to_the_galaxy.starships", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Hobbit")]
-        public class HobbitGenerator : GeneratorBase
+        public partial class HobbitGenerator : GeneratorBase
         {
             internal HobbitGenerator(Faker faker)
                      : base(faker)
@@ -7759,7 +7964,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tolkien.hobbit.character", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tolkien.hobbit.character", this))));
             }
             /// <summary>
             /// Produces the name of a location from The Hobbit.
@@ -7770,7 +7975,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tolkien.hobbit.location", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tolkien.hobbit.location", this))));
             }
             /// <summary>
             /// Produces a quote from The Hobbit.
@@ -7782,7 +7987,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tolkien.hobbit.quote", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tolkien.hobbit.quote", this))));
             }
             /// <summary>
             /// Produces the name of one of the 13 dwarves from the Company, or Gandalf or Bilbo.
@@ -7793,12 +7998,13 @@ namespace FakerNet
             [FakerMethod("thorins_company")]
             public string ThorinsCompany()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tolkien.hobbit.thorins_company", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tolkien.hobbit.thorins_company", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("HowToTrainYourDragon")]
-        public class HowToTrainYourDragonGenerator : GeneratorBase
+        public partial class HowToTrainYourDragonGenerator : GeneratorBase
         {
             internal HowToTrainYourDragonGenerator(Faker faker)
                      : base(faker)
@@ -7814,7 +8020,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("how_to_train_your_dragon.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("how_to_train_your_dragon.characters", this))));
             }
             /// <summary>
             /// Produces a dragon from How To Train Your Dragon.
@@ -7825,7 +8031,7 @@ namespace FakerNet
             [FakerMethod("dragon")]
             public string Dragon()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("how_to_train_your_dragon.dragons", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("how_to_train_your_dragon.dragons", this))));
             }
             /// <summary>
             /// Produces a location from How To Train Your Dragon.
@@ -7836,12 +8042,13 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("how_to_train_your_dragon.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("how_to_train_your_dragon.locations", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Lebowski")]
-        public class LebowskiGenerator : GeneratorBase
+        public partial class LebowskiGenerator : GeneratorBase
         {
             internal LebowskiGenerator(Faker faker)
                      : base(faker)
@@ -7857,7 +8064,7 @@ namespace FakerNet
             [FakerMethod("actor")]
             public string Actor()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("lebowski.actors", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("lebowski.actors", this))));
             }
             /// <summary>
             /// Produces a character from The Big Lebowski.
@@ -7868,7 +8075,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("lebowski.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("lebowski.characters", this))));
             }
             /// <summary>
             /// Produces a quote from The Big Lebowski.
@@ -7879,12 +8086,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("lebowski.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("lebowski.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("LordOfTheRings")]
-        public class LordOfTheRingsGenerator : GeneratorBase
+        public partial class LordOfTheRingsGenerator : GeneratorBase
         {
             internal LordOfTheRingsGenerator(Faker faker)
                      : base(faker)
@@ -7900,7 +8108,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tolkien.lord_of_the_rings.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tolkien.lord_of_the_rings.characters", this))));
             }
             /// <summary>
             /// Produces a location from Lord of the Rings.
@@ -7911,7 +8119,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tolkien.lord_of_the_rings.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tolkien.lord_of_the_rings.locations", this))));
             }
             /// <summary>
             /// Produces a quote from Lord of the Rings.
@@ -7923,12 +8131,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("tolkien.lord_of_the_rings.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tolkien.lord_of_the_rings.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("PrincessBride")]
-        public class PrincessBrideGenerator : GeneratorBase
+        public partial class PrincessBrideGenerator : GeneratorBase
         {
             internal PrincessBrideGenerator(Faker faker)
                      : base(faker)
@@ -7944,7 +8153,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("princess_bride.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("princess_bride.characters", this))));
             }
             /// <summary>
             /// Produces a quote from The Princess Bride.
@@ -7956,31 +8165,29 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("princess_bride.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("princess_bride.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("StarWars")]
-        public class StarWarsGenerator : GeneratorBase
+        public partial class StarWarsGenerator : GeneratorBase
         {
             internal StarWarsGenerator(Faker faker)
                      : base(faker)
             {
             }
             
-            #warning No implementation defined for method call_number();
             /// <summary>
-            /// Generates numbers array.
-            ///                                 <p>Generates numbers array</p>
-            ///                             
+            /// Produces a call number from Star Wars.
             /// </summary>
             /// <example>
             /// <code>Faker::Movies::StarWars.call_numbers  #=> ["Leader", "#"]</code>
             /// </example>
-            [FakerMethod("call_numbers")]
-            public List<string> CallNumbers()
+            [FakerMethod("call_number")]
+            public string CallNumber()
             {
-                return this.Resolve("star_wars.call_numbers", this).Split(',').Select(item => item).ToList();
+                return this.ResolveYamlValue("star_wars.call_numbers", this);
             }
             /// <summary>
             /// Produces a call sign from Star Wars.
@@ -7991,111 +8198,102 @@ namespace FakerNet
             [FakerMethod("call_sign")]
             public string CallSign()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("star_wars.call_sign", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("star_wars.call_sign", this))));
             }
-            #warning No implementation defined for method call_squadron();
             /// <summary>
-            /// Returns squadrons array.
-            ///                                 <p>Returns squadrons array</p>
-            ///                             
+            /// Produces a call squadron from Star Wars.
             /// </summary>
             /// <example>
             /// <code>Faker::Movies::StarWars.call_squadrons  #=> ["Rogue", "Red", "Gray", "Green", "Blue", "Gold", "Black", "Yellow", "Phoenix"]</code>
             /// </example>
-            [FakerMethod("call_squadrons")]
-            public List<string> CallSquadrons()
+            [FakerMethod("call_squadron")]
+            public string CallSquadron()
             {
-                return this.Resolve("star_wars.call_squadrons", this).Split(',').Select(item => item).ToList();
+                return this.ResolveYamlValue("star_wars.call_squadrons", this);
             }
-            #warning No implementation defined for method character();
             /// <summary>
-            /// Returns all character names in movie.
-            ///                                 <p>Returns all character names in movie</p>
-            ///                             
+            /// Produces a character from Star Wars.
             /// </summary>
             /// <example>
             /// <code>Faker::Movies::StarWars.characters</code>
             /// </example>
-            [FakerMethod("characters")]
-            public List<string> Characters()
+            [FakerMethod("character")]
+            public string Character()
             {
-                return this.Resolve("star_wars.characters", this).Split(',').Select(item => item).ToList();
+                return this.ResolveYamlValue("star_wars.characters", this);
             }
-            #warning No implementation defined for method droid();
             /// <summary>
-            /// Returns droid list.
-            ///                                 <p>Returns droid list</p>
-            ///                             
+            /// Produces a droid from Star Wars.
             /// </summary>
             /// <example>
             /// <code>Faker::Movies::StarWars.droids</code>
             /// </example>
-            [FakerMethod("droids")]
-            public List<string> Droids()
+            [FakerMethod("droid")]
+            public string Droid()
             {
-                return this.Resolve("star_wars.droids", this).Split(',').Select(item => item).ToList();
+                return this.ResolveYamlValue("star_wars.droids", this);
             }
-            #warning No implementation defined for method planet();
             /// <summary>
-            /// Lists out all planet names.
-            ///                                 <p>Lists out all planet names</p>
-            ///                             
+            /// Produces a planet from Star Wars.
             /// </summary>
             /// <example>
             /// <code>Faker::Movies::StarWars.planets</code>
             /// </example>
-            [FakerMethod("planets")]
-            public List<string> Planets()
+            [FakerMethod("planet")]
+            public string Planet()
             {
-                return this.Resolve("star_wars.planets", this).Split(',').Select(item => item).ToList();
+                return this.ResolveYamlValue("star_wars.planets", this);
             }
             #warning No implementation defined for method quote(string? character = null);
-            #warning No implementation defined for method specie();
             /// <summary>
-            /// Returns name of all species.
-            ///                                 <p>Returns name of all species</p>
-            ///                             
+            /// Produces a species from Star Wars.
             /// </summary>
             /// <example>
             /// <code>Faker::Movies::StarWars.species</code>
             /// </example>
-            [FakerMethod("species")]
-            public List<string> Species()
+            [FakerMethod("specie")]
+            public string Specie()
             {
-                return this.Resolve("star_wars.species", this).Split(',').Select(item => item).ToList();
+                return this.ResolveYamlValue("star_wars.species", this);
             }
-            #warning No implementation defined for method vehicle();
             /// <summary>
-            /// Lists out all vehicles.
-            ///                                 <p>Lists out all vehicles</p>
-            ///                             
+            /// Produces a vehicle from Star Wars.
             /// </summary>
             /// <example>
             /// <code>Faker::Movies::StarWars.vehicles</code>
             /// </example>
-            [FakerMethod("vehicles")]
-            public List<string> Vehicles()
+            [FakerMethod("vehicle")]
+            public string Vehicle()
             {
-                return this.Resolve("star_wars.vehicles", this).Split(',').Select(item => item).ToList();
+                return this.ResolveYamlValue("star_wars.vehicles", this);
             }
-            #warning No implementation defined for method wookiee_sentence();
             /// <summary>
-            /// All wookiee words.
-            ///                                 <p>All wookiee words</p>
-            ///                             
+            /// Produces a wookiee sentence from Star Wars.
+            /// </summary>
+            /// <example>
+            /// <code>Faker::Movies::StarWars.wookiee_sentence #=> "Yrroonn ru ooma roo ahuma ur roooarrgh hnn-rowr."</code>
+            /// </example>
+            [FakerMethod("wookiee_sentence")]
+            public string WookieeSentence()
+            {
+                return String.Join(" ", Enumerable.Range(0, Random.NextInt32(0, 10)).Select(i => WookieeWord())) + Random.NextItem(['.', '?', '!']);
+            }
+            /// <summary>
+            /// Gets a random wookiee word
             /// </summary>
             /// <example>
             /// <code>Faker::Movies::StarWars.wookiee_words</code>
             /// </example>
-            [FakerMethod("wookiee_words")]
-            public List<string> WookieeWords()
+            [FakerMethod("wookiee_word")]
+            public string WookieeWord()
             {
-                return this.Resolve("star_wars.wookiee_words", this).Split(',').Select(item => item).ToList();
+                return this.ResolveYamlValue("star_wars.wookiee_words", this);
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("TheRoom")]
-        public class TheRoomGenerator : GeneratorBase
+        public partial class TheRoomGenerator : GeneratorBase
         {
             internal TheRoomGenerator(Faker faker)
                      : base(faker)
@@ -8111,7 +8309,7 @@ namespace FakerNet
             [FakerMethod("actor")]
             public string Actor()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_room.actors", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_room.actors", this))));
             }
             /// <summary>
             /// Produces a character from The Room (2003).
@@ -8122,7 +8320,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_room.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_room.characters", this))));
             }
             /// <summary>
             /// Produces a location from The Room (2003).
@@ -8133,7 +8331,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_room.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_room.locations", this))));
             }
             /// <summary>
             /// Produces a quote from The Room (2003).
@@ -8145,12 +8343,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_room.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_room.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Tron")]
-        public class TronGenerator : GeneratorBase
+        public partial class TronGenerator : GeneratorBase
         {
             internal TronGenerator(Faker faker)
                      : base(faker)
@@ -8167,8 +8366,9 @@ namespace FakerNet
             #warning No implementation defined for method vehicle();
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("VForVendetta")]
-        public class VForVendettaGenerator : GeneratorBase
+        public partial class VForVendettaGenerator : GeneratorBase
         {
             internal VForVendettaGenerator(Faker faker)
                      : base(faker)
@@ -8184,7 +8384,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("v_for_vendetta.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("v_for_vendetta.characters", this))));
             }
             /// <summary>
             /// Produces a quote from V For Vendetta.
@@ -8196,7 +8396,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("v_for_vendetta.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("v_for_vendetta.quotes", this))));
             }
             /// <summary>
             /// Produces a speech from V For Vendetta.
@@ -8208,7 +8408,7 @@ namespace FakerNet
             [FakerMethod("speech")]
             public string Speech()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("v_for_vendetta.speeches", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("v_for_vendetta.speeches", this))));
             }
         }
         
@@ -8219,8 +8419,9 @@ namespace FakerNet
     /// <p>A generator of titles of operas by various composers</p>
     /// 
     /// </summary>
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Music")]
-    public class MusicGenerator : GeneratorBase
+    public partial class MusicGenerator : GeneratorBase
     {
         [FakerMethod("GratefulDead")]
         public GratefulDeadGenerator GratefulDead { get; }
@@ -8245,20 +8446,21 @@ namespace FakerNet
         internal MusicGenerator(Faker faker)
                  : base(faker)
         {
-            GratefulDead = new GratefulDeadGenerator(_faker);
-            Hiphop = new HiphopGenerator(_faker);
-            Opera = new OperaGenerator(_faker);
-            PearlJam = new PearlJamGenerator(_faker);
-            Phish = new PhishGenerator(_faker);
-            Prince = new PrinceGenerator(_faker);
-            RockBand = new RockBandGenerator(_faker);
-            Rush = new RushGenerator(_faker);
-            SmashingPumpkins = new SmashingPumpkinsGenerator(_faker);
-            UmphreysMcgee = new UmphreysMcgeeGenerator(_faker);
+            GratefulDead = new GratefulDeadGenerator(this.Faker);
+            Hiphop = new HiphopGenerator(this.Faker);
+            Opera = new OperaGenerator(this.Faker);
+            PearlJam = new PearlJamGenerator(this.Faker);
+            Phish = new PhishGenerator(this.Faker);
+            Prince = new PrinceGenerator(this.Faker);
+            RockBand = new RockBandGenerator(this.Faker);
+            Rush = new RushGenerator(this.Faker);
+            SmashingPumpkins = new SmashingPumpkinsGenerator(this.Faker);
+            UmphreysMcgee = new UmphreysMcgeeGenerator(this.Faker);
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("GratefulDead")]
-        public class GratefulDeadGenerator : GeneratorBase
+        public partial class GratefulDeadGenerator : GeneratorBase
         {
             internal GratefulDeadGenerator(Faker faker)
                      : base(faker)
@@ -8274,7 +8476,7 @@ namespace FakerNet
             [FakerMethod("player")]
             public string Player()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("grateful_dead.players", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("grateful_dead.players", this))));
             }
             /// <summary>
             /// Produces the name of a song by The Grateful Dead.
@@ -8285,12 +8487,13 @@ namespace FakerNet
             [FakerMethod("song")]
             public string Song()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("grateful_dead.songs", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("grateful_dead.songs", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Hiphop")]
-        public class HiphopGenerator : GeneratorBase
+        public partial class HiphopGenerator : GeneratorBase
         {
             internal HiphopGenerator(Faker faker)
                      : base(faker)
@@ -8299,8 +8502,6 @@ namespace FakerNet
             
             /// <summary>
             /// Produces the name of a Hip Hop Artist.
-            ///                                 <p>Produces the name of a Hip Hop Artist</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Music::Hiphop.artist #=> "Lil Wayne"</code>
@@ -8308,12 +8509,10 @@ namespace FakerNet
             [FakerMethod("artist")]
             public string Artist()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("music.hiphop.artist", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("music.hiphop.artist", this))));
             }
             /// <summary>
             /// Produces the name of a Hip Hop Group.
-            ///                                 <p>Produces the name of a Hip Hop Group</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Music::Hiphop.groups #=> "OVO"</code>
@@ -8321,12 +8520,10 @@ namespace FakerNet
             [FakerMethod("groups")]
             public string Groups()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("music.hiphop.groups", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("music.hiphop.groups", this))));
             }
             /// <summary>
             /// Produces the name of a Hip Hop Subgenre.
-            ///                                 <p>Produces the name of a Hip Hop Subgenre</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Music::Hiphop.subgeneres #=> "Alternative"</code>
@@ -8334,12 +8531,13 @@ namespace FakerNet
             [FakerMethod("subgenres")]
             public string Subgenres()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("music.hiphop.subgenres", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("music.hiphop.subgenres", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Opera")]
-        public class OperaGenerator : GeneratorBase
+        public partial class OperaGenerator : GeneratorBase
         {
             internal OperaGenerator(Faker faker)
                      : base(faker)
@@ -8355,7 +8553,7 @@ namespace FakerNet
             [FakerMethod("beethoven")]
             public string Beethoven()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.german.by_ludwig_van_beethoven", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.german.by_ludwig_van_beethoven", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Vincenzo Bellini.
@@ -8366,7 +8564,7 @@ namespace FakerNet
             [FakerMethod("bellini")]
             public string Bellini()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.italian.by_vincenzo_bellini", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.italian.by_vincenzo_bellini", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Alban Berg.
@@ -8377,7 +8575,7 @@ namespace FakerNet
             [FakerMethod("berg")]
             public string Berg()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.german.by_alban_berg", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.german.by_alban_berg", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Hector Berlioz.
@@ -8388,7 +8586,7 @@ namespace FakerNet
             [FakerMethod("berlioz")]
             public string Berlioz()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.french.by_hector_berlioz", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.french.by_hector_berlioz", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Georges Bizet.
@@ -8399,7 +8597,7 @@ namespace FakerNet
             [FakerMethod("bizet")]
             public string Bizet()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.french.by_georges_bizet", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.french.by_georges_bizet", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Gaetano Donizetti.
@@ -8410,7 +8608,7 @@ namespace FakerNet
             [FakerMethod("donizetti")]
             public string Donizetti()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.italian.by_gaetano_donizetti", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.italian.by_gaetano_donizetti", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Christoph Willibald Gluck.
@@ -8421,7 +8619,7 @@ namespace FakerNet
             [FakerMethod("gluck")]
             public string Gluck()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.italian.by_christoph_willibald_gluck", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.italian.by_christoph_willibald_gluck", this))));
             }
             /// <summary>
             /// Produces the title of a French opera by Christoph Willibald Gluck.
@@ -8432,7 +8630,7 @@ namespace FakerNet
             [FakerMethod("gluck_french")]
             public string GluckFrench()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.french.by_christoph_willibald_gluck", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.french.by_christoph_willibald_gluck", this))));
             }
             /// <summary>
             /// Produces the title of an Italian opera by Christoph Willibald Gluck.
@@ -8443,7 +8641,7 @@ namespace FakerNet
             [FakerMethod("gluck_italian")]
             public string GluckItalian()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.italian.by_christoph_willibald_gluck", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.italian.by_christoph_willibald_gluck", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Charles Gounod.
@@ -8454,7 +8652,7 @@ namespace FakerNet
             [FakerMethod("gounod")]
             public string Gounod()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.french.by_charles_gounod", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.french.by_charles_gounod", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Wolfgang Amadeus Mozart.
@@ -8465,7 +8663,7 @@ namespace FakerNet
             [FakerMethod("mozart")]
             public string Mozart()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.italian.by_wolfgang_amadeus_mozart", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.italian.by_wolfgang_amadeus_mozart", this))));
             }
             /// <summary>
             /// Produces the title of a German opera by Wolfgang Amadeus Mozart.
@@ -8476,7 +8674,7 @@ namespace FakerNet
             [FakerMethod("mozart_german")]
             public string MozartGerman()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.german.by_wolfgang_amadeus_mozart", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.german.by_wolfgang_amadeus_mozart", this))));
             }
             /// <summary>
             /// Produces the title of an Italian opera by Wolfgang Amadeus Mozart.
@@ -8487,7 +8685,7 @@ namespace FakerNet
             [FakerMethod("mozart_italian")]
             public string MozartItalian()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.italian.by_wolfgang_amadeus_mozart", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.italian.by_wolfgang_amadeus_mozart", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Maurice Ravel.
@@ -8498,7 +8696,7 @@ namespace FakerNet
             [FakerMethod("ravel")]
             public string Ravel()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.french.by_maurice_ravel", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.french.by_maurice_ravel", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Gioacchino Rossini.
@@ -8509,7 +8707,7 @@ namespace FakerNet
             [FakerMethod("rossini")]
             public string Rossini()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.italian.by_gioacchino_rossini", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.italian.by_gioacchino_rossini", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Camille Saint-Saens.
@@ -8520,7 +8718,7 @@ namespace FakerNet
             [FakerMethod("saint_saens")]
             public string SaintSaens()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.french.by_camille_saint_saens", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.french.by_camille_saint_saens", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Franz Schubert.
@@ -8531,7 +8729,7 @@ namespace FakerNet
             [FakerMethod("schubert")]
             public string Schubert()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.german.by_franz_schubert", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.german.by_franz_schubert", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Robert Schumann.
@@ -8542,7 +8740,7 @@ namespace FakerNet
             [FakerMethod("schumann")]
             public string Schumann()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.german.by_robert_schumann", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.german.by_robert_schumann", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Richard Strauss.
@@ -8553,7 +8751,7 @@ namespace FakerNet
             [FakerMethod("strauss")]
             public string Strauss()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.german.by_richard_strauss", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.german.by_richard_strauss", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Giuseppe Verdi.
@@ -8564,7 +8762,7 @@ namespace FakerNet
             [FakerMethod("verdi")]
             public string Verdi()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.italian.by_giuseppe_verdi", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.italian.by_giuseppe_verdi", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Richard Wagner.
@@ -8575,7 +8773,7 @@ namespace FakerNet
             [FakerMethod("wagner")]
             public string Wagner()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.german.by_richard_wagner", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.german.by_richard_wagner", this))));
             }
             /// <summary>
             /// Produces the title of an opera by Carl Maria von Weber.
@@ -8586,12 +8784,13 @@ namespace FakerNet
             [FakerMethod("weber")]
             public string Weber()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("opera.german.by_carl_maria_von_weber", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("opera.german.by_carl_maria_von_weber", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("PearlJam")]
-        public class PearlJamGenerator : GeneratorBase
+        public partial class PearlJamGenerator : GeneratorBase
         {
             internal PearlJamGenerator(Faker faker)
                      : base(faker)
@@ -8607,12 +8806,10 @@ namespace FakerNet
             [FakerMethod("album")]
             public string Album()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("pearl_jam.albums", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("pearl_jam.albums", this))));
             }
             /// <summary>
             /// Produces the name of a member of Pearl Jam (current and former).
-            ///                                 <p>Produces the name of a member of Pearl Jam (current and former)</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Music::PearlJam.musician #=> "Eddie Vedder"</code>
@@ -8620,7 +8817,7 @@ namespace FakerNet
             [FakerMethod("musician")]
             public string Musician()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("pearl_jam.musicians", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("pearl_jam.musicians", this))));
             }
             /// <summary>
             /// Produces the name of a song by Pearl Jam.
@@ -8631,12 +8828,13 @@ namespace FakerNet
             [FakerMethod("song")]
             public string Song()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("pearl_jam.songs", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("pearl_jam.songs", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Phish")]
-        public class PhishGenerator : GeneratorBase
+        public partial class PhishGenerator : GeneratorBase
         {
             internal PhishGenerator(Faker faker)
                      : base(faker)
@@ -8652,7 +8850,7 @@ namespace FakerNet
             [FakerMethod("album")]
             public string Album()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("phish.albums", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("phish.albums", this))));
             }
             /// <summary>
             /// Produces the name of a musician in Phish.
@@ -8663,7 +8861,7 @@ namespace FakerNet
             [FakerMethod("musician")]
             public string Musician()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("phish.musicians", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("phish.musicians", this))));
             }
             /// <summary>
             /// Produces the name of a song by Phish.
@@ -8674,12 +8872,13 @@ namespace FakerNet
             [FakerMethod("song")]
             public string Song()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("phish.songs", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("phish.songs", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Prince")]
-        public class PrinceGenerator : GeneratorBase
+        public partial class PrinceGenerator : GeneratorBase
         {
             internal PrinceGenerator(Faker faker)
                      : base(faker)
@@ -8696,7 +8895,7 @@ namespace FakerNet
             [FakerMethod("album")]
             public string Album()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("prince.album", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("prince.album", this))));
             }
             /// <summary>
             /// Produces a random Prince-associated band.
@@ -8707,7 +8906,7 @@ namespace FakerNet
             [FakerMethod("band")]
             public string Band()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("prince.band", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("prince.band", this))));
             }
             /// <summary>
             /// Produces a random Prince song lyric.
@@ -8719,7 +8918,7 @@ namespace FakerNet
             [FakerMethod("lyric")]
             public string Lyric()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("prince.lyric", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("prince.lyric", this))));
             }
             /// <summary>
             /// Produces a random Prince song.
@@ -8731,12 +8930,13 @@ namespace FakerNet
             [FakerMethod("song")]
             public string Song()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("prince.song", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("prince.song", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("RockBand")]
-        public class RockBandGenerator : GeneratorBase
+        public partial class RockBandGenerator : GeneratorBase
         {
             internal RockBandGenerator(Faker faker)
                      : base(faker)
@@ -8752,7 +8952,7 @@ namespace FakerNet
             [FakerMethod("name")]
             public string Name()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("rock_band.name", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("rock_band.name", this))));
             }
             /// <summary>
             /// Produces a rock song.
@@ -8763,12 +8963,13 @@ namespace FakerNet
             [FakerMethod("song")]
             public string Song()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("rock_band.song", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("rock_band.song", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Rush")]
-        public class RushGenerator : GeneratorBase
+        public partial class RushGenerator : GeneratorBase
         {
             internal RushGenerator(Faker faker)
                      : base(faker)
@@ -8777,8 +8978,6 @@ namespace FakerNet
             
             /// <summary>
             /// Produces the name of an album by Rush.
-            ///                                 <p>Produces the name of an album by Rush</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Music::Rush.album #=> "Hold Your Fire"</code>
@@ -8786,12 +8985,10 @@ namespace FakerNet
             [FakerMethod("album")]
             public string Album()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("rush.albums", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("rush.albums", this))));
             }
             /// <summary>
             /// Produces the name of a member of Rush.
-            ///                                 <p>Produces the name of a member of Rush</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Music::Rush.player #=> "Geddy Lee"</code>
@@ -8799,12 +8996,13 @@ namespace FakerNet
             [FakerMethod("player")]
             public string Player()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("rush.players", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("rush.players", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("SmashingPumpkins")]
-        public class SmashingPumpkinsGenerator : GeneratorBase
+        public partial class SmashingPumpkinsGenerator : GeneratorBase
         {
             internal SmashingPumpkinsGenerator(Faker faker)
                      : base(faker)
@@ -8820,7 +9018,7 @@ namespace FakerNet
             [FakerMethod("album")]
             public string Album()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("smashing_pumpkins.albums", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("smashing_pumpkins.albums", this))));
             }
             /// <summary>
             /// Produces a random Smashing Pumpkins song lyric.
@@ -8832,12 +9030,10 @@ namespace FakerNet
             [FakerMethod("lyric")]
             public string Lyric()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("smashing_pumpkins.lyric", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("smashing_pumpkins.lyric", this))));
             }
             /// <summary>
             /// Produces the name of a member of the Smashing Pumpkins (current and former).
-            ///                                 <p>Produces the name of a member of the Smashing Pumpkins (current and former)</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Music::SmashingPumpkins.musician #=> "Billy Corgan"</code>
@@ -8845,7 +9041,7 @@ namespace FakerNet
             [FakerMethod("musician")]
             public string Musician()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("smashing_pumpkins.musicians", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("smashing_pumpkins.musicians", this))));
             }
             /// <summary>
             /// Produces the name of a song by the Smashing Pumpkins.
@@ -8856,12 +9052,13 @@ namespace FakerNet
             [FakerMethod("song")]
             public string Song()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("smashing_pumpkins.songs", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("smashing_pumpkins.songs", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("UmphreysMcgee")]
-        public class UmphreysMcgeeGenerator : GeneratorBase
+        public partial class UmphreysMcgeeGenerator : GeneratorBase
         {
             internal UmphreysMcgeeGenerator(Faker faker)
                      : base(faker)
@@ -8877,7 +9074,7 @@ namespace FakerNet
             [FakerMethod("song")]
             public string Song()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("umphreys_mcgee.song", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("umphreys_mcgee.song", this))));
             }
         }
         
@@ -8890,7 +9087,7 @@ namespace FakerNet
         [FakerMethod("album")]
         public string Album()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("music.albums", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("music.albums", this))));
         }
         /// <summary>
         /// Produces the name of a band.
@@ -8901,7 +9098,7 @@ namespace FakerNet
         [FakerMethod("band")]
         public string Band()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("music.bands", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("music.bands", this))));
         }
         #warning No implementation defined for method chord();
         #warning No implementation defined for method chord_types();
@@ -8914,7 +9111,7 @@ namespace FakerNet
         [FakerMethod("genre")]
         public string Genre()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("music.genres", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("music.genres", this))));
         }
         /// <summary>
         /// Produces the name of an instrument.
@@ -8925,7 +9122,7 @@ namespace FakerNet
         [FakerMethod("instrument")]
         public string Instrument()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("music.instruments", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("music.instruments", this))));
         }
         #warning No implementation defined for method key();
         #warning No implementation defined for method key_types();
@@ -8934,7 +9131,6 @@ namespace FakerNet
         /// <summary>
         /// Produces a name from Lou Bega's Mambo #5.
         ///                             <p>Produces a name from Lou Bega’s Mambo #5</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Music.mambo #=> "Monica"</code>
@@ -8942,12 +9138,13 @@ namespace FakerNet
         [FakerMethod("mambo_no_5")]
         public string MamboNo5()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("music.mambo_no_5", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("music.mambo_no_5", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Name")]
-    public class NameGenerator : GeneratorBase
+    public partial class NameGenerator : GeneratorBase
     {
         internal NameGenerator(Faker faker)
                  : base(faker)
@@ -8963,7 +9160,7 @@ namespace FakerNet
         [FakerMethod("female_first_name")]
         public string FemaleFirstName()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("name.female_first_name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("name.female_first_name", this))));
         }
         /// <summary>
         /// Produces a random first name.
@@ -8974,7 +9171,7 @@ namespace FakerNet
         [FakerMethod("first_name")]
         public string FirstName()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("name.first_name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("name.first_name", this))));
         }
         #warning No implementation defined for method initials(long number = 3);
         /// <summary>
@@ -8986,7 +9183,7 @@ namespace FakerNet
         [FakerMethod("last_name")]
         public string LastName()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("name.last_name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("name.last_name", this))));
         }
         /// <summary>
         /// Produces a random male first name.
@@ -8997,7 +9194,7 @@ namespace FakerNet
         [FakerMethod("male_first_name")]
         public string MaleFirstName()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("name.male_first_name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("name.male_first_name", this))));
         }
         /// <summary>
         /// Produces a random name.
@@ -9008,7 +9205,7 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("name.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("name.name", this))));
         }
         /// <summary>
         /// Produces a random name with middle name.
@@ -9019,7 +9216,7 @@ namespace FakerNet
         [FakerMethod("name_with_middle")]
         public string NameWithMiddle()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("name.name_with_middle", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("name.name_with_middle", this))));
         }
         /// <summary>
         /// Produces a random gender neutral first name.
@@ -9030,7 +9227,7 @@ namespace FakerNet
         [FakerMethod("neutral_first_name")]
         public string NeutralFirstName()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("name.neutral_first_name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("name.neutral_first_name", this))));
         }
         /// <summary>
         /// Produces a random name prefix.
@@ -9041,7 +9238,7 @@ namespace FakerNet
         [FakerMethod("prefix")]
         public string Prefix()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("name.prefix", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("name.prefix", this))));
         }
         /// <summary>
         /// Produces a random name suffix.
@@ -9052,12 +9249,13 @@ namespace FakerNet
         [FakerMethod("suffix")]
         public string Suffix()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("name.suffix", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("name.suffix", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Nation")]
-    public class NationGenerator : GeneratorBase
+    public partial class NationGenerator : GeneratorBase
     {
         internal NationGenerator(Faker faker)
                  : base(faker)
@@ -9073,7 +9271,7 @@ namespace FakerNet
         [FakerMethod("capital_city")]
         public string CapitalCity()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("nation.capital_city", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("nation.capital_city", this))));
         }
         #warning No implementation defined for method flag();
         /// <summary>
@@ -9085,7 +9283,7 @@ namespace FakerNet
         [FakerMethod("language")]
         public string Language()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("nation.language", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("nation.language", this))));
         }
         /// <summary>
         /// Produces a random national sport.
@@ -9096,7 +9294,7 @@ namespace FakerNet
         [FakerMethod("national_sport")]
         public string NationalSport()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("team.sport", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("team.sport", this))));
         }
         /// <summary>
         /// Produces a random nationality.
@@ -9107,12 +9305,13 @@ namespace FakerNet
         [FakerMethod("nationality")]
         public string Nationality()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("nation.nationality", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("nation.nationality", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("NationalHealthService")]
-    public class NationalHealthServiceGenerator : GeneratorBase
+    public partial class NationalHealthServiceGenerator : GeneratorBase
     {
         internal NationalHealthServiceGenerator(Faker faker)
                  : base(faker)
@@ -9123,8 +9322,9 @@ namespace FakerNet
         #warning No implementation defined for method check_digit(long number = 0);
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("NatoPhoneticAlphabet")]
-    public class NatoPhoneticAlphabetGenerator : GeneratorBase
+    public partial class NatoPhoneticAlphabetGenerator : GeneratorBase
     {
         internal NatoPhoneticAlphabetGenerator(Faker faker)
                  : base(faker)
@@ -9140,12 +9340,13 @@ namespace FakerNet
         [FakerMethod("code_word")]
         public string CodeWord()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("nato_phonetic_alphabet.code_word", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("nato_phonetic_alphabet.code_word", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Number")]
-    public class NumberGenerator : GeneratorBase
+    public partial class NumberGenerator : GeneratorBase
     {
         internal NumberGenerator(Faker faker)
                  : base(faker)
@@ -9171,8 +9372,9 @@ namespace FakerNet
         #warning No implementation defined for method within(UNKNOWN_Range? range = null);
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Omniauth")]
-    public class OmniauthGenerator : GeneratorBase
+    public partial class OmniauthGenerator : GeneratorBase
     {
         internal OmniauthGenerator(Faker faker)
                  : base(faker)
@@ -9182,25 +9384,26 @@ namespace FakerNet
         #warning No implementation defined for method apple(string name, string email, string? uid = null);
         #warning No implementation defined for method auth0(string name, string email, string? uid = null);
         #warning Failed processing method city_state
+        #warning Failed processing method email
         #warning No implementation defined for method facebook(string name, string email, string username, string uid);
+        #warning Failed processing method first_name
         #warning Failed processing method gender
         #warning No implementation defined for method github(string name, string email, string uid);
         #warning No implementation defined for method google(string name, string email, string uid);
         #warning Failed processing method image
+        #warning No implementation defined for method initialize();
+        #warning Failed processing method last_name
         #warning No implementation defined for method linkedin(string name, string email, string uid);
+        #warning Failed processing method name
         #warning Failed processing method random_boolean
         #warning Failed processing method random_number_from_range
         #warning Failed processing method timezone
         #warning No implementation defined for method twitter(string name, string nickname, string uid);
-        #warning Failed processing method email
-        #warning Failed processing method first_name
-        #warning No implementation defined for method initialize();
-        #warning Failed processing method last_name
-        #warning Failed processing method name
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("PhoneNumber")]
-    public class PhoneNumberGenerator : GeneratorBase
+    public partial class PhoneNumberGenerator : GeneratorBase
     {
         internal PhoneNumberGenerator(Faker faker)
                  : base(faker)
@@ -9218,7 +9421,7 @@ namespace FakerNet
         [FakerMethod("area_code")]
         public string AreaCode()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("phone_number.area_code", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("phone_number.area_code", this))));
         }
         /// <summary>
         /// Produces a random cell phone number in a random format without the country code and it can have different dividers.
@@ -9231,7 +9434,7 @@ namespace FakerNet
         [FakerMethod("cell_phone")]
         public string CellPhone()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("cell_phone.formats", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("cell_phone.formats", this))));
         }
         #warning No implementation defined for method cell_phone_in_e164();
         /// <summary>
@@ -9245,7 +9448,7 @@ namespace FakerNet
         [FakerMethod("cell_phone_with_country_code")]
         public string CellPhoneWithCountryCode()
         {
-            return this.Expression("#{country_code} #{cell_phone}", this);
+            return this.EvaluateExpression("#{country_code} #{cell_phone}", this);
         }
         /// <summary>
         /// Produces a random country code.
@@ -9258,7 +9461,7 @@ namespace FakerNet
         [FakerMethod("country_code")]
         public string CountryCode()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("phone_number.country_code", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("phone_number.country_code", this))));
         }
         /// <summary>
         /// Produces a random exchange code.
@@ -9271,7 +9474,7 @@ namespace FakerNet
         [FakerMethod("exchange_code")]
         public string ExchangeCode()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("phone_number.exchange_code", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("phone_number.exchange_code", this))));
         }
         /// <summary>
         /// Produces a phone number in a random format without the country code and it can have different dividers.
@@ -9284,7 +9487,7 @@ namespace FakerNet
         [FakerMethod("phone_number")]
         public string PhoneNumber()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("phone_number.formats", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("phone_number.formats", this))));
         }
         /// <summary>
         /// Produces a random phone number with country code.
@@ -9297,13 +9500,14 @@ namespace FakerNet
         [FakerMethod("phone_number_with_country_code")]
         public string PhoneNumberWithCountryCode()
         {
-            return this.Expression("#{country_code} #{phone_number}", this);
+            return this.EvaluateExpression("#{country_code} #{phone_number}", this);
         }
         #warning No implementation defined for method subscriber_number(long length = 4);
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Placeholdit")]
-    public class PlaceholditGenerator : GeneratorBase
+    public partial class PlaceholditGenerator : GeneratorBase
     {
         internal PlaceholditGenerator(Faker faker)
                  : base(faker)
@@ -9314,8 +9518,9 @@ namespace FakerNet
         #warning No implementation defined for method image(string size, string format, string backgroundColor, string textColor, string? text = null);
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("ProgrammingLanguage")]
-    public class ProgrammingLanguageGenerator : GeneratorBase
+    public partial class ProgrammingLanguageGenerator : GeneratorBase
     {
         internal ProgrammingLanguageGenerator(Faker faker)
                  : base(faker)
@@ -9331,7 +9536,7 @@ namespace FakerNet
         [FakerMethod("creator")]
         public string Creator()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("programming_language.creator", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("programming_language.creator", this))));
         }
         /// <summary>
         /// Produces the name of a programming language.
@@ -9342,12 +9547,13 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("programming_language.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("programming_language.name", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Quote")]
-    public class QuoteGenerator : GeneratorBase
+    public partial class QuoteGenerator : GeneratorBase
     {
         internal QuoteGenerator(Faker faker)
                  : base(faker)
@@ -9363,7 +9569,7 @@ namespace FakerNet
         [FakerMethod("famous_last_words")]
         public string FamousLastWords()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("quote.famous_last_words", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("quote.famous_last_words", this))));
         }
         /// <summary>
         /// Produces a quote from a fortune cookie.
@@ -9374,7 +9580,7 @@ namespace FakerNet
         [FakerMethod("fortune_cookie")]
         public string FortuneCookie()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("quote.fortune_cookie", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("quote.fortune_cookie", this))));
         }
         /// <summary>
         /// Produces a quote from Deep Thoughts by Jack Handey.
@@ -9385,7 +9591,7 @@ namespace FakerNet
         [FakerMethod("jack_handey")]
         public string JackHandey()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("quote.jack_handey", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("quote.jack_handey", this))));
         }
         /// <summary>
         /// Produces a quote from Matz.
@@ -9396,7 +9602,7 @@ namespace FakerNet
         [FakerMethod("matz")]
         public string Matz()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("quote.matz", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("quote.matz", this))));
         }
         /// <summary>
         /// Produces a quote from comedian Mitch Hedberg.
@@ -9407,7 +9613,7 @@ namespace FakerNet
         [FakerMethod("mitch_hedberg")]
         public string MitchHedberg()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("quote.mitch_hedberg", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("quote.mitch_hedberg", this))));
         }
         /// <summary>
         /// Produces a quote about the most interesting man in the world.
@@ -9418,7 +9624,7 @@ namespace FakerNet
         [FakerMethod("most_interesting_man_in_the_world")]
         public string MostInterestingManInTheWorld()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("quote.most_interesting_man_in_the_world", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("quote.most_interesting_man_in_the_world", this))));
         }
         /// <summary>
         /// Produces a Robin quote.
@@ -9429,7 +9635,7 @@ namespace FakerNet
         [FakerMethod("robin")]
         public string Robin()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("quote.robin", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("quote.robin", this))));
         }
         /// <summary>
         /// Produces a singular siegler quote.
@@ -9440,7 +9646,7 @@ namespace FakerNet
         [FakerMethod("singular_siegler")]
         public string SingularSiegler()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("quote.singular_siegler", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("quote.singular_siegler", this))));
         }
         /// <summary>
         /// Produces a quote from Yoda.
@@ -9451,12 +9657,13 @@ namespace FakerNet
         [FakerMethod("yoda")]
         public string Yoda()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("quote.yoda", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("quote.yoda", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Quotes")]
-    public class QuotesGenerator : GeneratorBase
+    public partial class QuotesGenerator : GeneratorBase
     {
         [FakerMethod("Chiquito")]
         public ChiquitoGenerator Chiquito { get; }
@@ -9467,13 +9674,14 @@ namespace FakerNet
         internal QuotesGenerator(Faker faker)
                  : base(faker)
         {
-            Chiquito = new ChiquitoGenerator(_faker);
-            Rajnikanth = new RajnikanthGenerator(_faker);
-            Shakespeare = new ShakespeareGenerator(_faker);
+            Chiquito = new ChiquitoGenerator(this.Faker);
+            Rajnikanth = new RajnikanthGenerator(this.Faker);
+            Shakespeare = new ShakespeareGenerator(this.Faker);
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Chiquito")]
-        public class ChiquitoGenerator : GeneratorBase
+        public partial class ChiquitoGenerator : GeneratorBase
         {
             internal ChiquitoGenerator(Faker faker)
                      : base(faker)
@@ -9484,30 +9692,31 @@ namespace FakerNet
             [FakerMethod("expressions")]
             public string Expressions()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("chiquito.expressions", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("chiquito.expressions", this))));
             }
             #warning No implementation defined for method joke();
             [FakerMethod("jokes")]
             public string Jokes()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("chiquito.jokes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("chiquito.jokes", this))));
             }
             #warning No implementation defined for method sentence();
             [FakerMethod("sentences")]
             public string Sentences()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("chiquito.sentences", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("chiquito.sentences", this))));
             }
             #warning No implementation defined for method term();
             [FakerMethod("terms")]
             public string Terms()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("chiquito.terms", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("chiquito.terms", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Rajnikanth")]
-        public class RajnikanthGenerator : GeneratorBase
+        public partial class RajnikanthGenerator : GeneratorBase
         {
             internal RajnikanthGenerator(Faker faker)
                      : base(faker)
@@ -9517,7 +9726,6 @@ namespace FakerNet
             /// <summary>
             /// Produces a Rajnikanth.
             ///                                 <p>Original list of jokes: <a href="http://www.rajinikanthjokes.com">www.rajinikanthjokes.com</a>/</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Rajnikanth.joke
@@ -9526,12 +9734,13 @@ namespace FakerNet
             [FakerMethod("joke")]
             public string Joke()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("rajnikanth.joke", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("rajnikanth.joke", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Shakespeare")]
-        public class ShakespeareGenerator : GeneratorBase
+        public partial class ShakespeareGenerator : GeneratorBase
         {
             internal ShakespeareGenerator(Faker faker)
                      : base(faker)
@@ -9541,7 +9750,6 @@ namespace FakerNet
             /// <summary>
             /// Generates quote from 'As you like it!'.
             ///                                 <p>Generates quote from ‘As you like it!’</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Quotes::Shakespeare.as_you_like_it   #=> "How bitter a thing it is to look into happiness through another man's eyes!"</code>
@@ -9549,13 +9757,11 @@ namespace FakerNet
             [FakerMethod("as_you_like_it")]
             public string AsYouLikeIt()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("shakespeare.as_you_like_it", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("shakespeare.as_you_like_it", this))));
             }
             #warning No implementation defined for method as_you_like_it_quote();
             /// <summary>
             /// Generates quote from Hamlet.
-            ///                                 <p>Generates quote from Hamlet</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Quotes::Shakespeare.hamlet   #=> "A little more than kin, and less than kind."</code>
@@ -9563,13 +9769,12 @@ namespace FakerNet
             [FakerMethod("hamlet")]
             public string Hamlet()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("shakespeare.hamlet", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("shakespeare.hamlet", this))));
             }
             #warning No implementation defined for method hamlet_quote();
             /// <summary>
             /// Returns quote from 'King Rechard III'.
             ///                                 <p>Returns quote from ‘King Rechard III’</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Quotes::Shakespeare  #=> "The king's name is a tower of strength."</code>
@@ -9577,13 +9782,12 @@ namespace FakerNet
             [FakerMethod("king_richard_iii")]
             public string KingRichardIii()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("shakespeare.king_richard_iii", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("shakespeare.king_richard_iii", this))));
             }
             #warning No implementation defined for method king_richard_iii_quote();
             /// <summary>
             /// Quote from 'Romeo and Juliet'.
             ///                                 <p>Quote from ‘Romeo and Juliet’</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::Quotes::Shakespeare.romeo_and_juliet  #=> "Wisely and slow; they stumble that run fast."</code>
@@ -9591,15 +9795,16 @@ namespace FakerNet
             [FakerMethod("romeo_and_juliet")]
             public string RomeoAndJuliet()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("shakespeare.romeo_and_juliet", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("shakespeare.romeo_and_juliet", this))));
             }
             #warning No implementation defined for method romeo_and_juliet_quote();
         }
         
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Relationship")]
-    public class RelationshipGenerator : GeneratorBase
+    public partial class RelationshipGenerator : GeneratorBase
     {
         internal RelationshipGenerator(Faker faker)
                  : base(faker)
@@ -9616,7 +9821,7 @@ namespace FakerNet
         [FakerMethod("in_law")]
         public string InLaw()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("relationship.in_law", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("relationship.in_law", this))));
         }
         /// <summary>
         /// Produces a random parent relationship.
@@ -9627,7 +9832,7 @@ namespace FakerNet
         [FakerMethod("parent")]
         public string Parent()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("relationship.parent", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("relationship.parent", this))));
         }
         /// <summary>
         /// Produces a random sibling relationship.
@@ -9638,7 +9843,7 @@ namespace FakerNet
         [FakerMethod("sibling")]
         public string Sibling()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("relationship.sibling", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("relationship.sibling", this))));
         }
         /// <summary>
         /// Produces a random spouse relationship.
@@ -9649,12 +9854,13 @@ namespace FakerNet
         [FakerMethod("spouse")]
         public string Spouse()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("relationship.spouse", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("relationship.spouse", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Restaurant")]
-    public class RestaurantGenerator : GeneratorBase
+    public partial class RestaurantGenerator : GeneratorBase
     {
         internal RestaurantGenerator(Faker faker)
                  : base(faker)
@@ -9671,7 +9877,7 @@ namespace FakerNet
         [FakerMethod("description")]
         public string Description()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("restaurant.description", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("restaurant.description", this))));
         }
         /// <summary>
         /// Produces the name of a restaurant.
@@ -9682,7 +9888,7 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("restaurant.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("restaurant.name", this))));
         }
         /// <summary>
         /// Produces a review for a restaurant.
@@ -9694,7 +9900,7 @@ namespace FakerNet
         [FakerMethod("review")]
         public string Review()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("restaurant.review", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("restaurant.review", this))));
         }
         /// <summary>
         /// Produces a type of restaurant.
@@ -9705,12 +9911,13 @@ namespace FakerNet
         [FakerMethod("type")]
         public string Type()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("restaurant.type", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("restaurant.type", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Science")]
-    public class ScienceGenerator : GeneratorBase
+    public partial class ScienceGenerator : GeneratorBase
     {
         internal ScienceGenerator(Faker faker)
                  : base(faker)
@@ -9726,7 +9933,7 @@ namespace FakerNet
         [FakerMethod("element")]
         public string Element()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("science.element", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("science.element", this))));
         }
         /// <summary>
         /// Produces the state of an element.
@@ -9737,7 +9944,7 @@ namespace FakerNet
         [FakerMethod("element_state")]
         public string ElementState()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("science.element_state", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("science.element_state", this))));
         }
         /// <summary>
         /// Produces the subcategory of an element.
@@ -9748,7 +9955,7 @@ namespace FakerNet
         [FakerMethod("element_subcategory")]
         public string ElementSubcategory()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("science.element_subcategory", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("science.element_subcategory", this))));
         }
         /// <summary>
         /// Produces the symbol of an element.
@@ -9759,12 +9966,10 @@ namespace FakerNet
         [FakerMethod("element_symbol")]
         public string ElementSymbol()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("science.element_symbol", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("science.element_symbol", this))));
         }
         /// <summary>
         /// Produces a scientifically sounding word.
-        ///                             <p>Produces a scientifically sounding word</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Science.modifier #=> "Quantum"
@@ -9773,7 +9978,7 @@ namespace FakerNet
         [FakerMethod("modifier")]
         public string Modifier()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("science.modifier", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("science.modifier", this))));
         }
         #warning No implementation defined for method science(List<UNKNOWN_Symbol> branches);
         /// <summary>
@@ -9785,17 +9990,14 @@ namespace FakerNet
         [FakerMethod("scientist")]
         public string Scientist()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("science.scientist", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("science.scientist", this))));
         }
         /// <summary>
         /// Produces the name of a scientific tool.
         ///                             <p>By default it uses a science word modifier to generate more diverse data, which can be disabled.</p>
-        ///                         
         /// </summary>
         /// <param name="simple">
-        /// 
-        /// <p>Whether to generate simple realistic tool names, (no Q-word).</p>
-        /// 
+        /// Whether to generate simple realistic tool names, (no Q-word).
         /// (default value "false")
         /// </param>
         /// <example>
@@ -9807,12 +10009,13 @@ namespace FakerNet
         [FakerMethod("tool")]
         public string Tool(bool simple = false)
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("science.tool", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("science.tool", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Show")]
-    public class ShowGenerator : GeneratorBase
+    public partial class ShowGenerator : GeneratorBase
     {
         internal ShowGenerator(Faker faker)
                  : base(faker)
@@ -9821,8 +10024,6 @@ namespace FakerNet
         
         /// <summary>
         /// Produces the name of a musical for an older audience.
-        ///                             <p>Produces the name of a musical for an older audience</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Alphanumeric.alpha
@@ -9831,12 +10032,10 @@ namespace FakerNet
         [FakerMethod("adult_musical")]
         public string AdultMusical()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("show.adult_musical", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("show.adult_musical", this))));
         }
         /// <summary>
         /// Produces the name of a musical for a younger audience.
-        ///                             <p>Produces the name of a musical for a younger audience</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Alphanumeric.alpha
@@ -9845,12 +10044,10 @@ namespace FakerNet
         [FakerMethod("kids_musical")]
         public string KidsMusical()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("show.kids_musical", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("show.kids_musical", this))));
         }
         /// <summary>
         /// Produces the name of a play.
-        ///                             <p>Produces the name of a play</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Alphanumeric.alpha
@@ -9859,12 +10056,13 @@ namespace FakerNet
         [FakerMethod("play")]
         public string Play()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("show.play", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("show.play", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("SlackEmoji")]
-    public class SlackEmojiGenerator : GeneratorBase
+    public partial class SlackEmojiGenerator : GeneratorBase
     {
         internal SlackEmojiGenerator(Faker faker)
                  : base(faker)
@@ -9880,7 +10078,7 @@ namespace FakerNet
         [FakerMethod("activity")]
         public string Activity()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("slack_emoji.activity", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("slack_emoji.activity", this))));
         }
         /// <summary>
         /// Produces a random slack emoji from celebration category.
@@ -9891,7 +10089,7 @@ namespace FakerNet
         [FakerMethod("celebration")]
         public string Celebration()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("slack_emoji.celebration", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("slack_emoji.celebration", this))));
         }
         /// <summary>
         /// Produces a random slack emoji from custom category.
@@ -9902,7 +10100,7 @@ namespace FakerNet
         [FakerMethod("custom")]
         public string Custom()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("slack_emoji.custom", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("slack_emoji.custom", this))));
         }
         /// <summary>
         /// Produces a random slack emoji from any category.
@@ -9913,7 +10111,7 @@ namespace FakerNet
         [FakerMethod("emoji")]
         public string Emoji()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("slack_emoji.emoji", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("slack_emoji.emoji", this))));
         }
         /// <summary>
         /// Produces a random slack emoji from food and drink category.
@@ -9924,7 +10122,7 @@ namespace FakerNet
         [FakerMethod("food_and_drink")]
         public string FoodAndDrink()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("slack_emoji.food_and_drink", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("slack_emoji.food_and_drink", this))));
         }
         /// <summary>
         /// Produces a random slack emoji from nature category.
@@ -9935,7 +10133,7 @@ namespace FakerNet
         [FakerMethod("nature")]
         public string Nature()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("slack_emoji.nature", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("slack_emoji.nature", this))));
         }
         /// <summary>
         /// Produces a random slack emoji from objects and symbols category.
@@ -9946,7 +10144,7 @@ namespace FakerNet
         [FakerMethod("objects_and_symbols")]
         public string ObjectsAndSymbols()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("slack_emoji.objects_and_symbols", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("slack_emoji.objects_and_symbols", this))));
         }
         /// <summary>
         /// Produces a random slack emoji from people category.
@@ -9957,7 +10155,7 @@ namespace FakerNet
         [FakerMethod("people")]
         public string People()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("slack_emoji.people", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("slack_emoji.people", this))));
         }
         /// <summary>
         /// Produces a random slack emoji from travel and places category.
@@ -9968,12 +10166,13 @@ namespace FakerNet
         [FakerMethod("travel_and_places")]
         public string TravelAndPlaces()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("slack_emoji.travel_and_places", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("slack_emoji.travel_and_places", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Source")]
-    public class SourceGenerator : GeneratorBase
+    public partial class SourceGenerator : GeneratorBase
     {
         internal SourceGenerator(Faker faker)
                  : base(faker)
@@ -9993,15 +10192,13 @@ namespace FakerNet
         [FakerMethod("hello_world")]
         public string HelloWorld(string lang = "ruby")
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("source.hello_world." + lang + "", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("source.hello_world." + lang + "", this))));
         }
         /// <summary>
         /// Produces source code for printing a string in a given language.
         /// </summary>
         /// <param name="str">
-        /// 
-        /// <p>The string to print</p>
-        /// 
+        /// The string to print
         /// </param>
         /// <param name="lang">
         /// The programming language to use
@@ -10013,7 +10210,7 @@ namespace FakerNet
         [FakerMethod("print")]
         public string Print(string str, string lang = "ruby")
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("source.print." + lang + "", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("source.print." + lang + "", this))));
         }
         /// <summary>
         /// Produces source code for printing 1 through 10 in a given language.
@@ -10028,12 +10225,13 @@ namespace FakerNet
         [FakerMethod("print_1_to_10")]
         public string Print1To10(string lang = "ruby")
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("source.print_1_to_10." + lang + "", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("source.print_1_to_10." + lang + "", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("SouthAfrica")]
-    public class SouthAfricaGenerator : GeneratorBase
+    public partial class SouthAfricaGenerator : GeneratorBase
     {
         internal SouthAfricaGenerator(Faker faker)
                  : base(faker)
@@ -10052,8 +10250,9 @@ namespace FakerNet
         #warning No implementation defined for method vat_number();
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Space")]
-    public class SpaceGenerator : GeneratorBase
+    public partial class SpaceGenerator : GeneratorBase
     {
         internal SpaceGenerator(Faker faker)
                  : base(faker)
@@ -10069,7 +10268,7 @@ namespace FakerNet
         [FakerMethod("agency")]
         public string Agency()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("space.agency", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("space.agency", this))));
         }
         /// <summary>
         /// Produces a space agency abbreviation.
@@ -10080,7 +10279,7 @@ namespace FakerNet
         [FakerMethod("agency_abv")]
         public string AgencyAbv()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("space.agency_abv", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("space.agency_abv", this))));
         }
         /// <summary>
         /// Produces the name of a space company.
@@ -10091,7 +10290,7 @@ namespace FakerNet
         [FakerMethod("company")]
         public string Company()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("space.company", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("space.company", this))));
         }
         /// <summary>
         /// Produces the name of a constellation.
@@ -10102,7 +10301,7 @@ namespace FakerNet
         [FakerMethod("constellation")]
         public string Constellation()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("space.constellation", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("space.constellation", this))));
         }
         /// <summary>
         /// Produces a distance measurement.
@@ -10113,7 +10312,7 @@ namespace FakerNet
         [FakerMethod("distance_measurement")]
         public string DistanceMeasurement()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("space.distance_measurement", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("space.distance_measurement", this))));
         }
         /// <summary>
         /// Produces the name of a galaxy.
@@ -10124,7 +10323,7 @@ namespace FakerNet
         [FakerMethod("galaxy")]
         public string Galaxy()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("space.galaxy", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("space.galaxy", this))));
         }
         /// <summary>
         /// Produces the name of a launch vehicle.
@@ -10135,7 +10334,7 @@ namespace FakerNet
         [FakerMethod("launch_vehicle")]
         public string LaunchVehicle()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("space.launch_vehicle", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("space.launch_vehicle", this))));
         }
         /// <summary>
         /// Produces the name of a meteorite.
@@ -10146,7 +10345,7 @@ namespace FakerNet
         [FakerMethod("meteorite")]
         public string Meteorite()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("space.meteorite", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("space.meteorite", this))));
         }
         /// <summary>
         /// Produces the name of a moon.
@@ -10157,7 +10356,7 @@ namespace FakerNet
         [FakerMethod("moon")]
         public string Moon()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("space.moon", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("space.moon", this))));
         }
         /// <summary>
         /// Produces the name of a NASA spacecraft.
@@ -10168,7 +10367,7 @@ namespace FakerNet
         [FakerMethod("nasa_space_craft")]
         public string NasaSpaceCraft()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("space.nasa_space_craft", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("space.nasa_space_craft", this))));
         }
         /// <summary>
         /// Produces the name of a nebula.
@@ -10179,7 +10378,7 @@ namespace FakerNet
         [FakerMethod("nebula")]
         public string Nebula()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("space.nebula", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("space.nebula", this))));
         }
         /// <summary>
         /// Produces the name of a planet.
@@ -10190,7 +10389,7 @@ namespace FakerNet
         [FakerMethod("planet")]
         public string Planet()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("space.planet", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("space.planet", this))));
         }
         /// <summary>
         /// Produces the name of a star.
@@ -10201,7 +10400,7 @@ namespace FakerNet
         [FakerMethod("star")]
         public string Star()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("space.star", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("space.star", this))));
         }
         /// <summary>
         /// Produces the name of a star cluster.
@@ -10212,12 +10411,13 @@ namespace FakerNet
         [FakerMethod("star_cluster")]
         public string StarCluster()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("space.star_cluster", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("space.star_cluster", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Sport")]
-    public class SportGenerator : GeneratorBase
+    public partial class SportGenerator : GeneratorBase
     {
         internal SportGenerator(Faker faker)
                  : base(faker)
@@ -10233,20 +10433,16 @@ namespace FakerNet
         [FakerMethod("ancient_olympics_sport")]
         public string AncientOlympicsSport()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("sport.ancient_olympics", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("sport.ancient_olympics", this))));
         }
         /// <summary>
         /// Produces a sport from the modern olympics or paralympics, summer or winter.
         /// </summary>
         /// <param name="includeAncient">
-        /// 
-        /// <p>If true, may produce a sport from the ancient olympics</p>
-        /// 
+        /// If true, may produce a sport from the ancient olympics
         /// </param>
         /// <param name="includeUnusual">
-        /// 
-        /// <p>If true, may produce an unusual (definitely not olympic) sport</p>
-        /// 
+        /// If true, may produce an unusual (definitely not olympic) sport
         /// (default value "false")
         /// </param>
         /// <example>
@@ -10255,7 +10451,7 @@ namespace FakerNet
         [FakerMethod("sport")]
         public string Sport(bool includeAncient, bool includeUnusual = false)
         {
-            return this.Resolve("sport.summer_olympics", this);
+            return this.ResolveYamlValue("sport.summer_olympics", this);
         }
         /// <summary>
         /// Produces a sport from the summer olympics.
@@ -10266,7 +10462,7 @@ namespace FakerNet
         [FakerMethod("summer_olympics_sport")]
         public string SummerOlympicsSport()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("sport.summer_olympics", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("sport.summer_olympics", this))));
         }
         /// <summary>
         /// Produces a sport from the summer paralympics.
@@ -10277,7 +10473,7 @@ namespace FakerNet
         [FakerMethod("summer_paralympics_sport")]
         public string SummerParalympicsSport()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("sport.summer_paralympics", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("sport.summer_paralympics", this))));
         }
         /// <summary>
         /// Produces an unusual sport.
@@ -10288,7 +10484,7 @@ namespace FakerNet
         [FakerMethod("unusual_sport")]
         public string UnusualSport()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("sport.unusual", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("sport.unusual", this))));
         }
         /// <summary>
         /// Produces a sport from the winter olympics.
@@ -10299,7 +10495,7 @@ namespace FakerNet
         [FakerMethod("winter_olympics_sport")]
         public string WinterOlympicsSport()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("sport.winter_olympics", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("sport.winter_olympics", this))));
         }
         /// <summary>
         /// Produces a sport from the winter paralympics.
@@ -10310,12 +10506,13 @@ namespace FakerNet
         [FakerMethod("winter_paralympics_sport")]
         public string WinterParalympicsSport()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("sport.winter_paralympics", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("sport.winter_paralympics", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Sports")]
-    public class SportsGenerator : GeneratorBase
+    public partial class SportsGenerator : GeneratorBase
     {
         [FakerMethod("Basketball")]
         public BasketballGenerator Basketball { get; }
@@ -10330,15 +10527,16 @@ namespace FakerNet
         internal SportsGenerator(Faker faker)
                  : base(faker)
         {
-            Basketball = new BasketballGenerator(_faker);
-            Chess = new ChessGenerator(_faker);
-            Football = new FootballGenerator(_faker);
-            Mountaineering = new MountaineeringGenerator(_faker);
-            Volleyball = new VolleyballGenerator(_faker);
+            Basketball = new BasketballGenerator(this.Faker);
+            Chess = new ChessGenerator(this.Faker);
+            Football = new FootballGenerator(this.Faker);
+            Mountaineering = new MountaineeringGenerator(this.Faker);
+            Volleyball = new VolleyballGenerator(this.Faker);
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Basketball")]
-        public class BasketballGenerator : GeneratorBase
+        public partial class BasketballGenerator : GeneratorBase
         {
             internal BasketballGenerator(Faker faker)
                      : base(faker)
@@ -10354,7 +10552,7 @@ namespace FakerNet
             [FakerMethod("coach")]
             public string Coach()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("basketball.coaches", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("basketball.coaches", this))));
             }
             /// <summary>
             /// Produces the name of a basketball player.
@@ -10365,7 +10563,7 @@ namespace FakerNet
             [FakerMethod("player")]
             public string Player()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("basketball.players", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("basketball.players", this))));
             }
             /// <summary>
             /// Produces a position in basketball.
@@ -10376,7 +10574,7 @@ namespace FakerNet
             [FakerMethod("position")]
             public string Position()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("basketball.positions", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("basketball.positions", this))));
             }
             /// <summary>
             /// Produces the name of a basketball team.
@@ -10387,12 +10585,13 @@ namespace FakerNet
             [FakerMethod("team")]
             public string Team()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("basketball.teams", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("basketball.teams", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Chess")]
-        public class ChessGenerator : GeneratorBase
+        public partial class ChessGenerator : GeneratorBase
         {
             internal ChessGenerator(Faker faker)
                      : base(faker)
@@ -10409,7 +10608,7 @@ namespace FakerNet
             [FakerMethod("opening")]
             public string Opening()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("chess.openings", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("chess.openings", this))));
             }
             /// <summary>
             /// Produces the name of a chess player name.
@@ -10420,7 +10619,7 @@ namespace FakerNet
             [FakerMethod("player")]
             public string Player()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("chess.players", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("chess.players", this))));
             }
             #warning No implementation defined for method rating();
             /// <summary>
@@ -10432,17 +10631,18 @@ namespace FakerNet
             [FakerMethod("title")]
             public string Title()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("chess.titles", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("chess.titles", this))));
             }
             [FakerMethod("tournament")]
             public string Tournament()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("chess.tournaments", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("chess.tournaments", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Football")]
-        public class FootballGenerator : GeneratorBase
+        public partial class FootballGenerator : GeneratorBase
         {
             internal FootballGenerator(Faker faker)
                      : base(faker)
@@ -10458,7 +10658,7 @@ namespace FakerNet
             [FakerMethod("coach")]
             public string Coach()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("football.coaches", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("football.coaches", this))));
             }
             /// <summary>
             /// Produces a football competition.
@@ -10469,7 +10669,7 @@ namespace FakerNet
             [FakerMethod("competition")]
             public string Competition()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("football.competitions", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("football.competitions", this))));
             }
             /// <summary>
             /// Produces the name of a football player.
@@ -10480,7 +10680,7 @@ namespace FakerNet
             [FakerMethod("player")]
             public string Player()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("football.players", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("football.players", this))));
             }
             /// <summary>
             /// Produces a position in football.
@@ -10491,7 +10691,7 @@ namespace FakerNet
             [FakerMethod("position")]
             public string Position()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("football.positions", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("football.positions", this))));
             }
             /// <summary>
             /// Produces the name of a football team.
@@ -10502,12 +10702,13 @@ namespace FakerNet
             [FakerMethod("team")]
             public string Team()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("football.teams", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("football.teams", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Mountaineering")]
-        public class MountaineeringGenerator : GeneratorBase
+        public partial class MountaineeringGenerator : GeneratorBase
         {
             internal MountaineeringGenerator(Faker faker)
                      : base(faker)
@@ -10523,12 +10724,13 @@ namespace FakerNet
             [FakerMethod("mountaineer")]
             public string Mountaineer()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("mountaineering.mountaineer", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("mountaineering.mountaineer", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Volleyball")]
-        public class VolleyballGenerator : GeneratorBase
+        public partial class VolleyballGenerator : GeneratorBase
         {
             internal VolleyballGenerator(Faker faker)
                      : base(faker)
@@ -10544,7 +10746,7 @@ namespace FakerNet
             [FakerMethod("coach")]
             public string Coach()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("volleyball.coach", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("volleyball.coach", this))));
             }
             /// <summary>
             /// Produces a formation in volleyball.
@@ -10555,7 +10757,7 @@ namespace FakerNet
             [FakerMethod("formation")]
             public string Formation()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("volleyball.formation", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("volleyball.formation", this))));
             }
             /// <summary>
             /// Produces the name of a volleyball player.
@@ -10566,7 +10768,7 @@ namespace FakerNet
             [FakerMethod("player")]
             public string Player()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("volleyball.player", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("volleyball.player", this))));
             }
             /// <summary>
             /// Produces a position in volleyball.
@@ -10577,7 +10779,7 @@ namespace FakerNet
             [FakerMethod("position")]
             public string Position()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("volleyball.position", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("volleyball.position", this))));
             }
             /// <summary>
             /// Produces the name of a volleyball team.
@@ -10588,14 +10790,37 @@ namespace FakerNet
             [FakerMethod("team")]
             public string Team()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("volleyball.team", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("volleyball.team", this))));
             }
         }
         
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
+    [FakerGenerator("String")]
+    public partial class StringGenerator : GeneratorBase
+    {
+        internal StringGenerator(Faker faker)
+                 : base(faker)
+        {
+        }
+        
+        #warning No implementation defined for method char_space_ratio();
+        // Expecting native implementation of
+        //      public long Length(string text)
+        // Expecting native implementation of
+        //      public string Lower(string text)
+        // Expecting native implementation of
+        //      public string RandomString(long minLength = 50, long maxLength = 50, string alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        #warning No implementation defined for method select_a();
+        #warning No implementation defined for method space_or_utf8_char();
+        #warning No implementation defined for method utf8character();
+        #warning No implementation defined for method utf8string();
+    }
+    
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Stripe")]
-    public class StripeGenerator : GeneratorBase
+    public partial class StripeGenerator : GeneratorBase
     {
         internal StripeGenerator(Faker faker)
                  : base(faker)
@@ -10610,8 +10835,9 @@ namespace FakerNet
         #warning No implementation defined for method year();
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Subscription")]
-    public class SubscriptionGenerator : GeneratorBase
+    public partial class SubscriptionGenerator : GeneratorBase
     {
         internal SubscriptionGenerator(Faker faker)
                  : base(faker)
@@ -10627,7 +10853,7 @@ namespace FakerNet
         [FakerMethod("payment_method")]
         public string PaymentMethod()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("subscription.payment_methods", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("subscription.payment_methods", this))));
         }
         /// <summary>
         /// Produces the name of a payment term.
@@ -10638,7 +10864,7 @@ namespace FakerNet
         [FakerMethod("payment_term")]
         public string PaymentTerm()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("subscription.payment_terms", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("subscription.payment_terms", this))));
         }
         /// <summary>
         /// Produces the name of a subscription plan.
@@ -10649,7 +10875,7 @@ namespace FakerNet
         [FakerMethod("plan")]
         public string Plan()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("subscription.plans", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("subscription.plans", this))));
         }
         /// <summary>
         /// Produces a subscription status.
@@ -10660,7 +10886,7 @@ namespace FakerNet
         [FakerMethod("status")]
         public string Status()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("subscription.statuses", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("subscription.statuses", this))));
         }
         /// <summary>
         /// Produces the name of a subscription term.
@@ -10671,12 +10897,13 @@ namespace FakerNet
         [FakerMethod("subscription_term")]
         public string SubscriptionTerm()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("subscription.subscription_terms", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("subscription.subscription_terms", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Superhero")]
-    public class SuperheroGenerator : GeneratorBase
+    public partial class SuperheroGenerator : GeneratorBase
     {
         internal SuperheroGenerator(Faker faker)
                  : base(faker)
@@ -10692,7 +10919,7 @@ namespace FakerNet
         [FakerMethod("descriptor")]
         public string Descriptor()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("superhero.descriptor", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("superhero.descriptor", this))));
         }
         /// <summary>
         /// Produces a random superhero name.
@@ -10703,7 +10930,7 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("superhero.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("superhero.name", this))));
         }
         /// <summary>
         /// Produces a superpower.
@@ -10714,7 +10941,7 @@ namespace FakerNet
         [FakerMethod("power")]
         public string Power()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("superhero.power", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("superhero.power", this))));
         }
         /// <summary>
         /// Produces a superhero name prefix.
@@ -10725,7 +10952,7 @@ namespace FakerNet
         [FakerMethod("prefix")]
         public string Prefix()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("superhero.prefix", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("superhero.prefix", this))));
         }
         /// <summary>
         /// Produces a superhero name suffix.
@@ -10736,12 +10963,13 @@ namespace FakerNet
         [FakerMethod("suffix")]
         public string Suffix()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("superhero.suffix", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("superhero.suffix", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Tea")]
-    public class TeaGenerator : GeneratorBase
+    public partial class TeaGenerator : GeneratorBase
     {
         internal TeaGenerator(Faker faker)
                  : base(faker)
@@ -10753,9 +10981,7 @@ namespace FakerNet
         /// Produces a random variety or blend of tea.
         /// </summary>
         /// <param name="type">
-        /// 
-        /// <p>the type of tea to query for (valid types: ‘Black’, ‘Green’, ‘Oolong’, ‘White’, and ‘Herbal’)</p>
-        /// 
+        /// the type of tea to query for (valid types: ‘Black’, ‘Green’, ‘Oolong’, ‘White’, and ‘Herbal’)
         /// (default value "nil")
         /// </param>
         /// <example>
@@ -10765,12 +10991,13 @@ namespace FakerNet
         [FakerMethod("variety")]
         public string Variety(string? type = null)
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("tea.type", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("tea.type", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Team")]
-    public class TeamGenerator : GeneratorBase
+    public partial class TeamGenerator : GeneratorBase
     {
         internal TeamGenerator(Faker faker)
                  : base(faker)
@@ -10786,7 +11013,7 @@ namespace FakerNet
         [FakerMethod("creature")]
         public string Creature()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("team.creature", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("team.creature", this))));
         }
         /// <summary>
         /// Produces the name of a team mascot.
@@ -10797,7 +11024,7 @@ namespace FakerNet
         [FakerMethod("mascot")]
         public string Mascot()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("team.mascot", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("team.mascot", this))));
         }
         /// <summary>
         /// Produces a team name from a state and a creature.
@@ -10808,7 +11035,7 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("team.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("team.name", this))));
         }
         /// <summary>
         /// Produces a team sport.
@@ -10819,7 +11046,7 @@ namespace FakerNet
         [FakerMethod("sport")]
         public string Sport()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("team.sport", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("team.sport", this))));
         }
         /// <summary>
         /// Produces a team state.
@@ -10830,12 +11057,13 @@ namespace FakerNet
         [FakerMethod("state")]
         public string State()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("address.state", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("address.state", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Time")]
-    public class TimeGenerator : GeneratorBase
+    public partial class TimeGenerator : GeneratorBase
     {
         internal TimeGenerator(Faker faker)
                  : base(faker)
@@ -10854,8 +11082,9 @@ namespace FakerNet
         #warning Failed processing method time_with_format
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Travel")]
-    public class TravelGenerator : GeneratorBase
+    public partial class TravelGenerator : GeneratorBase
     {
         [FakerMethod("Airport")]
         public AirportGenerator Airport { get; }
@@ -10864,12 +11093,13 @@ namespace FakerNet
         internal TravelGenerator(Faker faker)
                  : base(faker)
         {
-            Airport = new AirportGenerator(_faker);
-            TrainStation = new TrainStationGenerator(_faker);
+            Airport = new AirportGenerator(this.Faker);
+            TrainStation = new TrainStationGenerator(this.Faker);
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Airport")]
-        public class AirportGenerator : GeneratorBase
+        public partial class AirportGenerator : GeneratorBase
         {
             internal AirportGenerator(Faker faker)
                      : base(faker)
@@ -10878,52 +11108,43 @@ namespace FakerNet
             
             /// <summary>
             /// Produces random Airport by IATA code and takes arguments for size and region.
-            ///                                 <p>Produces random Airport by IATA code and takes arguments for size and region</p>
+            ///                                 
             /// 
             ///                                 <p>Faker::Travel::Airport.iata(size: ‘large’, region: ‘united_states’) =&gt; “LAX”</p>
-            ///                             
             /// </summary>
             /// <param name="size">
-            /// 
-            /// <p>airport size, united_states has large, or medium, or small, european_union has large, or medium</p>
-            /// 
+            /// airport size, united_states has large, or medium, or small, european_union has large, or medium
             /// </param>
             /// <param name="region">
-            /// 
-            /// <p>airport region, currently available -&gt; united_states or european_union</p>
-            /// 
+            /// airport region, currently available -&gt; united_states or european_union
             /// </param>
             [FakerMethod("iata")]
             public string Iata(string size, string region)
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("airport." + region + ".iata_code." + size + "", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("airport." + region + ".iata_code." + size + "", this))));
             }
             /// <summary>
             /// Produces random Airport by name and takes arguments for size and region.
-            ///                                 <p>Produces random Airport by name and takes arguments for size and region</p>
+            ///                                 
             /// 
             ///                                 <p>Faker::Travel::Airport.name(size: ‘large’, region: ‘united_states’) =&gt; “Los Angeles International Airport”</p>
-            ///                             
             /// </summary>
             /// <param name="size">
-            /// 
-            /// <p>airport size, united_states has large, or medium, or small, european_union has large, or medium</p>
-            /// 
+            /// airport size, united_states has large, or medium, or small, european_union has large, or medium
             /// </param>
             /// <param name="region">
-            /// 
-            /// <p>airport region, currently available -&gt; united_states or european_union</p>
-            /// 
+            /// airport region, currently available -&gt; united_states or european_union
             /// </param>
             [FakerMethod("name")]
             public string Name(string size, string region)
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("airport." + region + "." + size + "", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("airport." + region + "." + size + "", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("TrainStation")]
-        public class TrainStationGenerator : GeneratorBase
+        public partial class TrainStationGenerator : GeneratorBase
         {
             internal TrainStationGenerator(Faker faker)
                      : base(faker)
@@ -10933,34 +11154,30 @@ namespace FakerNet
             #warning No implementation defined for method fill_missing_inputs_with_samples();
             /// <summary>
             /// Produces random Train Station by name and takes optional arguments for region and type.
-            ///                                 <p>Produces random Train Station by name and takes optional arguments for region and type</p>
+            ///                                 
             /// 
             ///                                 <p>Faker::Travel::TrainStation.name(region: ‘united_kingdom’, type: ‘metro’) =&gt; “Brockley” Faker::Travel::TrainStation.name(type: ‘railway’) =&gt; “Düsseldorf Hauptbahnhof” Faker::Travel::TrainStation.name(region: ‘spain’) =&gt; “Santa Eulàlia”</p>
-            ///                             
             /// </summary>
             /// <param name="region">
-            /// 
-            /// <p>Train station region: germany, spain, united_kingdom, united_states</p>
-            /// 
+            /// Train station region: germany, spain, united_kingdom, united_states
             /// </param>
             /// <param name="type">
-            /// 
-            /// <p>Train station type: metro, railway</p>
-            /// 
+            /// Train station type: metro, railway
             /// (default value "nil")
             /// </param>
             [FakerMethod("name")]
             public string Name(string region, string? type = null)
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("train_station." + region + "." + type + "", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("train_station." + region + "." + type + "", this))));
             }
             #warning No implementation defined for method validate_arguments();
         }
         
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("TvShows")]
-    public class TvShowsGenerator : GeneratorBase
+    public partial class TvShowsGenerator : GeneratorBase
     {
         [FakerMethod("AquaTeenHungerForce")]
         public AquaTeenHungerForceGenerator AquaTeenHungerForce { get; }
@@ -11016,10 +11233,10 @@ namespace FakerNet
         public SouthParkGenerator SouthPark { get; }
         [FakerMethod("Spongebob")]
         public SpongebobGenerator Spongebob { get; }
-        [FakerMethod("StarTrek")]
-        public StarTrekGenerator StarTrek { get; }
         [FakerMethod("Stargate")]
         public StargateGenerator Stargate { get; }
+        [FakerMethod("StarTrek")]
+        public StarTrekGenerator StarTrek { get; }
         [FakerMethod("StrangerThings")]
         public StrangerThingsGenerator StrangerThings { get; }
         [FakerMethod("Suits")]
@@ -11043,49 +11260,50 @@ namespace FakerNet
         internal TvShowsGenerator(Faker faker)
                  : base(faker)
         {
-            AquaTeenHungerForce = new AquaTeenHungerForceGenerator(_faker);
-            Archer = new ArcherGenerator(_faker);
-            BigBangTheory = new BigBangTheoryGenerator(_faker);
-            BojackHorseman = new BojackHorsemanGenerator(_faker);
-            BreakingBad = new BreakingBadGenerator(_faker);
-            BrooklynNineNine = new BrooklynNineNineGenerator(_faker);
-            Buffy = new BuffyGenerator(_faker);
-            Community = new CommunityGenerator(_faker);
-            DrWho = new DrWhoGenerator(_faker);
-            DumbAndDumber = new DumbAndDumberGenerator(_faker);
-            FamilyGuy = new FamilyGuyGenerator(_faker);
-            FinalSpace = new FinalSpaceGenerator(_faker);
-            Friends = new FriendsGenerator(_faker);
-            Futurama = new FuturamaGenerator(_faker);
-            GameOfThrones = new GameOfThronesGenerator(_faker);
-            HeyArnold = new HeyArnoldGenerator(_faker);
-            HowIMetYourMother = new HowIMetYourMotherGenerator(_faker);
-            MichaelScott = new MichaelScottGenerator(_faker);
-            NewGirl = new NewGirlGenerator(_faker);
-            ParksAndRec = new ParksAndRecGenerator(_faker);
-            RickAndMorty = new RickAndMortyGenerator(_faker);
-            RuPaul = new RuPaulGenerator(_faker);
-            Seinfeld = new SeinfeldGenerator(_faker);
-            SiliconValley = new SiliconValleyGenerator(_faker);
-            Simpsons = new SimpsonsGenerator(_faker);
-            SouthPark = new SouthParkGenerator(_faker);
-            Spongebob = new SpongebobGenerator(_faker);
-            StarTrek = new StarTrekGenerator(_faker);
-            Stargate = new StargateGenerator(_faker);
-            StrangerThings = new StrangerThingsGenerator(_faker);
-            Suits = new SuitsGenerator(_faker);
-            Supernatural = new SupernaturalGenerator(_faker);
-            TheExpanse = new TheExpanseGenerator(_faker);
-            TheFreshPrinceOfBelAir = new TheFreshPrinceOfBelAirGenerator(_faker);
-            TheITCrowd = new TheITCrowdGenerator(_faker);
-            TheOffice = new TheOfficeGenerator(_faker);
-            TheThickOfIt = new TheThickOfItGenerator(_faker);
-            TwinPeaks = new TwinPeaksGenerator(_faker);
-            VentureBros = new VentureBrosGenerator(_faker);
+            AquaTeenHungerForce = new AquaTeenHungerForceGenerator(this.Faker);
+            Archer = new ArcherGenerator(this.Faker);
+            BigBangTheory = new BigBangTheoryGenerator(this.Faker);
+            BojackHorseman = new BojackHorsemanGenerator(this.Faker);
+            BreakingBad = new BreakingBadGenerator(this.Faker);
+            BrooklynNineNine = new BrooklynNineNineGenerator(this.Faker);
+            Buffy = new BuffyGenerator(this.Faker);
+            Community = new CommunityGenerator(this.Faker);
+            DrWho = new DrWhoGenerator(this.Faker);
+            DumbAndDumber = new DumbAndDumberGenerator(this.Faker);
+            FamilyGuy = new FamilyGuyGenerator(this.Faker);
+            FinalSpace = new FinalSpaceGenerator(this.Faker);
+            Friends = new FriendsGenerator(this.Faker);
+            Futurama = new FuturamaGenerator(this.Faker);
+            GameOfThrones = new GameOfThronesGenerator(this.Faker);
+            HeyArnold = new HeyArnoldGenerator(this.Faker);
+            HowIMetYourMother = new HowIMetYourMotherGenerator(this.Faker);
+            MichaelScott = new MichaelScottGenerator(this.Faker);
+            NewGirl = new NewGirlGenerator(this.Faker);
+            ParksAndRec = new ParksAndRecGenerator(this.Faker);
+            RickAndMorty = new RickAndMortyGenerator(this.Faker);
+            RuPaul = new RuPaulGenerator(this.Faker);
+            Seinfeld = new SeinfeldGenerator(this.Faker);
+            SiliconValley = new SiliconValleyGenerator(this.Faker);
+            Simpsons = new SimpsonsGenerator(this.Faker);
+            SouthPark = new SouthParkGenerator(this.Faker);
+            Spongebob = new SpongebobGenerator(this.Faker);
+            Stargate = new StargateGenerator(this.Faker);
+            StarTrek = new StarTrekGenerator(this.Faker);
+            StrangerThings = new StrangerThingsGenerator(this.Faker);
+            Suits = new SuitsGenerator(this.Faker);
+            Supernatural = new SupernaturalGenerator(this.Faker);
+            TheExpanse = new TheExpanseGenerator(this.Faker);
+            TheFreshPrinceOfBelAir = new TheFreshPrinceOfBelAirGenerator(this.Faker);
+            TheITCrowd = new TheITCrowdGenerator(this.Faker);
+            TheOffice = new TheOfficeGenerator(this.Faker);
+            TheThickOfIt = new TheThickOfItGenerator(this.Faker);
+            TwinPeaks = new TwinPeaksGenerator(this.Faker);
+            VentureBros = new VentureBrosGenerator(this.Faker);
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("AquaTeenHungerForce")]
-        public class AquaTeenHungerForceGenerator : GeneratorBase
+        public partial class AquaTeenHungerForceGenerator : GeneratorBase
         {
             internal AquaTeenHungerForceGenerator(Faker faker)
                      : base(faker)
@@ -11101,12 +11319,10 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("aqua_teen_hunger_force.character", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("aqua_teen_hunger_force.character", this))));
             }
             /// <summary>
             /// Produces a perl of great ATHF wisdom.
-            ///                                 <p>Produces a perl of great ATHF wisdom</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::TvShows::AquaTeenHungerForce.quote #=> "Friendship ain't about trust. Friendship's about nunchucks."</code>
@@ -11114,12 +11330,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("aqua_teen_hunger_force.quote", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("aqua_teen_hunger_force.quote", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Archer")]
-        public class ArcherGenerator : GeneratorBase
+        public partial class ArcherGenerator : GeneratorBase
         {
             internal ArcherGenerator(Faker faker)
                      : base(faker)
@@ -11135,7 +11352,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("archer.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("archer.characters", this))));
             }
             /// <summary>
             /// Produces a location from Archer.
@@ -11146,7 +11363,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("archer.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("archer.locations", this))));
             }
             /// <summary>
             /// Produces a quote from Archer.
@@ -11158,12 +11375,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("archer.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("archer.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("BigBangTheory")]
-        public class BigBangTheoryGenerator : GeneratorBase
+        public partial class BigBangTheoryGenerator : GeneratorBase
         {
             internal BigBangTheoryGenerator(Faker faker)
                      : base(faker)
@@ -11172,8 +11390,6 @@ namespace FakerNet
             
             /// <summary>
             /// Produces a character from Big Bang Theory.
-            ///                                 <p>Produces a character from Big Bang Theory</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::TvShows::BigBangTheory.character #=> "Sheldon Cooper"</code>
@@ -11181,12 +11397,10 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("big_bang_theory.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("big_bang_theory.characters", this))));
             }
             /// <summary>
             /// Produces a quote from Bing Bang Theory.
-            ///                                 <p>Produces a quote from Bing Bang Theory</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::TvShows::BigBangTheory.quote #=> "I'm not crazy. My mother had me tested."</code>
@@ -11194,12 +11408,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("big_bang_theory.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("big_bang_theory.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("BojackHorseman")]
-        public class BojackHorsemanGenerator : GeneratorBase
+        public partial class BojackHorsemanGenerator : GeneratorBase
         {
             internal BojackHorsemanGenerator(Faker faker)
                      : base(faker)
@@ -11215,7 +11430,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("bojack_horseman.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("bojack_horseman.characters", this))));
             }
             /// <summary>
             /// Produces a quote from BoJack Horseman.
@@ -11227,7 +11442,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("bojack_horseman.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("bojack_horseman.quotes", this))));
             }
             /// <summary>
             /// Produces a tongue twister from BoJack Horseman.
@@ -11238,12 +11453,13 @@ namespace FakerNet
             [FakerMethod("tongue_twister")]
             public string TongueTwister()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("bojack_horseman.tongue_twisters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("bojack_horseman.tongue_twisters", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("BreakingBad")]
-        public class BreakingBadGenerator : GeneratorBase
+        public partial class BreakingBadGenerator : GeneratorBase
         {
             internal BreakingBadGenerator(Faker faker)
                      : base(faker)
@@ -11259,7 +11475,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("breaking_bad.character", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("breaking_bad.character", this))));
             }
             /// <summary>
             /// Produces the name of an episode from Breaking Bad.
@@ -11270,12 +11486,13 @@ namespace FakerNet
             [FakerMethod("episode")]
             public string Episode()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("breaking_bad.episode", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("breaking_bad.episode", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("BrooklynNineNine")]
-        public class BrooklynNineNineGenerator : GeneratorBase
+        public partial class BrooklynNineNineGenerator : GeneratorBase
         {
             internal BrooklynNineNineGenerator(Faker faker)
                      : base(faker)
@@ -11291,7 +11508,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("brooklyn_nine_nine.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("brooklyn_nine_nine.characters", this))));
             }
             /// <summary>
             /// Produces a quote from Brooklyn Nine Nine.
@@ -11303,12 +11520,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("brooklyn_nine_nine.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("brooklyn_nine_nine.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Buffy")]
-        public class BuffyGenerator : GeneratorBase
+        public partial class BuffyGenerator : GeneratorBase
         {
             internal BuffyGenerator(Faker faker)
                      : base(faker)
@@ -11324,7 +11542,7 @@ namespace FakerNet
             [FakerMethod("actor")]
             public string Actor()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("buffy.actors", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("buffy.actors", this))));
             }
             /// <summary>
             /// Produces a big bad from Buffy the Vampire Slayer.
@@ -11335,7 +11553,7 @@ namespace FakerNet
             [FakerMethod("big_bad")]
             public string BigBad()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("buffy.big_bads", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("buffy.big_bads", this))));
             }
             /// <summary>
             /// Produces a character from Buffy the Vampire Slayer.
@@ -11346,7 +11564,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("buffy.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("buffy.characters", this))));
             }
             /// <summary>
             /// Produces an episode from Buffy the Vampire Slayer.
@@ -11357,7 +11575,7 @@ namespace FakerNet
             [FakerMethod("episode")]
             public string Episode()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("buffy.episodes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("buffy.episodes", this))));
             }
             /// <summary>
             /// Produces a quote from Buffy the Vampire Slayer.
@@ -11368,12 +11586,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("buffy.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("buffy.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Community")]
-        public class CommunityGenerator : GeneratorBase
+        public partial class CommunityGenerator : GeneratorBase
         {
             internal CommunityGenerator(Faker faker)
                      : base(faker)
@@ -11389,7 +11608,7 @@ namespace FakerNet
             [FakerMethod("characters")]
             public string Characters()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("community.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("community.characters", this))));
             }
             /// <summary>
             /// Produces a quote from Community.
@@ -11401,12 +11620,13 @@ namespace FakerNet
             [FakerMethod("quotes")]
             public string Quotes()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("community.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("community.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("DrWho")]
-        public class DrWhoGenerator : GeneratorBase
+        public partial class DrWhoGenerator : GeneratorBase
         {
             internal DrWhoGenerator(Faker faker)
                      : base(faker)
@@ -11422,7 +11642,7 @@ namespace FakerNet
             [FakerMethod("actor")]
             public string Actor()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dr_who.actors", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dr_who.actors", this))));
             }
             /// <summary>
             /// Produces a catch phrase from Doctor Who.
@@ -11433,7 +11653,7 @@ namespace FakerNet
             [FakerMethod("catch_phrase")]
             public string CatchPhrase()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dr_who.catch_phrases", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dr_who.catch_phrases", this))));
             }
             /// <summary>
             /// Produces a character from Doctor Who.
@@ -11444,7 +11664,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dr_who.character", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dr_who.character", this))));
             }
             /// <summary>
             /// Produces a quote from Doctor Who.
@@ -11455,7 +11675,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dr_who.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dr_who.quotes", this))));
             }
             /// <summary>
             /// Produces a species from Doctor Who.
@@ -11466,7 +11686,7 @@ namespace FakerNet
             [FakerMethod("specie")]
             public string Specie()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dr_who.species", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dr_who.species", this))));
             }
             /// <summary>
             /// Produces an iteration of The Doctor from Doctor Who.
@@ -11477,7 +11697,7 @@ namespace FakerNet
             [FakerMethod("the_doctor")]
             public string TheDoctor()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dr_who.the_doctors", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dr_who.the_doctors", this))));
             }
             /// <summary>
             /// Produces a villain from Doctor Who.
@@ -11488,12 +11708,13 @@ namespace FakerNet
             [FakerMethod("villain")]
             public string Villain()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dr_who.villains", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dr_who.villains", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("DumbAndDumber")]
-        public class DumbAndDumberGenerator : GeneratorBase
+        public partial class DumbAndDumberGenerator : GeneratorBase
         {
             internal DumbAndDumberGenerator(Faker faker)
                      : base(faker)
@@ -11509,7 +11730,7 @@ namespace FakerNet
             [FakerMethod("actor")]
             public string Actor()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dumb_and_dumber.actors", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dumb_and_dumber.actors", this))));
             }
             /// <summary>
             /// Produces a character from Dumb and Dumber.
@@ -11520,7 +11741,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dumb_and_dumber.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dumb_and_dumber.characters", this))));
             }
             /// <summary>
             /// Produces a quote from Dumb and Dumber.
@@ -11532,12 +11753,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("dumb_and_dumber.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("dumb_and_dumber.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("FamilyGuy")]
-        public class FamilyGuyGenerator : GeneratorBase
+        public partial class FamilyGuyGenerator : GeneratorBase
         {
             internal FamilyGuyGenerator(Faker faker)
                      : base(faker)
@@ -11553,7 +11775,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("family_guy.character", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("family_guy.character", this))));
             }
             /// <summary>
             /// Produces a location from Family Guy.
@@ -11564,7 +11786,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("family_guy.location", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("family_guy.location", this))));
             }
             /// <summary>
             /// Produces a quote from Family Guy.
@@ -11576,12 +11798,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("family_guy.quote", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("family_guy.quote", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("FinalSpace")]
-        public class FinalSpaceGenerator : GeneratorBase
+        public partial class FinalSpaceGenerator : GeneratorBase
         {
             internal FinalSpaceGenerator(Faker faker)
                      : base(faker)
@@ -11597,7 +11820,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("final_space.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("final_space.characters", this))));
             }
             /// <summary>
             /// Produces a quote from Final Space.
@@ -11609,7 +11832,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("final_space.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("final_space.quotes", this))));
             }
             /// <summary>
             /// Produces a vehicle from Final Space.
@@ -11620,12 +11843,13 @@ namespace FakerNet
             [FakerMethod("vehicle")]
             public string Vehicle()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("final_space.vehicles", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("final_space.vehicles", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Friends")]
-        public class FriendsGenerator : GeneratorBase
+        public partial class FriendsGenerator : GeneratorBase
         {
             internal FriendsGenerator(Faker faker)
                      : base(faker)
@@ -11641,7 +11865,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("friends.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("friends.characters", this))));
             }
             /// <summary>
             /// Produces a location from Friends.
@@ -11652,7 +11876,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("friends.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("friends.locations", this))));
             }
             /// <summary>
             /// Produces a quote from Friends.
@@ -11663,12 +11887,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("friends.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("friends.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Futurama")]
-        public class FuturamaGenerator : GeneratorBase
+        public partial class FuturamaGenerator : GeneratorBase
         {
             internal FuturamaGenerator(Faker faker)
                      : base(faker)
@@ -11684,7 +11909,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("futurama.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("futurama.characters", this))));
             }
             /// <summary>
             /// Produces a catchphrase from Hermes Conrad.
@@ -11696,7 +11921,7 @@ namespace FakerNet
             [FakerMethod("hermes_catchphrase")]
             public string HermesCatchphrase()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("futurama.hermes_catchphrases", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("futurama.hermes_catchphrases", this))));
             }
             /// <summary>
             /// Produces a location from Futurama.
@@ -11707,7 +11932,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("futurama.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("futurama.locations", this))));
             }
             /// <summary>
             /// Produces a quote from Futurama.
@@ -11719,12 +11944,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("futurama.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("futurama.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("GameOfThrones")]
-        public class GameOfThronesGenerator : GeneratorBase
+        public partial class GameOfThronesGenerator : GeneratorBase
         {
             internal GameOfThronesGenerator(Faker faker)
                      : base(faker)
@@ -11740,7 +11966,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("game_of_thrones.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("game_of_thrones.characters", this))));
             }
             /// <summary>
             /// Produces a city from Game of Thrones.
@@ -11751,7 +11977,7 @@ namespace FakerNet
             [FakerMethod("city")]
             public string City()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("game_of_thrones.cities", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("game_of_thrones.cities", this))));
             }
             /// <summary>
             /// Produces a dragon from Game of Thrones.
@@ -11762,7 +11988,7 @@ namespace FakerNet
             [FakerMethod("dragon")]
             public string Dragon()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("game_of_thrones.dragons", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("game_of_thrones.dragons", this))));
             }
             /// <summary>
             /// Produces a house from Game of Thrones.
@@ -11773,7 +11999,7 @@ namespace FakerNet
             [FakerMethod("house")]
             public string House()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("game_of_thrones.houses", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("game_of_thrones.houses", this))));
             }
             /// <summary>
             /// Produces a quote from Game of Thrones.
@@ -11785,12 +12011,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("game_of_thrones.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("game_of_thrones.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("HeyArnold")]
-        public class HeyArnoldGenerator : GeneratorBase
+        public partial class HeyArnoldGenerator : GeneratorBase
         {
             internal HeyArnoldGenerator(Faker faker)
                      : base(faker)
@@ -11799,8 +12026,6 @@ namespace FakerNet
             
             /// <summary>
             /// Produces a character from Hey Arnold!.
-            ///                                 <p>Produces a character from Hey Arnold!</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::TvShows::HeyArnold.character #=> "Arnold"</code>
@@ -11808,12 +12033,10 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("hey_arnold.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hey_arnold.characters", this))));
             }
             /// <summary>
             /// Produces a location from Hey Arnold!.
-            ///                                 <p>Produces a location from Hey Arnold!</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::TvShows::HeyArnold.location #=> "Big Bob's Beeper Emporium"</code>
@@ -11821,12 +12044,10 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("hey_arnold.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hey_arnold.locations", this))));
             }
             /// <summary>
             /// Produces a quote from Hey Arnold!.
-            ///                                 <p>Produces a quote from Hey Arnold!</p>
-            ///                             
             /// </summary>
             /// <example>
             /// <code>Faker::TvShows::HeyArnold.quote #=> "Stoop Kid's afraid to leave his stoop!"</code>
@@ -11834,12 +12055,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("hey_arnold.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hey_arnold.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("HowIMetYourMother")]
-        public class HowIMetYourMotherGenerator : GeneratorBase
+        public partial class HowIMetYourMotherGenerator : GeneratorBase
         {
             internal HowIMetYourMotherGenerator(Faker faker)
                      : base(faker)
@@ -11855,7 +12077,7 @@ namespace FakerNet
             [FakerMethod("catch_phrase")]
             public string CatchPhrase()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("how_i_met_your_mother.catch_phrase", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("how_i_met_your_mother.catch_phrase", this))));
             }
             /// <summary>
             /// Produces a character from How I Met Your Mother.
@@ -11866,7 +12088,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("how_i_met_your_mother.character", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("how_i_met_your_mother.character", this))));
             }
             /// <summary>
             /// Produces a high five from How I Met Your Mother.
@@ -11877,7 +12099,7 @@ namespace FakerNet
             [FakerMethod("high_five")]
             public string HighFive()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("how_i_met_your_mother.high_five", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("how_i_met_your_mother.high_five", this))));
             }
             /// <summary>
             /// Produces a quote from How I Met Your Mother.
@@ -11889,12 +12111,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("how_i_met_your_mother.quote", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("how_i_met_your_mother.quote", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("MichaelScott")]
-        public class MichaelScottGenerator : GeneratorBase
+        public partial class MichaelScottGenerator : GeneratorBase
         {
             internal MichaelScottGenerator(Faker faker)
                      : base(faker)
@@ -11911,12 +12134,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("michael_scott.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("michael_scott.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("NewGirl")]
-        public class NewGirlGenerator : GeneratorBase
+        public partial class NewGirlGenerator : GeneratorBase
         {
             internal NewGirlGenerator(Faker faker)
                      : base(faker)
@@ -11932,7 +12156,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("new_girl.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("new_girl.characters", this))));
             }
             /// <summary>
             /// Produces a quote from New Girl.
@@ -11944,12 +12168,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("new_girl.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("new_girl.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("ParksAndRec")]
-        public class ParksAndRecGenerator : GeneratorBase
+        public partial class ParksAndRecGenerator : GeneratorBase
         {
             internal ParksAndRecGenerator(Faker faker)
                      : base(faker)
@@ -11965,7 +12190,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("parks_and_rec.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("parks_and_rec.characters", this))));
             }
             /// <summary>
             /// Produces a city from Parks and Recreation.
@@ -11976,12 +12201,13 @@ namespace FakerNet
             [FakerMethod("city")]
             public string City()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("parks_and_rec.cities", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("parks_and_rec.cities", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("RickAndMorty")]
-        public class RickAndMortyGenerator : GeneratorBase
+        public partial class RickAndMortyGenerator : GeneratorBase
         {
             internal RickAndMortyGenerator(Faker faker)
                      : base(faker)
@@ -11997,7 +12223,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("rick_and_morty.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("rick_and_morty.characters", this))));
             }
             /// <summary>
             /// Produces a location from Rick and Morty.
@@ -12008,7 +12234,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("rick_and_morty.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("rick_and_morty.locations", this))));
             }
             /// <summary>
             /// Produces a quote from Rick and Morty.
@@ -12020,12 +12246,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("rick_and_morty.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("rick_and_morty.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("RuPaul")]
-        public class RuPaulGenerator : GeneratorBase
+        public partial class RuPaulGenerator : GeneratorBase
         {
             internal RuPaulGenerator(Faker faker)
                      : base(faker)
@@ -12041,7 +12268,7 @@ namespace FakerNet
             [FakerMethod("queen")]
             public string Queen()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("rupaul.queens", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("rupaul.queens", this))));
             }
             /// <summary>
             /// Produces a quote from RuPaul's Drag Race.
@@ -12052,12 +12279,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("rupaul.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("rupaul.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Seinfeld")]
-        public class SeinfeldGenerator : GeneratorBase
+        public partial class SeinfeldGenerator : GeneratorBase
         {
             internal SeinfeldGenerator(Faker faker)
                      : base(faker)
@@ -12073,7 +12301,7 @@ namespace FakerNet
             [FakerMethod("business")]
             public string Business()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("seinfeld.business", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("seinfeld.business", this))));
             }
             /// <summary>
             /// Produces a character from Seinfeld.
@@ -12084,7 +12312,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("seinfeld.character", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("seinfeld.character", this))));
             }
             /// <summary>
             /// Produces a quote from Seinfeld.
@@ -12096,12 +12324,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("seinfeld.quote", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("seinfeld.quote", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("SiliconValley")]
-        public class SiliconValleyGenerator : GeneratorBase
+        public partial class SiliconValleyGenerator : GeneratorBase
         {
             internal SiliconValleyGenerator(Faker faker)
                      : base(faker)
@@ -12117,7 +12346,7 @@ namespace FakerNet
             [FakerMethod("app")]
             public string App()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("silicon_valley.apps", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("silicon_valley.apps", this))));
             }
             /// <summary>
             /// Produces a character from Silicon Valley.
@@ -12128,7 +12357,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("silicon_valley.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("silicon_valley.characters", this))));
             }
             /// <summary>
             /// Produces a company from Silicon Valley.
@@ -12139,7 +12368,7 @@ namespace FakerNet
             [FakerMethod("company")]
             public string Company()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("silicon_valley.companies", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("silicon_valley.companies", this))));
             }
             /// <summary>
             /// Produces an email address from Silicon Valley.
@@ -12150,7 +12379,7 @@ namespace FakerNet
             [FakerMethod("email")]
             public string Email()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("silicon_valley.email", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("silicon_valley.email", this))));
             }
             /// <summary>
             /// Produces an invention from Silicon Valley.
@@ -12162,7 +12391,7 @@ namespace FakerNet
             [FakerMethod("invention")]
             public string Invention()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("silicon_valley.inventions", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("silicon_valley.inventions", this))));
             }
             /// <summary>
             /// Produces a motto from Silicon Valley.
@@ -12174,7 +12403,7 @@ namespace FakerNet
             [FakerMethod("motto")]
             public string Motto()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("silicon_valley.mottos", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("silicon_valley.mottos", this))));
             }
             /// <summary>
             /// Produces a quote from Silicon Valley.
@@ -12186,7 +12415,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("silicon_valley.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("silicon_valley.quotes", this))));
             }
             /// <summary>
             /// Produces a URL from Silicon Valley.
@@ -12197,12 +12426,13 @@ namespace FakerNet
             [FakerMethod("url")]
             public string Url()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("silicon_valley.urls", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("silicon_valley.urls", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Simpsons")]
-        public class SimpsonsGenerator : GeneratorBase
+        public partial class SimpsonsGenerator : GeneratorBase
         {
             internal SimpsonsGenerator(Faker faker)
                      : base(faker)
@@ -12218,7 +12448,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("simpsons.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("simpsons.characters", this))));
             }
             /// <summary>
             /// Produces an episode title from The Simpsons.
@@ -12230,7 +12460,7 @@ namespace FakerNet
             [FakerMethod("episode_title")]
             public string EpisodeTitle()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("simpsons.episode_titles", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("simpsons.episode_titles", this))));
             }
             /// <summary>
             /// Produces a location from The Simpsons.
@@ -12241,7 +12471,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("simpsons.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("simpsons.locations", this))));
             }
             /// <summary>
             /// Produces a quote from The Simpsons.
@@ -12253,12 +12483,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("simpsons.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("simpsons.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("SouthPark")]
-        public class SouthParkGenerator : GeneratorBase
+        public partial class SouthParkGenerator : GeneratorBase
         {
             internal SouthParkGenerator(Faker faker)
                      : base(faker)
@@ -12274,7 +12505,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("south_park.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("south_park.characters", this))));
             }
             /// <summary>
             /// Produces an episode name from South Park.
@@ -12286,7 +12517,7 @@ namespace FakerNet
             [FakerMethod("episode_name")]
             public string EpisodeName()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("south_park.episodes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("south_park.episodes", this))));
             }
             /// <summary>
             /// Produces a quote from South Park.
@@ -12298,12 +12529,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("south_park.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("south_park.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Spongebob")]
-        public class SpongebobGenerator : GeneratorBase
+        public partial class SpongebobGenerator : GeneratorBase
         {
             internal SpongebobGenerator(Faker faker)
                      : base(faker)
@@ -12319,7 +12551,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("spongebob.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("spongebob.characters", this))));
             }
             /// <summary>
             /// Produces an episode from Spongebob.
@@ -12330,7 +12562,7 @@ namespace FakerNet
             [FakerMethod("episode")]
             public string Episode()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("spongebob.episodes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("spongebob.episodes", this))));
             }
             /// <summary>
             /// Produces a quote from Spongebob.
@@ -12341,66 +12573,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("spongebob.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("spongebob.quotes", this))));
             }
         }
         
-        [FakerGenerator("StarTrek")]
-        public class StarTrekGenerator : GeneratorBase
-        {
-            internal StarTrekGenerator(Faker faker)
-                     : base(faker)
-            {
-            }
-            
-            /// <summary>
-            /// Produces a character from Star Trek.
-            /// </summary>
-            /// <example>
-            /// <code>Faker::TvShows::StarTrek.character #=> "Spock"</code>
-            /// </example>
-            [FakerMethod("character")]
-            public string Character()
-            {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("star_trek.character", this))));
-            }
-            /// <summary>
-            /// Produces a location from Star Trek.
-            /// </summary>
-            /// <example>
-            /// <code>Faker::TvShows::StarTrek.location #=> "Cardassia"</code>
-            /// </example>
-            [FakerMethod("location")]
-            public string Location()
-            {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("star_trek.location", this))));
-            }
-            /// <summary>
-            /// Produces a species from Star Trek.
-            /// </summary>
-            /// <example>
-            /// <code>Faker::TvShows::StarTrek.specie #=> "Ferengi"</code>
-            /// </example>
-            [FakerMethod("specie")]
-            public string Specie()
-            {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("star_trek.specie", this))));
-            }
-            /// <summary>
-            /// Produces a villain from Star Trek.
-            /// </summary>
-            /// <example>
-            /// <code>Faker::TvShows::StarTrek.villain #=> "Khan Noonien Singh"</code>
-            /// </example>
-            [FakerMethod("villain")]
-            public string Villain()
-            {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("star_trek.villain", this))));
-            }
-        }
-        
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Stargate")]
-        public class StargateGenerator : GeneratorBase
+        public partial class StargateGenerator : GeneratorBase
         {
             internal StargateGenerator(Faker faker)
                      : base(faker)
@@ -12416,7 +12595,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("stargate.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("stargate.characters", this))));
             }
             /// <summary>
             /// Produces a planet from Stargate.
@@ -12427,7 +12606,7 @@ namespace FakerNet
             [FakerMethod("planet")]
             public string Planet()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("stargate.planets", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("stargate.planets", this))));
             }
             /// <summary>
             /// Produces a quote from Stargate.
@@ -12439,12 +12618,68 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("stargate.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("stargate.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
+        [FakerGenerator("StarTrek")]
+        public partial class StarTrekGenerator : GeneratorBase
+        {
+            internal StarTrekGenerator(Faker faker)
+                     : base(faker)
+            {
+            }
+            
+            /// <summary>
+            /// Produces a character from Star Trek.
+            /// </summary>
+            /// <example>
+            /// <code>Faker::TvShows::StarTrek.character #=> "Spock"</code>
+            /// </example>
+            [FakerMethod("character")]
+            public string Character()
+            {
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("star_trek.character", this))));
+            }
+            /// <summary>
+            /// Produces a location from Star Trek.
+            /// </summary>
+            /// <example>
+            /// <code>Faker::TvShows::StarTrek.location #=> "Cardassia"</code>
+            /// </example>
+            [FakerMethod("location")]
+            public string Location()
+            {
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("star_trek.location", this))));
+            }
+            /// <summary>
+            /// Produces a species from Star Trek.
+            /// </summary>
+            /// <example>
+            /// <code>Faker::TvShows::StarTrek.specie #=> "Ferengi"</code>
+            /// </example>
+            [FakerMethod("specie")]
+            public string Specie()
+            {
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("star_trek.specie", this))));
+            }
+            /// <summary>
+            /// Produces a villain from Star Trek.
+            /// </summary>
+            /// <example>
+            /// <code>Faker::TvShows::StarTrek.villain #=> "Khan Noonien Singh"</code>
+            /// </example>
+            [FakerMethod("villain")]
+            public string Villain()
+            {
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("star_trek.villain", this))));
+            }
+        }
+        
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("StrangerThings")]
-        public class StrangerThingsGenerator : GeneratorBase
+        public partial class StrangerThingsGenerator : GeneratorBase
         {
             internal StrangerThingsGenerator(Faker faker)
                      : base(faker)
@@ -12461,7 +12696,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("stranger_things.character", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("stranger_things.character", this))));
             }
             /// <summary>
             /// Produces a character from Stranger Things.
@@ -12472,12 +12707,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("stranger_things.quote", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("stranger_things.quote", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Suits")]
-        public class SuitsGenerator : GeneratorBase
+        public partial class SuitsGenerator : GeneratorBase
         {
             internal SuitsGenerator(Faker faker)
                      : base(faker)
@@ -12493,7 +12729,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("suits.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("suits.characters", this))));
             }
             /// <summary>
             /// Produces a quote from Suits.
@@ -12504,12 +12740,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("suits.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("suits.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("Supernatural")]
-        public class SupernaturalGenerator : GeneratorBase
+        public partial class SupernaturalGenerator : GeneratorBase
         {
             internal SupernaturalGenerator(Faker faker)
                      : base(faker)
@@ -12525,7 +12762,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("supernatural.character", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("supernatural.character", this))));
             }
             /// <summary>
             /// Produces the name of a hunted creature.
@@ -12536,7 +12773,7 @@ namespace FakerNet
             [FakerMethod("creature")]
             public string Creature()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("supernatural.creature", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("supernatural.creature", this))));
             }
             /// <summary>
             /// Produces the name of a weapon used by the hunters.
@@ -12547,12 +12784,13 @@ namespace FakerNet
             [FakerMethod("weapon")]
             public string Weapon()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("supernatural.weapon", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("supernatural.weapon", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("TheExpanse")]
-        public class TheExpanseGenerator : GeneratorBase
+        public partial class TheExpanseGenerator : GeneratorBase
         {
             internal TheExpanseGenerator(Faker faker)
                      : base(faker)
@@ -12568,7 +12806,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_expanse.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_expanse.characters", this))));
             }
             /// <summary>
             /// Produces a location from The Expanse.
@@ -12579,7 +12817,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_expanse.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_expanse.locations", this))));
             }
             /// <summary>
             /// Produces a quote from The Expanse.
@@ -12590,7 +12828,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_expanse.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_expanse.quotes", this))));
             }
             /// <summary>
             /// Produces a ship from The Expanse.
@@ -12601,12 +12839,13 @@ namespace FakerNet
             [FakerMethod("ship")]
             public string Ship()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_expanse.ships", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_expanse.ships", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("TheFreshPrinceOfBelAir")]
-        public class TheFreshPrinceOfBelAirGenerator : GeneratorBase
+        public partial class TheFreshPrinceOfBelAirGenerator : GeneratorBase
         {
             internal TheFreshPrinceOfBelAirGenerator(Faker faker)
                      : base(faker)
@@ -12622,7 +12861,7 @@ namespace FakerNet
             [FakerMethod("actor")]
             public string Actor()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_fresh_prince_of_bel_air.actors", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_fresh_prince_of_bel_air.actors", this))));
             }
             /// <summary>
             /// Produces a character from The Fresh Prince of Bel-Air.
@@ -12633,7 +12872,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_fresh_prince_of_bel_air.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_fresh_prince_of_bel_air.characters", this))));
             }
             /// <summary>
             /// Produces a quote from The Fresh Prince of Bel-Air.
@@ -12645,12 +12884,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_fresh_prince_of_bel_air.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_fresh_prince_of_bel_air.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("TheITCrowd")]
-        public class TheITCrowdGenerator : GeneratorBase
+        public partial class TheITCrowdGenerator : GeneratorBase
         {
             internal TheITCrowdGenerator(Faker faker)
                      : base(faker)
@@ -12666,7 +12906,7 @@ namespace FakerNet
             [FakerMethod("actor")]
             public string Actor()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_it_crowd.actors", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_it_crowd.actors", this))));
             }
             /// <summary>
             /// Produces a character from The IT Crowd.
@@ -12677,7 +12917,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_it_crowd.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_it_crowd.characters", this))));
             }
             /// <summary>
             /// Produces an email from The IT Crowd.
@@ -12688,7 +12928,7 @@ namespace FakerNet
             [FakerMethod("email")]
             public string Email()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_it_crowd.emails", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_it_crowd.emails", this))));
             }
             /// <summary>
             /// Produces a quote from The IT Crowd.
@@ -12700,12 +12940,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_it_crowd.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_it_crowd.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("TheOffice")]
-        public class TheOfficeGenerator : GeneratorBase
+        public partial class TheOfficeGenerator : GeneratorBase
         {
             internal TheOfficeGenerator(Faker faker)
                      : base(faker)
@@ -12721,7 +12962,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_office.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_office.characters", this))));
             }
             /// <summary>
             /// Produces a quote from The Office.
@@ -12732,12 +12973,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_office.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_office.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("TheThickOfIt")]
-        public class TheThickOfItGenerator : GeneratorBase
+        public partial class TheThickOfItGenerator : GeneratorBase
         {
             internal TheThickOfItGenerator(Faker faker)
                      : base(faker)
@@ -12753,7 +12995,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_thick_of_it.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_thick_of_it.characters", this))));
             }
             /// <summary>
             /// Produces a department from The Thick of It.
@@ -12764,7 +13006,7 @@ namespace FakerNet
             [FakerMethod("department")]
             public string Department()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_thick_of_it.departments", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_thick_of_it.departments", this))));
             }
             /// <summary>
             /// Produces a position from The Thick of It.
@@ -12776,12 +13018,13 @@ namespace FakerNet
             [FakerMethod("position")]
             public string Position()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("the_thick_of_it.positions", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("the_thick_of_it.positions", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("TwinPeaks")]
-        public class TwinPeaksGenerator : GeneratorBase
+        public partial class TwinPeaksGenerator : GeneratorBase
         {
             internal TwinPeaksGenerator(Faker faker)
                      : base(faker)
@@ -12797,7 +13040,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("twin_peaks.characters", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("twin_peaks.characters", this))));
             }
             /// <summary>
             /// Produces a location from Twin Peaks.
@@ -12808,7 +13051,7 @@ namespace FakerNet
             [FakerMethod("location")]
             public string Location()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("twin_peaks.locations", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("twin_peaks.locations", this))));
             }
             /// <summary>
             /// Produces a quote from Twin Peaks.
@@ -12820,12 +13063,13 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("twin_peaks.quotes", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("twin_peaks.quotes", this))));
             }
         }
         
+        [GeneratedCode("Faker Code Generator", "1.0.0.0")]
         [FakerGenerator("VentureBros")]
-        public class VentureBrosGenerator : GeneratorBase
+        public partial class VentureBrosGenerator : GeneratorBase
         {
             internal VentureBrosGenerator(Faker faker)
                      : base(faker)
@@ -12841,7 +13085,7 @@ namespace FakerNet
             [FakerMethod("character")]
             public string Character()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("venture_bros.character", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("venture_bros.character", this))));
             }
             /// <summary>
             /// Produces an organization from The Venture Bros.
@@ -12853,7 +13097,7 @@ namespace FakerNet
             [FakerMethod("organization")]
             public string Organization()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("venture_bros.organization", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("venture_bros.organization", this))));
             }
             /// <summary>
             /// Produces a quote from The Venture Bros.
@@ -12865,7 +13109,7 @@ namespace FakerNet
             [FakerMethod("quote")]
             public string Quote()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("venture_bros.quote", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("venture_bros.quote", this))));
             }
             /// <summary>
             /// Produces a vehicle from The Venture Bros.
@@ -12876,14 +13120,15 @@ namespace FakerNet
             [FakerMethod("vehicle")]
             public string Vehicle()
             {
-                return this.Translate(this.Numerify(this.Letterify(this.Resolve("venture_bros.vehicle", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("venture_bros.vehicle", this))));
             }
         }
         
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Twitter")]
-    public class TwitterGenerator : GeneratorBase
+    public partial class TwitterGenerator : GeneratorBase
     {
         internal TwitterGenerator(Faker faker)
                  : base(faker)
@@ -12901,8 +13146,9 @@ namespace FakerNet
         #warning Failed processing method utc_offset
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Types")]
-    public class TypesGenerator : GeneratorBase
+    public partial class TypesGenerator : GeneratorBase
     {
         internal TypesGenerator(Faker faker)
                  : base(faker)
@@ -12920,8 +13166,9 @@ namespace FakerNet
         #warning Failed processing method titleize
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("University")]
-    public class UniversityGenerator : GeneratorBase
+    public partial class UniversityGenerator : GeneratorBase
     {
         internal UniversityGenerator(Faker faker)
                  : base(faker)
@@ -12939,7 +13186,7 @@ namespace FakerNet
         [FakerMethod("name")]
         public string Name()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("university.name", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("university.name", this))));
         }
         /// <summary>
         /// Produces a random university prefix.
@@ -12950,7 +13197,7 @@ namespace FakerNet
         [FakerMethod("prefix")]
         public string Prefix()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("university.prefix", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("university.prefix", this))));
         }
         /// <summary>
         /// Produces a random university suffix.
@@ -12961,12 +13208,13 @@ namespace FakerNet
         [FakerMethod("suffix")]
         public string Suffix()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("university.suffix", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("university.suffix", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Vehicle")]
-    public class VehicleGenerator : GeneratorBase
+    public partial class VehicleGenerator : GeneratorBase
     {
         internal VehicleGenerator(Faker faker)
                  : base(faker)
@@ -12982,7 +13230,7 @@ namespace FakerNet
         [FakerMethod("car_options")]
         public List<string> CarOptions()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("vehicle.car_options", this)))).Split(',').Select(item => item).ToList();
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.car_options", this)))).Split(',').Select(item => item).ToList();
         }
         /// <summary>
         /// Produces a random car type.
@@ -12993,7 +13241,7 @@ namespace FakerNet
         [FakerMethod("car_type")]
         public string CarType()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("vehicle.car_types", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.car_types", this))));
         }
         /// <summary>
         /// Produces a random vehicle color.
@@ -13004,7 +13252,7 @@ namespace FakerNet
         [FakerMethod("color")]
         public string Color()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("vehicle.colors", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.colors", this))));
         }
         /// <summary>
         /// Produces a random vehicle door count.
@@ -13016,7 +13264,7 @@ namespace FakerNet
         [FakerMethod("doors")]
         public long Doors()
         {
-            return long.Parse(this.Resolve("vehicle.doors", this));
+            return long.Parse(this.ResolveYamlValue("vehicle.doors", this));
         }
         /// <summary>
         /// Produces a random vehicle drive type.
@@ -13027,7 +13275,7 @@ namespace FakerNet
         [FakerMethod("drive_type")]
         public string DriveType()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("vehicle.drive_types", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.drive_types", this))));
         }
         /// <summary>
         /// Produces a random engine cylinder count.
@@ -13039,7 +13287,7 @@ namespace FakerNet
         [FakerMethod("engine")]
         public string Engine()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("vehicle.cylinder_engine", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.cylinder_engine", this))));
         }
         /// <summary>
         /// Produces a random vehicle fuel type.
@@ -13050,15 +13298,13 @@ namespace FakerNet
         [FakerMethod("fuel_type")]
         public string FuelType()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("vehicle.fuel_types", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.fuel_types", this))));
         }
         /// <summary>
         /// Produces a random license plate number.
         /// </summary>
         /// <param name="stateAbbreviation">
-        /// 
-        /// <p>Two letter state abbreviation for license plate generation.</p>
-        /// 
+        /// Two letter state abbreviation for license plate generation.
         /// (default value "''")
         /// </param>
         /// <example>
@@ -13068,7 +13314,7 @@ namespace FakerNet
         [FakerMethod("license_plate")]
         public string LicensePlate(string stateAbbreviation = "")
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("vehicle.license_plate", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.license_plate", this))));
         }
         /// <summary>
         /// Produces a random vehicle make.
@@ -13079,7 +13325,7 @@ namespace FakerNet
         [FakerMethod("make")]
         public string Make()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("vehicle.makes", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.makes", this))));
         }
         #warning No implementation defined for method make_and_model();
         /// <summary>
@@ -13091,16 +13337,14 @@ namespace FakerNet
         [FakerMethod("manufacture")]
         public string Manufacture()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("vehicle.manufacture", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.manufacture", this))));
         }
         #warning No implementation defined for method mileage(long min, long max = MILEAGE_MAX);
         /// <summary>
         /// Produces a random vehicle model.
         /// </summary>
         /// <param name="makeOfModel">
-        /// 
-        /// <p>Specific valid vehicle make.</p>
-        /// 
+        /// Specific valid vehicle make.
         /// (default value "''")
         /// </param>
         /// <example>
@@ -13110,7 +13354,7 @@ namespace FakerNet
         [FakerMethod("model")]
         public string Model(string makeOfModel = "")
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("vehicle.models_by_make.#{make}", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.models_by_make.#{make}", this))));
         }
         #warning Failed processing method singapore_checksum
         #warning No implementation defined for method singapore_license_plate();
@@ -13123,7 +13367,7 @@ namespace FakerNet
         [FakerMethod("standard_specs")]
         public List<string> StandardSpecs()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("vehicle.standard_specs", this)))).Split(',').Select(item => item).ToList();
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.standard_specs", this)))).Split(',').Select(item => item).ToList();
         }
         /// <summary>
         /// Produces a random vehicle style.
@@ -13134,7 +13378,7 @@ namespace FakerNet
         [FakerMethod("style")]
         public string Style()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("vehicle.styles", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.styles", this))));
         }
         /// <summary>
         /// Produces a random vehicle transmission.
@@ -13145,12 +13389,10 @@ namespace FakerNet
         [FakerMethod("transmission")]
         public string Transmission()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("vehicle.transmissions", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.transmissions", this))));
         }
         /// <summary>
         /// Produces a car version.
-        ///                             <p>Produces a car version</p>
-        ///                         
         /// </summary>
         /// <example>
         /// <code>Faker::Vehicle.version #=> "40 TFSI Premium"</code>
@@ -13158,14 +13400,15 @@ namespace FakerNet
         [FakerMethod("version")]
         public string Version()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("vehicle.version", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.version", this))));
         }
         #warning No implementation defined for method vin();
         #warning No implementation defined for method year();
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("Verb")]
-    public class VerbGenerator : GeneratorBase
+    public partial class VerbGenerator : GeneratorBase
     {
         internal VerbGenerator(Faker faker)
                  : base(faker)
@@ -13181,7 +13424,7 @@ namespace FakerNet
         [FakerMethod("base")]
         public string Base()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("verbs.base", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("verbs.base", this))));
         }
         /// <summary>
         /// Produces a random verb in the .ing form.
@@ -13192,7 +13435,7 @@ namespace FakerNet
         [FakerMethod("ing_form")]
         public string IngForm()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("verbs.ing_form", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("verbs.ing_form", this))));
         }
         /// <summary>
         /// Produces a random verb in past tense.
@@ -13203,7 +13446,7 @@ namespace FakerNet
         [FakerMethod("past")]
         public string Past()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("verbs.past", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("verbs.past", this))));
         }
         /// <summary>
         /// Produces a random verb in past participle.
@@ -13214,7 +13457,7 @@ namespace FakerNet
         [FakerMethod("past_participle")]
         public string PastParticiple()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("verbs.past_participle", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("verbs.past_participle", this))));
         }
         /// <summary>
         /// Produces a random verb in simple present.
@@ -13225,12 +13468,13 @@ namespace FakerNet
         [FakerMethod("simple_present")]
         public string SimplePresent()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("verbs.simple_present", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("verbs.simple_present", this))));
         }
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("VulnerabilityIdentifier")]
-    public class VulnerabilityIdentifierGenerator : GeneratorBase
+    public partial class VulnerabilityIdentifierGenerator : GeneratorBase
     {
         internal VulnerabilityIdentifierGenerator(Faker faker)
                  : base(faker)
@@ -13240,8 +13484,9 @@ namespace FakerNet
         #warning No implementation defined for method cve(long year = ::Date.today.year);
     }
     
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [FakerGenerator("WorldCup")]
-    public class WorldCupGenerator : GeneratorBase
+    public partial class WorldCupGenerator : GeneratorBase
     {
         internal WorldCupGenerator(Faker faker)
                  : base(faker)
@@ -13257,7 +13502,7 @@ namespace FakerNet
         [FakerMethod("city")]
         public string City()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("world_cup.cities", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("world_cup.cities", this))));
         }
         /// <summary>
         /// Produces a random national team name from a group.
@@ -13268,7 +13513,7 @@ namespace FakerNet
         [FakerMethod("group")]
         public string Group()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("world_cup.groups.#{group}", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("world_cup.groups.#{group}", this))));
         }
         /// <summary>
         /// Produces a random name from national team roster.
@@ -13279,7 +13524,7 @@ namespace FakerNet
         [FakerMethod("roster")]
         public string Roster()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("world_cup.rosters.#{country}.#{type}", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("world_cup.rosters.#{country}.#{type}", this))));
         }
         /// <summary>
         /// Produces the name of a stadium that has hosted a World Cup match.
@@ -13290,7 +13535,7 @@ namespace FakerNet
         [FakerMethod("stadium")]
         public string Stadium()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("world_cup.stadiums", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("world_cup.stadiums", this))));
         }
         /// <summary>
         /// Produces a national team name.
@@ -13301,67 +13546,11 @@ namespace FakerNet
         [FakerMethod("team")]
         public string Team()
         {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("world_cup.teams", this))));
+            return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("world_cup.teams", this))));
         }
     }
     
-    [FakerGenerator("String")]
-    public class StringGenerator : GeneratorBase
-    {
-        internal StringGenerator(Faker faker)
-                 : base(faker)
-        {
-        }
-        
-        /// <param name="text">
-        /// The string to get the length of
-        /// </param>
-        [FakerMethod("length")]
-        public long Length(string text)
-        {
-            return text.Length;
-        }
-        /// <param name="text">
-        /// The string as lower case
-        /// </param>
-        [FakerMethod("lower")]
-        public string Lower(string text)
-        {
-            return text.ToLower();
-        }
-        #warning No implementation defined for method random();
-        #warning No implementation defined for method select_a();
-        #warning No implementation defined for method utf8string();
-        #warning No implementation defined for method space_or_utf8_char();
-        #warning No implementation defined for method char_space_ratio();
-        #warning No implementation defined for method utf8character();
-    }
-    
-    [FakerGenerator("Bible")]
-    public class BibleGenerator : GeneratorBase
-    {
-        internal BibleGenerator(Faker faker)
-                 : base(faker)
-        {
-        }
-        
-        [FakerMethod("character")]
-        public string Character()
-        {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("bible.character", this))));
-        }
-        [FakerMethod("location")]
-        public string Location()
-        {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("bible.location", this))));
-        }
-        [FakerMethod("quote")]
-        public string Quote()
-        {
-            return this.Translate(this.Numerify(this.Letterify(this.Resolve("bible.quote", this))));
-        }
-    }
-    
+    [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     partial class Faker
     {
         [FakerMethod("Address")]
@@ -13388,6 +13577,8 @@ namespace FakerNet
         public BarcodeGenerator Barcode { get; }
         [FakerMethod("Beer")]
         public BeerGenerator Beer { get; }
+        [FakerMethod("Bible")]
+        public BibleGenerator Bible { get; }
         [FakerMethod("Blockchain")]
         public BlockchainGenerator Blockchain { get; }
         [FakerMethod("Blood")]
@@ -13478,8 +13669,6 @@ namespace FakerNet
         public GenderGenerator Gender { get; }
         [FakerMethod("GreekPhilosophers")]
         public GreekPhilosophersGenerator GreekPhilosophers { get; }
-        [FakerMethod("HTML")]
-        public HTMLGenerator HTML { get; }
         [FakerMethod("Hacker")]
         public HackerGenerator Hacker { get; }
         [FakerMethod("Hipster")]
@@ -13488,6 +13677,8 @@ namespace FakerNet
         public HobbyGenerator Hobby { get; }
         [FakerMethod("House")]
         public HouseGenerator House { get; }
+        [FakerMethod("HTML")]
+        public HTMLGenerator HTML { get; }
         [FakerMethod("IDNumber")]
         public IDNumberGenerator IDNumber { get; }
         [FakerMethod("IndustrySegments")]
@@ -13566,6 +13757,8 @@ namespace FakerNet
         public SportGenerator Sport { get; }
         [FakerMethod("Sports")]
         public SportsGenerator Sports { get; }
+        [FakerMethod("String")]
+        public StringGenerator String { get; }
         [FakerMethod("Stripe")]
         public StripeGenerator Stripe { get; }
         [FakerMethod("Subscription")]
@@ -13596,10 +13789,6 @@ namespace FakerNet
         public VulnerabilityIdentifierGenerator VulnerabilityIdentifier { get; }
         [FakerMethod("WorldCup")]
         public WorldCupGenerator WorldCup { get; }
-        [FakerMethod("String")]
-        public StringGenerator String { get; }
-        [FakerMethod("Bible")]
-        public BibleGenerator Bible { get; }
         
         public Faker(CultureInfo locale, Random random)
         {
@@ -13618,6 +13807,7 @@ namespace FakerNet
             Bank = new BankGenerator(this);
             Barcode = new BarcodeGenerator(this);
             Beer = new BeerGenerator(this);
+            Bible = new BibleGenerator(this);
             Blockchain = new BlockchainGenerator(this);
             Blood = new BloodGenerator(this);
             Book = new BookGenerator(this);
@@ -13663,11 +13853,11 @@ namespace FakerNet
             Games = new GamesGenerator(this);
             Gender = new GenderGenerator(this);
             GreekPhilosophers = new GreekPhilosophersGenerator(this);
-            HTML = new HTMLGenerator(this);
             Hacker = new HackerGenerator(this);
             Hipster = new HipsterGenerator(this);
             Hobby = new HobbyGenerator(this);
             House = new HouseGenerator(this);
+            HTML = new HTMLGenerator(this);
             IDNumber = new IDNumberGenerator(this);
             IndustrySegments = new IndustrySegmentsGenerator(this);
             Internet = new InternetGenerator(this);
@@ -13707,6 +13897,7 @@ namespace FakerNet
             Space = new SpaceGenerator(this);
             Sport = new SportGenerator(this);
             Sports = new SportsGenerator(this);
+            String = new StringGenerator(this);
             Stripe = new StripeGenerator(this);
             Subscription = new SubscriptionGenerator(this);
             Superhero = new SuperheroGenerator(this);
@@ -13722,8 +13913,6 @@ namespace FakerNet
             Verb = new VerbGenerator(this);
             VulnerabilityIdentifier = new VulnerabilityIdentifierGenerator(this);
             WorldCup = new WorldCupGenerator(this);
-            String = new StringGenerator(this);
-            Bible = new BibleGenerator(this);
             
             Init(locale);
         }

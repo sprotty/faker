@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using NJsonSchema.CodeGeneration.CSharp;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -31,10 +32,29 @@ namespace Faker.Api.UI
             InitializeComponent();
             if (File.Exists(@"C:\SourceCode\faker\api-generator\faker_api_metadata.json"))
                 OpenFile(@"C:\SourceCode\faker\api-generator\faker_api_metadata.json");
+
+            MultiBinding multiBinding = new MultiBinding();
+            multiBinding.Converter = new AllTypesConverter();
+            multiBinding.Bindings.Add(new Binding(nameof(Root.Types)) { });
+            multiBinding.Bindings.Add(new Binding(nameof(Root.Enums)) { });
+            this.SetBinding(MainWindow.AllTypesProperty, multiBinding);
+            //            < !--< Window.AllTypes >
+            //    < MultiBinding Converter = "{StaticResource AllTypesConverter}" Mode = "OneWay" >
+            //        < Binding Path = "Enums" Mode = "OneWay" />
+            //        < Binding Path = "Types" Mode = "OneWay" />
+            //    </ MultiBinding >
+            //</ Window.AllTypes > -->
+        }
+
+        public static readonly DependencyProperty AllTypesProperty = DependencyProperty.Register(nameof(AllTypes), typeof(string[]), typeof(MainWindow), new FrameworkPropertyMetadata(new string[0]));
+        public string[] AllTypes
+        {
+            get => (string[])GetValue(AllTypesProperty);
+            set => SetValue(AllTypesProperty, value);
         }
 
         public string[] AllPlatforms { get; } = new string[] { "C#", "Ruby" };
-        public string[] AllTypes { get; } = new string[] { "String", "Integer", "Float", "Boolean" };
+        //public string[] AllTypes { get; } = new string[] { "String", "Integer", "Float", "Boolean" };
         public Root? Faker => (Root)this.DataContext;
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -54,6 +74,14 @@ namespace Faker.Api.UI
                 OpenFile(dlg.FileName);
         }
 
+        private void Sort<TSource, TKey>(ObservableCollection<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            var orderedList = source.OrderBy(keySelector).ToList();
+            source.Clear();
+            foreach (var item in orderedList)
+                source.Add(item);
+        }
+
         private void OpenFile(string filename)
         {
             using (var jtr = new FileStream(filename, FileMode.Open))
@@ -62,13 +90,26 @@ namespace Faker.Api.UI
                 this.DataContext = jFaker;
                 this._openFilename = filename;
 
-                //var allClasses = jFaker.Classes.SelectMany(c => c.Classes).Union(jFaker.Classes);
-                //var allMethods = allClasses.SelectMany(c => c.Methods);
-                //var allImplementations = allClasses.SelectMany(c => c.Methods).SelectMany(m => m.Implementations);
-                //var allArgs = allClasses.SelectMany(c => c.Methods).SelectMany(m => m.Arguments);
-                //var allDesc = allArgs.SelectMany(i => i.Descriptions);
-                //var allMehtodDesc = allMethods.SelectMany(i => i.Descriptions);
-                //var allExamples = allMethods.SelectMany(i => i.Examples);
+                // sort the classes and methods
+                Sort(jFaker.Classes, c => c.Name);
+                foreach (var cls in jFaker.Classes)
+                {
+                    Sort(cls.Methods, m => m.Name);
+                    Sort(cls.Classes, c => c.Name);
+                    foreach (var subCls in cls.Classes)
+                    {
+                        Sort(subCls.Methods, m => m.Name);
+                    }
+                }
+
+                var allClasses = jFaker.Classes.SelectMany(c => c.Classes).Union(jFaker.Classes);
+                var allMethods = allClasses.SelectMany(c => c.Methods);
+                var allImplementations = allClasses.SelectMany(c => c.Methods).SelectMany(m => m.Implementations);
+                var allArgs = allClasses.SelectMany(c => c.Methods).SelectMany(m => m.Arguments);
+                var allArgDescs = allArgs.SelectMany(i => i.Descriptions);
+                var allDesc = allArgs.SelectMany(i => i.Descriptions);
+                var allMehtodDesc = allMethods.SelectMany(i => i.Descriptions);
+                var allExamples = allMethods.SelectMany(i => i.Examples);
 
                 //foreach (var example in allExamples)
                 //{
@@ -122,6 +163,33 @@ namespace Faker.Api.UI
                 //            desc.Text = desc.Text.Substring(0, desc.Text.Length - 1);
                 //    }
                 //}
+
+                foreach (var desc in allDesc)
+                {
+                    int indent = Utilities.GetCommonIndent(desc.Text, 4);
+                    if (indent > 0)
+                    {
+                        desc.Text = Utilities.RemoveCommonIndent(desc.Text, indent, 4);
+                        while (desc.Text.StartsWith('\n'))
+                            desc.Text = desc.Text.Substring(1);
+                        while (desc.Text.EndsWith('\n'))
+                            desc.Text = desc.Text.Substring(0, desc.Text.Length - 1);
+                    }
+                    if (desc.Text.StartsWith('\n'))
+                        desc.Text = desc.Text.TrimStart();
+                    if (desc.Text.EndsWith('\n'))
+                        desc.Text = desc.Text.TrimEnd();
+                    if (desc.Text.Split('\n').Length == 1)
+                        desc.Text = desc.Text.Trim();
+                    string firstLine = desc.Text.Split('\n')[0].Trim();
+                    if (firstLine.EndsWith("."))
+                        firstLine = firstLine.Substring(0, firstLine.Length - 1);
+                    if (desc.Text.Contains($"<p>{firstLine}</p>"))
+                        desc.Text = desc.Text.Replace($"<p>{firstLine}</p>", "");
+                    if (desc.Text.StartsWith("<p>") && desc.Text.EndsWith("</p>") && desc.Text.IndexOf("<p>", "<p>".Length) == -1)
+                        desc.Text = desc.Text.Substring("<p>".Length, desc.Text.Length - "</p><p>".Length).Trim();
+                    desc.Text = desc.Text.Trim();
+                }
                 //var allNativeImpls = allImplementations.Where(i => i.Type == "Native" && string.IsNullOrWhiteSpace(i.Data?.Trim()) == false);
                 //var allNativeImplsWithNoTarget = allImplementations.Where(i => i.Type == "Native" && string.IsNullOrWhiteSpace(i.Data?.Trim()) == false && string.IsNullOrWhiteSpace(i.InternalPlatform));
                 //foreach (var impl in allNativeImpls)
@@ -171,116 +239,7 @@ namespace Faker.Api.UI
             //}
         }
 
-        //#region GetCommonIndent
-        ///// <summary>
-        ///// works out the max number of whitespace positions that exist on every line (with content)
-        ///// </summary>
-        ///// <param name="txt"></param>
-        ///// <param name="tabWidth"></param>
-        ///// <returns></returns>
-        //public static int GetCommonIndent(string txt, int tabWidth)
-        //{
-        //    if (string.IsNullOrEmpty(txt))
-        //        return 0;
-
-        //    StringBuilder output = new StringBuilder();
-        //    int maxLeadingWhitespace = int.MaxValue;
-        //    int thisLineLeadingWhitespace = 0;
-        //    bool nonWhitespaceEncountered = false;
-
-        //    foreach (var c in txt)
-        //    {
-        //        switch (c)
-        //        {
-        //            case ' ':
-        //                if (nonWhitespaceEncountered == false)
-        //                    thisLineLeadingWhitespace++;
-        //                break;
-        //            case '\t':
-        //                if (nonWhitespaceEncountered == false)
-        //                {
-        //                    int spacesToAdd = tabWidth - (thisLineLeadingWhitespace % tabWidth);
-        //                    thisLineLeadingWhitespace += spacesToAdd;
-        //                }
-        //                break;
-
-        //            case '\n':
-        //                if (nonWhitespaceEncountered)
-        //                {
-        //                    maxLeadingWhitespace = Math.Min(thisLineLeadingWhitespace, maxLeadingWhitespace);
-        //                }
-        //                thisLineLeadingWhitespace = 0;
-        //                nonWhitespaceEncountered = false;
-        //                break;
-
-        //            default:
-        //                nonWhitespaceEncountered = true;
-        //                break;
-        //        }
-        //    }
-        //    if (nonWhitespaceEncountered)
-        //        maxLeadingWhitespace = Math.Min(thisLineLeadingWhitespace, maxLeadingWhitespace);
-        //    if (maxLeadingWhitespace == int.MaxValue)
-        //        maxLeadingWhitespace = 0;
-        //    return maxLeadingWhitespace;
-        //}
-        //#endregion
-
-        //#region RemoveCommonIndent
-        ///// <summary>
-        ///// Takes of any c
-        ///// </summary>
-        ///// <param name="txt"></param>
-        ///// <param name="tabWidth"></param>
-        ///// <returns></returns>
-        //public static string RemoveCommonIndent(string txt, int whitespaceCharsToRemove, int tabWidth)
-        //{
-        //    if (string.IsNullOrEmpty(txt))
-        //        return "";
-
-        //    StringBuilder output = new StringBuilder();
-        //    int spacesToRemove = whitespaceCharsToRemove;
-        //    bool nonWhitespaceEncountered = false;
-        //    int colPos = 0;
-        //    StringBuilder sb = new StringBuilder(txt.Length);
-
-        //    foreach (var c in txt)
-        //    {
-        //        switch (c)
-        //        {
-        //            case ' ':
-        //                colPos++;
-        //                if (nonWhitespaceEncountered == false && spacesToRemove-- > 0)
-        //                    continue; // skip space
-
-        //                break;
-        //            case '\t':
-        //                int spacesForTab = tabWidth - (colPos % tabWidth);
-
-        //                if (nonWhitespaceEncountered || spacesToRemove <= 0)
-        //                    break;
-
-        //                spacesToRemove -= spacesForTab;
-        //                if (spacesToRemove < 0)
-        //                    sb.Append(' ', -spacesToRemove);
-        //                continue;
-
-        //            case '\n':
-        //                colPos = 0;
-        //                spacesToRemove = whitespaceCharsToRemove;
-        //                nonWhitespaceEncountered = false;
-        //                break;
-
-        //            default:
-        //                nonWhitespaceEncountered = true;
-        //                break;
-        //        }
-
-        //        sb.Append(c);
-        //    }
-        //    return sb.ToString();
-        //}
-        //#endregion
+        //#re
 
         private void Menu_Save_Click(object sender, RoutedEventArgs e)
         {
@@ -372,6 +331,18 @@ namespace Faker.Api.UI
             }
         }
 
+        private void MethodsMenuItem_New_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.ClassTree.SelectedItem is ClassElement parentClass)
+            {
+                Method methodToAdd = new Method()
+                {
+                    Name = "new_method",
+                    ReturnType = "String",
+                };
+                parentClass.Methods.Add(methodToAdd);
+            }
+        }
         private void MethodsMenuItem_Delete_Click(object sender, RoutedEventArgs e)
         {
             if (this.MethodList.SelectedItem is Method methodToDelete && this.ClassTree.SelectedItem is ClassElement parentClass)

@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-[assembly: Parallelize(Workers = 0, Scope = ExecutionScope.ClassLevel)]
+
 namespace FakerNet.NUnit
 {
     [TestClass]
@@ -17,11 +17,6 @@ namespace FakerNet.NUnit
             FakerForEveryLocale<string>(faker => faker.Address.City());
         }
         [TestMethod()]
-        public void Test_CityWithState_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.CityWithState());
-        }
-        [TestMethod()]
         public void Test_CityPrefix_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Address.CityPrefix());
@@ -30,6 +25,11 @@ namespace FakerNet.NUnit
         public void Test_CitySuffix_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Address.CitySuffix());
+        }
+        [TestMethod()]
+        public void Test_CityWithState_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Address.CityWithState());
         }
         [TestMethod()]
         public void Test_Community_Execute()
@@ -77,6 +77,11 @@ namespace FakerNet.NUnit
             FakerForEveryLocale<string>(faker => faker.Address.MailBox());
         }
         [TestMethod()]
+        public void Test_Postcode_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Address.Postcode());
+        }
+        [TestMethod()]
         public void Test_SecondaryAddress_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Address.SecondaryAddress());
@@ -116,11 +121,6 @@ namespace FakerNet.NUnit
         {
             FakerForEveryLocale<string>(faker => faker.Address.ZipCode());
         }
-        [TestMethod()]
-        public void Test_Postcode_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.Postcode());
-        }
     }
     
     [TestClass]
@@ -141,8 +141,16 @@ namespace FakerNet.NUnit
     [TestClass]
     public class Test_Alphanumeric : FakerNUnitBase
     {
-        #warning No implementation defined for method alpha(long number = 32);
-        // Method : alpha_numeric : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_Alpha_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Alphanumeric.Alpha());
+        }
+        [TestMethod()]
+        public void Test_AlphaNumeric_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Alphanumeric.AlphaNumeric());
+        }
     }
     
     [TestClass]
@@ -245,34 +253,46 @@ namespace FakerNet.NUnit
     [TestClass]
     public class Test_Bank : FakerNUnitBase
     {
-        #warning No implementation defined for method account_number(long digits = 10);
-        #warning No implementation defined for method bsb_number();
-        #warning Failed processing method checksum
-        #warning Failed processing method compile_bsb_number
-        #warning Failed processing method compile_fraction
-        #warning Failed processing method compile_routing_number
+        [TestMethod()]
+        public void Test_AccountNumber_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Bank.AccountNumber());
+        }
+        [TestMethod()]
+        public void Test_BsbNumber_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Bank.BsbNumber());
+        }
         [TestMethod()]
         public void Test_Iban_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Bank.Iban());
         }
-        #warning Failed processing method iban_checksum
-        #warning No implementation defined for method iban_country_code();
+        [TestMethod()]
+        public void Test_IbanCountryCode_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Bank.IbanCountryCode());
+        }
         [TestMethod()]
         public void Test_Name_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Bank.Name());
         }
-        #warning Failed processing method rand_numstring
-        #warning No implementation defined for method routing_number();
-        #warning No implementation defined for method routing_number_with_format();
+        [TestMethod()]
+        public void Test_RoutingNumber_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Bank.RoutingNumber());
+        }
+        [TestMethod()]
+        public void Test_RoutingNumberWithFormat_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Bank.RoutingNumberWithFormat());
+        }
         [TestMethod()]
         public void Test_SwiftBic_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Bank.SwiftBic());
         }
-        #warning No implementation defined for method valid_checksum();
-        #warning Failed processing method valid_routing_number
     }
     
     [TestClass]
@@ -338,6 +358,26 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
+    public class Test_Bible : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Character_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Bible.Character());
+        }
+        [TestMethod()]
+        public void Test_Location_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Bible.Location());
+        }
+        [TestMethod()]
+        public void Test_Quote_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Bible.Quote());
+        }
+    }
+    
+    [TestClass]
     public class Test_Blockchain : FakerNUnitBase
     {
     }
@@ -370,9 +410,21 @@ namespace FakerNet.NUnit
     [TestClass]
     public class Test_Blockchain_Bitcoin : FakerNUnitBase
     {
-        #warning No implementation defined for method address();
-        // Method : address_for : Can not generated test for method with required arguments.
-        #warning No implementation defined for method testnet_address();
+        [TestMethod()]
+        public void Test_Address_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Blockchain.Bitcoin.Address());
+        }
+        [TestMethod()]
+        public void Test_AddressFor_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Blockchain.Bitcoin.AddressFor());
+        }
+        [TestMethod()]
+        public void Test_TestnetAddress_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Blockchain.Bitcoin.TestnetAddress());
+        }
     }
     
     [TestClass]
@@ -704,22 +756,61 @@ namespace FakerNet.NUnit
         {
             FakerForEveryLocale<string>(faker => faker.Code.Asin());
         }
-        #warning No implementation defined for method ean(long digits = 13);
-        #warning Failed processing method generate_base10_isbn
-        #warning Failed processing method generate_base13_ean
-        #warning Failed processing method generate_base13_isbn
-        #warning Failed processing method generate_base8_ean
-        #warning Failed processing method generate_imei
-        #warning Failed processing method generate_nric_check_alphabet
-        #warning Failed processing method generate_sin_check_digit
-        #warning No implementation defined for method imei();
-        #warning No implementation defined for method isbn(long digits = 10);
-        #warning No implementation defined for method npi();
-        // Method : nric : Can not generated test for method with required arguments.
-        #warning No implementation defined for method rut();
-        #warning Failed processing method rut_verificator_digit
-        #warning No implementation defined for method sin();
-        #warning Failed processing method sum
+        [TestMethod()]
+        public void Test_Ean_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Ean());
+        }
+        [TestMethod()]
+        public void Test_Imei_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Imei());
+        }
+        [TestMethod()]
+        public void Test_Isbn_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Isbn());
+        }
+        [TestMethod()]
+        public void Test_Npi_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Npi());
+        }
+        [TestMethod()]
+        public void Test_Nric_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Nric());
+        }
+        [TestMethod()]
+        public void Test_Rut_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Rut());
+        }
+        [TestMethod()]
+        public void Test_Sin_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Sin());
+        }
+        [TestMethod()]
+        public void Test_Ean8_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Ean8());
+        }
+        [TestMethod()]
+        public void Test_Ean13_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Ean13());
+        }
+        [TestMethod()]
+        public void Test_Isbn10_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Isbn10());
+        }
+        [TestMethod()]
+        public void Test_Isbn13_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Isbn13());
+        }
     }
     
     [TestClass]
@@ -1093,7 +1184,11 @@ namespace FakerNet.NUnit
         {
             FakerForEveryLocale<string>(faker => faker.Creature.Bird.CommonFamilyName());
         }
-        #warning No implementation defined for method common_name(UNKNOWN_String | Symbol | nil? taxOrder = null);
+        [TestMethod()]
+        public void Test_CommonName_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Creature.Bird.CommonName());
+        }
         [TestMethod()]
         public void Test_EmotionalAdjective_Execute()
         {
@@ -1371,6 +1466,7 @@ namespace FakerNet.NUnit
         #warning Failed processing method gb_licence_checksum
         #warning Failed processing method gb_licence_padding
         #warning Failed processing method gb_licence_year
+        #warning No implementation defined for method initialize();
         #warning No implementation defined for method northern_irish_driving_licence();
         #warning Failed processing method random_gender
         // Method : uk_driving_licence : Can not generated test for method with required arguments.
@@ -1379,7 +1475,6 @@ namespace FakerNet.NUnit
         {
             FakerForEveryLocale<string>(faker => faker.DrivingLicence.UsaDrivingLicence());
         }
-        #warning No implementation defined for method initialize();
     }
     
     [TestClass]
@@ -1650,13 +1745,17 @@ namespace FakerNet.NUnit
     [TestClass]
     public class Test_File : FakerNUnitBase
     {
-        // Method : dir : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_Dir_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.File.Dir());
+        }
         [TestMethod()]
         public void Test_Extension_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.File.Extension());
         }
-        // Method : file_name : Can not generated test for method with required arguments.
+        #warning No implementation defined for method file_name(string? dir = null, string? name = null, string? ext = null, string directorySeparator = "/");
         [TestMethod()]
         public void Test_MimeType_Execute()
         {
@@ -2654,37 +2753,6 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_HTML : FakerNUnitBase
-    {
-        #warning Failed processing method available_methods
-        [TestMethod()]
-        public void Test_Code_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.HTML.Code());
-        }
-        // Method : element : Can not generated test for method with required arguments.
-        [TestMethod()]
-        public void Test_Emphasis_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.HTML.Emphasis());
-        }
-        #warning Failed processing method generate_table_row
-        #warning No implementation defined for method heading();
-        #warning No implementation defined for method link(string rel = "stylesheet");
-        #warning No implementation defined for method ordered_list();
-        // Method : paragraph : Can not generated test for method with required arguments.
-        // Method : random : Can not generated test for method with required arguments.
-        // Method : sandwich : Can not generated test for method with required arguments.
-        [TestMethod()]
-        public void Test_Script_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.HTML.Script());
-        }
-        #warning No implementation defined for method table();
-        #warning No implementation defined for method unordered_list();
-    }
-    
-    [TestClass]
     public class Test_Hacker : FakerNUnitBase
     {
         [TestMethod()]
@@ -2754,6 +2822,37 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
+    public class Test_HTML : FakerNUnitBase
+    {
+        #warning Failed processing method available_methods
+        [TestMethod()]
+        public void Test_Code_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.HTML.Code());
+        }
+        // Method : element : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_Emphasis_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.HTML.Emphasis());
+        }
+        #warning Failed processing method generate_table_row
+        #warning No implementation defined for method heading();
+        #warning No implementation defined for method link(string rel = "stylesheet");
+        #warning No implementation defined for method ordered_list();
+        // Method : paragraph : Can not generated test for method with required arguments.
+        // Method : random : Can not generated test for method with required arguments.
+        // Method : sandwich : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_Script_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.HTML.Script());
+        }
+        #warning No implementation defined for method table();
+        #warning No implementation defined for method unordered_list();
+    }
+    
+    [TestClass]
     public class Test_IDNumber : FakerNUnitBase
     {
         #warning Failed processing method _translate
@@ -2810,46 +2909,108 @@ namespace FakerNet.NUnit
     [TestClass]
     public class Test_Internet : FakerNUnitBase
     {
-        // Method : base64 : Can not generated test for method with required arguments.
-        #warning No implementation defined for method bot_user_agent(string? vendor = null);
-        #warning Failed processing method construct_email
+        [TestMethod()]
+        public void Test_Base64_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.Base64());
+        }
+        [TestMethod()]
+        public void Test_BotUserAgent_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.BotUserAgent());
+        }
         #warning Failed processing method device_token
-        // Method : domain_name : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_DomainName_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.DomainName());
+        }
         [TestMethod()]
         public void Test_DomainSuffix_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Internet.DomainSuffix());
         }
-        #warning No implementation defined for method domain_word();
-        // Method : email : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_DomainWord_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.DomainWord());
+        }
+        [TestMethod()]
+        public void Test_Email_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.Email());
+        }
         #warning No implementation defined for method fix_umlauts(string string = "");
-        #warning No implementation defined for method ip_v4_address();
+        [TestMethod()]
+        public void Test_IpV4Address_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.IpV4Address());
+        }
         [TestMethod()]
         public void Test_IpV4Cidr_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Internet.IpV4Cidr());
         }
-        #warning No implementation defined for method ip_v6_address();
+        [TestMethod()]
+        public void Test_IpV6Address_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.IpV6Address());
+        }
         [TestMethod()]
         public void Test_IpV6Cidr_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Internet.IpV6Cidr());
         }
-        #warning No implementation defined for method mac_address();
-        // Method : password : Can not generated test for method with required arguments.
-        #warning No implementation defined for method private_ip_v4_address();
+        [TestMethod()]
+        public void Test_MacAddress_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.MacAddress());
+        }
+        [TestMethod()]
+        public void Test_Password_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.Password());
+        }
+        [TestMethod()]
+        public void Test_PrivateIpV4Address_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.PrivateIpV4Address());
+        }
         #warning No implementation defined for method private_net_checker();
         #warning No implementation defined for method private_nets_regex();
-        #warning No implementation defined for method public_ip_v4_address();
+        [TestMethod()]
+        public void Test_PublicIpV4Address_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.PublicIpV4Address());
+        }
         #warning No implementation defined for method reserved_net_checker();
         #warning No implementation defined for method reserved_nets_regex();
-        #warning Failed processing method sanitize_email_local_part
-        // Method : slug : Can not generated test for method with required arguments.
-        // Method : url : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_Slug_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.Slug());
+        }
+        [TestMethod()]
+        public void Test_Url_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.Url());
+        }
         #warning No implementation defined for method user();
-        #warning No implementation defined for method user_agent(string? vendor = null);
-        // Method : username : Can not generated test for method with required arguments.
-        #warning No implementation defined for method uuid();
+        [TestMethod()]
+        public void Test_UserAgent_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.UserAgent());
+        }
+        [TestMethod()]
+        public void Test_Username_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.Username());
+        }
+        [TestMethod()]
+        public void Test_Uuid_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.Uuid());
+        }
     }
     
     [TestClass]
@@ -3615,59 +3776,56 @@ namespace FakerNet.NUnit
     [TestClass]
     public class Test_Movies_StarWars : FakerNUnitBase
     {
-        #warning No implementation defined for method call_number();
         [TestMethod()]
-        public void Test_CallNumbers_Execute()
+        public void Test_CallNumber_Execute()
         {
-            FakerForEveryLocale<List<string>>(faker => faker.Movies.StarWars.CallNumbers());
+            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.CallNumber());
         }
         [TestMethod()]
         public void Test_CallSign_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Movies.StarWars.CallSign());
         }
-        #warning No implementation defined for method call_squadron();
         [TestMethod()]
-        public void Test_CallSquadrons_Execute()
+        public void Test_CallSquadron_Execute()
         {
-            FakerForEveryLocale<List<string>>(faker => faker.Movies.StarWars.CallSquadrons());
+            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.CallSquadron());
         }
-        #warning No implementation defined for method character();
         [TestMethod()]
-        public void Test_Characters_Execute()
+        public void Test_Character_Execute()
         {
-            FakerForEveryLocale<List<string>>(faker => faker.Movies.StarWars.Characters());
+            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.Character());
         }
-        #warning No implementation defined for method droid();
         [TestMethod()]
-        public void Test_Droids_Execute()
+        public void Test_Droid_Execute()
         {
-            FakerForEveryLocale<List<string>>(faker => faker.Movies.StarWars.Droids());
+            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.Droid());
         }
-        #warning No implementation defined for method planet();
         [TestMethod()]
-        public void Test_Planets_Execute()
+        public void Test_Planet_Execute()
         {
-            FakerForEveryLocale<List<string>>(faker => faker.Movies.StarWars.Planets());
+            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.Planet());
         }
         #warning No implementation defined for method quote(string? character = null);
-        #warning No implementation defined for method specie();
         [TestMethod()]
-        public void Test_Species_Execute()
+        public void Test_Specie_Execute()
         {
-            FakerForEveryLocale<List<string>>(faker => faker.Movies.StarWars.Species());
+            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.Specie());
         }
-        #warning No implementation defined for method vehicle();
         [TestMethod()]
-        public void Test_Vehicles_Execute()
+        public void Test_Vehicle_Execute()
         {
-            FakerForEveryLocale<List<string>>(faker => faker.Movies.StarWars.Vehicles());
+            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.Vehicle());
         }
-        #warning No implementation defined for method wookiee_sentence();
         [TestMethod()]
-        public void Test_WookieeWords_Execute()
+        public void Test_WookieeSentence_Execute()
         {
-            FakerForEveryLocale<List<string>>(faker => faker.Movies.StarWars.WookieeWords());
+            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.WookieeSentence());
+        }
+        [TestMethod()]
+        public void Test_WookieeWord_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.WookieeWord());
         }
     }
     
@@ -4167,21 +4325,21 @@ namespace FakerNet.NUnit
         // Method : apple : Can not generated test for method with required arguments.
         // Method : auth0 : Can not generated test for method with required arguments.
         #warning Failed processing method city_state
+        #warning Failed processing method email
         // Method : facebook : Can not generated test for method with required arguments.
+        #warning Failed processing method first_name
         #warning Failed processing method gender
         // Method : github : Can not generated test for method with required arguments.
         // Method : google : Can not generated test for method with required arguments.
         #warning Failed processing method image
+        #warning No implementation defined for method initialize();
+        #warning Failed processing method last_name
         // Method : linkedin : Can not generated test for method with required arguments.
+        #warning Failed processing method name
         #warning Failed processing method random_boolean
         #warning Failed processing method random_number_from_range
         #warning Failed processing method timezone
         // Method : twitter : Can not generated test for method with required arguments.
-        #warning Failed processing method email
-        #warning Failed processing method first_name
-        #warning No implementation defined for method initialize();
-        #warning Failed processing method last_name
-        #warning Failed processing method name
     }
     
     [TestClass]
@@ -4800,6 +4958,23 @@ namespace FakerNet.NUnit
         {
             FakerForEveryLocale<string>(faker => faker.Sports.Volleyball.Team());
         }
+    }
+    
+    [TestClass]
+    public class Test_String : FakerNUnitBase
+    {
+        #warning No implementation defined for method char_space_ratio();
+        // Method : length : Can not generated test for method with required arguments.
+        // Method : lower : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_RandomString_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.String.RandomString());
+        }
+        #warning No implementation defined for method select_a();
+        #warning No implementation defined for method space_or_utf8_char();
+        #warning No implementation defined for method utf8character();
+        #warning No implementation defined for method utf8string();
     }
     
     [TestClass]
@@ -5525,6 +5700,26 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
+    public class Test_TvShows_Stargate : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Character_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.TvShows.Stargate.Character());
+        }
+        [TestMethod()]
+        public void Test_Planet_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.TvShows.Stargate.Planet());
+        }
+        [TestMethod()]
+        public void Test_Quote_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.TvShows.Stargate.Quote());
+        }
+    }
+    
+    [TestClass]
     public class Test_TvShows_StarTrek : FakerNUnitBase
     {
         [TestMethod()]
@@ -5546,26 +5741,6 @@ namespace FakerNet.NUnit
         public void Test_Villain_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.TvShows.StarTrek.Villain());
-        }
-    }
-    
-    [TestClass]
-    public class Test_TvShows_Stargate : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Character_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.TvShows.Stargate.Character());
-        }
-        [TestMethod()]
-        public void Test_Planet_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.TvShows.Stargate.Planet());
-        }
-        [TestMethod()]
-        public void Test_Quote_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.TvShows.Stargate.Quote());
         }
     }
     
@@ -5968,39 +6143,6 @@ namespace FakerNet.NUnit
         public void Test_Team_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.WorldCup.Team());
-        }
-    }
-    
-    [TestClass]
-    public class Test_String : FakerNUnitBase
-    {
-        // Method : length : Can not generated test for method with required arguments.
-        // Method : lower : Can not generated test for method with required arguments.
-        #warning No implementation defined for method random();
-        #warning No implementation defined for method select_a();
-        #warning No implementation defined for method utf8string();
-        #warning No implementation defined for method space_or_utf8_char();
-        #warning No implementation defined for method char_space_ratio();
-        #warning No implementation defined for method utf8character();
-    }
-    
-    [TestClass]
-    public class Test_Bible : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Character_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Bible.Character());
-        }
-        [TestMethod()]
-        public void Test_Location_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Bible.Location());
-        }
-        [TestMethod()]
-        public void Test_Quote_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Bible.Quote());
         }
     }
     

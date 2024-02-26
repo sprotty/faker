@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,20 +21,20 @@ namespace FakerNet
         /// <returns>a list of <see cref="CultureInfo"/>} instance</returns>
         internal static CultureInfo[] GetLocaleChain(this CultureInfo from)
         {
-            if (UtilityMethods.EnglishCulture.Equals(from))
+            if (EnglishCulture.Equals(from))
             {
-                return new[] { UtilityMethods.EnglishCulture };
+                return new[] { EnglishCulture };
             }
             CultureInfo normalized = from;
 
             List<CultureInfo> chain = new List<CultureInfo>(3);
             chain.Add(normalized);
             if (normalized.GetCountry() != "" &&
-                UtilityMethods.EnglishCulture.GetLanguage() != normalized.GetLanguage())
+                EnglishCulture.GetLanguage() != normalized.GetLanguage())
             {
                 chain.Add(new CultureInfo(normalized.GetLanguage()));
             }
-            chain.Add(UtilityMethods.EnglishCulture); // default
+            chain.Add(EnglishCulture); // default
             return chain.ToArray();
         }
 
@@ -61,6 +63,49 @@ namespace FakerNet
             }
             return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
         }
+
+        #region FirstLetterToLower
+        public static string FirstLetterToLower(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return str;
+            return str.Substring(0, 1).ToLower() + str.Substring(1);
+        }
+        #endregion
+
+        #region FirstLetterToUpper
+        public static string FirstLetterToUpper(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return str;
+            return str.Substring(0, 1).ToUpper() + str.Substring(1);
+        }
+        #endregion
+
+        #region RemoveTrailing
+        public static string RemoveTrailing(this string str, params char[] charsToRemove)
+        {
+            int i = str.Length - 1;
+            while (i >= 0 && charsToRemove.Contains(str[i]))
+                i--;
+            return str.Substring(0, i + 1);
+        }
+        #endregion
+
+        
+
+        public static string GetEnumValue(Enum value)
+        {
+            DisplayAttribute? displayAttr;
+
+            var fieldInfo = value.GetType().GetField(value.ToString());
+
+            if ((displayAttr = fieldInfo?.GetCustomAttribute<DisplayAttribute>()) != null && displayAttr.Name != null)
+                return displayAttr.Name;
+
+            return value.ToString();
+        }
+
     }
 
     public class UNKNWON_Hash { }
@@ -98,7 +143,7 @@ namespace FakerNet
             return $"{Min}..{Max}";
         }
 
-        public static implicit operator IntegerRange(string d) => IntegerRange.Parse(d);
+        public static implicit operator IntegerRange(string d) => Parse(d);
     }
     public class FloatRange
     {
@@ -127,6 +172,6 @@ namespace FakerNet
             return $"{Min}..{Max}";
         }
 
-        public static implicit operator FloatRange(string d) => FloatRange.Parse(d);
+        public static implicit operator FloatRange(string d) => Parse(d);
     }
 }

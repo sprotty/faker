@@ -4,25 +4,54 @@ const { exit } = require('node:process');
 var indent = 0;
 var indentRequired = true;
 var output_data = [];
-var keywords = ["bool", "byte", "sbyte", "short", "ushort", "int", "uint", "long", "ulong", "double", "float", "decimal",
-    "string", "char", "void", "object", "typeof", "sizeof", "null", "true", "false", "if", "else", "while", "for", "foreach", "do", "switch",
-    "case", "default", "lock", "try", "throw", "catch", "finally", "goto", "break", "continue", "return", "public", "private", "internal",
-    "protected", "static", "readonly", "sealed", "const", "fixed", "stackalloc", "volatile", "new", "override", "abstract", "virtual",
-    "event", "extern", "ref", "out", "in", "is", "as", "params", "__arglist", "__makeref", "__reftype", "__refvalue", "this", "base",
-    "namespace", "using", "class", "struct", "interface", "enum", "delegate", "checked", "unchecked", "unsafe", "operator", "implicit", "explicit"
+var keywords = ['bool', 'byte', 'sbyte', 'short', 'ushort', 'int', 'uint', 'long', 'ulong', 'double', 'float', 'decimal',
+    'string', 'char', 'void', 'object', 'typeof', 'sizeof', 'null', 'true', 'false', 'if', 'else', 'while', 'for', 'foreach', 'do', 'switch',
+    'case', 'default', 'lock', 'try', 'throw', 'catch', 'finally', 'goto', 'break', 'continue', 'return', 'public', 'private', 'internal',
+    'protected', 'static', 'readonly', 'sealed', 'const', 'fixed', 'stackalloc', 'volatile', 'new', 'override', 'abstract', 'virtual',
+    'event', 'extern', 'ref', 'out', 'in', 'is', 'as', 'params', '__arglist', '__makeref', '__reftype', '__refvalue', 'this', 'base',
+    'namespace', 'using', 'class', 'struct', 'interface', 'enum', 'delegate', 'checked', 'unchecked', 'unsafe', 'operator', 'implicit', 'explicit'
 ];
 
-output("using System.Diagnostics.CodeAnalysis;\n");
-output("using System.Globalization;\n");
-output("\n");
-output("namespace FakerNet\n");
-output("{\n");
+output('using System.Diagnostics.CodeAnalysis;\n');
+output('using System.Globalization;\n');
+output('using System.CodeDom.Compiler;\n');
+output('using System.ComponentModel.DataAnnotations;\n');
+output('using System.Text;\n');
+output('using System.Diagnostics;\n');
+output('\n');
+output('namespace FakerNet\n');
+output('{\n');
 outputIndentPush();
 {
+    for (const enm of config.enums) {
+        output('[GeneratedCode("Faker Code Generator", "1.0.0.0")]\n');
+        output('/// <summary>\n');
+        writeDocsString(enm.description);
+        output('/// </summary>\n');
+        output('public enum ' + GetNativeEnumName(enm.name) + '\n');
+        output('{\n');
+        outputIndentPush();
+        {
+            for (const enmVal of enm.values) {
+                if (isNullOrWhitespace(enmVal.description) == false) {
+                    output('/// <summary>\n');
+                    writeDocsString(enmVal.description);
+                    output('/// </summary>\n');
+                }
+                output('[Display(Name = "' + (enmVal.value ?? enmVal.name) + '")]\n');
+                output(GetNativeEnumValue(enmVal.name) + ',\n');
+            }
+        }
+        outputIndentPop();
+        output('}\n');
+        output('\n');
+    }
+
     for (const cls of config.classes) {
         generateClass(cls);
     }
 
+    output('[GeneratedCode("Faker Code Generator", "1.0.0.0")]\n');
     output('partial class Faker\n');
     output('{\n');
     outputIndentPush();
@@ -52,16 +81,17 @@ outputIndentPush();
     output('}\n');
 }
 outputIndentPop();
-output("}\n");
+output('}\n');
 
-fs.writeFileSync("./faker_api_metadata.cs", output_data.join(''));
+fs.writeFileSync('./faker_api_metadata.cs', output_data.join(''));
 
 exit(0);
 
 function generateClass(cls) {
     writeDocsSummary(cls.descriptions);
+    output('[GeneratedCode("Faker Code Generator", "1.0.0.0")]\n');
     output('[FakerGenerator("' + cls.name + '")]\n');
-    output('public class ' + cls.name + 'Generator : GeneratorBase\n');
+    output('public partial class ' + cls.name + 'Generator : GeneratorBase\n');
     output('{\n');
     outputIndentPush();
     {
@@ -70,16 +100,13 @@ function generateClass(cls) {
             output('public ' + nestedCls.name + 'Generator ' + nestedCls.name + ' { get; }\n');
         }
 
-        // output('private Faker _faker;\n');
-        // output('\n');
         output('internal ' + cls.name + 'Generator(Faker faker)\n');
         output('         : base(faker)\n');
         output('{\n');
         outputIndentPush();
         {
-            // output('_faker = faker;\n');
             for (const nestedCls of cls.classes) {
-                output(nestedCls.name + ' = new ' + nestedCls.name + 'Generator(_faker);\n');
+                output(nestedCls.name + ' = new ' + nestedCls.name + 'Generator(this.Faker);\n');
             }
         }
         outputIndentPop();
@@ -168,8 +195,9 @@ function writeMethod(method) {
     const nativeMethodType = GetNativeType(rubyMethodType);
 
     // if its already implmented in the native libraries then just make a note of it and move on
-    if (impl.type == 'NativeFunction' && isNullOrWhitespace(impl.data)) {
-        output('// Expecting native implmentation of ' + method.name + '(' + getArgs(method.arguments) + ');\n');
+    if (impl.type == 'Native' && isNullOrWhitespace(impl.data)) {
+        output('// Expecting native implementation of\n');
+        output('//      public ' + nativeMethodType + ' ' + nativeMethodName + '(' + getArgs(method.arguments) + ')\n');
         return;
     }
 
@@ -194,9 +222,8 @@ function writeMethod(method) {
             if (impl.platform != 'C#') {
                 output('#warning No native implmentation for this method - needs porting\n');
                 output('throw new NotSupportedException("Mehtod needs porting to C#");\n');
-            }
-            else {
-                output(impl.data + '\n');
+            } else {
+                output(impl.data.replaceAll('\r\n', '\n') + '\n');
             }
             break;
         case 'Resolve':
@@ -210,9 +237,9 @@ function writeMethod(method) {
 
             var expr;
             if (impl.type == 'Expression')
-                expr = 'this.Expression("' + implData + '", this)';
+                expr = 'this.EvaluateExpression("' + implData + '", this)';
             else
-                expr = 'this.Resolve("' + implData + '", this)';
+                expr = 'this.ResolveYamlValue("' + implData + '", this)';
 
             if (impl.charSubst == true)
                 expr = 'this.Letterify(' + expr + ')';
@@ -239,31 +266,31 @@ function getArg(arg) {
     var argNativeName = GetNativeArgName(arg.name);
     var argNativeType = GetNativeType(arg.type);
     var canDefault = CanDefaultValueType(arg.type);
-    var argDefaultDecl = "";
+    var argDefaultDecl = '';
 
     if (isNullOrWhitespace(arg.default) == false) {
-        if (arg.default == "nil") {
+        if (arg.default == 'nil') {
             // String Fn(ARG_TYPE? arg = null)
-            argDefaultDecl = "null";
-            argNativeType += "?";
+            argDefaultDecl = 'null';
+            argNativeType += '?';
         }
-        else if (argNativeType == "string" && arg.default.startsWith("'") && arg.default.endsWith("'")) {
-            // String Fn(ARG_TYPE arg = "DEFAULT_VALUE")
-            argDefaultDecl = "\"" + getNativeEscapedString(arg.default.substring(1, arg.default.length - 1)) + "\"";
+        else if (argNativeType == 'string' && arg.default.startsWith("'") && arg.default.endsWith("'")) {
+            // String Fn(ARG_TYPE arg = 'DEFAULT_VALUE')
+            argDefaultDecl = '"' + getNativeEscapedString(arg.default.substring(1, arg.default.length - 1)) + '"';
         }
         else if (canDefault == false) {
             // Implemented within the function
             // String Fn(ARG_TYPE? arg = null){
             //  arg ??= DEFAULT_VALUE;
             // }
-            argDefaultDecl = "null";
-            argNativeType += "?";
+            argDefaultDecl = 'null';
+            argNativeType += '?';
         }
         else {
             // String Fn(ARG_TYPE arg = DEFAULT_VALUE)
             argDefaultDecl = arg.default;
         }
-        argDefaultDecl = " = " + argDefaultDecl;
+        argDefaultDecl = ' = ' + argDefaultDecl;
     }
 
     return argNativeType + ' ' + argNativeName + argDefaultDecl;
@@ -277,10 +304,10 @@ function getArgInitalization(arg) {
     if (isNullOrWhitespace(argDefault) == false && canDefault == false) {
         if (argNativeType == 'IntegerRange')
             return argNativeName + ' ??= IntegerRange.Parse(\"' + getNativeEscapedString(argDefault) + '\");';
-        else if (argNativeType.startsWith("UNKNOWN_"))
-            return '// ' + argNativeName + ' ??= ' + argNativeType + '.Parse(\"' + getNativeEscapedString(argDefault) + '\");';
-        else if (argNativeType.startsWith("List<"))
-            return '// ' + argNativeName + ' ??= ' + argNativeType + '.Parse(\"' + getNativeEscapedString(argDefault) + '\");';
+        else if (argNativeType.startsWith('UNKNOWN_'))
+            return '// ' + argNativeName + ' ??= ' + argNativeType + '.Parse("' + getNativeEscapedString(argDefault) + '");';
+        else if (argNativeType.startsWith('List<'))
+            return '// ' + argNativeName + ' ??= ' + argNativeType + '.Parse("' + getNativeEscapedString(argDefault) + '");';
         else
             throw new Error('Missing initilization code for ' + argNativeType);
     }
@@ -301,10 +328,17 @@ function GetNativeMethodName(rubyName) {
     return rubyName.split('_').map(n => n.substring(0, 1).toUpperCase() + n.substring(1)).join('');
 }
 
+function GetNativeEnumName(rubyName) {
+    return rubyName;
+}
+function GetNativeEnumValue(rubyName) {
+    return rubyName.split('_').map(n => n.substring(0, 1).toUpperCase() + n.substring(1)).join('');
+}
+
 
 
 function GetNativeType(rubyType) {
-    if (rubyType.startsWith("Array<") && rubyType.endsWith(">"))
+    if (rubyType.startsWith('Array<') && rubyType.endsWith('>'))
         return 'List<' + GetNativeType(rubyType.substring(6, rubyType.length - 1)) + '>';
     else if (rubyType == 'Boolean')
         return 'bool';
@@ -320,6 +354,8 @@ function GetNativeType(rubyType) {
         return 'string';
     else if (rubyType == '')
         return 'String'; // Assume string???
+    else if (config.enums.some(e => e.name == rubyType))
+        return GetNativeEnumName(rubyType); // its an enumeration
     else
         return 'UNKNOWN_' + rubyType;
 }
@@ -340,6 +376,8 @@ function CanDefaultValueType(rubyType) {
         return true;
     else if (rubyType == '')
         return true; // Assume string???
+    else if (config.enums.some(e => e.name == rubyType))
+        return true; // its an enumeration
     else
         return false;
 }
@@ -363,6 +401,8 @@ function GetCastStringToCode(strExpr, rubyType) {
         return 'IntegerRange.Parse(' + strExpr + ')';
     else if (rubyType == 'String')
         return strExpr;
+    else if (config.enums.some(e => e.name == rubyType))
+        return 'Enum.Parse<' + GetNativeEnumName(rubyType) + '>(' + strExpr + ')'; // its an enumeration    
     //	else if (rubyType == '')
     //		return strExpr; // Assume string???
     else

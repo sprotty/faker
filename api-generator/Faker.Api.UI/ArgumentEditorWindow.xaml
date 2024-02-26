@@ -21,8 +21,8 @@
             <TextBlock Text="Argument Type"/>
             <ComboBox Margin="15,3,0,7" Padding="3" ItemsSource="{Binding ElementName=window, Path=AllTypes}" SelectedValue="{Binding Type}"/>
 
-            <TextBlock Text="Default Value (empty for no default)"/>
-            <TextBox Margin="15,3,0,7" Padding="3" Text="{Binding Default}"/>
+            <TextBlock Text="Default Value (empty for required/no default, nil for null)"/>
+            <TextBox Margin="15,3,0,7" Padding="3" Text="{Binding Default}" ToolTip="empty for required\nnil for null\n'text' for a string\n[5..10] for IntegerRange/DoubleRange"/>
 
 
             <TextBlock >Default Description</TextBlock>

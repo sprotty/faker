@@ -13,6 +13,7 @@ namespace Faker.Api
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Diagnostics.CodeAnalysis;
+    using Faker.Api.UI;
 
     public class FakerModel : INotifyPropertyChanged
     {
@@ -24,6 +25,10 @@ namespace Faker.Api
 
     public partial class Root : FakerModel
     {
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("enums")]
+        public virtual ObservableCollection<EnumElement> Enums { get; set; } = new ObservableCollection<EnumElement>();
+
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [JsonPropertyName("types")]
         public virtual ObservableCollection<TypeElement> Types { get; set; } = new ObservableCollection<TypeElement>();
@@ -164,7 +169,7 @@ namespace Faker.Api
             this.Type = src.Type;
             this.Default = src.Default;
             this.Descriptions.Clear();
-            foreach(var desc in src.Descriptions)
+            foreach (var desc in src.Descriptions)
                 this.Descriptions.Add(new DescriptionElement(desc));
         }
 
@@ -322,7 +327,25 @@ namespace Faker.Api
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [JsonPropertyName("data")]
-        public virtual string? Data { get => _data; set { _data = value; OnPropertyChanged(); } }
+        public virtual string? Data
+        {
+            get => _data; set
+            {
+                string indentedText = (value??"").Replace("\r\n", "\n");
+                int indent = Utilities.GetCommonIndent(indentedText, 4);
+                if (indent > 0)
+                {
+                    indentedText = Utilities.RemoveCommonIndent(indentedText, indent, 4);
+                    while (indentedText.StartsWith('\n'))
+                        indentedText = indentedText.Substring(1);
+                    while (indentedText.EndsWith('\n'))
+                        indentedText = indentedText.Substring(0, indentedText.Length - 1);
+                }
+
+                _data = indentedText; 
+                OnPropertyChanged();
+            }
+        }
 
     }
 
@@ -334,4 +357,32 @@ namespace Faker.Api
         [JsonPropertyName("name")]
         public virtual string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
     }
+
+    public partial class EnumElement : FakerModel
+    {
+        private string _name = "";
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("name")]
+        public virtual string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("values")]
+        public virtual ObservableCollection<EnumValueElement> Values { get; set; } = new ObservableCollection<EnumValueElement>();
+    }
+
+    public partial class EnumValueElement : FakerModel
+    {
+        private string _name = "";
+        private string _description = "";
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("name")]
+        public virtual string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("description")]
+        public virtual string Descriptions { get => _description; set { _description = value; OnPropertyChanged(); } }
+    }
+
 }

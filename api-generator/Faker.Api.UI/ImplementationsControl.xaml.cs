@@ -60,7 +60,8 @@ namespace Faker.Api.UI
 
         private void ImplementationsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ImplementationEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, (Implementation)ImplementationsList.SelectedValue, true);
+            if (ImplementationsList.SelectedValue != null)
+                ImplementationEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, (Implementation)ImplementationsList.SelectedValue, true);
         }
     }
 }

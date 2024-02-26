@@ -1,4 +1,14 @@
-﻿OK, this is a bit of a mess.
+﻿OK, this is a bit of a mess, basically the YAML and the expressions in the code are RUBY.
+The Ruby `#{SUTFF}` syntax is similar to the C# `$"{STUFF}"` syntax, and that can go into the YAML files.
+So our parser needs to do a bit of basic RUBY evaluation to work - this is a bit 80/20 we are not re-writing RUBY
+but need some basic functionality make stuff work.
+
+**Naming conventions**
+Classes in RUBY are CamelCase (ClashOfClans).
+Methods in RUBY are snake_case (city_name).
+The maps in the YAML are all snake_case (clash_of_clans)
+So if you are looking at a qualified name `Address.city` then this is a call to `city()` on the RUBY class `Faker.Address`.
+So if you are looking at a qualified name `address.city` then this is a lookup into the YAML files with the path `[LOCALE].faker.address.city`.
 
 **Regluar Expressions**
 
@@ -51,7 +61,11 @@ YAML
 
 **Escaping and mixing and matching**
 
-This is a problem... Faker has created no explicit rules for espcaping, I think `\` is the escape char for RUBY so a function literal would look like this `\#{name}`.
+Escaping in a RUBY string is done with the `\` char see https://blog.appsignal.com/2016/12/21/ruby-magic-escaping-in-ruby.html.
+
+So a function literal would look like this `\#{name}`
+
+Not 100%, but this probably follows in the YAML as well - Currently escaping is not supported in C# in either the YAML or RUBY expressions - this doesn't seem to be a problem....YET.....
 
 On the whole if stuff is processed RegEx, Function Calls, Numbers, Literals then it seems to work OK.
 

@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\..\FakerApiBody.xml" Link="FakerApiBody.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Fare" Version="2.2.1" />
     <PackageReference Include="Serilog" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
@@ -84,7 +80,7 @@
     <EmbeddedResource Include="..\..\lib\locales\en\chess.yml" Link="Resources\en\chess.yml" />
     <EmbeddedResource Include="..\..\lib\locales\en\chiquito.yml" Link="Resources\en\chiquito.yml" />
     <EmbeddedResource Include="..\..\lib\locales\en\chuck_norris.yml" Link="Resources\en\chuck_norris.yml" />
-    <EmbeddedResource Include="..\..\lib\locales\en\clash_of_clan.yml" Link="Resources\en\clash_of_clan.yml" />
+    <EmbeddedResource Include="..\..\lib\locales\en\clash_of_clans.yml" Link="Resources\en\clash_of_clans.yml" />
     <EmbeddedResource Include="..\..\lib\locales\en\code.yml" Link="Resources\en\code.yml" />
     <EmbeddedResource Include="..\..\lib\locales\en\coffee.yml" Link="Resources\en\coffee.yml" />
     <EmbeddedResource Include="..\..\lib\locales\en\coin.yml" Link="Resources\en\coin.yml" />
@@ -112,7 +108,7 @@
     <EmbeddedResource Include="..\..\lib\locales\en\doraemon.yml" Link="Resources\en\doraemon.yml" />
     <EmbeddedResource Include="..\..\lib\locales\en\dota.yml" Link="Resources\en\dota.yml" />
     <EmbeddedResource Include="..\..\lib\locales\en\dragon_ball.yml" Link="Resources\en\dragon_ball.yml" />
-    <EmbeddedResource Include="..\..\lib\locales\en\driving_license.yml" Link="Resources\en\driving_license.yml" />
+    <EmbeddedResource Include="..\..\lib\locales\en\driving_licence.yml" Link="Resources\en\driving_licence.yml" />
     <EmbeddedResource Include="..\..\lib\locales\en\drone.yml" Link="Resources\en\drone.yml" />
     <EmbeddedResource Include="..\..\lib\locales\en\dr_who.yml" Link="Resources\en\dr_who.yml" />
     <EmbeddedResource Include="..\..\lib\locales\en\dumb_and_dumber.yml" Link="Resources\en\dumb_and_dumber.yml" />

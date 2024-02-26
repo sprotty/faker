@@ -208,6 +208,12 @@ function GetNativeMethodName(rubyName) {
     return rubyName.split('_').map(n => n.substring(0, 1).toUpperCase() + n.substring(1)).join('');
 }
 
+function GetNativeEnumName(rubyName) {
+    return rubyName;
+}
+function GetNativeEnumValue(rubyName) {
+    return rubyName.split('_').map(n => n.substring(0, 1).toUpperCase() + n.substring(1)).join('');
+}
 
 
 function GetNativeType(rubyType) {
@@ -227,6 +233,8 @@ function GetNativeType(rubyType) {
         return 'string';
     else if (rubyType == '')
         return 'String'; // Assume string???
+    else if (config.enums.some(e => e.name == rubyType))
+        return GetNativeEnumName(rubyType); // its an enumeration
     else
         return 'UNKNOWN_' + rubyType;
 }
@@ -247,8 +255,9 @@ function CanDefaultValueType(rubyType) {
         return true;
     else if (rubyType == '')
         return true; // Assume string???
-    else
-        return false;
+    else if (config.enums.some(e => e.name == rubyType))
+        return true; // its an enumeration    else
+    return false;
 }
 
 function GetCastStringToCode(strExpr, rubyType) {
@@ -270,6 +279,8 @@ function GetCastStringToCode(strExpr, rubyType) {
         return 'IntegerRange.Parse(' + strExpr + ')';
     else if (rubyType == 'String')
         return strExpr;
+    else if (config.enums.some(e => e.name == rubyType))
+        return 'Enum.Parse<' + GetNativeEnumName(rubyType) + '>(' + strExpr + ')'; // its an enumeration    
     //	else if (rubyType == '')
     //		return strExpr; // Assume string???
     else

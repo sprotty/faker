@@ -8,21 +8,27 @@ namespace FakerNet
 {
     internal static class RandomExtensions
     {
+        /// <summary>Returns a non-negative random integer that is less than the specified maximum.</summary>
         public static int NextInt32(this Random random, int n)
         {
             return random.Next(n);
         }
+        /// <summary>Returns a random integer greater than or equal to <paramref name="min"/> and less than <paramref name="max"/>.</summary>
         public static int NextInt32(this Random random, int min, int max)
         {
-            return random.Next((max - min) + 1) + min;
+            return random.Next(max - min + 1) + min;
+        }
+        public static int NextInt32(this Random random, IntegerRange rng)
+        {
+            return random.NextInt32((int)rng.Min, (int)rng.Max);
         }
 
         public static long NextInt64(this Random random, long min, long max)
         {
-            return (Math.Abs(random.NextInt64() % (max - min)) + min);
+            return Math.Abs(random.NextInt64() % (max - min)) + min;
         }
         // lifted from http://stackoverflow.com/questions/2546078/java-random-long-number-in-0-x-n-range
-        public static long NextInt64(this Random random, long n)
+        public static long NextInt64(this Random random, long n)    
         {
             if (n <= 0)
             {
@@ -41,16 +47,38 @@ namespace FakerNet
 
         public static double NextDouble(this Random random, double min, double max)
         {
-            return (random.NextDouble() * (max - min)) + min;
+            return random.NextDouble() * (max - min) + min;
         }
         public static bool NextBoolean(this Random random)
         {
             return random.Next(2) == 0;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="random"></param>
+        /// <param name="trueRatio">1 for all true, 0 for all false</param>
+        /// <returns></returns>
+        public static bool NextBoolean(this Random random, double trueRatio)
+        {
+            return random.NextDouble() < trueRatio;
+        }
 
+        public static T NextItem<T>(this Random random, IEnumerable<T> lst)
+        {
+            return lst.ElementAt(random.Next(lst.Count()));
+        }
         public static T NextItem<T>(this Random random, IList<T> lst)
         {
             return lst[random.Next(lst.Count)];
+        }
+        public static T NextItem<T>(this Random random, ICollection<T> lst)
+        {
+            return lst.ElementAt(random.Next(lst.Count));
+        }
+        public static TValue NextItem<TKey, TValue>(this Random random, IDictionary<TKey, TValue> map)
+        {
+            return map[random.NextItem(map.Keys)];
         }
         public static string NextHex(this Random random, int length)
         {

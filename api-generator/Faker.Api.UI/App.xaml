@@ -5,6 +5,7 @@
              xmlns:sys="clr-namespace:System;assembly=netstandard"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <local:AllTypesConverter x:Key="AllTypesConverter"/>
         <local:DescriptionConverter x:Key="DescriptionConverter" x:Shared="False" />
         <local:NullVisibilityConverter x:Key="NullVisibilityConverter" />
         <local:IsNullConverter x:Key="IsNullConverter" />

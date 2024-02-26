@@ -1,6 +1,7 @@
 ﻿// Ignore Spelling: Numerify Letterify Regexify yml yaml bothify
 
 using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,20 +17,21 @@ using System.Threading.Tasks;
 
 namespace FakerNet
 {
-
     /// <summary>
     /// Provides utility methods for generating fake strings, such as names, phone
     /// numbers, addresses. generate random strings with given patterns
     /// </summary>
     public partial class Faker
     {
+        private YamlFileLoader _yamlFileCache = new YamlFileLoader();
         private ReadOnlyCollection<IValueResolver> _fakeValuesList;
         private Dictionary<Type, Dictionary<Tuple<string, int>, MethodInfo>> _methodLookup = new Dictionary<Type, Dictionary<Tuple<string, int>, MethodInfo>>();
         private Dictionary<Type, Dictionary<string, PropertyInfo>> _propertyLookup = new Dictionary<Type, Dictionary<string, PropertyInfo>>();
+        private Faker? _fakerEn = null;
 
         #region Constructor
         public Faker()
-        : this(UtilityMethods.EnglishCulture)
+        : this(CultureInfo.CurrentCulture)
         {
 
         }
@@ -41,9 +43,19 @@ namespace FakerNet
         }
 
         public Faker(Random random)
-            : this(UtilityMethods.EnglishCulture, random)
+            : this(CultureInfo.CurrentCulture, random)
         {
 
+        }
+        private Faker(Faker faker)
+            : this(CultureInfo.CurrentCulture, faker.Random)
+        {
+            this._yamlFileCache = faker._yamlFileCache;
+            this._fakeValuesList = new ReadOnlyCollection<IValueResolver>(faker._fakeValuesList.TakeLast(1).ToList());
+            this._methodLookup = faker._methodLookup;
+            this._propertyLookup = faker._propertyLookup;
+            this.Locale = UtilityMethods.EnglishCulture;
+            this.Logger = faker.Logger;
         }
 
         #region Init
@@ -92,13 +104,13 @@ namespace FakerNet
                     ValueGroupResolver fakeValuesGrouping = new ValueGroupResolver();
                     foreach (EnFile file in EnFile.AllFiles)
                     {
-                        fakeValuesGrouping.add(new YamlValueResolver(l, file.getFile(), file.getPath()));
+                        fakeValuesGrouping.add(new YamlValueResolver(_yamlFileCache, l, file.getFile(), file.getPath()));
                     }
                     all.Add(fakeValuesGrouping);
                 }
                 else
                 {
-                    all.Add(new YamlValueResolver(l));
+                    all.Add(new YamlValueResolver(_yamlFileCache, l));
                 }
             }
 
@@ -111,8 +123,24 @@ namespace FakerNet
         public CultureInfo Locale { get; private set; }
         internal Random Random { get; set; }
         internal ILogger Logger = Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
+        /// <summary>
+        /// Gets a faker instance in the 'en' locale.
+        /// </summary>
+        public Faker FakerEn
+        {
+            get
+            {
+                if (_fakerEn == null)
+                {
+                    if (this._fakeValuesList.Count == 1)
+                        _fakerEn = this;
+                    else
+                        _fakerEn = new Faker(this);
+                }
 
-
+                return _fakerEn;
+            }
+        }
 
         #region Fetch
         /// <summary>
@@ -123,38 +151,100 @@ namespace FakerNet
         /// otherwise it will just return the value as a string.
         /// </summary>
         /// <param name="key">the key to fetch from the YML structure.</param>
-        /// <param name="defaultIfNull">defaultIfNull the value to return if the fetched value is null</param>
         /// <returns></returns>
-        public string? SafeFetch(string key, string? defaultIfNull)
+        public Dictionary<object, object> FetchYamlMap(string key)
         {
-            Object? o = FetchObject(key);
-            if (o == null)
-                return defaultIfNull;
+            Object? o = this.FetchYamlObject(key);
+            if (o is not Dictionary<object, object> map)
+                throw new InvalidOperationException($"Could not fetch the list '{key}' for locale {Locale.Name}.");
+            return map;
+        }
 
-            if (o is List<object> values)
+        /// <summary>
+        /// Safely fetches a key.
+        /// If the value is null, it will return an empty string.
+        /// If it is a list, it will assume it is a list of strings and select a random value from it.
+        /// If the retrieved value is an slash encoded regular expression such as <code>/[a-b]/</code> then the regex will be converted to a regexify expression and returned(ex. <code>#regexify '[a-b]'</code>)
+        /// otherwise it will just return the value as a string.
+        /// </summary>
+        /// <param name="key">the key to fetch from the YML structure.</param>
+        /// <returns></returns>
+        public List<object> FetchYamlList(string key)
+        {
+            Object? o = this.FetchYamlObject(key);
+            if (o is not List<object> list)
+                throw new InvalidOperationException($"Could not fetch the list '{key}' for locale {Locale.Name}.");
+            return list;
+        }
+
+        /// <summary>
+        /// Safely fetches a key.
+        /// If the value is null, it will return an empty string.
+        /// If it is a list, it will assume it is a list of strings and select a random value from it.
+        /// If the retrieved value is an slash encoded regular expression such as <code>/[a-b]/</code> then the regex will be converted to a regexify expression and returned(ex. <code>#regexify '[a-b]'</code>)
+        /// otherwise it will just return the value as a string.
+        /// </summary>
+        /// <param name="key">the key to fetch from the YML structure.</param>
+        /// <returns></returns>
+        public bool TryFetchYamlValue(string key, [NotNullWhen(true)] out string? result, [NotNullWhen(false)] out Exception? e)
+        {
+            Object? o = this.FetchYamlObject(key);
+            if (o == null)
+            {
+                result = null;
+                e = new InvalidOperationException($"The YAML key '{key}' could not be found (locale {Locale.Name}).");
+                return false;
+            }
+            else if (o is List<object> values)
             {
                 if (values.Count == 0)
                 {
-                    return defaultIfNull;
+                    result = null;
+                    e = new InvalidOperationException($"The YAML key '{key}' contained an empty list (locale {Locale.Name}).");
+                    return false;
                 }
-                return (string)values[this.Random.NextInt32(values.Count)];
+                else
+                {
+                    result = (string)values[this.Random.NextInt32(values.Count)];
+                    e = null;
+                    return true;
+                }
             }
-            else if (isSlashDelimitedRegex(o.ToString()))
+            else if (isSlashDelimitedRegex(o.ToString()!))
             {
-                return $"#{{regexify '{trimRegexSlashesAndEscape(o.ToString())}'}}";
+                result = $"#{{regexify '{trimRegexSlashesAndEscape(o.ToString()!)}'}}";
+                e = null;
+                return true;
             }
             else
             {
-                return (string)o;
+                result = (string)o;
+                e = null;
+                return true;
             }
         }
+        public string? TryFetchYamlValue(string key)
+        {
+            if (TryFetchYamlValue(key, out var result, out var e) == false)
+                return null;
+            else
+                return result;
+        }
+        public string FetchYamlValue(string key)
+        {
+            if (TryFetchYamlValue(key, out var result, out var e) == false)
+                throw e;
+            else
+                return result;
+        }
 
+        #region FetchYamlObject
         /// <summary>
         /// Return the object selected by the key from yaml file.
         /// </summary>
         /// <param name="key">key key contains path to an object. Path segment is separated by dot.E.g.name.first_name</param>
         /// <returns></returns>
-        private Object? FetchObject(string key)
+        private Object? FetchYamlObject(string key)
         {
             string[] path = key.Split('\\', '.');
 
@@ -188,6 +278,29 @@ namespace FakerNet
         }
         #endregion
 
+        /// <summary>
+        /// true if s is non null and is a slash delimited regex(ex. <code> / [ab] /</code>)
+        /// </summary>
+        /// <param name="expression">expression input expression</param>
+        /// <returns></returns>
+        private bool isSlashDelimitedRegex(string expression)
+        {
+            return expression != null && expression.StartsWith("/") && expression.EndsWith("/");
+        }
+
+
+        /// <summary>
+        /// Given a {@code slashDelimitedRegex} such as {@code /[ab]/}, removes the slashes and returns only {@code [ab]}
+        /// Also escapes the expression (' becomes \')
+        /// </summary>
+        /// <param name="slashDelimitedRegex">a non null slash delimited regex (ex. {@code /[ab]/})</param>
+        /// <returns>the regex without the slashes (ex. {@code [ab]})</returns>
+        private string trimRegexSlashesAndEscape(string slashDelimitedRegex)
+        {
+            return slashDelimitedRegex.Substring(1, slashDelimitedRegex.Length - 2).Replace("\'", "\\\'");
+        }
+        #endregion
+
 
         #region BuildInvokableNativeMember
         /// <summary>
@@ -215,7 +328,11 @@ namespace FakerNet
                 {
                     var fakerMethodAttr = m.GetCustomAttribute<FakerMethodAttribute>();
                     if (fakerMethodAttr != null)
-                        methodMap.Add(new(fakerMethodAttr.FakerMethodName, m.GetParameters().Length), m);
+                    {
+                        int minArgs = m.GetParameters().Length - m.GetParameters().Reverse().Count(a => a.HasDefaultValue);
+                        for (int i = minArgs; i <= m.GetParameters().Length; i++)
+                            methodMap.Add(new(fakerMethodAttr.FakerMethodName, i), m);
+                    }
                 }
                 _methodLookup[targetObject.GetType()] = methodMap;
             }
@@ -236,7 +353,7 @@ namespace FakerNet
 
             if (methodMap.TryGetValue(new(rubyMethodName, methodArgs.Count), out var method))
             {
-                List<Object> coercedArguments = CoerceArguments(method, methodArgs);
+                List<Object?>? coercedArguments = CoerceArguments(method, methodArgs);
                 if (coercedArguments == null)
                     Logger.Warning($"FAILED to Coerce arguments for method {targetObject.GetType().Name}.{rubyMethodName}({string.Join(", ", method.GetParameters().Zip(methodArgs).Select(z => $"{z.First.Name} = {z.Second}"))})");
                 else
@@ -259,25 +376,33 @@ namespace FakerNet
         }
         #endregion
 
-        /// <summary>
+        #region CoerceArguments
+        // <summary>
         /// Coerce arguments in <em>args</em> into the appropriate types (if possible) for the parameter arguments to<em> accessor</em>.
         /// </summary>
         /// <param name="accessor"></param>
         /// <param name="args"></param>
         /// <returns>array of coerced values if successful, null otherwise</returns>
         /// <exception cref="Exception">Exception if unable to coerce</exception>
-        private List<Object>? CoerceArguments(MethodInfo accessor, List<string> args)
+        private List<Object?>? CoerceArguments(MethodInfo accessor, List<string> args)
         {
-            List<Object> coerced = new List<Object>();
-            for (int i = 0; i < accessor.GetParameters().Length; i++)
+            List<Object?> coerced = new List<Object?>();
+            for (int iTargetParam = 0; iTargetParam < accessor.GetParameters().Length; iTargetParam++)
             {
-                var currentParam = accessor.GetParameters()[i];
+                var currentParam = accessor.GetParameters()[iTargetParam];
                 Type toType = currentParam.ParameterType;
                 try
                 {
-                    if (toType.IsEnum)
+                    if (args.Count <= iTargetParam)
                     {
-                        coerced.Add(Enum.Parse(toType, args[i]));
+                        if (accessor.GetParameters()[iTargetParam].HasDefaultValue == false)
+                            throw new InvalidOperationException($"The method {accessor.Name} requires {accessor.GetParameters().Length}, but only {args.Count} have been supplied. The missing arguments require values.");
+                        else
+                            coerced.Add(accessor.GetParameters()[iTargetParam].DefaultValue);
+                    }
+                    else if (toType.IsEnum)
+                    {
+                        coerced.Add(Enum.Parse(toType, args[iTargetParam]));
                         //                    Method method = toType.getMethod("valueOf", string.class );
                         //        string enumArg = args.get(i).substring(args.get(i).indexOf(".") + 1);
                         //    Object coercedArg = method.invoke(null, enumArg);
@@ -285,14 +410,14 @@ namespace FakerNet
                     }
                     else if (toType == typeof(string))
                     {
-                        coerced.Add(args[i]);
+                        coerced.Add(args[iTargetParam]);
                     }
                     else
                     {
-                        var parseMethod = toType.GetMethod("Parse", BindingFlags.Static | BindingFlags.Public);
+                        var parseMethod = toType.GetMethod("Parse", new Type[] { typeof(string) });//, BindingFlags.Static | BindingFlags.Public);
                         if (parseMethod != null)
                         {
-                            coerced.Add(parseMethod.Invoke(null, new[] { args[i] }));
+                            coerced.Add(parseMethod.Invoke(null, new[] { args[iTargetParam] }));
                         }
                         else
                         {
@@ -305,16 +430,18 @@ namespace FakerNet
                 }
                 catch (Exception e)
                 {
-                    Logger.Warning($"Unable to coerce '{args[i]}' to {toType.Name}.", e);
+                    Logger.Warning($"Unable to coerce '{args[iTargetParam]}' to {toType.Name}.", e);
                     return null;
                 }
             }
             return coerced;
         }
+        #endregion
 
+        #region ResolveFakerObjectAndMethod
         /// <summary>
-        /// Accepts a {@link Faker} instance and a name.firstName style 'key' which is resolved to the return value of:
-        ///     {@link Faker#name()}'s {@link Name#firstName()} method.
+        /// Accepts a <see cref="Faker"/> instance and a name.firstName style 'key' which is resolved to the return value of:
+        ///     <see cref="Faker.Name"/>'s <see cref="NameGenerator.FirstName"/> method.
         /// </summary>
         /// <param name="key"></param>
         /// <param name="args"></param>
@@ -323,7 +450,9 @@ namespace FakerNet
         internal string? ResolveFakerObjectAndMethod(string key, List<string> args)
         {
             string[] classAndMethod = key.Split('.');
-            Debug.Assert(classAndMethod.Length == 2, "Expecting 2 parts, object.method");
+            // wrong number of parts to be a [class name].[method]
+            if (classAndMethod.Length != 2)
+                return null;
 
             //try
             //{
@@ -352,7 +481,9 @@ namespace FakerNet
             //    return null;
             //}
         }
+        #endregion
 
+        #region EvaluateUsingMethod
         /// <summary>
         /// Given a directive like 'firstName', attempts to resolve it to a method..
         /// </summary>
@@ -386,6 +517,7 @@ namespace FakerNet
                 return null;
             }
         }
+        #endregion
 
 
         #region interface IInvokableNativeMember
@@ -399,9 +531,9 @@ namespace FakerNet
         private class InvokableNativeMethod : IInvokableNativeMember
         {
             private MethodInfo _method;
-            private Object[] _coercedArgs;
+            private Object?[] _coercedArgs;
 
-            public InvokableNativeMethod(MethodInfo m, Object[] coercedArgs)
+            public InvokableNativeMethod(MethodInfo m, Object?[] coercedArgs)
             {
                 this._method = m ?? throw new ArgumentNullException("method cannot be null");
                 this._coercedArgs = coercedArgs ?? throw new ArgumentNullException("coerced arguments cannot be null");
@@ -425,30 +557,6 @@ namespace FakerNet
             {
                 return _property.GetValue(on);
             }
-        }
-        #endregion
-
-        #region Helpers
-        /// <summary>
-        /// true if s is non null and is a slash delimited regex(ex. <code> / [ab] /</code>)
-        /// </summary>
-        /// <param name="expression">expression input expression</param>
-        /// <returns></returns>
-        private bool isSlashDelimitedRegex(string expression)
-        {
-            return expression != null && expression.StartsWith("/") && expression.EndsWith("/");
-        }
-
-
-        /// <summary>
-        /// Given a {@code slashDelimitedRegex} such as {@code /[ab]/}, removes the slashes and returns only {@code [ab]}
-        /// Also escapes the expression (' becomes \')
-        /// </summary>
-        /// <param name="slashDelimitedRegex">a non null slash delimited regex (ex. {@code /[ab]/})</param>
-        /// <returns>the regex without the slashes (ex. {@code [ab]})</returns>
-        private string trimRegexSlashesAndEscape(string slashDelimitedRegex)
-        {
-            return slashDelimitedRegex.Substring(1, slashDelimitedRegex.Length - 2).Replace("\'", "\\\'");
         }
         #endregion
 
@@ -674,49 +782,5 @@ namespace FakerNet
         //       {
         //           return expression != null && expression.StartsWith("/") && expression.EndsWith("/");
         //       }
-
-        ///**
-        // * Constructs Faker instance with provided {@link CultureInfo}.
-        // *
-        // * @param locale - {@link CultureInfo}
-        // * @return {@link Faker#Faker(CultureInfo)}
-        // */
-        //public static Faker instance(CultureInfo locale)
-        //{
-        //    return new Faker(locale);
-        //}
-
-        ///**
-        // * Constructs Faker instance with provided {@link Random}.
-        // *
-        // * @param random - {@link Random}
-        // * @return {@link Faker#Faker(Random)}
-        // */
-        //public static Faker instance(Random random)
-        //{
-        //    return new Faker(random);
-        //}
-
-        ///**
-        // * Constructs Faker instance with provided {@link CultureInfo} and {@link Random}.
-        // *
-        // * @param locale - {@link CultureInfo}
-        // * @param random - {@link Random}
-        // * @return {@link Faker#Faker(CultureInfo, Random)}
-        // */
-        //public static Faker instance(CultureInfo locale, Random random)
-        //{
-        //    return new Faker(locale, random);
-        //}
-
-        ///**
-        // * Constructs Faker instance with default argument.
-        // *
-        // * @return {@link Faker#Faker()}
-        // */
-        //public static Faker instance()
-        //{
-        //    return new Faker();
-        //}
     }
 }

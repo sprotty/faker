@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -177,6 +178,35 @@ namespace Faker.Api.UI
                 Binding.DoNothing,
                 Binding.DoNothing
             };
+        }
+    }
+
+    public class AllTypesConverter : IMultiValueConverter {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values[0] is ObservableCollection<TypeElement> types &&
+                values[1] is ObservableCollection<EnumElement> enums)
+            {
+                List<string> allTypes = new List<string>();
+                allTypes.Add("String");
+                allTypes.Add("Integer");
+                allTypes.Add("Float");
+                allTypes.Add("Boolean");
+                allTypes.Add("IntegerRange");
+                allTypes.Add("DoubleRange");
+                allTypes.AddRange(types.Select(t=>t.Name));
+                allTypes.AddRange(enums.Select(t => t.Name));
+                return allTypes.ToArray();
+            }
+            else
+            {
+                return Binding.DoNothing;
+            }
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -22,12 +23,15 @@ namespace FakerNet
         private static readonly Regex EXPRESSION_PATTERN = new Regex("#\\{([a-z0-9A-Z_.]+)\\s?((?:,?'([^']+)')*)\\}", RegexOptions.Compiled);
         private static readonly Regex EXPRESSION_ARGUMENTS_PATTERN = new Regex("(?:'(.*?)')", RegexOptions.Compiled);
         private static readonly Regex EXPRESSION_JAVA_TO_YML_NAME_PATTERN = new Regex("([A-Z])", RegexOptions.Compiled);
-        protected readonly Faker _faker;
+
 
         protected GeneratorBase(Faker faker)
         {
-            _faker = faker;
+            Faker = faker;
         }
+
+        protected Random Random => Faker.Random;
+        protected CultureInfo Locale => Faker.Locale;
 
         #region Faker Common Methods
         /// <summary>
@@ -45,7 +49,7 @@ namespace FakerNet
             {
                 if (numberString[i] == '#')
                 {
-                    sb.Append(_faker.Random.NextInt32(10));
+                    sb.Append(Faker.Random.NextInt32(10));
                 }
                 else
                 {
@@ -86,7 +90,7 @@ namespace FakerNet
             {
                 if (letterString[i] == '?')
                 {
-                    sb.Append((char)(baseChar + _faker.Random.NextInt32(26))); // a-z
+                    sb.Append((char)(baseChar + Faker.Random.NextInt32(26))); // a-z
                 }
                 else
                 {
@@ -126,7 +130,7 @@ namespace FakerNet
         [FakerMethod("regexify")]
         public string Regexify(string regex)
         {
-            var regexBuilder = new Fare.Xeger(regex, _faker.Random);
+            var regexBuilder = new Fare.Xeger(regex, Faker.Random);
             string expr = regexBuilder.Generate();
             return expr;
         }
@@ -148,7 +152,7 @@ namespace FakerNet
         [FakerMethod("random_integer")]
         public string RandomIntegerAsString(IntegerRange rng)
         {
-            return RandomExtensions.NextInt64(_faker.Random, rng.Min, rng.Max).ToString(CultureInfo.InvariantCulture);
+            return RandomExtensions.NextInt64(Faker.Random, rng.Min, rng.Max).ToString(CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -159,93 +163,95 @@ namespace FakerNet
         [FakerMethod("random_float")]
         public string RandomFloatAsString(FloatRange rng)
         {
-            return _faker.Random.NextDouble(rng.Min, rng.Max).ToString("R");
+            return Faker.Random.NextDouble(rng.Min, rng.Max).ToString("R");
+        }
+        /// <summary>
+        /// Gets a sequence of hex chars
+        /// </summary>
+        /// <param name="length">the number of chars (typically an even number)</param>
+        /// <param name="lower">true for lower case, false for upper case</param>
+        /// <returns>RandomHex(4, false) = F8A0</returns>
+        [FakerMethod("random_hex")]
+        public string RandomHex(long length, bool lower = true)
+        {
+            var seq = Faker.Random.NextHex((int)length);
+            seq = lower ? seq.ToLower() : seq.ToUpper();
+            return seq;
         }
         #endregion
 
+        internal Faker Faker { get; }
 
-        #region Expression
-        //    /**
-        //* 
-        //* <p>
-        //* The following are valid expressions:
-        //* <ul>
-        //* </ul>
-        //*
-        //* @param expression (see examples above)
-        //* @return the evaluated string expression
-        //* @throws RuntimeException if unable to evaluate the expression
-        //*/]
         /// <summary>
-        /// Allows the evaluation of native methods within the YAML expressions.
+        /// Gets a faker object in the 'en' locale.
+        /// </summary>
+        internal Faker FakerEn => Faker.FakerEn;
+
+        #region EvaluateExpression
+        public string EvaluateExpression(string expression) => EvaluateExpression(expression, this);
+
+        /// <summary>
+        /// processes a expression in the style #{X.y} using the current objects as the 'current' location
+        /// within the yml file(or the { @link Faker}
+        /// object hierarchy as it were).
+        ///      #{Address.streetName} would get resolved to {@link Faker#address()}'s {@link Address#streetName()}
+        ///      #{address.street} would get resolved to the YAML > locale: faker: address: street:
+        ///      Combinations are supported as well: "#{x} #{y}"
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
         /// <example>
+        /// The following are valid expressions:
         ///     #{regexify '(a|b){2,3}'}
         ///     #{regexify '\\.\\*\\?\\+'}
         ///     #{bothify '????','false'}
         ///     #{Name.first_name} #{Name.first_name} #{Name.last_name}
         ///     #{number.number_between '1','10'}
         /// </example>
-        //public string Expression(string expression, Object current)
-        //{
-        //    return this.resolveExpression(expression, null, this);
-        //}
-
-        /**
-         * <p>processes a expression in the style #{X.y} using the current objects as the 'current' location
-         * within the yml file (or the {@link Faker} object hierarchy as it were).
-         * </p>
-         * <p>
-         * #{Address.streetName} would get resolved to {@link Faker#address()}'s {@link Address#streetName()}
-         * </p>
-         * <p>
-         * #{address.street} would get resolved to the YAML > locale: faker: address: street:
-         * </p>
-         * <p>
-         * Combinations are supported as well: "#{x} #{y}"
-         * </p>
-         * <p>
-         * Recursive templates are supported.  if "#{x}" resolves to "#{Address.streetName}" then "#{x}" resolves to
-         * {@link Faker#address()}'s {@link Address#streetName()}.
-         * </p>
-         */
-        public string Expression(string expression, Object current/*, Faker root*/)
+        /// <remarks>
+        /// Recursive templates are supported.  if "#{x}" resolves to "#{Address.streetName}" then "#{x}" resolves to
+        /// {@link Faker#address()}'s {@link Address#streetName()}.
+        public string EvaluateExpression(string expression, Object current)
         {
-            var matches = EXPRESSION_PATTERN.Matches(expression);
-
+            MatchCollection matches;
             string result = expression;
-            foreach (Match match in matches)
+
+            do
             {
-                //throw new TodoException();
-                string escapedDirective = match.Groups[0].Value;
-                string directive = match.Groups[1].Value;
-                string arguments = match.Groups[2].Value;
-                var argsMatcher = EXPRESSION_ARGUMENTS_PATTERN.Matches(arguments);
-                List<string> args = new List<string>();
-                foreach (Match argMatch in argsMatcher)
-                {
-                    args.Add(argMatch.Groups[1].Value);
-                }
+                matches = EXPRESSION_PATTERN.Matches(result);
 
-                // resolve the expression and reprocess it to handle recursive templates
-                string? resolved = resolveExpression(directive, args, current/*, root*/);
-                if (resolved == null)
+                foreach (Match match in matches)
                 {
-                    throw new InvalidOperationException("Unable to resolve " + escapedDirective + " directive.");
-                }
+                    string escapedDirective = match.Groups[0].Value;
+                    string directive = match.Groups[1].Value;
+                    string arguments = match.Groups[2].Value;
+                    var argsMatcher = EXPRESSION_ARGUMENTS_PATTERN.Matches(arguments);
+                    List<string> args = new List<string>();
+                    foreach (Match argMatch in argsMatcher)
+                    {
+                        string argExpr = argMatch.Groups[1].Value;
+                        string argValue = EvaluateExpression(argExpr, current);
+                        args.Add(argValue);
+                    }
 
-                resolved = Expression(resolved, current/*, root*/);
-                result = result.ReplaceFirst(escapedDirective, resolved);
-            }
+                    // resolve the expression and reprocess it to handle recursive templates
+                    string? resolved = EvaluateExpression(directive, args, current/*, root*/);
+                    if (resolved == null)
+                    {
+                        throw new InvalidOperationException("Unable to resolve " + escapedDirective + " directive.");
+                    }
+
+                    resolved = EvaluateExpression(resolved, current/*, root*/);
+                    result = result.ReplaceFirst(escapedDirective, resolved);
+                }
+            } while (matches.Count > 0);
             return result;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="directive"></param>
+        /// <param name="expression"></param>
         /// <param name="methodArgs"></param>
         /// <param name="current"></param>
         /// <param name="root"></param>
@@ -259,21 +265,21 @@ namespace FakerNet
         /// <li>Search for keys in yaml file by transforming object reference to yaml reference</li>
         /// </ul>
         /// </remarks>
-        private string? resolveExpression(string directive, List<string> methodArgs, Object current/*, Faker root*/)
+        private string? EvaluateExpression(string expression, List<string> methodArgs, Object current)
         {
             //            throw new TodoException();
             // name.name (resolve locally)
             // Name.first_name (resolve to faker.name().firstName())
-            string simpleDirective = (IsDotDirective(directive) || current == null)
-                                        ? directive
-                                        : classNameToYamlName(current) + "." + directive;
+            string simpleDirective = (IsDotDirective(expression) || current == null)
+                                        ? expression
+                                        : ClassNameToYamlName(current) + "." + expression;
 
             string? resolved = null;
             // resolve method references on CURRENT object like #{number_between '1','10'} on Number or
             // #{ssn_valid} on IdNumber
-            if (!IsDotDirective(directive))
+            if (!IsDotDirective(expression))
             {
-                resolved = _faker.EvaluateUsingMethod(current, directive, methodArgs);
+                resolved = Faker.EvaluateUsingMethod(current, expression, methodArgs);
             }
 
             // simple fetch of a value from the yaml file. the directive may have been mutated
@@ -281,19 +287,19 @@ namespace FakerNet
             // car.wheel will be looked up in the YAML file.
             if (resolved == null)
             {
-                resolved = _faker.SafeFetch(simpleDirective, null);
+                resolved = Faker.TryFetchYamlValue(simpleDirective);
             }
 
             // resolve method references on faker object like #{regexify '[a-z]'}
-            if (resolved == null && !IsDotDirective(directive))
+            if (resolved == null && !IsDotDirective(expression))
             {
-                resolved = _faker.EvaluateUsingMethod(this, directive, methodArgs);
+                resolved = Faker.EvaluateUsingMethod(this, expression, methodArgs);
             }
 
             // Resolve Faker Object method references like #{ClassName.method_name}
-            if (resolved == null && IsDotDirective(directive))
+            if (resolved == null && IsDotDirective(expression))
             {
-                resolved = _faker.ResolveFakerObjectAndMethod(directive, methodArgs);
+                resolved = Faker.ResolveFakerObjectAndMethod(expression, methodArgs);
             }
 
             // last ditch effort.  Due to Ruby's dynamic nature, something like 'Address.street_title' will resolve
@@ -301,22 +307,17 @@ namespace FakerNet
             // through the normal resolution above, but if we will can't resolve it, we once again do a 'safeFetch' as we
             // did first but FIRST we change the Object reference Class.method_name with a yml style internal refernce ->
             // class.method_name (lowercase)
-            if (resolved == null && IsDotDirective(directive))
+            if (resolved == null && IsDotDirective(expression))
             {
-                resolved = _faker.SafeFetch(javaNameToYamlName(simpleDirective), null);
+                resolved = Faker.TryFetchYamlValue(NativeNameToYamlName(simpleDirective));
             }
 
             return resolved;
         }
         #endregion
 
-
-
         #region Resolve
-        public string Resolve(string key, Object current)
-        {
-            return this.resolve(key, current/*, this*/);
-        }
+        public string ResolveYamlValue(string keyExpression)=>ResolveYamlValue(keyExpression, this);
 
         /// <summary>
         /// Resolves a key to an entry in the YAML files
@@ -328,24 +329,42 @@ namespace FakerNet
         /// <returns></returns>
         /// <example>
         ///     address.full_address
-        ///     address.country_by_name.#{lower 'US'}
+        ///     address.country_by_name.#{String.lower 'US'}
         /// </example>
         /// <exception cref="InvalidOperationException"></exception>
-        public string resolve(string keyExpression, Object current/*, Faker root*/)
+        public string ResolveYamlValue(string keyExpression, Object current)
         {
-            string resolvedKey = Expression(keyExpression, current/*, root*/);
+            string resolvedKey = EvaluateExpression(keyExpression, current);
 
-            string? expression = _faker.SafeFetch(resolvedKey, null);
-            if (expression == null)
-            {
-                throw new InvalidOperationException(keyExpression + " resulted in null expression");
-            }
+            string expression = Faker.FetchYamlValue(resolvedKey);
 
-            return Expression(expression, current/*, root*/);
+            return EvaluateExpression(expression, current/*, root*/);
         }
         #endregion
 
+        //#region Fetch
+        //public Dictionary<object, object> FetchYamlMap(string key)=>_faker.FetchYamlMap(key);
+        //public List<object> FetchYamlList(string key)=>_faker.FetchYamlList(key);
+        //public bool TryFetchYamlValue(string key, [NotNullWhen(true)] out string? result, [NotNullWhen(false)] out Exception? e) => _faker.TryFetchYamlValue(key, out result, out e);
+        //public string? TryFetchYamlValue(string key)=>_faker.TryFetchYamlValue(key);
+        //public string FetchYamlValue(string key) => _faker.FetchYamlValue(key);
+        //#endregion
+
         #region Helpers
+        /// <summary>
+        /// Creates a random array of bytes 
+        /// A helper function not exposed to the evaluation engine (used direclty by native functions)
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        protected byte[] CreateRandomBytes(int minLen, int maxLen)
+        {
+            int len = RandomExtensions.NextInt32(Faker.Random, minLen, maxLen);
+            byte[] bytes = new byte[len];
+            Faker.Random.NextBytes(bytes);
+            return bytes;
+        }
+
 
 
 
@@ -354,56 +373,31 @@ namespace FakerNet
             return directive.Contains(".");
         }
 
-        /**
-         * @return a yaml style name from the classname of the supplied object (PhoneNumber => phone_number)
-         */
-        private string classNameToYamlName(Object current)
+        /// <summary>
+        /// Gets a yaml style name from the classname of the supplied object (PhoneNumber => phone_number)
+        /// </summary>
+        /// <param name="current"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        private string ClassNameToYamlName(Object current)
         {
             var genAttr = current.GetType().GetCustomAttribute<FakerGeneratorAttribute>();
             if (genAttr == null)
                 throw new InvalidOperationException($"The class {current.GetType().Name} should have a {nameof(FakerGeneratorAttribute)} attribute");
 
-            return genAttr.FakerGeneratorName;
+            return genAttr.YamlName;
         }
 
-        /**
-         * @return a yaml style name like 'phone_number' from a java style name like 'PhoneNumber'
-         */
-        private string javaNameToYamlName(string expression)
+        /// <summary>
+        /// a yaml style name like 'phone_number' from a java style name like 'PhoneNumber'
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        private string NativeNameToYamlName(string expression)
         {
             string result = EXPRESSION_JAVA_TO_YML_NAME_PATTERN.Replace(expression, "_$1");
             return result.Substring(1).ToLower();
         }
         #endregion
-
-
-
-
-
-
-
-
-        //private string stringZ(Object obj) { return (obj == null) ? null : obj.ToString(); }
-
-
-        //       /**
-        //* @return a proper {@link CultureInfo} instance with language and country code set regardless of how
-        //* it was instantiated.  new CultureInfo("pt-br") will be normalized to a locale constructed
-        //* with new CultureInfo("pt","BR").
-        //*/
-        //       private CultureInfo normalizeLocale(CultureInfo locale)
-        //       {
-        //           return locale;
-        //           //string[] parts = locale.Name.Split('-', '_');
-        //           //if (parts.Length == 1)
-        //           //{
-        //           //    return new CultureInfo(parts[0]);
-        //           //}
-        //           //else
-        //           //{
-        //           //    return new CultureInfo(parts[0], parts[1]);
-        //           //}
-        //       }
-
     }
 }

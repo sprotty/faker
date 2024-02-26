@@ -16,15 +16,22 @@ namespace FakerNet
     [DebuggerDisplay("YAML Resolver {_locale.Name,nq} ({_path,nq} {_filename,nq})")]
     public class YamlValueResolver : IValueResolver
     {
+        private YamlFileLoader _yamlLoader;
         private CultureInfo _locale;
         private string _filename;
         private string _path;
         private Dictionary<object, object>? _values;
 
-        internal YamlValueResolver(CultureInfo locale)
-            : this(locale, getFilename(locale), getFilename(locale))
+        internal YamlValueResolver(YamlFileLoader yamlLoader, CultureInfo locale)
+            : this(yamlLoader, locale, getFilename(locale), getFilename(locale))
         {
-
+        }
+        internal YamlValueResolver(YamlFileLoader yamlLoader, CultureInfo locale, string filename, string path)
+        {
+            this._yamlLoader = yamlLoader;
+            this._locale = locale;
+            this._filename = filename;
+            this._path = path;
         }
 
         /// <summary>
@@ -35,19 +42,17 @@ namespace FakerNet
         private static string getFilename(CultureInfo locale)
         {
             StringBuilder filename = new StringBuilder(language(locale));
-            //var r = new RegionInfo(locale.LCID);
-
             if (string.IsNullOrWhiteSpace(locale.GetCountry()) == false)
-            {
                 filename.Append("-").Append(locale.GetCountry());
-            }
             return filename.ToString();
         }
 
-        /**
-         * If you new up a locale with "he", it gets converted to "iw" which is old.
-         * This addresses that unfortunate condition.
-         */
+        /// <summary>
+        /// If you new up a locale with "he", it gets converted to "iw" which is old.
+        /// This addresses that unfortunate condition.
+        /// </summary>
+        /// <param name="l"></param>
+        /// <returns></returns>
         private static string language(CultureInfo l)
         {
             if (l.GetLanguage() == "iw")
@@ -57,13 +62,43 @@ namespace FakerNet
             return l.GetLanguage();
         }
 
-        internal YamlValueResolver(CultureInfo locale, string filename, string path)
+
+        public Dictionary<object, object>? LoadValuesFromYaml()
         {
-            this._locale = locale;
-            this._filename = filename;
-            this._path = path;
+            string pathWithLocaleAndFilename = "/" + _locale.GetLanguage() + "/" + this._filename;
+            string pathWithFilename = "/" + _filename + ".yml";
+            string pathWithLocale = "/" + _locale.GetLanguage() + ".yml";
+
+            Dictionary<object, object>? valuesMap = null;
+            string[] paths = new[] { pathWithLocaleAndFilename, pathWithFilename, pathWithLocale };
+            foreach (string path in paths)
+            {
+                valuesMap = _yamlLoader.LoadYamlResourceFile(path);
+                if (valuesMap != null)
+                    break;
+            }
+
+            if (valuesMap == null)
+                return new Dictionary<object, object>();
+
+            if (valuesMap.TryGetValue(_locale.GetLanguage(), out var localeBasedResult) == false || localeBasedResult is not Dictionary<object, object> localeBased)
+            {
+                if (valuesMap.TryGetValue(_filename, out localeBasedResult) == true && localeBasedResult is Dictionary<object, object> filenameBased)
+                    localeBased = filenameBased;
+                else
+                    throw new InvalidOperationException("Could not find what we expected in the YML file");
+            }
+            return (Dictionary<object, object>)localeBased["faker"];
         }
 
+
+
+        internal bool SupportsPath(string path)
+        {
+            return this._path == path; //string.Compare(this._path, path, true) == 0; // the names we get from the YAML are inconsistent.
+        }
+
+        #region IValueResolver Implementation
         public Dictionary<object, object>? this[string key]
         {
             get
@@ -76,66 +111,6 @@ namespace FakerNet
                 return null;
             }
         }
-        private Dictionary<object, object>? LoadValuesFromYaml()
-        {
-            TextReader? stream = null;
-            try
-            {
-                string pathWithLocaleAndFilename = "/" + _locale.GetLanguage() + "/" + this._filename;
-                string pathWithFilename = "/" + _filename + ".yml";
-                string pathWithLocale = "/" + _locale.GetLanguage() + ".yml";
-
-                string[] paths = new[] { pathWithLocaleAndFilename, pathWithFilename, pathWithLocale };
-                foreach (string path in paths)
-                {
-                    stream = FindResourceTextFile(path);
-                    if (stream != null)
-                    {
-                        Debug.WriteLine($"Loaded : {path}");
-                        break;
-                    }
-                }
-
-                if (stream == null)
-                {
-                    return new Dictionary<object, object>();
-                }
-
-                var deserializer = new DeserializerBuilder()
-                    .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                    .Build();
-                Dictionary<object, object> valuesMap = deserializer.Deserialize<Dictionary<object, object>>(stream);
-                if (valuesMap.TryGetValue(_locale.GetLanguage(), out var localeBasedResult) == false || localeBasedResult is not Dictionary<object, object> localeBased)
-                {
-                    if (valuesMap.TryGetValue(_filename, out localeBasedResult) == true && localeBasedResult is Dictionary<object, object> filenameBased)
-                        localeBased = filenameBased;
-                    else
-                        throw new InvalidOperationException("Could not find what we expected in the YML file");
-                }
-                return (Dictionary<object, object>)localeBased["faker"];
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="resourceName">i.e. "MyCompany.MyProduct.MyFile.txt"</param>
-        /// <returns></returns>
-        private TextReader? FindResourceTextFile(string resourceName)
-        {
-            resourceName = "FakerNet/Resources" + resourceName;
-            resourceName = resourceName.Replace("/", ".");
-            Stream? stream = GetType().Assembly.GetManifestResourceStream(resourceName);
-            return stream == null ? null : new StreamReader(stream);
-        }
-
-        internal bool SupportsPath(string path)
-        {
-            return this._path == path;
-        }
+        #endregion
     }
 }

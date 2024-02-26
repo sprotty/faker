@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         x:Name="window"
         Title="Faker Editor" Height="800" Width="1024" 
-        d:DataContext="{d:DesignInstance Type=local:TestRoot, IsDesignTimeCreatable=True}">
+        d:DataContext="{d:DesignInstance Type=local:TestRoot, IsDesignTimeCreatable=True}" >
     <Window.Resources>
         <sys:String x:Key="NullPlatformText">All Platforms</sys:String>
     </Window.Resources>
@@ -66,6 +66,7 @@
                     </ListBox.ItemTemplate>
                     <ListBox.ContextMenu>
                         <ContextMenu>
+                            <MenuItem Header="New" Click="MethodsMenuItem_New_Click"/>
                             <MenuItem Header="Delete" Click="MethodsMenuItem_Delete_Click" IsEnabled="{Binding ElementName=MethodList, Path=SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
                         </ContextMenu>
                     </ListBox.ContextMenu>
