@@ -34,7 +34,7 @@ for (const cls of config.classes) {
 outputIndentPop();
 output("}\n");
 
-fs.writeFileSync("./faker_api_metadata.tests.cs", output_data.join(''));
+fs.writeFileSync("./FakerNet.NUnit/FakerGeneratorsTests.cs", output_data.join(''));
 
 exit(0);
 

@@ -1041,7 +1041,7 @@ en-NZ:
         - Old
         - Main
       community:
-        - "#{Name.surname}#{community_suffix}"
+        - "#{Name.last_name}#{community_suffix}"
         - "#{place_names}#{community_suffix}"
         - "#{place_names} #{landscape_elements}"
         - "#{community_prefix} #{place_names}"

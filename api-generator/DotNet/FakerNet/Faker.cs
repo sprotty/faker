@@ -393,6 +393,9 @@ namespace FakerNet
                 Type toType = currentParam.ParameterType;
                 try
                 {
+                    if (toType.IsGenericType && toType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                        toType = toType.GetGenericArguments()[0];
+
                     if (args.Count <= iTargetParam)
                     {
                         if (accessor.GetParameters()[iTargetParam].HasDefaultValue == false)

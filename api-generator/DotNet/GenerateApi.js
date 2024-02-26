@@ -83,7 +83,7 @@ outputIndentPush();
 outputIndentPop();
 output('}\n');
 
-fs.writeFileSync('./faker_api_metadata.cs', output_data.join(''));
+fs.writeFileSync('./FakerNet/Generators/FakerGenerators.cs', output_data.join(''));
 
 exit(0);
 
@@ -180,11 +180,11 @@ function writeDocsString(txt) {
 
 function writeMethod(method) {
     if (isNullOrWhitespace(method.name) || isNullOrWhitespace(method.return_type)) {
-        output('#warning Failed processing method ' + method.name + '\n');
+        output('#warning Failed processing method ' + method.name + ' : method has no name or return type.\n');
         return;
     }
     // find the best implementation
-    var impl = method.implementations.find(d => d.platform == 'C#') ?? method.implementations.find(d => d.platform == null)
+    var impl = method.implementations.find(d => d.platform == 'C#') ?? method.implementations.find(d => isNullOrWhitespace(d.platform))
     if (impl == null) {
         output('#warning No implementation defined for method ' + method.name + '(' + getArgs(method.arguments) + ');\n');
         return;

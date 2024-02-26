@@ -298,17 +298,50 @@ namespace FakerNet.NUnit
     [TestClass]
     public class Test_Barcode : FakerNUnitBase
     {
-        #warning Failed processing method ean
         #warning Failed processing method ean_with_composite_symbology
-        #warning Failed processing method generate_barcode
-        #warning No implementation defined for method generate_check_digit();
-        #warning Failed processing method isbn
-        #warning Failed processing method ismn
-        #warning Failed processing method issn
+        [TestMethod()]
+        public void Test_Ean13_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Barcode.Ean13());
+        }
+        [TestMethod()]
+        public void Test_Ean8_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Barcode.Ean8());
+        }
+        // Method : generate_barcode : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_Isbn10_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Barcode.Isbn10());
+        }
+        [TestMethod()]
+        public void Test_Isbn13_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Barcode.Isbn13());
+        }
+        [TestMethod()]
+        public void Test_Ismn_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Barcode.Ismn());
+        }
+        [TestMethod()]
+        public void Test_Issn_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Barcode.Issn());
+        }
         #warning No implementation defined for method sum_even_odd();
-        #warning Failed processing method upc_a
+        [TestMethod()]
+        public void Test_UpcA_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Barcode.UpcA());
+        }
         #warning Failed processing method upc_a_with_composite_symbology
-        #warning Failed processing method upc_e
+        [TestMethod()]
+        public void Test_UpcE_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Barcode.UpcE());
+        }
         #warning Failed processing method upc_e_with_composite_symbology
     }
     
@@ -762,6 +795,16 @@ namespace FakerNet.NUnit
             FakerForEveryLocale<string>(faker => faker.Code.Ean());
         }
         [TestMethod()]
+        public void Test_Ean13_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Ean13());
+        }
+        [TestMethod()]
+        public void Test_Ean8_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Ean8());
+        }
+        [TestMethod()]
         public void Test_Imei_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Code.Imei());
@@ -770,6 +813,16 @@ namespace FakerNet.NUnit
         public void Test_Isbn_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Code.Isbn());
+        }
+        [TestMethod()]
+        public void Test_Isbn10_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Isbn10());
+        }
+        [TestMethod()]
+        public void Test_Isbn13_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Code.Isbn13());
         }
         [TestMethod()]
         public void Test_Npi_Execute()
@@ -790,26 +843,6 @@ namespace FakerNet.NUnit
         public void Test_Sin_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Code.Sin());
-        }
-        [TestMethod()]
-        public void Test_Ean8_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Ean8());
-        }
-        [TestMethod()]
-        public void Test_Ean13_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Ean13());
-        }
-        [TestMethod()]
-        public void Test_Isbn10_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Isbn10());
-        }
-        [TestMethod()]
-        public void Test_Isbn13_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Isbn13());
         }
     }
     
@@ -4973,6 +5006,7 @@ namespace FakerNet.NUnit
         }
         #warning No implementation defined for method select_a();
         #warning No implementation defined for method space_or_utf8_char();
+        // Method : sub_string : Can not generated test for method with required arguments.
         #warning No implementation defined for method utf8character();
         #warning No implementation defined for method utf8string();
     }

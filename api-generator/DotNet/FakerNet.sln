@@ -5,11 +5,17 @@ VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FakerNet", "FakerNet\FakerNet.csproj", "{3C9BFE6B-0315-4129-946B-B67FC1705641}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FakerNetTests", "FakerNetTests\FakerNetTests.csproj", "{2152F717-E826-430E-A4FF-8F00DC910B2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Faker.Api.UI", "..\Faker.Api.UI\Faker.Api.UI.csproj", "{C73D63D4-2590-44AE-BA22-AEE1C3ADDE94}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Faker.Api.UI", "..\api-generator\Faker.Api.UI\Faker.Api.UI.csproj", "{C73D63D4-2590-44AE-BA22-AEE1C3ADDE94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FakerNet.NUnit", "FakerNet.NUnit\FakerNet.NUnit.csproj", "{6ADE6E82-3A96-463E-98B5-F7285233B827}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakerNet.NUnit", "FakerNet.NUnit\FakerNet.NUnit.csproj", "{6ADE6E82-3A96-463E-98B5-F7285233B827}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generators", "Generators", "{78F51FDF-22F5-487E-BD84-3B76BBA1EDC9}"
+	ProjectSection(SolutionItems) = preProject
+		..\faker_api_metadata.json = ..\faker_api_metadata.json
+		..\faker_api_metadata.schema.json = ..\faker_api_metadata.schema.json
+		GenerateApi.js = GenerateApi.js
+		GenerateNUnit.js = GenerateNUnit.js
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +27,6 @@ Global
 		{3C9BFE6B-0315-4129-946B-B67FC1705641}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C9BFE6B-0315-4129-946B-B67FC1705641}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C9BFE6B-0315-4129-946B-B67FC1705641}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2152F717-E826-430E-A4FF-8F00DC910B2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2152F717-E826-430E-A4FF-8F00DC910B2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2152F717-E826-430E-A4FF-8F00DC910B2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2152F717-E826-430E-A4FF-8F00DC910B2A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C73D63D4-2590-44AE-BA22-AEE1C3ADDE94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C73D63D4-2590-44AE-BA22-AEE1C3ADDE94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C73D63D4-2590-44AE-BA22-AEE1C3ADDE94}.Release|Any CPU.ActiveCfg = Release|Any CPU

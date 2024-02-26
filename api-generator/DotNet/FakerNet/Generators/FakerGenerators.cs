@@ -667,18 +667,100 @@ namespace FakerNet
         {
         }
         
-        #warning Failed processing method ean
-        #warning Failed processing method ean_with_composite_symbology
-        #warning Failed processing method generate_barcode
-        #warning No implementation defined for method generate_check_digit();
-        #warning Failed processing method isbn
-        #warning Failed processing method ismn
-        #warning Failed processing method issn
+        #warning Failed processing method ean_with_composite_symbology : method has no name or return type.
+        /// <summary>
+        /// Returns a EAN 13 digit format barcode number with check digit 
+        /// </summary>
+        /// <example>
+        /// <code>&quot;2115190480285&quot;</code>
+        /// </example>
+        [FakerMethod("ean13")]
+        public string Ean13()
+        {
+            return this.EvaluateExpression("#{Barcode.generate_barcode '#{String.random_digits '12'}'}", this);
+        }
+        /// <summary>
+        /// Returns a EAN 8 digit format barcode number with check digit 
+        /// </summary>
+        /// <example>
+        /// <code>&quot;85657526&quot;
+        /// &quot;30152700&quot;</code>
+        /// </example>
+        [FakerMethod("ean8")]
+        public string Ean8()
+        {
+            return this.EvaluateExpression("#{Barcode.generate_barcode '#{String.random_digits '7'}'}", this);
+        }
+        // Expecting native implementation of
+        //      public string GenerateBarcode(string barcodeDigits)
+        /// <summary>
+        /// Returns a 10 digit ISBN code as a barcode number with check digit 
+        /// </summary>
+        /// <example>
+        /// <code>9798363807732</code>
+        /// </example>
+        [FakerMethod("isbn10")]
+        public string Isbn10()
+        {
+            return this.EvaluateExpression("#{Barcode.generate_barcode '#{String.sub_string '#{Code.isbn10 'false'}','0','9'}'}", this);
+        }
+        /// <summary>
+        /// Returns a 13 digit ISBN code as a barcode number with check digit 
+        /// </summary>
+        /// <example>
+        /// <code>9798363807732</code>
+        /// </example>
+        [FakerMethod("isbn13")]
+        public string Isbn13()
+        {
+            return this.EvaluateExpression("#{Barcode.generate_barcode '#{String.sub_string '#{Code.isbn13 'false'}','0','12'}'}", this);
+        }
+        /// <summary>
+        /// Returns a ISMN format barcode number with check digit  @return [String].
+        /// 
+        /// @example
+        /// Faker::Barcode.ismn      =&gt; &quot;9790527672897&quot;
+        /// 
+        /// </summary>
+        [FakerMethod("ismn")]
+        public string Ismn()
+        {
+            return this.EvaluateExpression("#{Barcode.generate_barcode '#{numerify '#{barcode.ismn}'}'}", this);
+        }
+        /// <summary>
+        /// Returns a ISSN format barcode number with check digit 
+        /// @example
+        /// Faker::Barcode.issn      =&gt; &quot;9775541703338&quot;
+        /// </code></pre>
+        /// </summary>
+        [FakerMethod("issn")]
+        public string Issn()
+        {
+            return this.EvaluateExpression("#{Barcode.generate_barcode '#{numerify '#{barcode.issn}'}'}", this);
+        }
         #warning No implementation defined for method sum_even_odd();
-        #warning Failed processing method upc_a
-        #warning Failed processing method upc_a_with_composite_symbology
-        #warning Failed processing method upc_e
-        #warning Failed processing method upc_e_with_composite_symbology
+        /// <summary>
+        /// Returns a UPC_A format barcode number with check digit  @return [String].
+        /// @example
+        /// Faker::Barcode.upc_a      =&gt; &quot;766807541831&quot;
+        /// </summary>
+        [FakerMethod("upc_a")]
+        public string UpcA()
+        {
+            return this.EvaluateExpression("#{Barcode.generate_barcode '#{numerify '#{barcode.upc_a}'}'}", this);
+        }
+        #warning Failed processing method upc_a_with_composite_symbology : method has no name or return type.
+        /// <summary>
+        /// Returns a UPC_E format barcode number with check digit  @return [String]
+        /// @example
+        /// 03746820
+        /// </summary>
+        [FakerMethod("upc_e")]
+        public string UpcE()
+        {
+            return this.EvaluateExpression("#{Barcode.generate_barcode '#{numerify '#{barcode.upc_e}'}'}", this);
+        }
+        #warning Failed processing method upc_e_with_composite_symbology : method has no name or return type.
     }
     
     [GeneratedCode("Faker Code Generator", "1.0.0.0")]
@@ -1595,9 +1677,9 @@ namespace FakerNet
         
         #warning No implementation defined for method check_digit();
         #warning No implementation defined for method dv();
-        #warning Failed processing method format_rut
+        #warning Failed processing method format_rut : method has no name or return type.
         #warning No implementation defined for method full_rut(long minRut, long maxRut, bool @fixed);
-        #warning Failed processing method last_rut
+        #warning Failed processing method last_rut : method has no name or return type.
         #warning No implementation defined for method rut(long minRut, long maxRut, bool isFixed = false);
     }
     
@@ -1648,10 +1730,50 @@ namespace FakerNet
         }
         // Expecting native implementation of
         //      public string Ean(long digits = 13)
+        /// <summary>
+        /// Produces a random EAN (European Article Number) 13 digit code.
+        /// </summary>
+        [FakerMethod("ean13")]
+        public string Ean13()
+        {
+            return this.EvaluateExpression("#{Code.ean '13'}", this);
+        }
+        /// <summary>
+        /// Produces a random EAN (European Article Number) 8 digit code.
+        /// </summary>
+        [FakerMethod("ean8")]
+        public string Ean8()
+        {
+            return this.EvaluateExpression("#{Code.ean '8'}", this);
+        }
         // Expecting native implementation of
         //      public string Imei()
         // Expecting native implementation of
         //      public string Isbn(long digits = 10, bool separator = true)
+        /// <summary>
+        /// Produces a random ISBN (International Standard Book Number) 10 digit code.
+        /// </summary>
+        /// <param name="separator">
+        /// true if you want separators returned, false otherwise
+        /// (default value "true")
+        /// </param>
+        [FakerMethod("isbn10")]
+        public string Isbn10(bool separator = true)
+        {
+            return this.EvaluateExpression("#{Code.isbn '10','" + separator + "'}", this);
+        }
+        /// <summary>
+        /// Produces a random ISBN (International Standard Book Number) 13 digit code.
+        /// </summary>
+        /// <param name="separator">
+        /// true if you want separators returned, false otherwise
+        /// (default value "true")
+        /// </param>
+        [FakerMethod("isbn13")]
+        public string Isbn13(bool separator = true)
+        {
+            return this.EvaluateExpression("#{Code.isbn '13','" + separator + "'}", this);
+        }
         // Expecting native implementation of
         //      public string Npi()
         // Expecting native implementation of
@@ -1660,38 +1782,6 @@ namespace FakerNet
         //      public string Rut()
         // Expecting native implementation of
         //      public string Sin()
-        /// <summary>
-        /// Produces a random EAN (European Article Number) 8 digit code.
-        /// </summary>
-        [FakerMethod("ean8")]
-        public string Ean8()
-        {
-            return this.EvaluateExpression("#{code.ean '8'}", this);
-        }
-        /// <summary>
-        /// Produces a random EAN (European Article Number) 13 digit code.
-        /// </summary>
-        [FakerMethod("ean13")]
-        public string Ean13()
-        {
-            return this.EvaluateExpression("#{code.ean '13'}", this);
-        }
-        /// <summary>
-        /// Produces a random ISBN (International Standard Book Number) 10 digit code.
-        /// </summary>
-        [FakerMethod("isbn10")]
-        public string Isbn10()
-        {
-            return this.EvaluateExpression("#{code.isbn '10'}", this);
-        }
-        /// <summary>
-        /// Produces a random ISBN (International Standard Book Number) 13 digit code.
-        /// </summary>
-        [FakerMethod("isbn13")]
-        public string Isbn13()
-        {
-            return this.EvaluateExpression("#{code.isbn '13'}", this);
-        }
     }
     
     [GeneratedCode("Faker Code Generator", "1.0.0.0")]
@@ -1747,7 +1837,7 @@ namespace FakerNet
         {
             return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("coffee.country", this))));
         }
-        #warning Failed processing method search_format
+        #warning Failed processing method search_format : method has no name or return type.
         /// <summary>
         /// Produces a random coffee variety.
         /// </summary>
@@ -1819,7 +1909,7 @@ namespace FakerNet
         #warning No implementation defined for method hsl_to_hex(UNKNOWN_Array(Float, Float, Float) aHslColor);
         #warning No implementation defined for method hsla_color();
         #warning No implementation defined for method rgb_color();
-        #warning Failed processing method single_rgb_color
+        #warning Failed processing method single_rgb_color : method has no name or return type.
     }
     
     [GeneratedCode("Faker Code Generator", "1.0.0.0")]
@@ -1842,7 +1932,7 @@ namespace FakerNet
         {
             return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("commerce.brand", this))));
         }
-        #warning Failed processing method categories
+        #warning Failed processing method categories : method has no name or return type.
         /// <summary>
         /// Produces a random color.
         /// </summary>
@@ -1866,7 +1956,7 @@ namespace FakerNet
         {
             return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("commerce.product_name.material", this))));
         }
-        #warning Failed processing method merge_categories
+        #warning Failed processing method merge_categories : method has no name or return type.
         #warning No implementation defined for method price(UNKNOWN_Range range, bool asString = false);
         /// <summary>
         /// Produces a random product name.
@@ -1917,14 +2007,14 @@ namespace FakerNet
         {
         }
         
-        #warning Failed processing method abn_checksum
+        #warning Failed processing method abn_checksum : method has no name or return type.
         #warning No implementation defined for method australian_business_number();
         #warning No implementation defined for method brazilian_company_number();
         #warning No implementation defined for method bs();
         #warning No implementation defined for method buzzword();
-        #warning Failed processing method calculate_gst_checksum
+        #warning Failed processing method calculate_gst_checksum : method has no name or return type.
         #warning No implementation defined for method catch_phrase();
-        #warning Failed processing method collect_regon_sum
+        #warning Failed processing method collect_regon_sum : method has no name or return type.
         #warning No implementation defined for method czech_organisation_number();
         /// <summary>
         /// Produces a company department.
@@ -1953,11 +2043,11 @@ namespace FakerNet
         {
             return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("company.industry", this))));
         }
-        #warning Failed processing method inn_checksum
+        #warning Failed processing method inn_checksum : method has no name or return type.
         #warning No implementation defined for method inn_number(UNKNOWN_Symbol type);
         #warning No implementation defined for method logo();
-        #warning Failed processing method luhn_algorithm
-        #warning Failed processing method mod11
+        #warning Failed processing method luhn_algorithm : method has no name or return type.
+        #warning Failed processing method mod11 : method has no name or return type.
         /// <summary>
         /// Produces a company name.
         /// </summary>
@@ -1999,8 +2089,8 @@ namespace FakerNet
         #warning No implementation defined for method south_african_listed_company_registration_number();
         #warning No implementation defined for method south_african_pty_ltd_registration_number();
         #warning No implementation defined for method south_african_trust_registration_number();
-        #warning Failed processing method spanish_b_algorithm
-        #warning Failed processing method spanish_cif_control_digit
+        #warning Failed processing method spanish_b_algorithm : method has no name or return type.
+        #warning Failed processing method spanish_cif_control_digit : method has no name or return type.
         #warning No implementation defined for method spanish_organisation_number();
         /// <summary>
         /// Produces a company suffix.
@@ -2025,7 +2115,7 @@ namespace FakerNet
         {
             return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("company.type", this))));
         }
-        #warning Failed processing method weight_sum
+        #warning Failed processing method weight_sum : method has no name or return type.
     }
     
     [GeneratedCode("Faker Code Generator", "1.0.0.0")]
@@ -2827,9 +2917,9 @@ namespace FakerNet
         #warning No implementation defined for method between(DateOnly from, DateOnly to);
         #warning No implementation defined for method between_except(DateOnly from, DateOnly to, DateOnly excepted);
         #warning No implementation defined for method birthday(long minAge, long maxAge = 65);
-        #warning Failed processing method birthday_date
+        #warning Failed processing method birthday_date : method has no name or return type.
         #warning No implementation defined for method forward(long from, long days = 365);
-        #warning Failed processing method get_date_object
+        #warning Failed processing method get_date_object : method has no name or return type.
         #warning No implementation defined for method in_date_period(long month, long year = ::Date.today.year);
         #warning No implementation defined for method on_day_of_week_between(UNKNOWN_Symbol day, DateOnly from, DateOnly to);
     }
@@ -3078,13 +3168,13 @@ namespace FakerNet
         }
         
         #warning No implementation defined for method british_driving_licence(string lastName, string initials, string gender, string dateOfBirth);
-        #warning Failed processing method gb_licence_checksum
-        #warning Failed processing method gb_licence_padding
-        #warning Failed processing method gb_licence_year
+        #warning Failed processing method gb_licence_checksum : method has no name or return type.
+        #warning Failed processing method gb_licence_padding : method has no name or return type.
+        #warning Failed processing method gb_licence_year : method has no name or return type.
         #warning No implementation defined for method initialize();
         #warning No implementation defined for method northern_irish_driving_licence();
-        #warning Failed processing method random_gender
-        #warning Failed processing method uk_driving_licence
+        #warning Failed processing method random_gender : method has no name or return type.
+        #warning Failed processing method uk_driving_licence : method has no name or return type.
         /// <summary>
         /// Produces a random USA driving licence number by state code passed.
         /// </summary>
@@ -3852,7 +3942,7 @@ namespace FakerNet
         {
             return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("finance.vat_number." + country + "", this))));
         }
-        #warning Failed processing method vat_number_keys
+        #warning Failed processing method vat_number_keys : method has no name or return type.
     }
     
     [GeneratedCode("Faker Code Generator", "1.0.0.0")]
@@ -6120,7 +6210,7 @@ namespace FakerNet
         {
             return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("hacker.noun", this))));
         }
-        #warning Failed processing method phrases
+        #warning Failed processing method phrases : method has no name or return type.
         #warning No implementation defined for method say_something_smart();
         /// <summary>
         /// Actions that hackers take.
@@ -6217,7 +6307,7 @@ namespace FakerNet
         {
         }
         
-        #warning Failed processing method available_methods
+        #warning Failed processing method available_methods : method has no name or return type.
         /// <summary>
         /// Produces a random code block formatted in HTML.
         /// </summary>
@@ -6241,12 +6331,12 @@ namespace FakerNet
         {
             return this.Translate(this.Numerify(this.Letterify(this.EvaluateExpression("<em>#{Faker::Lorem.paragraph(sentence_count: 1)}</em>", this))));
         }
-        #warning Failed processing method generate_table_row
+        #warning Failed processing method generate_table_row : method has no name or return type.
         #warning No implementation defined for method heading();
         #warning No implementation defined for method link(string rel = "stylesheet");
         #warning No implementation defined for method ordered_list();
         #warning No implementation defined for method paragraph(long sentenceCount, bool supplemental, long randomSentencesToAdd, List<string>? excludeWords = null);
-        #warning Failed processing method random
+        #warning Failed processing method random : method has no name or return type.
         #warning No implementation defined for method sandwich(long sentences, long repeat = 1);
         /// <summary>
         /// Generates a random <script> tag with the `src` attribute set to a random URL.
@@ -6272,28 +6362,28 @@ namespace FakerNet
         {
         }
         
-        #warning Failed processing method _translate
+        #warning Failed processing method _translate : method has no name or return type.
         #warning No implementation defined for method brazilian_citizen_number(bool formatted = false);
-        #warning Failed processing method brazilian_citizen_number_checksum_digit
-        #warning Failed processing method brazilian_citizen_number_digit
-        #warning Failed processing method brazilian_document_checksum
-        #warning Failed processing method brazilian_document_digit
+        #warning Failed processing method brazilian_citizen_number_checksum_digit : method has no name or return type.
+        #warning Failed processing method brazilian_citizen_number_digit : method has no name or return type.
+        #warning Failed processing method brazilian_document_checksum : method has no name or return type.
+        #warning Failed processing method brazilian_document_digit : method has no name or return type.
         #warning No implementation defined for method brazilian_id(bool formatted = false);
-        #warning Failed processing method brazilian_id_checksum_digit
-        #warning Failed processing method brazilian_id_digit
+        #warning Failed processing method brazilian_id_checksum_digit : method has no name or return type.
+        #warning Failed processing method brazilian_id_digit : method has no name or return type.
         #warning No implementation defined for method chilean_id();
-        #warning Failed processing method chilean_verification_code
+        #warning Failed processing method chilean_verification_code : method has no name or return type.
         #warning No implementation defined for method croatian_id(bool international = false);
-        #warning Failed processing method croatian_id_checksum_digit
-        #warning Failed processing method danish_control_digits
+        #warning Failed processing method croatian_id_checksum_digit : method has no name or return type.
+        #warning Failed processing method danish_control_digits : method has no name or return type.
         #warning No implementation defined for method danish_id_number(bool formatted, DateOnly birthday, UNKNOWN_Symbol? gender = null);
         #warning No implementation defined for method french_insee_number();
         #warning No implementation defined for method invalid();
         #warning No implementation defined for method invalid_south_african_id_number();
-        #warning Failed processing method south_african_id_checksum_digit
+        #warning Failed processing method south_african_id_checksum_digit : method has no name or return type.
         #warning No implementation defined for method spanish_citizen_number();
         #warning No implementation defined for method spanish_foreign_citizen_number();
-        #warning Failed processing method ssn_valid
+        #warning Failed processing method ssn_valid : method has no name or return type.
         #warning No implementation defined for method valid();
         #warning No implementation defined for method valid_south_african_id_number();
     }
@@ -6381,7 +6471,7 @@ namespace FakerNet
         //      public string Base64(long length = 16, bool padding = false, bool urlsafe = true)
         // Expecting native implementation of
         //      public string BotUserAgent(string? vendor = null)
-        #warning Failed processing method device_token
+        #warning Failed processing method device_token : method has no name or return type.
         // Expecting native implementation of
         //      public string DomainName(bool subdomain = false, string? domain = null)
         // Expecting native implementation of
@@ -6492,12 +6582,12 @@ namespace FakerNet
         }
         
         #warning No implementation defined for method amount_between(long from, long to = 0);
-        #warning Failed processing method calculate_weighted_sum
+        #warning Failed processing method calculate_weighted_sum : method has no name or return type.
         #warning No implementation defined for method creditor_reference(string @ref = "");
-        #warning Failed processing method iban_checksum
-        #warning Failed processing method kidmod10
-        #warning Failed processing method method_731
-        #warning Failed processing method mod10_remainder
+        #warning Failed processing method iban_checksum : method has no name or return type.
+        #warning Failed processing method kidmod10 : method has no name or return type.
+        #warning Failed processing method method_731 : method has no name or return type.
+        #warning Failed processing method mod10_remainder : method has no name or return type.
         #warning No implementation defined for method reference(string @ref = "");
     }
     
@@ -7092,10 +7182,10 @@ namespace FakerNet
         }
         
         #warning No implementation defined for method add_depth_to_json(UNKNOWN_Hash{String => String} json, long width, UNKNOWN_Hash options);
-        #warning Failed processing method add_hash
-        #warning Failed processing method add_hash_to_bottom
-        #warning Failed processing method build_keys_from_array
-        #warning Failed processing method build_shallow_hash
+        #warning Failed processing method add_hash : method has no name or return type.
+        #warning Failed processing method add_hash_to_bottom : method has no name or return type.
+        #warning Failed processing method build_keys_from_array : method has no name or return type.
+        #warning Failed processing method build_shallow_hash : method has no name or return type.
         #warning No implementation defined for method shallow_json(long width, UNKNOWN_Hash options);
     }
     
@@ -7192,9 +7282,9 @@ namespace FakerNet
         
         #warning No implementation defined for method character();
         #warning No implementation defined for method characters(long number, long minAlpha, long minNumeric = 0);
-        #warning Failed processing method locale_period
-        #warning Failed processing method locale_question_mark
-        #warning Failed processing method locale_space
+        #warning Failed processing method locale_period : method has no name or return type.
+        #warning Failed processing method locale_question_mark : method has no name or return type.
+        #warning Failed processing method locale_space : method has no name or return type.
         #warning No implementation defined for method multibyte();
         #warning No implementation defined for method paragraph(long sentenceCount, bool supplemental, long randomSentencesToAdd);
         #warning No implementation defined for method paragraph_by_chars(long number, bool supplemental = false);
@@ -7216,7 +7306,7 @@ namespace FakerNet
         {
         }
         
-        #warning Failed processing method build_url
+        #warning Failed processing method build_url : method has no name or return type.
         #warning No implementation defined for method colorized_image(string size, string color, List<string> searchTerms, bool matchAll = false);
         #warning No implementation defined for method grayscale_image(string size, List<string> searchTerms, bool matchAll = false);
         #warning No implementation defined for method image(string size, List<string> searchTerms, bool matchAll = false);
@@ -7232,7 +7322,7 @@ namespace FakerNet
         {
         }
         
-        #warning Failed processing method available_methods
+        #warning Failed processing method available_methods : method has no name or return type.
         /// <summary>
         /// Produces a random code block formatted in Ruby.
         /// </summary>
@@ -7278,7 +7368,7 @@ namespace FakerNet
             return this.Translate(this.Numerify(this.Letterify(this.EvaluateExpression("`#{Faker::Lorem.sentence(word_count: 1)}`", this))));
         }
         #warning No implementation defined for method ordered_list();
-        #warning Failed processing method random
+        #warning Failed processing method random : method has no name or return type.
         #warning No implementation defined for method sandwich(long sentences, long repeat = 1);
         #warning No implementation defined for method table();
         #warning No implementation defined for method unordered_list();
@@ -7315,12 +7405,12 @@ namespace FakerNet
         {
         }
         
-        #warning Failed processing method check_for_plural
-        #warning Failed processing method define_measurement_locale
-        #warning Failed processing method ensure_valid_amount
+        #warning Failed processing method check_for_plural : method has no name or return type.
+        #warning Failed processing method define_measurement_locale : method has no name or return type.
+        #warning Failed processing method ensure_valid_amount : method has no name or return type.
         #warning No implementation defined for method height(long amount = rand(10));
         #warning No implementation defined for method length(long amount = rand(10));
-        #warning Failed processing method make_plural
+        #warning Failed processing method make_plural : method has no name or return type.
         #warning No implementation defined for method metric_height(long amount = rand(10));
         #warning No implementation defined for method metric_length(long amount = rand(10));
         #warning No implementation defined for method metric_volume(long amount = rand(10));
@@ -9358,17 +9448,17 @@ namespace FakerNet
         #warning No implementation defined for method decimal(long lDigits, long rDigits = 2);
         #warning No implementation defined for method decimal_part(long digits = 10);
         #warning No implementation defined for method digit();
-        #warning Failed processing method generate
-        #warning Failed processing method greater_than_zero
+        #warning Failed processing method generate : method has no name or return type.
+        #warning Failed processing method greater_than_zero : method has no name or return type.
         #warning No implementation defined for method hexadecimal(long digits = 6);
         #warning No implementation defined for method leading_zero_number(long digits = 10);
-        #warning Failed processing method less_than_zero
+        #warning Failed processing method less_than_zero : method has no name or return type.
         #warning No implementation defined for method negative(long from, long to);
         #warning No implementation defined for method non_zero_digit();
         #warning No implementation defined for method normal(long mean, UNKNOWN_Numeric? standardDeviation = null);
         #warning No implementation defined for method number(long digits = 10);
         #warning No implementation defined for method positive(long from, long to = 5000.00);
-        #warning Failed processing method should_be
+        #warning Failed processing method should_be : method has no name or return type.
         #warning No implementation defined for method within(UNKNOWN_Range? range = null);
     }
     
@@ -9383,21 +9473,21 @@ namespace FakerNet
         
         #warning No implementation defined for method apple(string name, string email, string? uid = null);
         #warning No implementation defined for method auth0(string name, string email, string? uid = null);
-        #warning Failed processing method city_state
-        #warning Failed processing method email
+        #warning Failed processing method city_state : method has no name or return type.
+        #warning Failed processing method email : method has no name or return type.
         #warning No implementation defined for method facebook(string name, string email, string username, string uid);
-        #warning Failed processing method first_name
-        #warning Failed processing method gender
+        #warning Failed processing method first_name : method has no name or return type.
+        #warning Failed processing method gender : method has no name or return type.
         #warning No implementation defined for method github(string name, string email, string uid);
         #warning No implementation defined for method google(string name, string email, string uid);
-        #warning Failed processing method image
+        #warning Failed processing method image : method has no name or return type.
         #warning No implementation defined for method initialize();
-        #warning Failed processing method last_name
+        #warning Failed processing method last_name : method has no name or return type.
         #warning No implementation defined for method linkedin(string name, string email, string uid);
-        #warning Failed processing method name
-        #warning Failed processing method random_boolean
-        #warning Failed processing method random_number_from_range
-        #warning Failed processing method timezone
+        #warning Failed processing method name : method has no name or return type.
+        #warning Failed processing method random_boolean : method has no name or return type.
+        #warning Failed processing method random_number_from_range : method has no name or return type.
+        #warning Failed processing method timezone : method has no name or return type.
         #warning No implementation defined for method twitter(string name, string nickname, string uid);
     }
     
@@ -9514,7 +9604,7 @@ namespace FakerNet
         {
         }
         
-        #warning Failed processing method generate_color
+        #warning Failed processing method generate_color : method has no name or return type.
         #warning No implementation defined for method image(string size, string format, string backgroundColor, string textColor, string? text = null);
     }
     
@@ -10814,6 +10904,24 @@ namespace FakerNet
         //      public string RandomString(long minLength = 50, long maxLength = 50, string alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
         #warning No implementation defined for method select_a();
         #warning No implementation defined for method space_or_utf8_char();
+        /// <summary>
+        /// returns part of the string
+        /// </summary>
+        /// <param name="text">
+        /// The string to get a part of
+        /// </param>
+        /// <param name="start">
+        /// The index to start the sub string at
+        /// </param>
+        /// <param name="length">
+        /// the number of bytes to get (by default it will return the rest of the string)
+        /// (default value "nil")
+        /// </param>
+        [FakerMethod("sub_string")]
+        public string SubString(string text, long start, long? length = null)
+        {
+            return text.Substring((int)start, (int)(length ??(text.Length-start)));
+        }
         #warning No implementation defined for method utf8character();
         #warning No implementation defined for method utf8string();
     }
@@ -11073,13 +11181,13 @@ namespace FakerNet
         #warning No implementation defined for method backward(long days, UNKNOWN_Symbol period, UNKNOWN_Symbol? format = null);
         #warning No implementation defined for method between(UNKNOWN_Time from, UNKNOWN_Time to, UNKNOWN_Symbol? format = null);
         #warning No implementation defined for method between_dates(DateOnly from, DateOnly to, UNKNOWN_Symbol period, UNKNOWN_Symbol? format = null);
-        #warning Failed processing method date_with_random_time
+        #warning Failed processing method date_with_random_time : method has no name or return type.
         #warning No implementation defined for method forward(long days, UNKNOWN_Symbol period, UNKNOWN_Symbol? format = null);
-        #warning Failed processing method get_time_object
-        #warning Failed processing method hours
-        #warning Failed processing method minutes
-        #warning Failed processing method seconds
-        #warning Failed processing method time_with_format
+        #warning Failed processing method get_time_object : method has no name or return type.
+        #warning Failed processing method hours : method has no name or return type.
+        #warning Failed processing method minutes : method has no name or return type.
+        #warning Failed processing method seconds : method has no name or return type.
+        #warning Failed processing method time_with_format : method has no name or return type.
     }
     
     [GeneratedCode("Faker Code Generator", "1.0.0.0")]
@@ -13135,15 +13243,15 @@ namespace FakerNet
         {
         }
         
-        #warning Failed processing method created_at
-        #warning Failed processing method id
-        #warning Failed processing method photo_entity
+        #warning Failed processing method created_at : method has no name or return type.
+        #warning Failed processing method id : method has no name or return type.
+        #warning Failed processing method photo_entity : method has no name or return type.
         #warning No implementation defined for method screen_name();
         #warning No implementation defined for method status(bool includeUser, bool includePhoto = false);
-        #warning Failed processing method status_entities
+        #warning Failed processing method status_entities : method has no name or return type.
         #warning No implementation defined for method user(bool includeStatus, bool includeEmail = false);
-        #warning Failed processing method user_entities
-        #warning Failed processing method utc_offset
+        #warning Failed processing method user_entities : method has no name or return type.
+        #warning Failed processing method utc_offset : method has no name or return type.
     }
     
     [GeneratedCode("Faker Code Generator", "1.0.0.0")]
@@ -13163,7 +13271,7 @@ namespace FakerNet
         #warning No implementation defined for method rb_hash(long number);
         #warning No implementation defined for method rb_integer();
         #warning No implementation defined for method rb_string();
-        #warning Failed processing method titleize
+        #warning Failed processing method titleize : method has no name or return type.
     }
     
     [GeneratedCode("Faker Code Generator", "1.0.0.0")]
@@ -13356,7 +13464,7 @@ namespace FakerNet
         {
             return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("vehicle.models_by_make.#{make}", this))));
         }
-        #warning Failed processing method singapore_checksum
+        #warning Failed processing method singapore_checksum : method has no name or return type.
         #warning No implementation defined for method singapore_license_plate();
         /// <summary>
         /// Produces a random list of standard specs.

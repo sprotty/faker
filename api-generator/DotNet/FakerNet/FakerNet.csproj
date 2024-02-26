@@ -1,0 +1,376 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="FakerGeneratorApi.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="FakerGeneratorApi.tt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fare" Version="2.2.1" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+    <PackageReference Include="YamlDotNet" Version="15.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="FakerGeneratorApi.txt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FakerGeneratorApi.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\fr\" />
+    <Folder Include="Resources\ja\" />
+    <Folder Include="Resources\zh-CN\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\..\lib\locales\en\address.yml" Link="Resources\en\address.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\adjective.yml" Link="Resources\en\adjective.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\airport.yml" Link="Resources\en\airport.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\ancient.yml" Link="Resources\en\ancient.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\animal.yml" Link="Resources\en\animal.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\app.yml" Link="Resources\en\app.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\appliance.yml" Link="Resources\en\appliance.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\aqua_teen_hunger_force.yml" Link="Resources\en\aqua_teen_hunger_force.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\archer.yml" Link="Resources\en\archer.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\artist.yml" Link="Resources\en\artist.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\australia.yml" Link="Resources\en\australia.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\avatar.yml" Link="Resources\en\avatar.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\back_to_the_future.yml" Link="Resources\en\back_to_the_future.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\bank.yml" Link="Resources\en\bank.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\barcode.yml" Link="Resources\en\barcode.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\basketball.yml" Link="Resources\en\basketball.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\beer.yml" Link="Resources\en\beer.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\bible.yml" Link="Resources\en\bible.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\big_bang_theory.yml" Link="Resources\en\big_bang_theory.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\bird.yml" Link="Resources\en\bird.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\blood.yml" Link="Resources\en\blood.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\bojack_horseman.yml" Link="Resources\en\bojack_horseman.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\book.yml" Link="Resources\en\book.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\bossa_nova.yml" Link="Resources\en\bossa_nova.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\breaking_bad.yml" Link="Resources\en\breaking_bad.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\brooklyn_nine_nine.yml" Link="Resources\en\brooklyn_nine_nine.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\buffy.yml" Link="Resources\en\buffy.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\business.yml" Link="Resources\en\business.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\camera.yml" Link="Resources\en\camera.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\cannabis.yml" Link="Resources\en\cannabis.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\cat.yml" Link="Resources\en\cat.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\chess.yml" Link="Resources\en\chess.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\chiquito.yml" Link="Resources\en\chiquito.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\chuck_norris.yml" Link="Resources\en\chuck_norris.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\clash_of_clans.yml" Link="Resources\en\clash_of_clans.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\code.yml" Link="Resources\en\code.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\coffee.yml" Link="Resources\en\coffee.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\coin.yml" Link="Resources\en\coin.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\color.yml" Link="Resources\en\color.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\commerce.yml" Link="Resources\en\commerce.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\community.yml" Link="Resources\en\community.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\company.yml" Link="Resources\en\company.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\compass.yml" Link="Resources\en\compass.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\computer.yml" Link="Resources\en\computer.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\conan.yml" Link="Resources\en\conan.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\construction.yml" Link="Resources\en\construction.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\control.yml" Link="Resources\en\control.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\cosmere.yml" Link="Resources\en\cosmere.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\cowboy_bebop.yml" Link="Resources\en\cowboy_bebop.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\crypto_coin.yml" Link="Resources\en\crypto_coin.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\culture_series.yml" Link="Resources\en\culture_series.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\currency.yml" Link="Resources\en\currency.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\dc_comics.yml" Link="Resources\en\dc_comics.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\demographic.yml" Link="Resources\en\demographic.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\departed.yml" Link="Resources\en\departed.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\dessert.yml" Link="Resources\en\dessert.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\device.yml" Link="Resources\en\device.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\dnd.yml" Link="Resources\en\dnd.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\dog.yml" Link="Resources\en\dog.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\doraemon.yml" Link="Resources\en\doraemon.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\dota.yml" Link="Resources\en\dota.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\dragon_ball.yml" Link="Resources\en\dragon_ball.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\driving_licence.yml" Link="Resources\en\driving_licence.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\drone.yml" Link="Resources\en\drone.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\dr_who.yml" Link="Resources\en\dr_who.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\dumb_and_dumber.yml" Link="Resources\en\dumb_and_dumber.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\dune.yml" Link="Resources\en\dune.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\educator.yml" Link="Resources\en\educator.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\elder_scrolls.yml" Link="Resources\en\elder_scrolls.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\electrical_components.yml" Link="Resources\en\electrical_components.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\emotion.yml" Link="Resources\en\emotion.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\esport.yml" Link="Resources\en\esport.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\fallout.yml" Link="Resources\en\fallout.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\family_guy.yml" Link="Resources\en\family_guy.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\file.yml" Link="Resources\en\file.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\final_fantasy_xiv.yml" Link="Resources\en\final_fantasy_xiv.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\final_space.yml" Link="Resources\en\final_space.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\finance.yml" Link="Resources\en\finance.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\fma_brotherhood.yml" Link="Resources\en\fma_brotherhood.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\food.yml" Link="Resources\en\food.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\football.yml" Link="Resources\en\football.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\fresh_prince_of_bel_air.yml" Link="Resources\en\fresh_prince_of_bel_air.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\friends.yml" Link="Resources\en\friends.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\funny_name.yml" Link="Resources\en\funny_name.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\futurama.yml" Link="Resources\en\futurama.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\game.yml" Link="Resources\en\game.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\game_of_thrones.yml" Link="Resources\en\game_of_thrones.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\gender.yml" Link="Resources\en\gender.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\ghostbusters.yml" Link="Resources\en\ghostbusters.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\grateful_dead.yml" Link="Resources\en\grateful_dead.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\greek_philosophers.yml" Link="Resources\en\greek_philosophers.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\hacker.yml" Link="Resources\en\hacker.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\hackers.yml" Link="Resources\en\hackers.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\half_life.yml" Link="Resources\en\half_life.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\harry_potter.yml" Link="Resources\en\harry_potter.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\heroes.yml" Link="Resources\en\heroes.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\heroes_of_the_storm.yml" Link="Resources\en\heroes_of_the_storm.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\hey_arnold.yml" Link="Resources\en\hey_arnold.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\hipster.yml" Link="Resources\en\hipster.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\hitchhikers_guide_to_the_galaxy.yml" Link="Resources\en\hitchhikers_guide_to_the_galaxy.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\hobby.yml" Link="Resources\en\hobby.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\horse.yml" Link="Resources\en\horse.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\house.yml" Link="Resources\en\house.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\how_i_met_your_mother.yml" Link="Resources\en\how_i_met_your_mother.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\how_to_train_your_dragon.yml" Link="Resources\en\how_to_train_your_dragon.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\id_number.yml" Link="Resources\en\id_number.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\industry_segments.yml" Link="Resources\en\industry_segments.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\internet.yml" Link="Resources\en\internet.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\invoice.yml" Link="Resources\en\invoice.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\jack_handey.yml" Link="Resources\en\jack_handey.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\job.yml" Link="Resources\en\job.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\kamen_rider.yml" Link="Resources\en\kamen_rider.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\kpop.yml" Link="Resources\en\kpop.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\league_of_legends.yml" Link="Resources\en\league_of_legends.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\lebowski.yml" Link="Resources\en\lebowski.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\lorem.yml" Link="Resources\en\lorem.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\lovecraft.yml" Link="Resources\en\lovecraft.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\markdown.yml" Link="Resources\en\markdown.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\marketing.yml" Link="Resources\en\marketing.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\measurement.yml" Link="Resources\en\measurement.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\michael_scott.yml" Link="Resources\en\michael_scott.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\military.yml" Link="Resources\en\military.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\minecraft.yml" Link="Resources\en\minecraft.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\mitch_hedberg.yml" Link="Resources\en\mitch_hedberg.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\mountain.yml" Link="Resources\en\mountain.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\mountaineering.yml" Link="Resources\en\mountaineering.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\movie.yml" Link="Resources\en\movie.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\music.yml" Link="Resources\en\music.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\myst.yml" Link="Resources\en\myst.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\name.yml" Link="Resources\en\name.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\naruto.yml" Link="Resources\en\naruto.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\nation.yml" Link="Resources\en\nation.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\nato_phonetic_alphabet.yml" Link="Resources\en\nato_phonetic_alphabet.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\new_girl.yml" Link="Resources\en\new_girl.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\one_piece.yml" Link="Resources\en\one_piece.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\opera.yml" Link="Resources\en\opera.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\overwatch.yml" Link="Resources\en\overwatch.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\parks_and_rec.yml" Link="Resources\en\parks_and_rec.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\pearl_jam.yml" Link="Resources\en\pearl_jam.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\phish.yml" Link="Resources\en\phish.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\phone_number.yml" Link="Resources\en\phone_number.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\pokemon.yml" Link="Resources\en\pokemon.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\prince.yml" Link="Resources\en\prince.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\princess_bride.yml" Link="Resources\en\princess_bride.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\programming_language.yml" Link="Resources\en\programming_language.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\quote.yml" Link="Resources\en\quote.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\rajnikanth.yml" Link="Resources\en\rajnikanth.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\README.md" Link="Resources\en\README.md" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\relationship.yml" Link="Resources\en\relationship.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\restaurant.yml" Link="Resources\en\restaurant.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\rick_and_morty.yml" Link="Resources\en\rick_and_morty.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\rock_band.yml" Link="Resources\en\rock_band.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\rupaul.yml" Link="Resources\en\rupaul.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\rush.yml" Link="Resources\en\rush.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\science.yml" Link="Resources\en\science.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\seinfeld.yml" Link="Resources\en\seinfeld.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\shakespeare.yml" Link="Resources\en\shakespeare.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\show.yml" Link="Resources\en\show.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\silicon_valley.yml" Link="Resources\en\silicon_valley.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\simpsons.yml" Link="Resources\en\simpsons.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\slack_emoji.yml" Link="Resources\en\slack_emoji.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\smashing_pumpkins.yml" Link="Resources\en\smashing_pumpkins.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\sonic_the_hedgehog.yml" Link="Resources\en\sonic_the_hedgehog.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\source.yml" Link="Resources\en\source.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\south_park.yml" Link="Resources\en\south_park.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\space.yml" Link="Resources\en\space.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\spongebob.yml" Link="Resources\en\spongebob.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\sport.yml" Link="Resources\en\sport.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\stargate.yml" Link="Resources\en\stargate.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\star_trek.yml" Link="Resources\en\star_trek.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\star_wars.yml" Link="Resources\en\star_wars.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\stranger_thing.yml" Link="Resources\en\stranger_thing.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\street_fighter.yml" Link="Resources\en\street_fighter.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\stripe.yml" Link="Resources\en\stripe.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\studio_ghibli.yml" Link="Resources\en\studio_ghibli.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\subscription.yml" Link="Resources\en\subscription.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\suits.yml" Link="Resources\en\suits.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\superhero.yml" Link="Resources\en\superhero.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\supernatural.yml" Link="Resources\en\supernatural.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\super_mario.yml" Link="Resources\en\super_mario.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\super_smash_bros.yml" Link="Resources\en\super_smash_bros.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\sword_art_online.yml" Link="Resources\en\sword_art_online.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\tarkov.yml" Link="Resources\en\tarkov.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\tea.yml" Link="Resources\en\tea.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\team.yml" Link="Resources\en\team.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\the_expanse.yml" Link="Resources\en\the_expanse.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\the_it_crowd.yml" Link="Resources\en\the_it_crowd.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\the_kingkiller_chronicle.yml" Link="Resources\en\the_kingkiller_chronicle.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\the_office.yml" Link="Resources\en\the_office.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\the_room.yml" Link="Resources\en\the_room.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\the_thick_of_it.yml" Link="Resources\en\the_thick_of_it.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\tolkien.yml" Link="Resources\en\tolkien.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\touhou.yml" Link="Resources\en\touhou.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\train_station.yml" Link="Resources\en\train_station.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\tron.yml" Link="Resources\en\tron.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\twin_peaks.yml" Link="Resources\en\twin_peaks.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\umphreys_mcgee.yml" Link="Resources\en\umphreys_mcgee.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\university.yml" Link="Resources\en\university.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\vehicle.yml" Link="Resources\en\vehicle.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\venture_bros.yml" Link="Resources\en\venture_bros.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\verbs.yml" Link="Resources\en\verbs.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\volleyball.yml" Link="Resources\en\volleyball.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\v_for_vendetta.yml" Link="Resources\en\v_for_vendetta.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\warhammer_fantasy.yml" Link="Resources\en\warhammer_fantasy.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\witcher.yml" Link="Resources\en\witcher.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\world_cup.yml" Link="Resources\en\world_cup.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\world_of_warcraft.yml" Link="Resources\en\world_of_warcraft.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\yoda.yml" Link="Resources\en\yoda.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en\zelda.yml" Link="Resources\en\zelda.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\address.yml" Link="Resources\fr\address.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\adjective.yml" Link="Resources\fr\adjective.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\ancient.yml" Link="Resources\fr\ancient.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\animal.yml" Link="Resources\fr\animal.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\appliance.yml" Link="Resources\fr\appliance.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\book.yml" Link="Resources\fr\book.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\color.yml" Link="Resources\fr\color.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\company.yml" Link="Resources\fr\company.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\compass.yml" Link="Resources\fr\compass.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\demographic.yml" Link="Resources\fr\demographic.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\gender.yml" Link="Resources\fr\gender.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\internet.yml" Link="Resources\fr\internet.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\lorem.yml" Link="Resources\fr\lorem.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\measurement.yml" Link="Resources\fr\measurement.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\name.yml" Link="Resources\fr\name.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\phone_number.yml" Link="Resources\fr\phone_number.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr\pokemon.yml" Link="Resources\fr\pokemon.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\address.yml" Link="Resources\ja\address.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\adjective.yml" Link="Resources\ja\adjective.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\ancient.yml" Link="Resources\ja\ancient.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\animal.yml" Link="Resources\ja\animal.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\bank.yml" Link="Resources\ja\bank.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\book.yml" Link="Resources\ja\book.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\cat.yml" Link="Resources\ja\cat.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\coffee.yml" Link="Resources\ja\coffee.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\color.yml" Link="Resources\ja\color.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\commerce.yml" Link="Resources\ja\commerce.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\company.yml" Link="Resources\ja\company.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\dog.yml" Link="Resources\ja\dog.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\emotion.yml" Link="Resources\ja\emotion.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\food.yml" Link="Resources\ja\food.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\gender.yml" Link="Resources\ja\gender.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\lorem.yml" Link="Resources\ja\lorem.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\name.yml" Link="Resources\ja\name.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\naruto.yml" Link="Resources\ja\naruto.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\overwatch.yml" Link="Resources\ja\overwatch.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\phone_number.yml" Link="Resources\ja\phone_number.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\pokemon.yml" Link="Resources\ja\pokemon.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\README.md" Link="Resources\ja\README.md" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\relationship.yml" Link="Resources\ja\relationship.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\restaurant.yml" Link="Resources\ja\restaurant.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\space.yml" Link="Resources\ja\space.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\sport.yml" Link="Resources\ja\sport.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\studio_ghibli.yml" Link="Resources\ja\studio_ghibli.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\subscription.yml" Link="Resources\ja\subscription.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\super_mario.yml" Link="Resources\ja\super_mario.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\super_smash_bros.yml" Link="Resources\ja\super_smash_bros.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\touhou.yml" Link="Resources\ja\touhou.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\university.yml" Link="Resources\ja\university.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ja\zelda.yml" Link="Resources\ja\zelda.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\..\lib\locales\zh-CN\bank.yml" Link="Resources\zh-CN\bank.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\..\lib\locales\ar.yml" Link="Resources\ar.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\bg.yml" Link="Resources\bg.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ca-CAT.yml" Link="Resources\ca-CAT.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ca.yml" Link="Resources\ca.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\da-DK.yml" Link="Resources\da-DK.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\de-AT.yml" Link="Resources\de-AT.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\de-CH.yml" Link="Resources\de-CH.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\de.yml" Link="Resources\de.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ee.yml" Link="Resources\ee.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-au-ocker.yml" Link="Resources\en-au-ocker.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-AU.yml" Link="Resources\en-AU.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-BORK.yml" Link="Resources\en-BORK.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-CA.yml" Link="Resources\en-CA.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-GB.yml" Link="Resources\en-GB.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-IND.yml" Link="Resources\en-IND.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-MS.yml" Link="Resources\en-MS.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-NEP.yml" Link="Resources\en-NEP.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-NG.yml" Link="Resources\en-NG.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-NZ.yml" Link="Resources\en-NZ.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-PAK.yml" Link="Resources\en-PAK.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-SG.yml" Link="Resources\en-SG.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-TH.yml" Link="Resources\en-TH.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-UG.yml" Link="Resources\en-UG.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-US.yml" Link="Resources\en-US.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en-ZA.yml" Link="Resources\en-ZA.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\en.yml" Link="Resources\en.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\es-AR.yml" Link="Resources\es-AR.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\es-MX.yml" Link="Resources\es-MX.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\es.yml" Link="Resources\es.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fa.yml" Link="Resources\fa.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fi-FI.yml" Link="Resources\fi-FI.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr-CA.yml" Link="Resources\fr-CA.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr-CH.yml" Link="Resources\fr-CH.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\fr.yml" Link="Resources\fr.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\he.yml" Link="Resources\he.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\hy.yml" Link="Resources\hy.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\id.yml" Link="Resources\id.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\it.yml" Link="Resources\it.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ko.yml" Link="Resources\ko.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\lt.yml" Link="Resources\lt.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\lv.yml" Link="Resources\lv.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\mi-NZ.yml" Link="Resources\mi-NZ.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\nb-NO.yml" Link="Resources\nb-NO.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\nl.yml" Link="Resources\nl.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\no.yml" Link="Resources\no.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\pl.yml" Link="Resources\pl.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\pt-BR.yml" Link="Resources\pt-BR.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\pt.yml" Link="Resources\pt.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\README.md" Link="Resources\README.md" />
+    <EmbeddedResource Include="..\..\..\lib\locales\ru.yml" Link="Resources\ru.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\sk.yml" Link="Resources\sk.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\sv.yml" Link="Resources\sv.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\th.yml" Link="Resources\th.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\tr.yml" Link="Resources\tr.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\uk.yml" Link="Resources\uk.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\vi.yml" Link="Resources\vi.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\zh-CN.yml" Link="Resources\zh-CN.yml" />
+    <EmbeddedResource Include="..\..\..\lib\locales\zh-TW.yml" Link="Resources\zh-TW.yml" />
+  </ItemGroup>
+
+</Project>

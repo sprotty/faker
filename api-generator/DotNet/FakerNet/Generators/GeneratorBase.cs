@@ -84,7 +84,7 @@ namespace FakerNet
         [FakerMethod("letterify")]
         public string Letterify(string letterString, bool isUpper)
         {
-            int baseChar = (isUpper) ? 65 : 97;
+            int baseChar = isUpper ? 65 : 97;
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < letterString.Length; i++)
             {
@@ -211,7 +211,7 @@ namespace FakerNet
         /// <remarks>
         /// Recursive templates are supported.  if "#{x}" resolves to "#{Address.streetName}" then "#{x}" resolves to
         /// {@link Faker#address()}'s {@link Address#streetName()}.
-        public string EvaluateExpression(string expression, Object current)
+        public string EvaluateExpression(string expression, object current)
         {
             MatchCollection matches;
             string result = expression;
@@ -265,12 +265,12 @@ namespace FakerNet
         /// <li>Search for keys in yaml file by transforming object reference to yaml reference</li>
         /// </ul>
         /// </remarks>
-        private string? EvaluateExpression(string expression, List<string> methodArgs, Object current)
+        private string? EvaluateExpression(string expression, List<string> methodArgs, object current)
         {
             //            throw new TodoException();
             // name.name (resolve locally)
             // Name.first_name (resolve to faker.name().firstName())
-            string simpleDirective = (IsDotDirective(expression) || current == null)
+            string simpleDirective = IsDotDirective(expression) || current == null
                                         ? expression
                                         : ClassNameToYamlName(current) + "." + expression;
 
@@ -317,7 +317,7 @@ namespace FakerNet
         #endregion
 
         #region Resolve
-        public string ResolveYamlValue(string keyExpression)=>ResolveYamlValue(keyExpression, this);
+        public string ResolveYamlValue(string keyExpression) => ResolveYamlValue(keyExpression, this);
 
         /// <summary>
         /// Resolves a key to an entry in the YAML files
@@ -332,7 +332,7 @@ namespace FakerNet
         ///     address.country_by_name.#{String.lower 'US'}
         /// </example>
         /// <exception cref="InvalidOperationException"></exception>
-        public string ResolveYamlValue(string keyExpression, Object current)
+        public string ResolveYamlValue(string keyExpression, object current)
         {
             string resolvedKey = EvaluateExpression(keyExpression, current);
 
@@ -359,7 +359,7 @@ namespace FakerNet
         /// <returns></returns>
         protected byte[] CreateRandomBytes(int minLen, int maxLen)
         {
-            int len = RandomExtensions.NextInt32(Faker.Random, minLen, maxLen);
+            int len = Faker.Random.NextInt32(minLen, maxLen);
             byte[] bytes = new byte[len];
             Faker.Random.NextBytes(bytes);
             return bytes;
@@ -379,7 +379,7 @@ namespace FakerNet
         /// <param name="current"></param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        private string ClassNameToYamlName(Object current)
+        private string ClassNameToYamlName(object current)
         {
             var genAttr = current.GetType().GetCustomAttribute<FakerGeneratorAttribute>();
             if (genAttr == null)

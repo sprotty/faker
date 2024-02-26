@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace FakerNet.NUnit
@@ -31,7 +32,11 @@ namespace FakerNet.NUnit
             {
                 FakerNet.Faker faker = CreateFaker(locale);
                 for (int i = 0; i < 10; i++)
-                    results.Add(fn(faker));
+                {
+                    T result = fn(faker);
+                    results.Add(result);
+                    Debug.WriteLine(result);
+                }
             }
             return results;
         }
