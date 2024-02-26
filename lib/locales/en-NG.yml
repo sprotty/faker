@@ -54,7 +54,7 @@ en-NG:
                 Imo, Jigawa, Kaduna, Kano, Katsina, Kebbi, Kogi, Kwara, Lagos, Nasarawa, Niger, Ogun, Ondo, Osun, Oyo, Plateau, Rivers, Sokoto,
                 Taraba, Yobe, Zamfara, Abuja
               ]
-      cities: [
+      city_name: [
                 Aba, Abakaliki, Abeokuta, Abuja, Ado, Ekiti, Agege, Akpawfu, Akure, Asaba, Awka, Bauchi, Benin, City, Birnin, Kebbi, Buguma, Calabar, Dutse, Eket,
                 Enugu, Gombe, Gusau, Ibadan, Ifelodun, Ife, Ikeja, Ikirun, Ikot-Abasi, Ikot, Ekpene, Ilorin, Iragbiji, Jalingo, Jimeta, Jos, Kaduna, Kano, Katsina,
                 Karu, Kumariya, Lafia, Lagos, Lekki, Lokoja, Maiduguri, Makurdi, Minna, Nsukka, Offa, Ogbomoso, Onitsha, Okene, Ogaminana, Omu-Aran, Oron, Oshogbo,
@@ -70,7 +70,7 @@ en-NG:
                 Oguta, Damboa, Jebba, Garko, Mokwa, Gaya, Tambawel, Elele, Mongonu, Kwale, Gembu, Obudu, Little, Gombi, Magumeri, Degema, Hulk, Enugu-Ezike, Kari, Darazo
               ]
       city:
-        - "#{cities}"
+        - "#{city_name}"
       region: [South-West, North-East, South-South, North-Central, South-East, North-West]
       default_country: [Nigeria]
       default_country_code: ["NG"]

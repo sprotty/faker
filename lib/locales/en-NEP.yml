@@ -185,7 +185,7 @@ en-NEP:
         - Syangja
         - Tanahu
         - Terhathum
-      city:
+      city_name:
         - Bhaktapur
         - Biratnagar
         - Birendranagar
@@ -202,6 +202,8 @@ en-NEP:
         - Lahan
         - Nepalgunj
         - Pokhara
+      city:
+        - "#{city_name}"
       default_country:
         - Nepal
     internet:

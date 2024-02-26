@@ -1,7 +1,7 @@
 pt-BR:
   faker:
     address:
-      city:
+      city_name:
         - Abadia de Goiás
         - Abadia dos Dourados
         - Abadiânia
@@ -5289,6 +5289,8 @@ pt-BR:
         - Érico Cardoso
         - Óbidos
         - Óleo
+      city:
+        - "#{city_name}"
       country:
         - Afeganistão
         - Albânia

@@ -500,7 +500,7 @@ en-NZ:
         - Zane
         - Zoe
         - Zoë
-      surname:
+      last_name:
         - Smith
         - Jones
         - Williams
@@ -835,10 +835,6 @@ en-NZ:
         - Xu
         - Kim
         - Zhou
-      last_name:
-        - "#{surname}"
-        - "#{surname}-#{surname}"
-        - "#{surname} #{surname}"
       name_with_middle:
         - "#{first_name} #{last_name} #{last_name}"
         - "#{first_name} #{first_name} #{last_name}"
@@ -1101,7 +1097,7 @@ en-NZ:
         - New Zealand
       default_country_code:
         - NZ
-      city:
+      city_name:
         - Auckland
         - Wellington
         - Christchurch

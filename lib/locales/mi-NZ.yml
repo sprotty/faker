@@ -42,7 +42,7 @@ mi-NZ:
         - Tui
         - Whina
         - Wiremu
-      surname:
+      last_name:
         - Arahanga
         - Heke
         - Henare
@@ -74,10 +74,6 @@ mi-NZ:
         - Wikaira
         - Winiata
         - Wiparata
-      last_name:
-        - "#{surname}"
-        - "#{surname}-#{surname}"
-        - "#{surname} #{surname}"
       name_with_middle:
         - "#{first_name} #{last_name} #{last_name}"
         - "#{first_name} #{first_name} #{last_name}"
@@ -224,7 +220,7 @@ mi-NZ:
         - Aotearoa
       default_country_code:
         - NZ
-      city:
+      city_name:
         - Ahuriri
         - Awaroa
         - Heretaunga
@@ -267,6 +263,8 @@ mi-NZ:
         - Whanganui
         - Whangarei
         - Wharekākā
+      city:
+        - "#{city_name}"
       mail_box:
         - "PO Box ##"
         - "PO Box #####"

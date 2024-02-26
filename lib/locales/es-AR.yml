@@ -718,7 +718,7 @@ es-AR:
         - de los Andes
         - del Valle
         - de las Salinas
-      city_names:
+      city_name:
         - 25 de Mayo
         - 9 de Julio
         - Abra Pampa
@@ -1280,7 +1280,7 @@ es-AR:
         - Zapala
         - Zárate
       city:
-        - "#{city_names}"
+        - "#{city_name}"
         - "#{male_city_saint_prefix} #{Name.male_first_name}"
         - "#{female_city_saint_prefix} #{Name.female_first_name}"
         - "#{city_prefix} #{male_city_saint_prefix} #{Name.male_first_name}"
