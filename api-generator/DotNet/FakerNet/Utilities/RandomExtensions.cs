@@ -49,6 +49,11 @@ namespace FakerNet
         {
             return random.NextDouble() * (max - min) + min;
         }
+        public static DateTime NextDateTime(this Random random, DateTime min, DateTime max)
+        {
+            long ticks = random.NextInt64(min.Ticks, max.Ticks);
+            return new DateTime(ticks); 
+        }
         public static bool NextBoolean(this Random random)
         {
             return random.Next(2) == 0;
@@ -63,6 +68,7 @@ namespace FakerNet
         {
             return random.NextDouble() < trueRatio;
         }
+
 
         public static T NextItem<T>(this Random random, IEnumerable<T> lst)
         {

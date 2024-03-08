@@ -34,7 +34,7 @@ for (const cls of config.classes) {
 outputIndentPop();
 output("}\n");
 
-fs.writeFileSync("./FakerNet.NUnit/FakerGeneratorsTests.cs", output_data.join(''));
+fs.writeFileSync("./FakerNet.NUnit/FakerGeneratorsTests.cs", output_data.join('').replaceAll('\r', ''));
 
 exit(0);
 
@@ -46,14 +46,14 @@ function generateClass(scope, cls) {
     output('{\n');
     outputIndentPush();
 
-    for (const method of cls.methods)
+    for (const method of cls.methods??[])
         writeMethod(qClassName, method);
 
     outputIndentPop();
     output('}\n');
     output('\n');
 
-    for (const clsChild of cls.classes)
+    for (const clsChild of cls.classes??[])
         generateClass(qClassName, clsChild);
 }
 
@@ -325,7 +325,7 @@ function output(txt) {
     }
 }
 function output_internal(txt) {
-    process.stdout.write(txt);
+    // process.stdout.write(txt);
     output_data.push(txt);
 }
 

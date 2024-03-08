@@ -69,3 +69,32 @@ Not 100%, but this probably follows in the YAML as well - Currently escaping is 
 
 On the whole if stuff is processed RegEx, Function Calls, Numbers, Literals then it seems to work OK.
 
+
+
+
+
+
+Classes to port
+
+ColorGenerator
+CommerceGenerator
+CompanyGenerator
+CryptoGenerator
+DateGenerator
+DrivingLicenceGenerator
+HTMLGenerator
+IDNumberGenerator
+DONE InternetGenerator
+InvoiceGenerator
+JsonGenerator
+LoremGenerator
+LoremFlickrGenerator ??
+MarkdownGenerator
+MeasurementGenerator
+NationGenerator flag
+NumberGenerator
+OmniauthGenerator??
+StripeGenerator
+TimeGenerator
+TwitterGenerator
+TypesGenerator

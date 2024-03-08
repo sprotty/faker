@@ -73,7 +73,7 @@ namespace FakerNet
         public string Base64(long length = 16, bool padding = false, bool urlsafe = true)
         {
             int safeLength = (int)(length % 4 == 1 ? length + 1 : length);
-            IEnumerable<char> chars = StringGenerator.AlpahNumeric;
+            IEnumerable<char> chars = DataGenerator.StringGenerator.AlpahNumeric;
             if (urlsafe)
                 chars = chars.Append('-').Append('_');
             else
@@ -171,9 +171,9 @@ namespace FakerNet
         public string DomainSuffix(bool safe = false)
         {
             if (safe)
-                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("internet.safe_domain_suffix", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("internet.safe_domain_suffix"))));
             else
-                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("internet.domain_suffix", this))));
+                return this.Translate(this.Numerify(this.Letterify(this.ResolveYamlValue("internet.domain_suffix"))));
         }
 
         #region DomainWord
@@ -186,9 +186,9 @@ namespace FakerNet
         [FakerMethod("domain_word")]
         public string DomainWord()
         {
-            string validChars = StringGenerator.AlpahNumeric + "_-";
+            string validChars = DataGenerator.StringGenerator.AlpahNumeric + "_-";
 
-            string word = FakerEn.Company.Name(); // in some locales these are not allowable chars for a domain....
+            string word = FakerEn.Commerce.Company.Name(); // in some locales these are not allowable chars for a domain....
 
             word = string.Concat(
                         word
@@ -232,8 +232,9 @@ namespace FakerNet
         {
             string namePart;
             string domainPart;
+            
             string separator = separators == null || separators.Length == 0 ? "" : Random.NextItem(separators).ToString();
-            char[] validEmailNameChars = (StringGenerator.AlpahNumeric + "!#$%&'*+-/=?^_`{|}~.").ToCharArray();
+            char[] validEmailNameChars = (DataGenerator.StringGenerator.AlpahNumeric + "!#$%&'*+-/=?^_`{|}~.").ToCharArray();
 
             if (string.IsNullOrWhiteSpace(name))
                 namePart = Username(new IntegerRange(5, 15), separator);
@@ -308,16 +309,16 @@ namespace FakerNet
             List<char> character_bag = new();
 
             // use lower_chars by default and add upper_chars if mix_case
-            password.Add(Random.NextItem(StringGenerator.AlphabetLower.ToCharArray()));
-            character_bag.AddRange(StringGenerator.AlphabetLower);
+            password.Add(Random.NextItem(DataGenerator.StringGenerator.AlphabetLower.ToCharArray()));
+            character_bag.AddRange(DataGenerator.StringGenerator.AlphabetLower);
 
-            password.Add(Random.NextItem(StringGenerator.Digits.ToCharArray()));
-            character_bag.AddRange(StringGenerator.Digits);
+            password.Add(Random.NextItem(DataGenerator.StringGenerator.Digits.ToCharArray()));
+            character_bag.AddRange(DataGenerator.StringGenerator.Digits);
 
             if (mixCase)
             {
-                password.Add(Random.NextItem(StringGenerator.AlphabetUpper.ToCharArray()));
-                character_bag.AddRange(StringGenerator.AlphabetUpper);
+                password.Add(Random.NextItem(DataGenerator.StringGenerator.AlphabetUpper.ToCharArray()));
+                character_bag.AddRange(DataGenerator.StringGenerator.AlphabetUpper);
             }
 
             if (specialCharacters)
@@ -370,7 +371,7 @@ namespace FakerNet
         private bool reserved_net_checker(string addr)
         {
             return PrivateIP4AddressRangeExpressions.Concat(ReservedIP4AddressRangeExpressions).Any(r => r.IsMatch(addr));
-        } 
+        }
         #endregion
 
         #region Slug
@@ -482,7 +483,7 @@ namespace FakerNet
             int targetLen = Random.NextInt32(lengthRange);
             bool addedFirstName = false;
             bool cammelCase = Random.NextBoolean(0.1);// 10% are camel case
-            char separator = Random.NextItem(separators);
+            char separator = separators.Length > 0 ? Random.NextItem(separators) : default(char);
             bool firstPass = true; // try to favour a value - not a number its its short
 
 

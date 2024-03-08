@@ -26,6 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DotNet\FakerNet\FakerNet.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="ArgumentsControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

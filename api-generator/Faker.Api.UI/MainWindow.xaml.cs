@@ -111,6 +111,26 @@ namespace Faker.Api.UI
                 var allMehtodDesc = allMethods.SelectMany(i => i.Descriptions);
                 var allExamples = allMethods.SelectMany(i => i.Examples);
 
+                //using (var jtrOld = new FileStream(@"C:\SourceCode\faker\api-generator\faker_api_metadata - Copy.json", FileMode.Open))
+                //{
+                //    Root? jFakerOld = JsonSerializer.Deserialize<Root>(jtrOld, new JsonSerializerOptions() { ReadCommentHandling = JsonCommentHandling.Skip });
+                //    foreach (var cls in jFakerOld.Classes.Where(c => c.Classes.Any()))
+                //    {
+
+                //        foreach (var clsInner in cls.Classes)
+                //        {
+                //            Debug.WriteLine($"Class {clsInner.Name} = {cls.Name}.{clsInner.Name}");
+
+                //            var newCls = allClasses.SingleOrDefault(c => c.Name == clsInner.Name);
+                //            if (newCls == null)
+                //                Debug.WriteLine($"Failed to find {clsInner.Name}");
+                //            else
+                //                newCls.RubyQualifiedName = $"{cls.Name}.{clsInner.Name}";
+
+                //        }
+                //    }
+                //    Debug.WriteLine("Done");
+                //}
                 //foreach (var example in allExamples)
                 //{
                 //    int indent = GetCommonIndent(example.Description, 4);
@@ -252,6 +272,7 @@ namespace Faker.Api.UI
                     Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
                 });
                 File.WriteAllText(this._openFilename, json, Encoding.UTF8);
+                GenerateCode();
             }
         }
         private void Menu_Exit_Click(object sender, RoutedEventArgs e)
@@ -260,6 +281,31 @@ namespace Faker.Api.UI
                 return;
             Close();
         }
+
+        private void Menu_Generate_Click(object sender, RoutedEventArgs e)
+        {
+            GenerateCode();
+        }
+        private void GenerateCode()
+        {
+            ProcessStartInfo spiFakerGen = new ProcessStartInfo("node", @"C:\SourceCode\faker\api-generator\DotNet\GenerateApi.js")
+            {
+                WorkingDirectory = @"C:\SourceCode\faker\api-generator\DotNet"
+            };
+            ProcessStartInfo spiFakerNUnit = new ProcessStartInfo("node", @"C:\SourceCode\faker\api-generator\DotNet\GenerateNUnit.js")
+            {
+                WorkingDirectory = @"C:\SourceCode\faker\api-generator\DotNet"
+            };
+            ProcessStartInfo spiSgAdapter = new ProcessStartInfo("node", @"C:\SourceCode\faker\api-generator\DotNet\GenerateSgApi.js")
+            {
+                WorkingDirectory = @"C:\SourceCode\faker\api-generator\DotNet"
+            };
+
+            Process.Start(spiFakerGen);
+            Process.Start(spiFakerNUnit);
+            Process.Start(spiSgAdapter);
+        }
+
 
         private void Menu_Validate_Click(object sender, RoutedEventArgs e)
         {
@@ -335,7 +381,7 @@ namespace Faker.Api.UI
         {
             if (this.ClassTree.SelectedItem is ClassElement parentClass)
             {
-                Method methodToAdd = new Method()
+                MethodModel methodToAdd = new MethodModel()
                 {
                     Name = "new_method",
                     ReturnType = "String",
@@ -345,12 +391,114 @@ namespace Faker.Api.UI
         }
         private void MethodsMenuItem_Delete_Click(object sender, RoutedEventArgs e)
         {
-            if (this.MethodList.SelectedItem is Method methodToDelete && this.ClassTree.SelectedItem is ClassElement parentClass)
+            if (this.MethodList.SelectedItem is MethodModel methodToDelete && this.ClassTree.SelectedItem is ClassElement parentClass)
             {
                 parentClass.Methods.Remove(methodToDelete);
             }
 
         }
+
+        #region Nasty Drag & Drop code
+        private void ClassTree_Drop(object sender, DragEventArgs e)
+        {
+            var screenPos = e.GetPosition(this.ClassTree); ;
+            var sourceCls = (ClassElement)e.Data.GetData("inadt");
+            var targetCls = GetItemAtLocation<ClassElement>(screenPos);
+            if (targetCls == null)
+                return;
+
+            // remove it from where it was
+            if (GetParentClass(sourceCls) == null)
+                this.Faker?.Classes.Remove(sourceCls);
+            else
+                GetParentClass(sourceCls)?.Classes.Remove(sourceCls);
+
+            // add it to where we dropped it
+            targetCls.Classes.Add(sourceCls);
+        }
+
+        public ClassElement? GetParentClass(ClassElement cls)
+        {
+            if (this.Faker == null || this.Faker.Classes.Contains(cls))
+                return null;
+            return this.Faker.Classes.FirstOrDefault(c => c.Classes.Contains(cls));
+        }
+
+        T GetItemAtLocation<T>(Point location)
+        {
+            T foundItem = default(T);
+            HitTestResult hitTestResults = VisualTreeHelper.HitTest(ClassTree, location);
+
+            if (hitTestResults.VisualHit is FrameworkElement)
+            {
+                object dataObject = (hitTestResults.VisualHit as FrameworkElement).DataContext;
+
+                if (dataObject is T)
+                {
+                    foundItem = (T)dataObject;
+                }
+            }
+
+            return foundItem;
+        }
+        private void ClassTree_DragOver(object sender, DragEventArgs e)
+        {
+            var screenPos = e.GetPosition(this.ClassTree);
+            var sourceCls = (ClassElement)e.Data.GetData("inadt");
+            var targetCls = GetItemAtLocation<ClassElement>(screenPos);
+            if (GetParentClass(targetCls) != null || targetCls == sourceCls)
+                e.Effects = DragDropEffects.None;
+            else
+                e.Effects = DragDropEffects.Move;
+            e.Handled = true;
+        }
+
+        Point _startPoint;
+        bool _IsDragging = false;
+
+        void ClassTree_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed ||
+                e.RightButton == MouseButtonState.Pressed && !_IsDragging)
+            {
+                Point position = e.GetPosition(null);
+                if (Math.Abs(position.X - _startPoint.X) >
+                        SystemParameters.MinimumHorizontalDragDistance ||
+                    Math.Abs(position.Y - _startPoint.Y) >
+                        SystemParameters.MinimumVerticalDragDistance)
+                {
+                    StartDrag(e);
+                }
+            }
+        }
+
+        void ClassTree_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _startPoint = e.GetPosition(null);
+        }
+
+        private void StartDrag(MouseEventArgs e)
+        {
+            ClassElement cls = (ClassElement)this.ClassTree.SelectedValue;
+            if (cls == null || cls.Classes.Count > 0)
+                return;
+
+            _IsDragging = true;
+            DataObject data = null;
+            data = new DataObject("inadt", cls);
+
+            if (data != null)
+            {
+                DragDropEffects dde = DragDropEffects.Move;
+                if (e.RightButton == MouseButtonState.Pressed)
+                {
+                    dde = DragDropEffects.All;
+                }
+                DragDropEffects de = DragDrop.DoDragDrop(this.ClassTree, data, dde);
+            }
+            _IsDragging = false;
+        }
+        #endregion
     }
 
     public class TestRoot : Root

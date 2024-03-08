@@ -26,36 +26,45 @@ namespace Faker.Api
     public partial class Root : FakerModel
     {
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("enums")]
+        [JsonPropertyName("enums"), JsonPropertyOrder(0)]
         public virtual ObservableCollection<EnumElement> Enums { get; set; } = new ObservableCollection<EnumElement>();
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("types")]
+        [JsonPropertyName("types"), JsonPropertyOrder(1)]
         public virtual ObservableCollection<TypeElement> Types { get; set; } = new ObservableCollection<TypeElement>();
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("classes")]
+        [JsonPropertyName("classes"), JsonPropertyOrder(2)]
         public virtual ObservableCollection<ClassElement> Classes { get; set; } = new ObservableCollection<ClassElement>();
     }
 
     public partial class ClassElement : FakerModel
     {
         private string _name = "";
+        private string? _rubyQualifiedName;
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("name")]
+        [JsonPropertyName("name"), JsonPropertyOrder(0)]
         public virtual string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
 
+        /// <summary>
+        /// The name this is known by in the ruby code 
+        /// If not present then its Faker::[Name]
+        /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("descriptions")]
+        [JsonPropertyName("ruby_qualified_name"), JsonPropertyOrder(1)]
+        public virtual string? RubyQualifiedName { get => _rubyQualifiedName; set { _rubyQualifiedName = value; OnPropertyChanged(); } }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("descriptions"), JsonPropertyOrder(2)]
         public virtual ObservableCollection<DescriptionElement> Descriptions { get; set; } = new ObservableCollection<DescriptionElement>();
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("methods")]
-        public virtual ObservableCollection<Method> Methods { get; set; } = new ObservableCollection<Method>();
+        [JsonPropertyName("methods"), JsonPropertyOrder(3)]
+        public virtual ObservableCollection<MethodModel> Methods { get; set; } = new ObservableCollection<MethodModel>();
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("classes")]
+        [JsonPropertyName("classes"), JsonPropertyOrder(4)]
         public virtual ObservableCollection<ClassElement> Classes { get; set; } = new ObservableCollection<ClassElement>();
     }
 
@@ -78,7 +87,7 @@ namespace Faker.Api
         }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("platform")]
+        [JsonPropertyName("platform"), JsonPropertyOrder(0)]
         public virtual string? InternalPlatform { get => _platform; set { _platform = value; OnPropertyChanged(); } }
 
         [JsonIgnore]
@@ -88,27 +97,31 @@ namespace Faker.Api
             set { InternalPlatform = (value == FakerModel.AllPlatformsLiteral) ? null : value; }
         }
 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        [JsonPropertyName("text")]
-        [DefaultValue("")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("text"), JsonPropertyOrder(1)]
         public virtual string Text { get => _text; set { _text = value; OnPropertyChanged(); } }
     }
 
-    public partial class Method : FakerModel
+    public partial class MethodModel : FakerModel
     {
         private string _name = "";
         private string _returnType = "String";
         private string _returnDesc = "";
+        private bool _hidden = false;
+        private bool? _usesLocale = true;
+        private string? _versionIntroduced;
+        private string? _ltTdgMethodName;
+
         /// <summary>
         /// The name of the function as it is used internally (snake case). Plaform implementaions
         /// can convert these to suit there convensions.
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("name")]
+        [JsonPropertyName("name"), JsonPropertyOrder(0)]
         public virtual string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("descriptions")]
+        [JsonPropertyName("descriptions"), JsonPropertyOrder(2)]
         public virtual ObservableCollection<DescriptionElement> Descriptions { get; set; } = new ObservableCollection<DescriptionElement>();
 
         /// <summary>
@@ -116,7 +129,7 @@ namespace Faker.Api
         /// types
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("return_type")]
+        [JsonPropertyName("return_type"), JsonPropertyOrder(3)]
         public virtual string ReturnType { get => _returnType; set { _returnType = value; OnPropertyChanged(); } }
 
         /// <summary>
@@ -124,50 +137,74 @@ namespace Faker.Api
         /// types
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("return_desc")]
+        [JsonPropertyName("return_desc"), JsonPropertyOrder(4)]
         public virtual string ReturnDesc { get => _returnDesc; set { _returnDesc = value; OnPropertyChanged(); } }
 
         /// <summary>
         /// Indicates the method is used internally, but is not part of the interface.
         /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        [JsonPropertyName("hidden"), JsonPropertyOrder(5)]
+        public virtual bool Hidden { get => _hidden; set { _hidden = value; OnPropertyChanged(); } }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        [JsonPropertyName("version_introduced"), JsonPropertyOrder(6)]
+        public virtual string? VersionIntroduced { get => _versionIntroduced; set { _versionIntroduced = value; OnPropertyChanged(); } }
+
+        /// <summary>
+        /// Indicates the method is used internally, but is not part of the interface.
+        /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("hidden")]
-        public virtual bool? Hidden { get; set; }
+        [JsonPropertyName("usesLocale"), JsonPropertyOrder(7)]
+        [Browsable(false)]  
+        public virtual bool? UsesLocaleInternal { get => _usesLocale==true?null: _usesLocale; set { _usesLocale = value; OnPropertyChanged(); } }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public virtual bool UsesLocale { get => _usesLocale??true; set { _usesLocale = value; OnPropertyChanged(); } }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("arguments")]
-        public virtual ObservableCollection<Argument> Arguments { get; set; } = new ObservableCollection<Argument>();
+        [JsonPropertyName("arguments"), JsonPropertyOrder(8)]
+        public virtual ObservableCollection<ArgumentModel> Arguments { get; set; } = new ObservableCollection<ArgumentModel>();
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("examples")]
+        [JsonPropertyName("examples"), JsonPropertyOrder(9)]
         public virtual ObservableCollection<Example> Examples { get; set; } = new ObservableCollection<Example>();
 
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("implementations")]
-        public virtual ObservableCollection<Implementation> Implementations { get; set; } = new ObservableCollection<Implementation>();
+        [JsonPropertyName("implementations"), JsonPropertyOrder(10)]
+        public virtual ObservableCollection<ImplementationElement> Implementations { get; set; } = new ObservableCollection<ImplementationElement>();
 
+        /// <summary>
+        /// The name of the function in Liquid Technologies - Test Data Generator
+        /// if null then the <see cref="Name"/> is used
+        /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("lttdg_name"), JsonPropertyOrder(11)]
+        public virtual string? LtTdgMethodName { get => _ltTdgMethodName; set { _ltTdgMethodName = value; OnPropertyChanged(); } }
 
     }
 
-    public partial class Argument : FakerModel
+    public partial class ArgumentModel : FakerModel
     {
         private string _name = "";
         private string _type = "Native";
         private string? _default;
+        private string? _defaultValueDesc = null;
 
-        public Argument()
+        public ArgumentModel()
         {
         }
-        public Argument(Argument src)
+        public ArgumentModel(ArgumentModel src)
         {
             CopyFrom(src);
         }
-        public void CopyFrom(Argument src)
+        public void CopyFrom(ArgumentModel src)
         {
             this.Name = src.Name;
             this.Type = src.Type;
             this.Default = src.Default;
+            this.DefaultValueDesc = src.DefaultValueDesc;
             this.Descriptions.Clear();
             foreach (var desc in src.Descriptions)
                 this.Descriptions.Add(new DescriptionElement(desc));
@@ -179,22 +216,30 @@ namespace Faker.Api
         /// convensions).
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("name")]
+        [JsonPropertyName("name"), JsonPropertyOrder(0)]
         public virtual string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("type")]
+        [JsonPropertyName("type"), JsonPropertyOrder(1)]
         public virtual string Type { get => _type; set { _type = value; OnPropertyChanged(); } }
 
         /// <summary>
         /// The default value of the argument if not explicitly specified.
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("default")]
+        [JsonPropertyName("default"), JsonPropertyOrder(2)]
         public virtual string? Default { get => _default; set { _default = value; OnPropertyChanged(); } }
 
+        /// <summary>
+        /// A description of the value used if the property is not set (i.e. defaulted)
+        /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("descriptions")]
+        [JsonPropertyName("default_value_desc"), JsonPropertyOrder(3)]
+        public virtual string? DefaultValueDesc { get => _defaultValueDesc; set { _defaultValueDesc = value; OnPropertyChanged(); } }
+
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("descriptions"), JsonPropertyOrder(4)]
         public virtual ObservableCollection<DescriptionElement> Descriptions { get; set; } = new ObservableCollection<DescriptionElement>();
 
 
@@ -220,7 +265,7 @@ namespace Faker.Api
             this.InternalPlatform = src.InternalPlatform;
         }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("platform")]
+        [JsonPropertyName("platform"), JsonPropertyOrder(0)]
         public virtual string? InternalPlatform { get => _platform; set { _platform = value; OnPropertyChanged(); } }
 
         [JsonIgnore]
@@ -231,14 +276,14 @@ namespace Faker.Api
         }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("description")]
+        [JsonPropertyName("description"), JsonPropertyOrder(1)]
         public virtual string? Description { get => _description; set { _description = value; OnPropertyChanged(); } }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("code")]
+        [JsonPropertyName("code"), JsonPropertyOrder(2)]
         public virtual string? Code { get => _code; set { _code = value; OnPropertyChanged(); } }
     }
-    public partial class Implementation : FakerModel
+    public partial class ImplementationElement : FakerModel
     {
         private string? _platform = null;
         private string? _type = "Resolve";
@@ -247,14 +292,14 @@ namespace Faker.Api
         private bool? _digitSubst;
         private bool? _translate;
 
-        public Implementation()
+        public ImplementationElement()
         {
         }
-        public Implementation(Implementation src)
+        public ImplementationElement(ImplementationElement src)
         {
             CopyFrom(src);
         }
-        public void CopyFrom(Implementation src)
+        public void CopyFrom(ImplementationElement src)
         {
             InternalPlatform = src.InternalPlatform;
             Type = src.Type;
@@ -265,7 +310,7 @@ namespace Faker.Api
         }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("platform")]
+        [JsonPropertyName("platform"), JsonPropertyOrder(0)]
         public virtual string? InternalPlatform
         {
             get => _platform; set
@@ -298,7 +343,7 @@ namespace Faker.Api
         ///     implementation. If data is not set then the function must be implemented within the code).
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("type")]
+        [JsonPropertyName("type"), JsonPropertyOrder(1)]
         public virtual string Type { get => _type; set { _type = value; OnPropertyChanged(); } }
 
         /// <summary>
@@ -306,7 +351,7 @@ namespace Faker.Api
         /// [A-Z|a-z])
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("charSubst")]
+        [JsonPropertyName("charSubst"), JsonPropertyOrder(2)]
         public virtual bool? CharSubst { get => _charSubst; set { _charSubst = value; OnPropertyChanged(); } }
 
 
@@ -314,7 +359,7 @@ namespace Faker.Api
         /// Indicates if numeric substitutions will be applied to the evaluated value (# becomes [0-9])
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("digitSubst")]
+        [JsonPropertyName("digitSubst"), JsonPropertyOrder(3)]
         public virtual bool? DigitSubst { get => _digitSubst; set { _digitSubst = value; OnPropertyChanged(); } }
 
 
@@ -322,11 +367,11 @@ namespace Faker.Api
         /// Indicates if ther evaluated expression should be translated
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("translate")]
+        [JsonPropertyName("translate"), JsonPropertyOrder(4)]
         public virtual bool? Translate { get => _translate; set { _translate = value; OnPropertyChanged(); } }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("data")]
+        [JsonPropertyName("data"), JsonPropertyOrder(5)]
         public virtual string? Data
         {
             get => _data; set
@@ -354,7 +399,7 @@ namespace Faker.Api
         private string _name = "";
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("name")]
+        [JsonPropertyName("name"), JsonPropertyOrder(0)]
         public virtual string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
     }
 
@@ -363,11 +408,11 @@ namespace Faker.Api
         private string _name = "";
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("name")]
+        [JsonPropertyName("name"), JsonPropertyOrder(0)]
         public virtual string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("values")]
+        [JsonPropertyName("values"), JsonPropertyOrder(1)]
         public virtual ObservableCollection<EnumValueElement> Values { get; set; } = new ObservableCollection<EnumValueElement>();
     }
 
@@ -377,11 +422,11 @@ namespace Faker.Api
         private string _description = "";
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("name")]
+        [JsonPropertyName("name"), JsonPropertyOrder(0)]
         public virtual string Name { get => _name; set { _name = value; OnPropertyChanged(); } }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("description")]
+        [JsonPropertyName("description"), JsonPropertyOrder(1)]
         public virtual string Descriptions { get => _description; set { _description = value; OnPropertyChanged(); } }
     }
 

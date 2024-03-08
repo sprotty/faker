@@ -20,6 +20,13 @@
             "request": "launch",
             "cwd": "${workspaceFolder}/Ruby",
             "command": "node GenerateApi.js"
-        }
+        },
+        {
+            "type": "node-terminal",
+            "name": "Debug C# SG Generator",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/DotNet",
+            "command": "node GenerateSgApi.js"
+        },
     ]
 }

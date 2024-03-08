@@ -4,413 +4,6 @@ using System.Globalization;
 namespace FakerNet.NUnit
 {
     [TestClass]
-    public class Test_Address : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_BuildingNumber_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.BuildingNumber());
-        }
-        [TestMethod()]
-        public void Test_City_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.City());
-        }
-        [TestMethod()]
-        public void Test_CityPrefix_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.CityPrefix());
-        }
-        [TestMethod()]
-        public void Test_CitySuffix_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.CitySuffix());
-        }
-        [TestMethod()]
-        public void Test_CityWithState_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.CityWithState());
-        }
-        [TestMethod()]
-        public void Test_Community_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.Community());
-        }
-        [TestMethod()]
-        public void Test_Country_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.Country());
-        }
-        [TestMethod()]
-        public void Test_CountryByCode_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.CountryByCode());
-        }
-        [TestMethod()]
-        public void Test_CountryCode_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.CountryCode());
-        }
-        [TestMethod()]
-        public void Test_CountryCodeLong_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.CountryCodeLong());
-        }
-        [TestMethod()]
-        public void Test_CountryNameToCode_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.CountryNameToCode());
-        }
-        [TestMethod()]
-        public void Test_Latitude_Execute()
-        {
-            FakerForEveryLocale<double>(faker => faker.Address.Latitude());
-        }
-        [TestMethod()]
-        public void Test_Longitude_Execute()
-        {
-            FakerForEveryLocale<double>(faker => faker.Address.Longitude());
-        }
-        [TestMethod()]
-        public void Test_MailBox_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.MailBox());
-        }
-        [TestMethod()]
-        public void Test_Postcode_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.Postcode());
-        }
-        [TestMethod()]
-        public void Test_SecondaryAddress_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.SecondaryAddress());
-        }
-        [TestMethod()]
-        public void Test_State_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.State());
-        }
-        [TestMethod()]
-        public void Test_StateAbbr_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.StateAbbr());
-        }
-        [TestMethod()]
-        public void Test_StreetAddress_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.StreetAddress());
-        }
-        [TestMethod()]
-        public void Test_StreetName_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.StreetName());
-        }
-        [TestMethod()]
-        public void Test_StreetSuffix_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.StreetSuffix());
-        }
-        [TestMethod()]
-        public void Test_TimeZone_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.TimeZone());
-        }
-        [TestMethod()]
-        public void Test_ZipCode_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Address.ZipCode());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Adjective : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Negative_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Adjective.Negative());
-        }
-        [TestMethod()]
-        public void Test_Positive_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Adjective.Positive());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Alphanumeric : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Alpha_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Alphanumeric.Alpha());
-        }
-        [TestMethod()]
-        public void Test_AlphaNumeric_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Alphanumeric.AlphaNumeric());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Ancient : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_God_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Ancient.God());
-        }
-        [TestMethod()]
-        public void Test_Hero_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Ancient.Hero());
-        }
-        [TestMethod()]
-        public void Test_Primordial_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Ancient.Primordial());
-        }
-        [TestMethod()]
-        public void Test_Titan_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Ancient.Titan());
-        }
-    }
-    
-    [TestClass]
-    public class Test_App : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Author_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.App.Author());
-        }
-        [TestMethod()]
-        public void Test_Name_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.App.Name());
-        }
-        #warning No implementation defined for method semantic_version(IntegerRange? major = null, IntegerRange? minor = null, IntegerRange? patch = null);
-        [TestMethod()]
-        public void Test_Version_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.App.Version());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Appliance : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Brand_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Appliance.Brand());
-        }
-        [TestMethod()]
-        public void Test_Equipment_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Appliance.Equipment());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Artist : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Name_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Artist.Name());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Australia : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Animal_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Australia.Animal());
-        }
-        [TestMethod()]
-        public void Test_Location_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Australia.Location());
-        }
-        [TestMethod()]
-        public void Test_State_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Australia.State());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Avatar : FakerNUnitBase
-    {
-        // Method : image : Can not generated test for method with required arguments.
-    }
-    
-    [TestClass]
-    public class Test_Bank : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_AccountNumber_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Bank.AccountNumber());
-        }
-        [TestMethod()]
-        public void Test_BsbNumber_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Bank.BsbNumber());
-        }
-        [TestMethod()]
-        public void Test_Iban_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Bank.Iban());
-        }
-        [TestMethod()]
-        public void Test_IbanCountryCode_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Bank.IbanCountryCode());
-        }
-        [TestMethod()]
-        public void Test_Name_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Bank.Name());
-        }
-        [TestMethod()]
-        public void Test_RoutingNumber_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Bank.RoutingNumber());
-        }
-        [TestMethod()]
-        public void Test_RoutingNumberWithFormat_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Bank.RoutingNumberWithFormat());
-        }
-        [TestMethod()]
-        public void Test_SwiftBic_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Bank.SwiftBic());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Barcode : FakerNUnitBase
-    {
-        #warning Failed processing method ean_with_composite_symbology
-        [TestMethod()]
-        public void Test_Ean13_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Barcode.Ean13());
-        }
-        [TestMethod()]
-        public void Test_Ean8_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Barcode.Ean8());
-        }
-        // Method : generate_barcode : Can not generated test for method with required arguments.
-        [TestMethod()]
-        public void Test_Isbn10_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Barcode.Isbn10());
-        }
-        [TestMethod()]
-        public void Test_Isbn13_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Barcode.Isbn13());
-        }
-        [TestMethod()]
-        public void Test_Ismn_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Barcode.Ismn());
-        }
-        [TestMethod()]
-        public void Test_Issn_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Barcode.Issn());
-        }
-        #warning No implementation defined for method sum_even_odd();
-        [TestMethod()]
-        public void Test_UpcA_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Barcode.UpcA());
-        }
-        #warning Failed processing method upc_a_with_composite_symbology
-        [TestMethod()]
-        public void Test_UpcE_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Barcode.UpcE());
-        }
-        #warning Failed processing method upc_e_with_composite_symbology
-    }
-    
-    [TestClass]
-    public class Test_Beer : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Alcohol_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Beer.Alcohol());
-        }
-        [TestMethod()]
-        public void Test_Blg_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Beer.Blg());
-        }
-        [TestMethod()]
-        public void Test_Hop_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Beer.Hop());
-        }
-        [TestMethod()]
-        public void Test_Ibu_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Beer.Ibu());
-        }
-        [TestMethod()]
-        public void Test_Malts_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Beer.Malts());
-        }
-        [TestMethod()]
-        public void Test_Name_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Beer.Name());
-        }
-        [TestMethod()]
-        public void Test_Style_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Beer.Style());
-        }
-        [TestMethod()]
-        public void Test_Yeast_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Beer.Yeast());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Bible : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Character_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Bible.Character());
-        }
-        [TestMethod()]
-        public void Test_Location_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Bible.Location());
-        }
-        [TestMethod()]
-        public void Test_Quote_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Bible.Quote());
-        }
-    }
-    
-    [TestClass]
     public class Test_Blockchain : FakerNUnitBase
     {
     }
@@ -472,7 +65,6 @@ namespace FakerNet.NUnit
         #warning No implementation defined for method account();
         #warning No implementation defined for method block();
         #warning No implementation defined for method contract();
-        // Method : encode_tz : Can not generated test for method with required arguments.
         #warning No implementation defined for method operation();
         #warning No implementation defined for method public_key();
         #warning No implementation defined for method secret_key();
@@ -480,53 +72,103 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_Blood : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Group_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Blood.Group());
-        }
-        [TestMethod()]
-        public void Test_RhFactor_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Blood.RhFactor());
-        }
-        [TestMethod()]
-        public void Test_Type_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Blood.Type());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Book : FakerNUnitBase
+    public class Test_Books : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Author_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Book.Author());
+            FakerForEveryLocale<string>(faker => faker.Books.Author());
         }
         [TestMethod()]
         public void Test_Genre_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Book.Genre());
+            FakerForEveryLocale<string>(faker => faker.Books.Genre());
         }
         [TestMethod()]
         public void Test_Publisher_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Book.Publisher());
+            FakerForEveryLocale<string>(faker => faker.Books.Publisher());
         }
         [TestMethod()]
         public void Test_Title_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Book.Title());
+            FakerForEveryLocale<string>(faker => faker.Books.Title());
         }
     }
     
     [TestClass]
-    public class Test_Books : FakerNUnitBase
+    public class Test_Books_Bible : FakerNUnitBase
     {
+        [TestMethod()]
+        public void Test_Character_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.Bible.Character());
+        }
+        [TestMethod()]
+        public void Test_Location_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.Bible.Location());
+        }
+        [TestMethod()]
+        public void Test_Quote_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.Bible.Quote());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Books_Cosmere : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Allomancer_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.Cosmere.Allomancer());
+        }
+        [TestMethod()]
+        public void Test_Aon_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.Cosmere.Aon());
+        }
+        [TestMethod()]
+        public void Test_Feruchemist_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.Cosmere.Feruchemist());
+        }
+        [TestMethod()]
+        public void Test_Herald_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.Cosmere.Herald());
+        }
+        [TestMethod()]
+        public void Test_KnightRadiant_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.Cosmere.KnightRadiant());
+        }
+        [TestMethod()]
+        public void Test_Metal_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.Cosmere.Metal());
+        }
+        [TestMethod()]
+        public void Test_Shard_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.Cosmere.Shard());
+        }
+        [TestMethod()]
+        public void Test_ShardWorld_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.Cosmere.ShardWorld());
+        }
+        [TestMethod()]
+        public void Test_Spren_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.Cosmere.Spren());
+        }
+        [TestMethod()]
+        public void Test_Surge_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.Cosmere.Surge());
+        }
     }
     
     [TestClass]
@@ -561,6 +203,36 @@ namespace FakerNet.NUnit
         public void Test_Planet_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Books.CultureSeries.Planet());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Books_DcComics : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Hero_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.DcComics.Hero());
+        }
+        [TestMethod()]
+        public void Test_Heroine_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.DcComics.Heroine());
+        }
+        [TestMethod()]
+        public void Test_Name_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.DcComics.Name());
+        }
+        [TestMethod()]
+        public void Test_Title_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.DcComics.Title());
+        }
+        [TestMethod()]
+        public void Test_Villain_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Books.DcComics.Villain());
         }
     }
     
@@ -649,114 +321,27 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_Boolean : FakerNUnitBase
-    {
-        #warning No implementation defined for method get_boolean(double trueRatio = 0.5);
-    }
-    
-    [TestClass]
-    public class Test_BossaNova : FakerNUnitBase
+    public class Test_Books_Tolkien : FakerNUnitBase
     {
         [TestMethod()]
-        public void Test_Artist_Execute()
+        public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.BossaNova.Artist());
+            FakerForEveryLocale<string>(faker => faker.Books.Tolkien.Character());
         }
         [TestMethod()]
-        public void Test_Song_Execute()
+        public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.BossaNova.Song());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Business : FakerNUnitBase
-    {
-        #warning No implementation defined for method credit_card_expiry_date();
-        [TestMethod()]
-        public void Test_CreditCardNumber_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Business.CreditCardNumber());
+            FakerForEveryLocale<string>(faker => faker.Books.Tolkien.Location());
         }
         [TestMethod()]
-        public void Test_CreditCardType_Execute()
+        public void Test_Poem_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Business.CreditCardType());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Camera : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Brand_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Camera.Brand());
+            FakerForEveryLocale<string>(faker => faker.Books.Tolkien.Poem());
         }
         [TestMethod()]
-        public void Test_BrandWithModel_Execute()
+        public void Test_Race_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Camera.BrandWithModel());
-        }
-        [TestMethod()]
-        public void Test_Model_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Camera.Model());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Cannabis : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Brand_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Cannabis.Brand());
-        }
-        [TestMethod()]
-        public void Test_Buzzword_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Cannabis.Buzzword());
-        }
-        [TestMethod()]
-        public void Test_Cannabinoid_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Cannabis.Cannabinoid());
-        }
-        [TestMethod()]
-        public void Test_CannabinoidAbbreviation_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Cannabis.CannabinoidAbbreviation());
-        }
-        [TestMethod()]
-        public void Test_Category_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Cannabis.Category());
-        }
-        [TestMethod()]
-        public void Test_HealthBenefit_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Cannabis.HealthBenefit());
-        }
-        [TestMethod()]
-        public void Test_MedicalUse_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Cannabis.MedicalUse());
-        }
-        [TestMethod()]
-        public void Test_Strain_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Cannabis.Strain());
-        }
-        [TestMethod()]
-        public void Test_Terpene_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Cannabis.Terpene());
-        }
-        [TestMethod()]
-        public void Test_Type_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Cannabis.Type());
+            FakerForEveryLocale<string>(faker => faker.Books.Tolkien.Race());
         }
     }
     
@@ -769,112 +354,6 @@ namespace FakerNet.NUnit
         // Method : full_rut : Can not generated test for method with required arguments.
         #warning Failed processing method last_rut
         // Method : rut : Can not generated test for method with required arguments.
-    }
-    
-    [TestClass]
-    public class Test_ChuckNorris : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Fact_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.ChuckNorris.Fact());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Code : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Asin_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Asin());
-        }
-        [TestMethod()]
-        public void Test_Ean_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Ean());
-        }
-        [TestMethod()]
-        public void Test_Ean13_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Ean13());
-        }
-        [TestMethod()]
-        public void Test_Ean8_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Ean8());
-        }
-        [TestMethod()]
-        public void Test_Imei_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Imei());
-        }
-        [TestMethod()]
-        public void Test_Isbn_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Isbn());
-        }
-        [TestMethod()]
-        public void Test_Isbn10_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Isbn10());
-        }
-        [TestMethod()]
-        public void Test_Isbn13_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Isbn13());
-        }
-        [TestMethod()]
-        public void Test_Npi_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Npi());
-        }
-        [TestMethod()]
-        public void Test_Nric_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Nric());
-        }
-        [TestMethod()]
-        public void Test_Rut_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Rut());
-        }
-        [TestMethod()]
-        public void Test_Sin_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Code.Sin());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Coffee : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_BlendName_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Coffee.BlendName());
-        }
-        [TestMethod()]
-        public void Test_Intensifier_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Coffee.Intensifier());
-        }
-        [TestMethod()]
-        public void Test_Notes_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Coffee.Notes());
-        }
-        [TestMethod()]
-        public void Test_Origin_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Coffee.Origin());
-        }
-        #warning Failed processing method search_format
-        [TestMethod()]
-        public void Test_Variety_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Coffee.Variety());
-        }
     }
     
     [TestClass]
@@ -893,62 +372,250 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_Color : FakerNUnitBase
+    public class Test_Commerce : FakerNUnitBase
     {
-        [TestMethod()]
-        public void Test_ColorName_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Color.ColorName());
-        }
-        #warning No implementation defined for method hex_color(UNKNOWN_Hash? args = null);
-        // Method : hsl_color : Can not generated test for method with required arguments.
-        // Method : hsl_to_hex : Can not generated test for method with required arguments.
-        #warning No implementation defined for method hsla_color();
-        #warning No implementation defined for method rgb_color();
-        #warning Failed processing method single_rgb_color
     }
     
     [TestClass]
-    public class Test_Commerce : FakerNUnitBase
+    public class Test_Commerce_Appliance : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Brand_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Commerce.Brand());
+            FakerForEveryLocale<string>(faker => faker.Commerce.Appliance.Brand());
+        }
+        [TestMethod()]
+        public void Test_Equipment_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Appliance.Equipment());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Commerce_Bank : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_AccountNumber_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Bank.AccountNumber());
+        }
+        [TestMethod()]
+        public void Test_BsbNumber_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Bank.BsbNumber());
+        }
+        [TestMethod()]
+        public void Test_Iban_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Bank.Iban());
+        }
+        [TestMethod()]
+        public void Test_IbanCountryCode_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Bank.IbanCountryCode());
+        }
+        [TestMethod()]
+        public void Test_Name_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Bank.Name());
+        }
+        [TestMethod()]
+        public void Test_RoutingNumber_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Bank.RoutingNumber());
+        }
+        [TestMethod()]
+        public void Test_RoutingNumberWithFormat_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Bank.RoutingNumberWithFormat());
+        }
+        [TestMethod()]
+        public void Test_SwiftBic_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Bank.SwiftBic());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Commerce_Barcode : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_CompositeSymbology_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Barcode.CompositeSymbology());
+        }
+        #warning Failed processing method ean_with_composite_symbology
+        [TestMethod()]
+        public void Test_Ean13_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Barcode.Ean13());
+        }
+        [TestMethod()]
+        public void Test_Ean8_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Barcode.Ean8());
+        }
+        // Method : generate_barcode : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_Isbn10_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Barcode.Isbn10());
+        }
+        [TestMethod()]
+        public void Test_Isbn13_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Barcode.Isbn13());
+        }
+        [TestMethod()]
+        public void Test_Ismn_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Barcode.Ismn());
+        }
+        [TestMethod()]
+        public void Test_Issn_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Barcode.Issn());
+        }
+        [TestMethod()]
+        public void Test_UpcA_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Barcode.UpcA());
+        }
+        #warning Failed processing method upc_a_with_composite_symbology
+        [TestMethod()]
+        public void Test_UpcE_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Barcode.UpcE());
+        }
+        #warning Failed processing method upc_e_with_composite_symbology
+    }
+    
+    [TestClass]
+    public class Test_Commerce_Business : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_CreditCardExpiryDate_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Business.CreditCardExpiryDate());
+        }
+        [TestMethod()]
+        public void Test_CreditCardNumber_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Business.CreditCardNumber());
+        }
+        [TestMethod()]
+        public void Test_CreditCardType_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Business.CreditCardType());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Commerce_Code : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Asin_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Code.Asin());
+        }
+        [TestMethod()]
+        public void Test_Ean_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Code.Ean());
+        }
+        [TestMethod()]
+        public void Test_Ean13_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Code.Ean13());
+        }
+        [TestMethod()]
+        public void Test_Ean8_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Code.Ean8());
+        }
+        [TestMethod()]
+        public void Test_Imei_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Code.Imei());
+        }
+        [TestMethod()]
+        public void Test_Isbn_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Code.Isbn());
+        }
+        [TestMethod()]
+        public void Test_Isbn10_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Code.Isbn10());
+        }
+        [TestMethod()]
+        public void Test_Isbn13_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Code.Isbn13());
+        }
+        [TestMethod()]
+        public void Test_Npi_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Code.Npi());
+        }
+        [TestMethod()]
+        public void Test_Nric_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Code.Nric());
+        }
+        [TestMethod()]
+        public void Test_Rut_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Code.Rut());
+        }
+        [TestMethod()]
+        public void Test_Sin_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Code.Sin());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Commerce_CommerceRENAME : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Brand_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.CommerceRENAME.Brand());
         }
         #warning Failed processing method categories
         [TestMethod()]
         public void Test_Color_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Commerce.Color());
+            FakerForEveryLocale<string>(faker => faker.Commerce.CommerceRENAME.Color());
         }
         // Method : department : Can not generated test for method with required arguments.
         [TestMethod()]
         public void Test_Material_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Commerce.Material());
+            FakerForEveryLocale<string>(faker => faker.Commerce.CommerceRENAME.Material());
         }
         #warning Failed processing method merge_categories
         // Method : price : Can not generated test for method with required arguments.
         [TestMethod()]
         public void Test_ProductName_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Commerce.ProductName());
+            FakerForEveryLocale<string>(faker => faker.Commerce.CommerceRENAME.ProductName());
         }
         [TestMethod()]
         public void Test_PromotionCode_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Commerce.PromotionCode());
+            FakerForEveryLocale<string>(faker => faker.Commerce.CommerceRENAME.PromotionCode());
         }
         [TestMethod()]
         public void Test_Vendor_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Commerce.Vendor());
+            FakerForEveryLocale<string>(faker => faker.Commerce.CommerceRENAME.Vendor());
         }
     }
     
     [TestClass]
-    public class Test_Company : FakerNUnitBase
+    public class Test_Commerce_Company : FakerNUnitBase
     {
         #warning Failed processing method abn_checksum
         #warning No implementation defined for method australian_business_number();
@@ -962,7 +629,7 @@ namespace FakerNet.NUnit
         [TestMethod()]
         public void Test_Department_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Company.Department());
+            FakerForEveryLocale<string>(faker => faker.Commerce.Company.Department());
         }
         #warning No implementation defined for method duns_number();
         #warning No implementation defined for method ein();
@@ -972,7 +639,7 @@ namespace FakerNet.NUnit
         [TestMethod()]
         public void Test_Industry_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Company.Industry());
+            FakerForEveryLocale<string>(faker => faker.Commerce.Company.Industry());
         }
         #warning Failed processing method inn_checksum
         // Method : inn_number : Can not generated test for method with required arguments.
@@ -982,7 +649,7 @@ namespace FakerNet.NUnit
         [TestMethod()]
         public void Test_Name_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Company.Name());
+            FakerForEveryLocale<string>(faker => faker.Commerce.Company.Name());
         }
         #warning No implementation defined for method norwegian_organisation_number();
         #warning No implementation defined for method polish_register_of_national_economy();
@@ -990,13 +657,13 @@ namespace FakerNet.NUnit
         [TestMethod()]
         public void Test_Profession_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Company.Profession());
+            FakerForEveryLocale<string>(faker => faker.Commerce.Company.Profession());
         }
         // Method : russian_tax_number : Can not generated test for method with required arguments.
         [TestMethod()]
         public void Test_SicCode_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Company.SicCode());
+            FakerForEveryLocale<string>(faker => faker.Commerce.Company.SicCode());
         }
         #warning No implementation defined for method south_african_close_corporation_registration_number();
         #warning No implementation defined for method south_african_listed_company_registration_number();
@@ -1008,170 +675,246 @@ namespace FakerNet.NUnit
         [TestMethod()]
         public void Test_Suffix_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Company.Suffix());
+            FakerForEveryLocale<string>(faker => faker.Commerce.Company.Suffix());
         }
         #warning No implementation defined for method swedish_organisation_number();
         [TestMethod()]
         public void Test_Type_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Company.Type());
+            FakerForEveryLocale<string>(faker => faker.Commerce.Company.Type());
         }
         #warning Failed processing method weight_sum
     }
     
     [TestClass]
-    public class Test_Compass : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Abbreviation_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.Abbreviation());
-        }
-        [TestMethod()]
-        public void Test_Azimuth_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.Azimuth());
-        }
-        [TestMethod()]
-        public void Test_Cardinal_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.Cardinal());
-        }
-        [TestMethod()]
-        public void Test_CardinalAbbreviation_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.CardinalAbbreviation());
-        }
-        [TestMethod()]
-        public void Test_CardinalAzimuth_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.CardinalAzimuth());
-        }
-        [TestMethod()]
-        public void Test_Direction_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.Direction());
-        }
-        [TestMethod()]
-        public void Test_HalfWind_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.HalfWind());
-        }
-        [TestMethod()]
-        public void Test_HalfWindAbbreviation_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.HalfWindAbbreviation());
-        }
-        [TestMethod()]
-        public void Test_HalfWindAzimuth_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.HalfWindAzimuth());
-        }
-        [TestMethod()]
-        public void Test_Ordinal_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.Ordinal());
-        }
-        [TestMethod()]
-        public void Test_OrdinalAbbreviation_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.OrdinalAbbreviation());
-        }
-        [TestMethod()]
-        public void Test_OrdinalAzimuth_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.OrdinalAzimuth());
-        }
-        [TestMethod()]
-        public void Test_QuarterWind_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.QuarterWind());
-        }
-        [TestMethod()]
-        public void Test_QuarterWindAbbreviation_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.QuarterWindAbbreviation());
-        }
-        [TestMethod()]
-        public void Test_QuarterWindAzimuth_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Compass.QuarterWindAzimuth());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Computer : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Os_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Computer.Os());
-        }
-        [TestMethod()]
-        public void Test_Platform_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Computer.Platform());
-        }
-        [TestMethod()]
-        public void Test_Stack_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Computer.Stack());
-        }
-        [TestMethod()]
-        public void Test_Type_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Computer.Type());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Construction : FakerNUnitBase
+    public class Test_Commerce_Construction : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_HeavyEquipment_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Construction.HeavyEquipment());
+            FakerForEveryLocale<string>(faker => faker.Commerce.Construction.HeavyEquipment());
         }
         [TestMethod()]
         public void Test_Material_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Construction.Material());
+            FakerForEveryLocale<string>(faker => faker.Commerce.Construction.Material());
         }
         [TestMethod()]
         public void Test_Role_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Construction.Role());
+            FakerForEveryLocale<string>(faker => faker.Commerce.Construction.Role());
         }
         [TestMethod()]
         public void Test_StandardCostCode_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Construction.StandardCostCode());
+            FakerForEveryLocale<string>(faker => faker.Commerce.Construction.StandardCostCode());
         }
         [TestMethod()]
         public void Test_SubcontractCategory_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Construction.SubcontractCategory());
+            FakerForEveryLocale<string>(faker => faker.Commerce.Construction.SubcontractCategory());
         }
         [TestMethod()]
         public void Test_Trade_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Construction.Trade());
+            FakerForEveryLocale<string>(faker => faker.Commerce.Construction.Trade());
         }
     }
     
     [TestClass]
-    public class Test_Cosmere : FakerNUnitBase
+    public class Test_Commerce_CryptoCoin : FakerNUnitBase
     {
-        #warning No implementation defined for method allomancer();
-        #warning No implementation defined for method aon();
-        #warning No implementation defined for method feruchemist();
-        #warning No implementation defined for method herald();
-        #warning No implementation defined for method knight_radiant();
-        #warning No implementation defined for method metal();
-        #warning No implementation defined for method shard();
-        #warning No implementation defined for method shard_world();
-        #warning No implementation defined for method spren();
-        #warning No implementation defined for method surge();
+        #warning No implementation defined for method acronym();
+        [TestMethod()]
+        public void Test_CoinArray_Execute()
+        {
+            FakerForEveryLocale<List<string>>(faker => faker.Commerce.CryptoCoin.CoinArray());
+        }
+        #warning No implementation defined for method coin_hash();
+        #warning No implementation defined for method coin_name();
+        #warning No implementation defined for method url_logo();
+    }
+    
+    [TestClass]
+    public class Test_Commerce_Currency : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Code_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Currency.Code());
+        }
+        [TestMethod()]
+        public void Test_Name_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Currency.Name());
+        }
+        [TestMethod()]
+        public void Test_Symbol_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Currency.Symbol());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Commerce_Finance : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_CondominiumFiscalCode_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Finance.CondominiumFiscalCode());
+        }
+        // Method : credit_card : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_StockMarket_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Finance.StockMarket());
+        }
+        // Method : ticker : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_VatNumber_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Finance.VatNumber());
+        }
+        #warning Failed processing method vat_number_keys
+    }
+    
+    [TestClass]
+    public class Test_Commerce_IndustrySegments : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Industry_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.IndustrySegments.Industry());
+        }
+        [TestMethod()]
+        public void Test_Sector_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.IndustrySegments.Sector());
+        }
+        [TestMethod()]
+        public void Test_SubSector_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.IndustrySegments.SubSector());
+        }
+        [TestMethod()]
+        public void Test_SuperSector_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.IndustrySegments.SuperSector());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Commerce_Invoice : FakerNUnitBase
+    {
+        // Method : amount_between : Can not generated test for method with required arguments.
+        #warning Failed processing method calculate_weighted_sum
+        #warning No implementation defined for method creditor_reference(string ref = "");
+        #warning Failed processing method iban_checksum
+        #warning Failed processing method kidmod10
+        #warning Failed processing method method_731
+        #warning Failed processing method mod10_remainder
+        #warning No implementation defined for method reference(string ref = "");
+    }
+    
+    [TestClass]
+    public class Test_Commerce_Job : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Field_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Job.Field());
+        }
+        [TestMethod()]
+        public void Test_KeySkill_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Job.KeySkill());
+        }
+        [TestMethod()]
+        public void Test_Position_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Job.Position());
+        }
+        [TestMethod()]
+        public void Test_Title_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Job.Title());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Commerce_Marketing : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Buzzwords_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Marketing.Buzzwords());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Commerce_Restaurant : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Description_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Restaurant.Description());
+        }
+        [TestMethod()]
+        public void Test_Name_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Restaurant.Name());
+        }
+        [TestMethod()]
+        public void Test_Review_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Restaurant.Review());
+        }
+        [TestMethod()]
+        public void Test_Type_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Restaurant.Type());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Commerce_Stripe : FakerNUnitBase
+    {
+        #warning No implementation defined for method ccv(string? cardType = null);
+        #warning No implementation defined for method invalid_card();
+        #warning No implementation defined for method month();
+        #warning No implementation defined for method valid_card(string? cardType = null);
+        #warning No implementation defined for method valid_token(string? cardType = null);
+        #warning No implementation defined for method year();
+    }
+    
+    [TestClass]
+    public class Test_Commerce_Subscription : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_PaymentMethod_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Subscription.PaymentMethod());
+        }
+        [TestMethod()]
+        public void Test_PaymentTerm_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Subscription.PaymentTerm());
+        }
+        [TestMethod()]
+        public void Test_Plan_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Subscription.Plan());
+        }
+        [TestMethod()]
+        public void Test_Status_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Subscription.Status());
+        }
+        [TestMethod()]
+        public void Test_SubscriptionTerm_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Commerce.Subscription.SubscriptionTerm());
+        }
     }
     
     [TestClass]
@@ -1328,7 +1071,53 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_Crypto : FakerNUnitBase
+    public class Test_Data : FakerNUnitBase
+    {
+    }
+    
+    [TestClass]
+    public class Test_Data_Alphanumeric : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Alpha_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Data.Alphanumeric.Alpha());
+        }
+        [TestMethod()]
+        public void Test_AlphaNumeric_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Data.Alphanumeric.AlphaNumeric());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Data_Boolean : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_GetBoolean_Execute()
+        {
+            FakerForEveryLocale<bool>(faker => faker.Data.Boolean.GetBoolean());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Data_Color : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_ColorName_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Data.Color.ColorName());
+        }
+        #warning No implementation defined for method hex_color(UNKNOWN_Hash? args = null);
+        // Method : hsl_color : Can not generated test for method with required arguments.
+        // Method : hsl_to_hex : Can not generated test for method with required arguments.
+        #warning No implementation defined for method hsla_color();
+        #warning No implementation defined for method rgb_color();
+        #warning Failed processing method single_rgb_color
+    }
+    
+    [TestClass]
+    public class Test_Data_Crypto : FakerNUnitBase
     {
         #warning No implementation defined for method md5();
         #warning No implementation defined for method sha1();
@@ -1337,41 +1126,7 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_CryptoCoin : FakerNUnitBase
-    {
-        #warning No implementation defined for method acronym();
-        [TestMethod()]
-        public void Test_CoinArray_Execute()
-        {
-            FakerForEveryLocale<List<string>>(faker => faker.CryptoCoin.CoinArray());
-        }
-        #warning No implementation defined for method coin_hash();
-        #warning No implementation defined for method coin_name();
-        #warning No implementation defined for method url_logo();
-    }
-    
-    [TestClass]
-    public class Test_Currency : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Code_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Currency.Code());
-        }
-        [TestMethod()]
-        public void Test_Name_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Currency.Name());
-        }
-        [TestMethod()]
-        public void Test_Symbol_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Currency.Symbol());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Date : FakerNUnitBase
+    public class Test_Data_Date : FakerNUnitBase
     {
         #warning No implementation defined for method backward(long days = 365);
         // Method : between : Can not generated test for method with required arguments.
@@ -1385,522 +1140,366 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_DcComics : FakerNUnitBase
+    public class Test_Data_Lorem : FakerNUnitBase
     {
         [TestMethod()]
-        public void Test_Hero_Execute()
+        public void Test_LocalePeriod_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.DcComics.Hero());
+            FakerForEveryLocale<string>(faker => faker.Data.Lorem.LocalePeriod());
         }
         [TestMethod()]
-        public void Test_Heroine_Execute()
+        public void Test_LocaleQuestionMark_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.DcComics.Heroine());
+            FakerForEveryLocale<string>(faker => faker.Data.Lorem.LocaleQuestionMark());
         }
         [TestMethod()]
-        public void Test_Name_Execute()
+        public void Test_LocaleSpace_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.DcComics.Name());
+            FakerForEveryLocale<string>(faker => faker.Data.Lorem.LocaleSpace());
         }
         [TestMethod()]
-        public void Test_Title_Execute()
+        public void Test_Paragraph_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.DcComics.Title());
+            FakerForEveryLocale<string>(faker => faker.Data.Lorem.Paragraph());
         }
         [TestMethod()]
-        public void Test_Villain_Execute()
+        public void Test_ParagraphByChars_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.DcComics.Villain());
+            FakerForEveryLocale<string>(faker => faker.Data.Lorem.ParagraphByChars());
+        }
+        [TestMethod()]
+        public void Test_Question_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Data.Lorem.Question());
+        }
+        [TestMethod()]
+        public void Test_Sentence_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Data.Lorem.Sentence());
+        }
+        [TestMethod()]
+        public void Test_Word_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Data.Lorem.Word());
+        }
+        [TestMethod()]
+        public void Test_Words_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Data.Lorem.Words());
         }
     }
     
     [TestClass]
-    public class Test_Demographic : FakerNUnitBase
+    public class Test_Data_Measurement : FakerNUnitBase
+    {
+        #warning Failed processing method check_for_plural
+        #warning Failed processing method define_measurement_locale
+        #warning Failed processing method ensure_valid_amount
+        #warning No implementation defined for method height(long amount = rand(10));
+        #warning No implementation defined for method length(long amount = rand(10));
+        #warning Failed processing method make_plural
+        #warning No implementation defined for method metric_height(long amount = rand(10));
+        #warning No implementation defined for method metric_length(long amount = rand(10));
+        #warning No implementation defined for method metric_volume(long amount = rand(10));
+        #warning No implementation defined for method metric_weight(long amount = rand(10));
+        #warning No implementation defined for method volume(long amount = rand(10));
+        #warning No implementation defined for method weight(long amount = rand(10));
+    }
+    
+    [TestClass]
+    public class Test_Data_Number : FakerNUnitBase
+    {
+        // Method : between : Can not generated test for method with required arguments.
+        #warning No implementation defined for method binary(long digits = 4);
+        // Method : decimal : Can not generated test for method with required arguments.
+        #warning No implementation defined for method decimal_part(long digits = 10);
+        #warning No implementation defined for method digit();
+        #warning Failed processing method generate
+        #warning Failed processing method greater_than_zero
+        #warning No implementation defined for method hexadecimal(long digits = 6);
+        #warning No implementation defined for method leading_zero_number(long digits = 10);
+        #warning Failed processing method less_than_zero
+        // Method : negative : Can not generated test for method with required arguments.
+        #warning No implementation defined for method non_zero_digit();
+        // Method : normal : Can not generated test for method with required arguments.
+        #warning No implementation defined for method number(long digits = 10);
+        // Method : positive : Can not generated test for method with required arguments.
+        #warning Failed processing method should_be
+        #warning No implementation defined for method within(UNKNOWN_Range? range = null);
+    }
+    
+    [TestClass]
+    public class Test_Data_String : FakerNUnitBase
+    {
+        #warning No implementation defined for method char_space_ratio();
+        // Method : length : Can not generated test for method with required arguments.
+        // Method : lower : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_RandomString_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Data.String.RandomString());
+        }
+        #warning No implementation defined for method select_a();
+        #warning No implementation defined for method space_or_utf8_char();
+        // Method : sub_string : Can not generated test for method with required arguments.
+        #warning No implementation defined for method utf8character();
+        #warning No implementation defined for method utf8string();
+    }
+    
+    [TestClass]
+    public class Test_Data_Time : FakerNUnitBase
+    {
+        // Method : backward : Can not generated test for method with required arguments.
+        // Method : between : Can not generated test for method with required arguments.
+        // Method : between_dates : Can not generated test for method with required arguments.
+        #warning Failed processing method date_with_random_time
+        // Method : forward : Can not generated test for method with required arguments.
+        #warning Failed processing method get_time_object
+        #warning Failed processing method hours
+        #warning Failed processing method minutes
+        #warning Failed processing method seconds
+        #warning Failed processing method time_with_format
+    }
+    
+    [TestClass]
+    public class Test_Defence : FakerNUnitBase
+    {
+    }
+    
+    [TestClass]
+    public class Test_Defence_Military : FakerNUnitBase
     {
         [TestMethod()]
-        public void Test_Demonym_Execute()
+        public void Test_AirForceRank_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Demographic.Demonym());
+            FakerForEveryLocale<string>(faker => faker.Defence.Military.AirForceRank());
         }
         [TestMethod()]
-        public void Test_EducationalAttainment_Execute()
+        public void Test_ArmyRank_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Demographic.EducationalAttainment());
-        }
-        #warning No implementation defined for method height(UNKNOWN_Symbol? unit = null);
-        [TestMethod()]
-        public void Test_MaritalStatus_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Demographic.MaritalStatus());
+            FakerForEveryLocale<string>(faker => faker.Defence.Military.ArmyRank());
         }
         [TestMethod()]
-        public void Test_Race_Execute()
+        public void Test_CoastGuardRank_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Demographic.Race());
+            FakerForEveryLocale<string>(faker => faker.Defence.Military.CoastGuardRank());
         }
         [TestMethod()]
-        public void Test_Sex_Execute()
+        public void Test_DodPaygrade_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Demographic.Sex());
+            FakerForEveryLocale<string>(faker => faker.Defence.Military.DodPaygrade());
+        }
+        [TestMethod()]
+        public void Test_MarinesRank_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Defence.Military.MarinesRank());
+        }
+        [TestMethod()]
+        public void Test_NavyRank_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Defence.Military.NavyRank());
+        }
+        [TestMethod()]
+        public void Test_SpaceForceRank_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Defence.Military.SpaceForceRank());
         }
     }
     
     [TestClass]
-    public class Test_Dessert : FakerNUnitBase
+    public class Test_Defence_NatoPhoneticAlphabet : FakerNUnitBase
     {
         [TestMethod()]
-        public void Test_Flavor_Execute()
+        public void Test_CodeWord_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Dessert.Flavor());
-        }
-        [TestMethod()]
-        public void Test_Topping_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Dessert.Topping());
-        }
-        [TestMethod()]
-        public void Test_Variety_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Dessert.Variety());
+            FakerForEveryLocale<string>(faker => faker.Defence.NatoPhoneticAlphabet.CodeWord());
         }
     }
     
     [TestClass]
-    public class Test_Device : FakerNUnitBase
-    {
-        #warning No implementation defined for method build_number();
-        [TestMethod()]
-        public void Test_Manufacturer_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Device.Manufacturer());
-        }
-        [TestMethod()]
-        public void Test_ModelName_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Device.ModelName());
-        }
-        [TestMethod()]
-        public void Test_Platform_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Device.Platform());
-        }
-        [TestMethod()]
-        public void Test_Serial_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Device.Serial());
-        }
-        #warning No implementation defined for method version();
-    }
-    
-    [TestClass]
-    public class Test_DrivingLicence : FakerNUnitBase
-    {
-        // Method : british_driving_licence : Can not generated test for method with required arguments.
-        #warning Failed processing method gb_licence_checksum
-        #warning Failed processing method gb_licence_padding
-        #warning Failed processing method gb_licence_year
-        #warning No implementation defined for method initialize();
-        #warning No implementation defined for method northern_irish_driving_licence();
-        #warning Failed processing method random_gender
-        // Method : uk_driving_licence : Can not generated test for method with required arguments.
-        [TestMethod()]
-        public void Test_UsaDrivingLicence_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.DrivingLicence.UsaDrivingLicence());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Drone : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_BatteryCapacity_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.BatteryCapacity());
-        }
-        [TestMethod()]
-        public void Test_BatteryType_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.BatteryType());
-        }
-        [TestMethod()]
-        public void Test_BatteryVoltage_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.BatteryVoltage());
-        }
-        [TestMethod()]
-        public void Test_BatteryWeight_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.BatteryWeight());
-        }
-        [TestMethod()]
-        public void Test_ChargingTemperature_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.ChargingTemperature());
-        }
-        [TestMethod()]
-        public void Test_FlightTime_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.FlightTime());
-        }
-        [TestMethod()]
-        public void Test_Iso_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.Iso());
-        }
-        [TestMethod()]
-        public void Test_MaxAltitude_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.MaxAltitude());
-        }
-        [TestMethod()]
-        public void Test_MaxAngularVelocity_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.MaxAngularVelocity());
-        }
-        [TestMethod()]
-        public void Test_MaxAscentSpeed_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.MaxAscentSpeed());
-        }
-        [TestMethod()]
-        public void Test_MaxChargingPower_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.MaxChargingPower());
-        }
-        [TestMethod()]
-        public void Test_MaxDescentSpeed_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.MaxDescentSpeed());
-        }
-        [TestMethod()]
-        public void Test_MaxFlightDistance_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.MaxFlightDistance());
-        }
-        [TestMethod()]
-        public void Test_MaxResolution_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.MaxResolution());
-        }
-        [TestMethod()]
-        public void Test_MaxShutterSpeed_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.MaxShutterSpeed());
-        }
-        [TestMethod()]
-        public void Test_MaxSpeed_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.MaxSpeed());
-        }
-        [TestMethod()]
-        public void Test_MaxTiltAngle_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.MaxTiltAngle());
-        }
-        [TestMethod()]
-        public void Test_MaxWindResistance_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.MaxWindResistance());
-        }
-        [TestMethod()]
-        public void Test_MinShutterSpeed_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.MinShutterSpeed());
-        }
-        [TestMethod()]
-        public void Test_Name_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.Name());
-        }
-        [TestMethod()]
-        public void Test_OperatingTemperature_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.OperatingTemperature());
-        }
-        [TestMethod()]
-        public void Test_PhotoFormat_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.PhotoFormat());
-        }
-        [TestMethod()]
-        public void Test_ShutterSpeedRange_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.ShutterSpeedRange());
-        }
-        [TestMethod()]
-        public void Test_VideoFormat_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.VideoFormat());
-        }
-        [TestMethod()]
-        public void Test_Weight_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Drone.Weight());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Educator : FakerNUnitBase
+    public class Test_Education : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Campus_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Educator.Campus());
+            FakerForEveryLocale<string>(faker => faker.Education.Campus());
         }
         [TestMethod()]
         public void Test_CourseName_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Educator.CourseName());
+            FakerForEveryLocale<string>(faker => faker.Education.CourseName());
         }
         [TestMethod()]
         public void Test_Degree_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Educator.Degree());
+            FakerForEveryLocale<string>(faker => faker.Education.Degree());
         }
         [TestMethod()]
         public void Test_PrimarySchool_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Educator.PrimarySchool());
+            FakerForEveryLocale<string>(faker => faker.Education.PrimarySchool());
         }
         [TestMethod()]
         public void Test_SecondarySchool_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Educator.SecondarySchool());
+            FakerForEveryLocale<string>(faker => faker.Education.SecondarySchool());
         }
         [TestMethod()]
         public void Test_Subject_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Educator.Subject());
+            FakerForEveryLocale<string>(faker => faker.Education.Subject());
         }
         [TestMethod()]
         public void Test_University_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Educator.University());
+            FakerForEveryLocale<string>(faker => faker.Education.University());
         }
     }
     
     [TestClass]
-    public class Test_ElectricalComponents : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Active_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.ElectricalComponents.Active());
-        }
-        [TestMethod()]
-        public void Test_Electromechanical_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.ElectricalComponents.Electromechanical());
-        }
-        [TestMethod()]
-        public void Test_Passive_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.ElectricalComponents.Passive());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Emotion : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Adjective_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Emotion.Adjective());
-        }
-        [TestMethod()]
-        public void Test_Noun_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Emotion.Noun());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Esport : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Event_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Esport.Event());
-        }
-        [TestMethod()]
-        public void Test_Game_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Esport.Game());
-        }
-        [TestMethod()]
-        public void Test_League_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Esport.League());
-        }
-        [TestMethod()]
-        public void Test_Player_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Esport.Player());
-        }
-        [TestMethod()]
-        public void Test_Team_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Esport.Team());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Fantasy : FakerNUnitBase
+    public class Test_FoodAndDrink : FakerNUnitBase
     {
     }
     
     [TestClass]
-    public class Test_Fantasy_Tolkien : FakerNUnitBase
+    public class Test_FoodAndDrink_Beer : FakerNUnitBase
     {
         [TestMethod()]
-        public void Test_Character_Execute()
+        public void Test_Alcohol_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Fantasy.Tolkien.Character());
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Beer.Alcohol());
         }
         [TestMethod()]
-        public void Test_Location_Execute()
+        public void Test_Blg_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Fantasy.Tolkien.Location());
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Beer.Blg());
         }
         [TestMethod()]
-        public void Test_Poem_Execute()
+        public void Test_Hop_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Fantasy.Tolkien.Poem());
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Beer.Hop());
         }
         [TestMethod()]
-        public void Test_Race_Execute()
+        public void Test_Ibu_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Fantasy.Tolkien.Race());
-        }
-    }
-    
-    [TestClass]
-    public class Test_File : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Dir_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.File.Dir());
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Beer.Ibu());
         }
         [TestMethod()]
-        public void Test_Extension_Execute()
+        public void Test_Malts_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.File.Extension());
-        }
-        #warning No implementation defined for method file_name(string? dir = null, string? name = null, string? ext = null, string directorySeparator = "/");
-        [TestMethod()]
-        public void Test_MimeType_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.File.MimeType());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Finance : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_CondominiumFiscalCode_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Finance.CondominiumFiscalCode());
-        }
-        // Method : credit_card : Can not generated test for method with required arguments.
-        [TestMethod()]
-        public void Test_StockMarket_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Finance.StockMarket());
-        }
-        // Method : ticker : Can not generated test for method with required arguments.
-        [TestMethod()]
-        public void Test_VatNumber_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Finance.VatNumber());
-        }
-        #warning Failed processing method vat_number_keys
-    }
-    
-    [TestClass]
-    public class Test_Food : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Allergen_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Food.Allergen());
-        }
-        [TestMethod()]
-        public void Test_Description_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Food.Description());
-        }
-        [TestMethod()]
-        public void Test_Dish_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Food.Dish());
-        }
-        [TestMethod()]
-        public void Test_EthnicCategory_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Food.EthnicCategory());
-        }
-        [TestMethod()]
-        public void Test_Fruits_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Food.Fruits());
-        }
-        [TestMethod()]
-        public void Test_Ingredient_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Food.Ingredient());
-        }
-        [TestMethod()]
-        public void Test_Measurement_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Food.Measurement());
-        }
-        [TestMethod()]
-        public void Test_MetricMeasurement_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Food.MetricMeasurement());
-        }
-        [TestMethod()]
-        public void Test_Spice_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Food.Spice());
-        }
-        [TestMethod()]
-        public void Test_Vegetables_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Food.Vegetables());
-        }
-    }
-    
-    [TestClass]
-    public class Test_FunnyName : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_FourWordName_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.FunnyName.FourWordName());
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Beer.Malts());
         }
         [TestMethod()]
         public void Test_Name_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.FunnyName.Name());
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Beer.Name());
         }
         [TestMethod()]
-        public void Test_NameWithInitial_Execute()
+        public void Test_Style_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.FunnyName.NameWithInitial());
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Beer.Style());
         }
         [TestMethod()]
-        public void Test_ThreeWordName_Execute()
+        public void Test_Yeast_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.FunnyName.ThreeWordName());
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Beer.Yeast());
+        }
+    }
+    
+    [TestClass]
+    public class Test_FoodAndDrink_Coffee : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_BlendName_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Coffee.BlendName());
         }
         [TestMethod()]
-        public void Test_TwoWordName_Execute()
+        public void Test_Intensifier_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.FunnyName.TwoWordName());
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Coffee.Intensifier());
+        }
+        [TestMethod()]
+        public void Test_Notes_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Coffee.Notes());
+        }
+        [TestMethod()]
+        public void Test_Origin_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Coffee.Origin());
+        }
+        #warning Failed processing method search_format
+        [TestMethod()]
+        public void Test_Variety_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Coffee.Variety());
+        }
+    }
+    
+    [TestClass]
+    public class Test_FoodAndDrink_Food : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Allergen_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Food.Allergen());
+        }
+        [TestMethod()]
+        public void Test_Description_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Food.Description());
+        }
+        [TestMethod()]
+        public void Test_Dish_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Food.Dish());
+        }
+        [TestMethod()]
+        public void Test_EthnicCategory_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Food.EthnicCategory());
+        }
+        [TestMethod()]
+        public void Test_Fruits_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Food.Fruits());
+        }
+        [TestMethod()]
+        public void Test_Ingredient_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Food.Ingredient());
+        }
+        [TestMethod()]
+        public void Test_Measurement_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Food.Measurement());
+        }
+        [TestMethod()]
+        public void Test_MetricMeasurement_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Food.MetricMeasurement());
+        }
+        [TestMethod()]
+        public void Test_Spice_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Food.Spice());
+        }
+        [TestMethod()]
+        public void Test_Vegetables_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Food.Vegetables());
+        }
+    }
+    
+    [TestClass]
+    public class Test_FoodAndDrink_Tea : FakerNUnitBase
+    {
+        #warning No implementation defined for method type();
+        [TestMethod()]
+        public void Test_Variety_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.FoodAndDrink.Tea.Variety());
         }
     }
     
@@ -1925,1017 +1524,823 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_Games : FakerNUnitBase
-    {
-    }
-    
-    [TestClass]
-    public class Test_Games_ClashOfClans : FakerNUnitBase
+    public class Test_Game_ClashOfClans : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_DefensiveBuilding_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.ClashOfClans.DefensiveBuilding());
+            FakerForEveryLocale<string>(faker => faker.Game.ClashOfClans.DefensiveBuilding());
         }
         [TestMethod()]
         public void Test_Rank_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.ClashOfClans.Rank());
+            FakerForEveryLocale<string>(faker => faker.Game.ClashOfClans.Rank());
         }
         [TestMethod()]
         public void Test_Troop_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.ClashOfClans.Troop());
+            FakerForEveryLocale<string>(faker => faker.Game.ClashOfClans.Troop());
         }
     }
     
     [TestClass]
-    public class Test_Games_Control : FakerNUnitBase
+    public class Test_Game_Control : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_AlteredItem_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Control.AlteredItem());
+            FakerForEveryLocale<string>(faker => faker.Game.Control.AlteredItem());
         }
         [TestMethod()]
         public void Test_AlteredWorldEvent_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Control.AlteredWorldEvent());
+            FakerForEveryLocale<string>(faker => faker.Game.Control.AlteredWorldEvent());
         }
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Control.Character());
+            FakerForEveryLocale<string>(faker => faker.Game.Control.Character());
         }
         [TestMethod()]
         public void Test_Hiss_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Control.Hiss());
+            FakerForEveryLocale<string>(faker => faker.Game.Control.Hiss());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Control.Location());
+            FakerForEveryLocale<string>(faker => faker.Game.Control.Location());
         }
         [TestMethod()]
         public void Test_ObjectOfPower_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Control.ObjectOfPower());
+            FakerForEveryLocale<string>(faker => faker.Game.Control.ObjectOfPower());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Control.Quote());
+            FakerForEveryLocale<string>(faker => faker.Game.Control.Quote());
         }
         [TestMethod()]
         public void Test_TheBoard_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Control.TheBoard());
+            FakerForEveryLocale<string>(faker => faker.Game.Control.TheBoard());
         }
     }
     
     [TestClass]
-    public class Test_Games_DnD : FakerNUnitBase
+    public class Test_Game_DnD : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Alignment_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.DnD.Alignment());
+            FakerForEveryLocale<string>(faker => faker.Game.DnD.Alignment());
         }
         [TestMethod()]
         public void Test_Background_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.DnD.Background());
+            FakerForEveryLocale<string>(faker => faker.Game.DnD.Background());
         }
         [TestMethod()]
         public void Test_City_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.DnD.City());
+            FakerForEveryLocale<string>(faker => faker.Game.DnD.City());
         }
         [TestMethod()]
         public void Test_FirstName_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.DnD.FirstName());
+            FakerForEveryLocale<string>(faker => faker.Game.DnD.FirstName());
         }
         [TestMethod()]
         public void Test_Klass_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.DnD.Klass());
+            FakerForEveryLocale<string>(faker => faker.Game.DnD.Klass());
         }
         [TestMethod()]
         public void Test_Language_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.DnD.Language());
+            FakerForEveryLocale<string>(faker => faker.Game.DnD.Language());
         }
         [TestMethod()]
         public void Test_LastName_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.DnD.LastName());
+            FakerForEveryLocale<string>(faker => faker.Game.DnD.LastName());
         }
         [TestMethod()]
         public void Test_MeleeWeapon_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.DnD.MeleeWeapon());
+            FakerForEveryLocale<string>(faker => faker.Game.DnD.MeleeWeapon());
         }
         [TestMethod()]
         public void Test_Monster_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.DnD.Monster());
+            FakerForEveryLocale<string>(faker => faker.Game.DnD.Monster());
         }
         [TestMethod()]
         public void Test_Name_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.DnD.Name());
+            FakerForEveryLocale<string>(faker => faker.Game.DnD.Name());
         }
         [TestMethod()]
         public void Test_Race_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.DnD.Race());
+            FakerForEveryLocale<string>(faker => faker.Game.DnD.Race());
         }
         [TestMethod()]
         public void Test_RangedWeapon_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.DnD.RangedWeapon());
+            FakerForEveryLocale<string>(faker => faker.Game.DnD.RangedWeapon());
         }
         [TestMethod()]
         public void Test_TitleName_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.DnD.TitleName());
+            FakerForEveryLocale<string>(faker => faker.Game.DnD.TitleName());
         }
     }
     
     [TestClass]
-    public class Test_Games_Dota : FakerNUnitBase
+    public class Test_Game_Dota : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Building_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Dota.Building());
+            FakerForEveryLocale<string>(faker => faker.Game.Dota.Building());
         }
         [TestMethod()]
         public void Test_Hero_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Dota.Hero());
+            FakerForEveryLocale<string>(faker => faker.Game.Dota.Hero());
         }
         [TestMethod()]
         public void Test_Item_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Dota.Item());
+            FakerForEveryLocale<string>(faker => faker.Game.Dota.Item());
         }
         [TestMethod()]
         public void Test_Player_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Dota.Player());
+            FakerForEveryLocale<string>(faker => faker.Game.Dota.Player());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Dota.Quote());
+            FakerForEveryLocale<string>(faker => faker.Game.Dota.Quote());
         }
         [TestMethod()]
         public void Test_Team_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Dota.Team());
+            FakerForEveryLocale<string>(faker => faker.Game.Dota.Team());
         }
     }
     
     [TestClass]
-    public class Test_Games_ElderScrolls : FakerNUnitBase
+    public class Test_Game_ElderScrolls : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_City_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.ElderScrolls.City());
+            FakerForEveryLocale<string>(faker => faker.Game.ElderScrolls.City());
         }
         [TestMethod()]
         public void Test_Creature_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.ElderScrolls.Creature());
+            FakerForEveryLocale<string>(faker => faker.Game.ElderScrolls.Creature());
         }
         [TestMethod()]
         public void Test_Dragon_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.ElderScrolls.Dragon());
+            FakerForEveryLocale<string>(faker => faker.Game.ElderScrolls.Dragon());
         }
         [TestMethod()]
         public void Test_FirstName_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.ElderScrolls.FirstName());
+            FakerForEveryLocale<string>(faker => faker.Game.ElderScrolls.FirstName());
         }
         [TestMethod()]
         public void Test_Jewelry_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.ElderScrolls.Jewelry());
+            FakerForEveryLocale<string>(faker => faker.Game.ElderScrolls.Jewelry());
         }
         [TestMethod()]
         public void Test_LastName_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.ElderScrolls.LastName());
+            FakerForEveryLocale<string>(faker => faker.Game.ElderScrolls.LastName());
         }
         [TestMethod()]
         public void Test_Name_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.ElderScrolls.Name());
+            FakerForEveryLocale<string>(faker => faker.Game.ElderScrolls.Name());
         }
         [TestMethod()]
         public void Test_Race_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.ElderScrolls.Race());
+            FakerForEveryLocale<string>(faker => faker.Game.ElderScrolls.Race());
         }
         [TestMethod()]
         public void Test_Region_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.ElderScrolls.Region());
+            FakerForEveryLocale<string>(faker => faker.Game.ElderScrolls.Region());
         }
         [TestMethod()]
         public void Test_Weapon_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.ElderScrolls.Weapon());
+            FakerForEveryLocale<string>(faker => faker.Game.ElderScrolls.Weapon());
         }
     }
     
     [TestClass]
-    public class Test_Games_Fallout : FakerNUnitBase
+    public class Test_Game_Fallout : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Fallout.Character());
+            FakerForEveryLocale<string>(faker => faker.Game.Fallout.Character());
         }
         [TestMethod()]
         public void Test_Faction_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Fallout.Faction());
+            FakerForEveryLocale<string>(faker => faker.Game.Fallout.Faction());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Fallout.Location());
+            FakerForEveryLocale<string>(faker => faker.Game.Fallout.Location());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Fallout.Quote());
+            FakerForEveryLocale<string>(faker => faker.Game.Fallout.Quote());
         }
     }
     
     [TestClass]
-    public class Test_Games_FinalFantasyXIV : FakerNUnitBase
+    public class Test_Game_FinalFantasyXIV : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.FinalFantasyXIV.Character());
+            FakerForEveryLocale<string>(faker => faker.Game.FinalFantasyXIV.Character());
         }
         [TestMethod()]
         public void Test_DataCenter_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.FinalFantasyXIV.DataCenter());
+            FakerForEveryLocale<string>(faker => faker.Game.FinalFantasyXIV.DataCenter());
         }
         [TestMethod()]
         public void Test_Job_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.FinalFantasyXIV.Job());
+            FakerForEveryLocale<string>(faker => faker.Game.FinalFantasyXIV.Job());
         }
         [TestMethod()]
         public void Test_Race_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.FinalFantasyXIV.Race());
+            FakerForEveryLocale<string>(faker => faker.Game.FinalFantasyXIV.Race());
         }
         [TestMethod()]
         public void Test_Zone_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.FinalFantasyXIV.Zone());
+            FakerForEveryLocale<string>(faker => faker.Game.FinalFantasyXIV.Zone());
         }
     }
     
     [TestClass]
-    public class Test_Games_HalfLife : FakerNUnitBase
+    public class Test_Game_HalfLife : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.HalfLife.Character());
+            FakerForEveryLocale<string>(faker => faker.Game.HalfLife.Character());
         }
         [TestMethod()]
         public void Test_Enemy_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.HalfLife.Enemy());
+            FakerForEveryLocale<string>(faker => faker.Game.HalfLife.Enemy());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.HalfLife.Location());
+            FakerForEveryLocale<string>(faker => faker.Game.HalfLife.Location());
         }
     }
     
     [TestClass]
-    public class Test_Games_Heroes : FakerNUnitBase
+    public class Test_Game_Heroes : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Artifact_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Heroes.Artifact());
+            FakerForEveryLocale<string>(faker => faker.Game.Heroes.Artifact());
         }
         [TestMethod()]
         public void Test_Klass_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Heroes.Klass());
+            FakerForEveryLocale<string>(faker => faker.Game.Heroes.Klass());
         }
         [TestMethod()]
         public void Test_Name_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Heroes.Name());
+            FakerForEveryLocale<string>(faker => faker.Game.Heroes.Name());
         }
         [TestMethod()]
         public void Test_Specialty_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Heroes.Specialty());
+            FakerForEveryLocale<string>(faker => faker.Game.Heroes.Specialty());
         }
     }
     
     [TestClass]
-    public class Test_Games_HeroesOfTheStorm : FakerNUnitBase
+    public class Test_Game_HeroesOfTheStorm : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Battleground_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.HeroesOfTheStorm.Battleground());
+            FakerForEveryLocale<string>(faker => faker.Game.HeroesOfTheStorm.Battleground());
         }
         #warning No implementation defined for method class();
         [TestMethod()]
         public void Test_ClassName_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.HeroesOfTheStorm.ClassName());
+            FakerForEveryLocale<string>(faker => faker.Game.HeroesOfTheStorm.ClassName());
         }
         [TestMethod()]
         public void Test_Hero_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.HeroesOfTheStorm.Hero());
+            FakerForEveryLocale<string>(faker => faker.Game.HeroesOfTheStorm.Hero());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.HeroesOfTheStorm.Quote());
+            FakerForEveryLocale<string>(faker => faker.Game.HeroesOfTheStorm.Quote());
         }
     }
     
     [TestClass]
-    public class Test_Games_LeagueOfLegends : FakerNUnitBase
+    public class Test_Game_LeagueOfLegends : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Champion_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.LeagueOfLegends.Champion());
+            FakerForEveryLocale<string>(faker => faker.Game.LeagueOfLegends.Champion());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.LeagueOfLegends.Location());
+            FakerForEveryLocale<string>(faker => faker.Game.LeagueOfLegends.Location());
         }
         [TestMethod()]
         public void Test_Masteries_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.LeagueOfLegends.Masteries());
+            FakerForEveryLocale<string>(faker => faker.Game.LeagueOfLegends.Masteries());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.LeagueOfLegends.Quote());
+            FakerForEveryLocale<string>(faker => faker.Game.LeagueOfLegends.Quote());
         }
         [TestMethod()]
         public void Test_Rank_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.LeagueOfLegends.Rank());
+            FakerForEveryLocale<string>(faker => faker.Game.LeagueOfLegends.Rank());
         }
         [TestMethod()]
         public void Test_SummonerSpell_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.LeagueOfLegends.SummonerSpell());
+            FakerForEveryLocale<string>(faker => faker.Game.LeagueOfLegends.SummonerSpell());
         }
     }
     
     [TestClass]
-    public class Test_Games_Minecraft : FakerNUnitBase
+    public class Test_Game_Minecraft : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Achievement_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Minecraft.Achievement());
+            FakerForEveryLocale<string>(faker => faker.Game.Minecraft.Achievement());
         }
         [TestMethod()]
         public void Test_Biome_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Minecraft.Biome());
+            FakerForEveryLocale<string>(faker => faker.Game.Minecraft.Biome());
         }
         [TestMethod()]
         public void Test_Block_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Minecraft.Block());
+            FakerForEveryLocale<string>(faker => faker.Game.Minecraft.Block());
         }
         [TestMethod()]
         public void Test_Enchantment_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Minecraft.Enchantment());
+            FakerForEveryLocale<string>(faker => faker.Game.Minecraft.Enchantment());
         }
         [TestMethod()]
         public void Test_GameMode_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Minecraft.GameMode());
+            FakerForEveryLocale<string>(faker => faker.Game.Minecraft.GameMode());
         }
         [TestMethod()]
         public void Test_Item_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Minecraft.Item());
+            FakerForEveryLocale<string>(faker => faker.Game.Minecraft.Item());
         }
         [TestMethod()]
         public void Test_Mob_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Minecraft.Mob());
+            FakerForEveryLocale<string>(faker => faker.Game.Minecraft.Mob());
         }
         [TestMethod()]
         public void Test_StatusEffect_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Minecraft.StatusEffect());
+            FakerForEveryLocale<string>(faker => faker.Game.Minecraft.StatusEffect());
         }
     }
     
     [TestClass]
-    public class Test_Games_Myst : FakerNUnitBase
+    public class Test_Game_Myst : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Age_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Myst.Age());
+            FakerForEveryLocale<string>(faker => faker.Game.Myst.Age());
         }
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Myst.Character());
+            FakerForEveryLocale<string>(faker => faker.Game.Myst.Character());
         }
         [TestMethod()]
         public void Test_Creature_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Myst.Creature());
+            FakerForEveryLocale<string>(faker => faker.Game.Myst.Creature());
         }
         [TestMethod()]
         public void Test_Game_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Myst.Game());
+            FakerForEveryLocale<string>(faker => faker.Game.Myst.Game());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Myst.Quote());
+            FakerForEveryLocale<string>(faker => faker.Game.Myst.Quote());
         }
     }
     
     [TestClass]
-    public class Test_Games_Overwatch : FakerNUnitBase
+    public class Test_Game_Overwatch : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Hero_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Overwatch.Hero());
+            FakerForEveryLocale<string>(faker => faker.Game.Overwatch.Hero());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Overwatch.Location());
+            FakerForEveryLocale<string>(faker => faker.Game.Overwatch.Location());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Overwatch.Quote());
+            FakerForEveryLocale<string>(faker => faker.Game.Overwatch.Quote());
         }
     }
     
     [TestClass]
-    public class Test_Games_Pokemon : FakerNUnitBase
+    public class Test_Game_Pokemon : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Pokemon.Location());
+            FakerForEveryLocale<string>(faker => faker.Game.Pokemon.Location());
         }
         [TestMethod()]
         public void Test_Move_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Pokemon.Move());
+            FakerForEveryLocale<string>(faker => faker.Game.Pokemon.Move());
         }
         [TestMethod()]
         public void Test_Name_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Pokemon.Name());
+            FakerForEveryLocale<string>(faker => faker.Game.Pokemon.Name());
         }
     }
     
     [TestClass]
-    public class Test_Games_SonicTheHedgehog : FakerNUnitBase
+    public class Test_Game_SonicTheHedgehog : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.SonicTheHedgehog.Character());
+            FakerForEveryLocale<string>(faker => faker.Game.SonicTheHedgehog.Character());
         }
         [TestMethod()]
         public void Test_Game_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.SonicTheHedgehog.Game());
+            FakerForEveryLocale<string>(faker => faker.Game.SonicTheHedgehog.Game());
         }
         [TestMethod()]
         public void Test_Zone_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.SonicTheHedgehog.Zone());
+            FakerForEveryLocale<string>(faker => faker.Game.SonicTheHedgehog.Zone());
         }
     }
     
     [TestClass]
-    public class Test_Games_StreetFighter : FakerNUnitBase
+    public class Test_Game_StreetFighter : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.StreetFighter.Character());
+            FakerForEveryLocale<string>(faker => faker.Game.StreetFighter.Character());
         }
         [TestMethod()]
         public void Test_Move_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.StreetFighter.Move());
+            FakerForEveryLocale<string>(faker => faker.Game.StreetFighter.Move());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.StreetFighter.Quote());
+            FakerForEveryLocale<string>(faker => faker.Game.StreetFighter.Quote());
         }
         [TestMethod()]
         public void Test_Stage_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.StreetFighter.Stage());
+            FakerForEveryLocale<string>(faker => faker.Game.StreetFighter.Stage());
         }
     }
     
     [TestClass]
-    public class Test_Games_SuperMario : FakerNUnitBase
+    public class Test_Game_SuperMario : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.SuperMario.Character());
+            FakerForEveryLocale<string>(faker => faker.Game.SuperMario.Character());
         }
         [TestMethod()]
         public void Test_Game_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.SuperMario.Game());
+            FakerForEveryLocale<string>(faker => faker.Game.SuperMario.Game());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.SuperMario.Location());
+            FakerForEveryLocale<string>(faker => faker.Game.SuperMario.Location());
         }
     }
     
     [TestClass]
-    public class Test_Games_SuperSmashBros : FakerNUnitBase
+    public class Test_Game_SuperSmashBros : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Fighter_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.SuperSmashBros.Fighter());
+            FakerForEveryLocale<string>(faker => faker.Game.SuperSmashBros.Fighter());
         }
         [TestMethod()]
         public void Test_Stage_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.SuperSmashBros.Stage());
+            FakerForEveryLocale<string>(faker => faker.Game.SuperSmashBros.Stage());
         }
     }
     
     [TestClass]
-    public class Test_Games_Tarkov : FakerNUnitBase
+    public class Test_Game_Tarkov : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Boss_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.Boss());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.Boss());
         }
         [TestMethod()]
         public void Test_Faction_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.Faction());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.Faction());
         }
         [TestMethod()]
         public void Test_FenceQuest_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.FenceQuest());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.FenceQuest());
         }
         [TestMethod()]
         public void Test_Item_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.Item());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.Item());
         }
         [TestMethod()]
         public void Test_JaegerQuest_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.JaegerQuest());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.JaegerQuest());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.Location());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.Location());
         }
         [TestMethod()]
         public void Test_MechanicQuest_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.MechanicQuest());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.MechanicQuest());
         }
         [TestMethod()]
         public void Test_PeacekeeperQuest_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.PeacekeeperQuest());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.PeacekeeperQuest());
         }
         [TestMethod()]
         public void Test_PraporQuest_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.PraporQuest());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.PraporQuest());
         }
         [TestMethod()]
         public void Test_Quest_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.Quest());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.Quest());
         }
         [TestMethod()]
         public void Test_RagmanQuest_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.RagmanQuest());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.RagmanQuest());
         }
         [TestMethod()]
         public void Test_SkierQuest_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.SkierQuest());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.SkierQuest());
         }
         [TestMethod()]
         public void Test_TherapistQuest_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.TherapistQuest());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.TherapistQuest());
         }
         [TestMethod()]
         public void Test_Trader_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.Trader());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.Trader());
         }
         [TestMethod()]
         public void Test_Weapon_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Tarkov.Weapon());
+            FakerForEveryLocale<string>(faker => faker.Game.Tarkov.Weapon());
         }
     }
     
     [TestClass]
-    public class Test_Games_Touhou : FakerNUnitBase
+    public class Test_Game_Touhou : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Touhou.Character());
+            FakerForEveryLocale<string>(faker => faker.Game.Touhou.Character());
         }
         [TestMethod()]
         public void Test_Game_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Touhou.Game());
+            FakerForEveryLocale<string>(faker => faker.Game.Touhou.Game());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Touhou.Location());
+            FakerForEveryLocale<string>(faker => faker.Game.Touhou.Location());
         }
         [TestMethod()]
         public void Test_Song_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Touhou.Song());
+            FakerForEveryLocale<string>(faker => faker.Game.Touhou.Song());
         }
         [TestMethod()]
         public void Test_SpellCard_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Touhou.SpellCard());
+            FakerForEveryLocale<string>(faker => faker.Game.Touhou.SpellCard());
         }
     }
     
     [TestClass]
-    public class Test_Games_WarhammerFantasy : FakerNUnitBase
+    public class Test_Game_WarhammerFantasy : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Creature_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.WarhammerFantasy.Creature());
+            FakerForEveryLocale<string>(faker => faker.Game.WarhammerFantasy.Creature());
         }
         [TestMethod()]
         public void Test_Faction_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.WarhammerFantasy.Faction());
+            FakerForEveryLocale<string>(faker => faker.Game.WarhammerFantasy.Faction());
         }
         [TestMethod()]
         public void Test_Hero_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.WarhammerFantasy.Hero());
+            FakerForEveryLocale<string>(faker => faker.Game.WarhammerFantasy.Hero());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.WarhammerFantasy.Location());
+            FakerForEveryLocale<string>(faker => faker.Game.WarhammerFantasy.Location());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.WarhammerFantasy.Quote());
+            FakerForEveryLocale<string>(faker => faker.Game.WarhammerFantasy.Quote());
         }
     }
     
     [TestClass]
-    public class Test_Games_Witcher : FakerNUnitBase
+    public class Test_Game_Witcher : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Book_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Witcher.Book());
+            FakerForEveryLocale<string>(faker => faker.Game.Witcher.Book());
         }
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Witcher.Character());
+            FakerForEveryLocale<string>(faker => faker.Game.Witcher.Character());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Witcher.Location());
+            FakerForEveryLocale<string>(faker => faker.Game.Witcher.Location());
         }
         [TestMethod()]
         public void Test_Monster_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Witcher.Monster());
+            FakerForEveryLocale<string>(faker => faker.Game.Witcher.Monster());
         }
         [TestMethod()]
         public void Test_Potion_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Witcher.Potion());
+            FakerForEveryLocale<string>(faker => faker.Game.Witcher.Potion());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Witcher.Quote());
+            FakerForEveryLocale<string>(faker => faker.Game.Witcher.Quote());
         }
         [TestMethod()]
         public void Test_School_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Witcher.School());
+            FakerForEveryLocale<string>(faker => faker.Game.Witcher.School());
         }
         [TestMethod()]
         public void Test_Sign_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Witcher.Sign());
+            FakerForEveryLocale<string>(faker => faker.Game.Witcher.Sign());
         }
         [TestMethod()]
         public void Test_Witcher_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Witcher.Witcher());
+            FakerForEveryLocale<string>(faker => faker.Game.Witcher.Witcher());
         }
     }
     
     [TestClass]
-    public class Test_Games_WorldOfWarcraft : FakerNUnitBase
+    public class Test_Game_WorldOfWarcraft : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_ClassName_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.WorldOfWarcraft.ClassName());
+            FakerForEveryLocale<string>(faker => faker.Game.WorldOfWarcraft.ClassName());
         }
         [TestMethod()]
         public void Test_Hero_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.WorldOfWarcraft.Hero());
+            FakerForEveryLocale<string>(faker => faker.Game.WorldOfWarcraft.Hero());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.WorldOfWarcraft.Quote());
+            FakerForEveryLocale<string>(faker => faker.Game.WorldOfWarcraft.Quote());
         }
         [TestMethod()]
         public void Test_Race_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.WorldOfWarcraft.Race());
+            FakerForEveryLocale<string>(faker => faker.Game.WorldOfWarcraft.Race());
         }
     }
     
     [TestClass]
-    public class Test_Games_Zelda : FakerNUnitBase
+    public class Test_Game_Zelda : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Zelda.Character());
+            FakerForEveryLocale<string>(faker => faker.Game.Zelda.Character());
         }
         [TestMethod()]
         public void Test_Game_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Zelda.Game());
+            FakerForEveryLocale<string>(faker => faker.Game.Zelda.Game());
         }
         [TestMethod()]
         public void Test_Item_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Zelda.Item());
+            FakerForEveryLocale<string>(faker => faker.Game.Zelda.Item());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Games.Zelda.Location());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Gender : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_BinaryType_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Gender.BinaryType());
-        }
-        [TestMethod()]
-        public void Test_ShortBinaryType_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Gender.ShortBinaryType());
-        }
-        [TestMethod()]
-        public void Test_Type_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Gender.Type());
-        }
-    }
-    
-    [TestClass]
-    public class Test_GreekPhilosophers : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Name_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.GreekPhilosophers.Name());
-        }
-        [TestMethod()]
-        public void Test_Quote_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.GreekPhilosophers.Quote());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Hacker : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Abbreviation_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Hacker.Abbreviation());
-        }
-        [TestMethod()]
-        public void Test_Adjective_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Hacker.Adjective());
-        }
-        [TestMethod()]
-        public void Test_Ingverb_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Hacker.Ingverb());
-        }
-        [TestMethod()]
-        public void Test_Noun_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Hacker.Noun());
-        }
-        #warning Failed processing method phrases
-        #warning No implementation defined for method say_something_smart();
-        [TestMethod()]
-        public void Test_Verb_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Hacker.Verb());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Hipster : FakerNUnitBase
-    {
-        // Method : paragraph : Can not generated test for method with required arguments.
-        // Method : paragraph_by_chars : Can not generated test for method with required arguments.
-        // Method : paragraphs : Can not generated test for method with required arguments.
-        // Method : sentence : Can not generated test for method with required arguments.
-        // Method : sentences : Can not generated test for method with required arguments.
-        #warning No implementation defined for method word();
-        // Method : words : Can not generated test for method with required arguments.
-    }
-    
-    [TestClass]
-    public class Test_Hobby : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Activity_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Hobby.Activity());
-        }
-    }
-    
-    [TestClass]
-    public class Test_House : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Furniture_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.House.Furniture());
-        }
-        [TestMethod()]
-        public void Test_Room_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.House.Room());
-        }
-    }
-    
-    [TestClass]
-    public class Test_HTML : FakerNUnitBase
-    {
-        #warning Failed processing method available_methods
-        [TestMethod()]
-        public void Test_Code_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.HTML.Code());
-        }
-        // Method : element : Can not generated test for method with required arguments.
-        [TestMethod()]
-        public void Test_Emphasis_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.HTML.Emphasis());
-        }
-        #warning Failed processing method generate_table_row
-        #warning No implementation defined for method heading();
-        #warning No implementation defined for method link(string rel = "stylesheet");
-        #warning No implementation defined for method ordered_list();
-        // Method : paragraph : Can not generated test for method with required arguments.
-        // Method : random : Can not generated test for method with required arguments.
-        // Method : sandwich : Can not generated test for method with required arguments.
-        [TestMethod()]
-        public void Test_Script_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.HTML.Script());
-        }
-        #warning No implementation defined for method table();
-        #warning No implementation defined for method unordered_list();
-    }
-    
-    [TestClass]
-    public class Test_IDNumber : FakerNUnitBase
-    {
-        #warning Failed processing method _translate
-        #warning No implementation defined for method brazilian_citizen_number(bool formatted = false);
-        #warning Failed processing method brazilian_citizen_number_checksum_digit
-        #warning Failed processing method brazilian_citizen_number_digit
-        #warning Failed processing method brazilian_document_checksum
-        #warning Failed processing method brazilian_document_digit
-        #warning No implementation defined for method brazilian_id(bool formatted = false);
-        #warning Failed processing method brazilian_id_checksum_digit
-        #warning Failed processing method brazilian_id_digit
-        #warning No implementation defined for method chilean_id();
-        #warning Failed processing method chilean_verification_code
-        #warning No implementation defined for method croatian_id(bool international = false);
-        #warning Failed processing method croatian_id_checksum_digit
-        #warning Failed processing method danish_control_digits
-        // Method : danish_id_number : Can not generated test for method with required arguments.
-        #warning No implementation defined for method french_insee_number();
-        #warning No implementation defined for method invalid();
-        #warning No implementation defined for method invalid_south_african_id_number();
-        #warning Failed processing method south_african_id_checksum_digit
-        #warning No implementation defined for method spanish_citizen_number();
-        #warning No implementation defined for method spanish_foreign_citizen_number();
-        #warning Failed processing method ssn_valid
-        #warning No implementation defined for method valid();
-        #warning No implementation defined for method valid_south_african_id_number();
-    }
-    
-    [TestClass]
-    public class Test_IndustrySegments : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Industry_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.IndustrySegments.Industry());
-        }
-        [TestMethod()]
-        public void Test_Sector_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.IndustrySegments.Sector());
-        }
-        [TestMethod()]
-        public void Test_SubSector_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.IndustrySegments.SubSector());
-        }
-        [TestMethod()]
-        public void Test_SuperSector_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.IndustrySegments.SuperSector());
+            FakerForEveryLocale<string>(faker => faker.Game.Zelda.Location());
         }
     }
     
@@ -2973,7 +2378,6 @@ namespace FakerNet.NUnit
         {
             FakerForEveryLocale<string>(faker => faker.Internet.Email());
         }
-        #warning No implementation defined for method fix_umlauts(string string = "");
         [TestMethod()]
         public void Test_IpV4Address_Execute()
         {
@@ -3009,15 +2413,11 @@ namespace FakerNet.NUnit
         {
             FakerForEveryLocale<string>(faker => faker.Internet.PrivateIpV4Address());
         }
-        #warning No implementation defined for method private_net_checker();
-        #warning No implementation defined for method private_nets_regex();
         [TestMethod()]
         public void Test_PublicIpV4Address_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Internet.PublicIpV4Address());
         }
-        #warning No implementation defined for method reserved_net_checker();
-        #warning No implementation defined for method reserved_nets_regex();
         [TestMethod()]
         public void Test_Slug_Execute()
         {
@@ -3047,22 +2447,302 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
+    public class Test_Internet_HTML : FakerNUnitBase
+    {
+        #warning Failed processing method available_methods
+        [TestMethod()]
+        public void Test_Code_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.HTML.Code());
+        }
+        // Method : element : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_Emphasis_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.HTML.Emphasis());
+        }
+        #warning Failed processing method generate_table_row
+        #warning No implementation defined for method heading();
+        #warning No implementation defined for method link(string rel = "stylesheet");
+        #warning No implementation defined for method ordered_list();
+        // Method : paragraph : Can not generated test for method with required arguments.
+        // Method : random : Can not generated test for method with required arguments.
+        // Method : sandwich : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_Script_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.HTML.Script());
+        }
+        #warning No implementation defined for method table();
+        #warning No implementation defined for method unordered_list();
+    }
+    
+    [TestClass]
     public class Test_Internet_HTTP : FakerNUnitBase
     {
         #warning No implementation defined for method status_code();
     }
     
     [TestClass]
-    public class Test_Invoice : FakerNUnitBase
+    public class Test_Internet_Json : FakerNUnitBase
     {
-        // Method : amount_between : Can not generated test for method with required arguments.
-        #warning Failed processing method calculate_weighted_sum
-        #warning No implementation defined for method creditor_reference(string ref = "");
-        #warning Failed processing method iban_checksum
-        #warning Failed processing method kidmod10
-        #warning Failed processing method method_731
-        #warning Failed processing method mod10_remainder
-        #warning No implementation defined for method reference(string ref = "");
+        // Method : add_depth_to_json : Can not generated test for method with required arguments.
+        #warning Failed processing method add_hash
+        #warning Failed processing method add_hash_to_bottom
+        #warning Failed processing method build_keys_from_array
+        #warning Failed processing method build_shallow_hash
+        // Method : shallow_json : Can not generated test for method with required arguments.
+    }
+    
+    [TestClass]
+    public class Test_Internet_Markdown : FakerNUnitBase
+    {
+        #warning Failed processing method available_methods
+        [TestMethod()]
+        public void Test_BlockCode_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.Markdown.BlockCode());
+        }
+        [TestMethod()]
+        public void Test_Emphasis_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.Markdown.Emphasis());
+        }
+        [TestMethod()]
+        public void Test_Headers_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.Markdown.Headers());
+        }
+        [TestMethod()]
+        public void Test_InlineCode_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Internet.Markdown.InlineCode());
+        }
+        #warning No implementation defined for method ordered_list();
+        // Method : random : Can not generated test for method with required arguments.
+        // Method : sandwich : Can not generated test for method with required arguments.
+        #warning No implementation defined for method table();
+        #warning No implementation defined for method unordered_list();
+    }
+    
+    [TestClass]
+    public class Test_Internet_Twitter : FakerNUnitBase
+    {
+        #warning Failed processing method created_at
+        #warning Failed processing method id
+        #warning Failed processing method photo_entity
+        #warning No implementation defined for method screen_name();
+        // Method : status : Can not generated test for method with required arguments.
+        #warning Failed processing method status_entities
+        // Method : user : Can not generated test for method with required arguments.
+        #warning Failed processing method user_entities
+        #warning Failed processing method utc_offset
+    }
+    
+    [TestClass]
+    public class Test_IT : FakerNUnitBase
+    {
+    }
+    
+    [TestClass]
+    public class Test_IT_App : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Author_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.App.Author());
+        }
+        [TestMethod()]
+        public void Test_Name_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.App.Name());
+        }
+        #warning No implementation defined for method semantic_version(IntegerRange? major = null, IntegerRange? minor = null, IntegerRange? patch = null);
+        [TestMethod()]
+        public void Test_Version_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.App.Version());
+        }
+    }
+    
+    [TestClass]
+    public class Test_IT_Computer : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Os_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.Computer.Os());
+        }
+        [TestMethod()]
+        public void Test_Platform_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.Computer.Platform());
+        }
+        [TestMethod()]
+        public void Test_Stack_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.Computer.Stack());
+        }
+        [TestMethod()]
+        public void Test_Type_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.Computer.Type());
+        }
+    }
+    
+    [TestClass]
+    public class Test_IT_Device : FakerNUnitBase
+    {
+        #warning No implementation defined for method build_number();
+        [TestMethod()]
+        public void Test_Manufacturer_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.Device.Manufacturer());
+        }
+        [TestMethod()]
+        public void Test_ModelName_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.Device.ModelName());
+        }
+        [TestMethod()]
+        public void Test_Platform_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.Device.Platform());
+        }
+        [TestMethod()]
+        public void Test_Serial_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.Device.Serial());
+        }
+        #warning No implementation defined for method version();
+    }
+    
+    [TestClass]
+    public class Test_IT_ElectricalComponents : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Active_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.ElectricalComponents.Active());
+        }
+        [TestMethod()]
+        public void Test_Electromechanical_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.ElectricalComponents.Electromechanical());
+        }
+        [TestMethod()]
+        public void Test_Passive_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.ElectricalComponents.Passive());
+        }
+    }
+    
+    [TestClass]
+    public class Test_IT_File : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Dir_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.File.Dir());
+        }
+        [TestMethod()]
+        public void Test_Extension_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.File.Extension());
+        }
+        #warning No implementation defined for method file_name(string? dir = null, string? name = null, string? ext = null, string directorySeparator = "/");
+        [TestMethod()]
+        public void Test_MimeType_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.File.MimeType());
+        }
+    }
+    
+    [TestClass]
+    public class Test_IT_ProgrammingLanguage : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Creator_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.ProgrammingLanguage.Creator());
+        }
+        [TestMethod()]
+        public void Test_Name_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.ProgrammingLanguage.Name());
+        }
+    }
+    
+    [TestClass]
+    public class Test_IT_SlackEmoji : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Activity_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.SlackEmoji.Activity());
+        }
+        [TestMethod()]
+        public void Test_Celebration_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.SlackEmoji.Celebration());
+        }
+        [TestMethod()]
+        public void Test_Custom_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.SlackEmoji.Custom());
+        }
+        [TestMethod()]
+        public void Test_Emoji_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.SlackEmoji.Emoji());
+        }
+        [TestMethod()]
+        public void Test_FoodAndDrink_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.SlackEmoji.FoodAndDrink());
+        }
+        [TestMethod()]
+        public void Test_Nature_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.SlackEmoji.Nature());
+        }
+        [TestMethod()]
+        public void Test_ObjectsAndSymbols_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.SlackEmoji.ObjectsAndSymbols());
+        }
+        [TestMethod()]
+        public void Test_People_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.SlackEmoji.People());
+        }
+        [TestMethod()]
+        public void Test_TravelAndPlaces_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.SlackEmoji.TravelAndPlaces());
+        }
+    }
+    
+    [TestClass]
+    public class Test_IT_Source : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_HelloWorld_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.Source.HelloWorld());
+        }
+        // Method : print : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_Print1To10_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.IT.Source.Print1To10());
+        }
+    }
+    
+    [TestClass]
+    public class Test_IT_VulnerabilityIdentifier : FakerNUnitBase
+    {
+        #warning No implementation defined for method cve(long year = ::Date.today.year);
     }
     
     [TestClass]
@@ -3298,94 +2978,88 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_Job : FakerNUnitBase
+    public class Test_Location : FakerNUnitBase
     {
-        [TestMethod()]
-        public void Test_Field_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Job.Field());
-        }
-        [TestMethod()]
-        public void Test_KeySkill_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Job.KeySkill());
-        }
-        [TestMethod()]
-        public void Test_Position_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Job.Position());
-        }
-        [TestMethod()]
-        public void Test_Title_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Job.Title());
-        }
     }
     
     [TestClass]
-    public class Test_Json : FakerNUnitBase
-    {
-        // Method : add_depth_to_json : Can not generated test for method with required arguments.
-        #warning Failed processing method add_hash
-        #warning Failed processing method add_hash_to_bottom
-        #warning Failed processing method build_keys_from_array
-        #warning Failed processing method build_shallow_hash
-        // Method : shallow_json : Can not generated test for method with required arguments.
-    }
-    
-    [TestClass]
-    public class Test_Kpop : FakerNUnitBase
+    public class Test_Location_Compass : FakerNUnitBase
     {
         [TestMethod()]
-        public void Test_BoyBands_Execute()
+        public void Test_Abbreviation_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Kpop.BoyBands());
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.Abbreviation());
         }
         [TestMethod()]
-        public void Test_GirlGroups_Execute()
+        public void Test_Azimuth_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Kpop.GirlGroups());
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.Azimuth());
         }
         [TestMethod()]
-        public void Test_IGroups_Execute()
+        public void Test_Cardinal_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Kpop.IGroups());
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.Cardinal());
         }
         [TestMethod()]
-        public void Test_IiGroups_Execute()
+        public void Test_CardinalAbbreviation_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Kpop.IiGroups());
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.CardinalAbbreviation());
         }
         [TestMethod()]
-        public void Test_IiiGroups_Execute()
+        public void Test_CardinalAzimuth_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Kpop.IiiGroups());
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.CardinalAzimuth());
         }
         [TestMethod()]
-        public void Test_Solo_Execute()
+        public void Test_Direction_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Kpop.Solo());
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.Direction());
         }
-    }
-    
-    [TestClass]
-    public class Test_Lorem : FakerNUnitBase
-    {
-        #warning No implementation defined for method character();
-        // Method : characters : Can not generated test for method with required arguments.
-        #warning Failed processing method locale_period
-        #warning Failed processing method locale_question_mark
-        #warning Failed processing method locale_space
-        #warning No implementation defined for method multibyte();
-        // Method : paragraph : Can not generated test for method with required arguments.
-        // Method : paragraph_by_chars : Can not generated test for method with required arguments.
-        // Method : paragraphs : Can not generated test for method with required arguments.
-        // Method : question : Can not generated test for method with required arguments.
-        // Method : questions : Can not generated test for method with required arguments.
-        // Method : sentence : Can not generated test for method with required arguments.
-        // Method : sentences : Can not generated test for method with required arguments.
-        #warning No implementation defined for method word();
-        // Method : words : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_HalfWind_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.HalfWind());
+        }
+        [TestMethod()]
+        public void Test_HalfWindAbbreviation_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.HalfWindAbbreviation());
+        }
+        [TestMethod()]
+        public void Test_HalfWindAzimuth_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.HalfWindAzimuth());
+        }
+        [TestMethod()]
+        public void Test_Ordinal_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.Ordinal());
+        }
+        [TestMethod()]
+        public void Test_OrdinalAbbreviation_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.OrdinalAbbreviation());
+        }
+        [TestMethod()]
+        public void Test_OrdinalAzimuth_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.OrdinalAzimuth());
+        }
+        [TestMethod()]
+        public void Test_QuarterWind_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.QuarterWind());
+        }
+        [TestMethod()]
+        public void Test_QuarterWindAbbreviation_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.QuarterWindAbbreviation());
+        }
+        [TestMethod()]
+        public void Test_QuarterWindAzimuth_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Location.Compass.QuarterWindAzimuth());
+        }
     }
     
     [TestClass]
@@ -3399,116 +3073,70 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_Markdown : FakerNUnitBase
+    public class Test_Medicine : FakerNUnitBase
     {
-        #warning Failed processing method available_methods
-        [TestMethod()]
-        public void Test_BlockCode_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Markdown.BlockCode());
-        }
-        [TestMethod()]
-        public void Test_Emphasis_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Markdown.Emphasis());
-        }
-        [TestMethod()]
-        public void Test_Headers_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Markdown.Headers());
-        }
-        [TestMethod()]
-        public void Test_InlineCode_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Markdown.InlineCode());
-        }
-        #warning No implementation defined for method ordered_list();
-        // Method : random : Can not generated test for method with required arguments.
-        // Method : sandwich : Can not generated test for method with required arguments.
-        #warning No implementation defined for method table();
-        #warning No implementation defined for method unordered_list();
     }
     
     [TestClass]
-    public class Test_Marketing : FakerNUnitBase
+    public class Test_Medicine_Cannabis : FakerNUnitBase
     {
         [TestMethod()]
-        public void Test_Buzzwords_Execute()
+        public void Test_Brand_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Marketing.Buzzwords());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Measurement : FakerNUnitBase
-    {
-        #warning Failed processing method check_for_plural
-        #warning Failed processing method define_measurement_locale
-        #warning Failed processing method ensure_valid_amount
-        #warning No implementation defined for method height(long amount = rand(10));
-        #warning No implementation defined for method length(long amount = rand(10));
-        #warning Failed processing method make_plural
-        #warning No implementation defined for method metric_height(long amount = rand(10));
-        #warning No implementation defined for method metric_length(long amount = rand(10));
-        #warning No implementation defined for method metric_volume(long amount = rand(10));
-        #warning No implementation defined for method metric_weight(long amount = rand(10));
-        #warning No implementation defined for method volume(long amount = rand(10));
-        #warning No implementation defined for method weight(long amount = rand(10));
-    }
-    
-    [TestClass]
-    public class Test_Military : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_AirForceRank_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Military.AirForceRank());
+            FakerForEveryLocale<string>(faker => faker.Medicine.Cannabis.Brand());
         }
         [TestMethod()]
-        public void Test_ArmyRank_Execute()
+        public void Test_Buzzword_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Military.ArmyRank());
+            FakerForEveryLocale<string>(faker => faker.Medicine.Cannabis.Buzzword());
         }
         [TestMethod()]
-        public void Test_CoastGuardRank_Execute()
+        public void Test_Cannabinoid_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Military.CoastGuardRank());
+            FakerForEveryLocale<string>(faker => faker.Medicine.Cannabis.Cannabinoid());
         }
         [TestMethod()]
-        public void Test_DodPaygrade_Execute()
+        public void Test_CannabinoidAbbreviation_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Military.DodPaygrade());
+            FakerForEveryLocale<string>(faker => faker.Medicine.Cannabis.CannabinoidAbbreviation());
         }
         [TestMethod()]
-        public void Test_MarinesRank_Execute()
+        public void Test_Category_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Military.MarinesRank());
+            FakerForEveryLocale<string>(faker => faker.Medicine.Cannabis.Category());
         }
         [TestMethod()]
-        public void Test_NavyRank_Execute()
+        public void Test_HealthBenefit_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Military.NavyRank());
+            FakerForEveryLocale<string>(faker => faker.Medicine.Cannabis.HealthBenefit());
         }
         [TestMethod()]
-        public void Test_SpaceForceRank_Execute()
+        public void Test_MedicalUse_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Military.SpaceForceRank());
+            FakerForEveryLocale<string>(faker => faker.Medicine.Cannabis.MedicalUse());
+        }
+        [TestMethod()]
+        public void Test_Strain_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Medicine.Cannabis.Strain());
+        }
+        [TestMethod()]
+        public void Test_Terpene_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Medicine.Cannabis.Terpene());
+        }
+        [TestMethod()]
+        public void Test_Type_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Medicine.Cannabis.Type());
         }
     }
     
     [TestClass]
-    public class Test_Mountain : FakerNUnitBase
+    public class Test_Medicine_NationalHealthService : FakerNUnitBase
     {
-        [TestMethod()]
-        public void Test_Name_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Mountain.Name());
-        }
-        [TestMethod()]
-        public void Test_Range_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Mountain.Range());
-        }
+        #warning No implementation defined for method british_number();
+        #warning No implementation defined for method check_digit(long number = 0);
     }
     
     [TestClass]
@@ -3527,396 +3155,454 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_Movies : FakerNUnitBase
-    {
-    }
-    
-    [TestClass]
-    public class Test_Movies_Avatar : FakerNUnitBase
+    public class Test_Movie_Avatar : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Avatar.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.Avatar.Character());
         }
         [TestMethod()]
         public void Test_Date_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Avatar.Date());
+            FakerForEveryLocale<string>(faker => faker.Movie.Avatar.Date());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Avatar.Quote());
+            FakerForEveryLocale<string>(faker => faker.Movie.Avatar.Quote());
         }
     }
     
     [TestClass]
-    public class Test_Movies_BackToTheFuture : FakerNUnitBase
+    public class Test_Movie_BackToTheFuture : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.BackToTheFuture.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.BackToTheFuture.Character());
         }
         [TestMethod()]
         public void Test_Date_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.BackToTheFuture.Date());
+            FakerForEveryLocale<string>(faker => faker.Movie.BackToTheFuture.Date());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.BackToTheFuture.Quote());
+            FakerForEveryLocale<string>(faker => faker.Movie.BackToTheFuture.Quote());
         }
     }
     
     [TestClass]
-    public class Test_Movies_Departed : FakerNUnitBase
+    public class Test_Movie_BossaNova : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Artist_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Movie.BossaNova.Artist());
+        }
+        [TestMethod()]
+        public void Test_Song_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Movie.BossaNova.Song());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Movie_Departed : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Actor_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Departed.Actor());
+            FakerForEveryLocale<string>(faker => faker.Movie.Departed.Actor());
         }
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Departed.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.Departed.Character());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Departed.Quote());
+            FakerForEveryLocale<string>(faker => faker.Movie.Departed.Quote());
         }
     }
     
     [TestClass]
-    public class Test_Movies_Ghostbusters : FakerNUnitBase
+    public class Test_Movie_Ghostbusters : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Actor_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Ghostbusters.Actor());
+            FakerForEveryLocale<string>(faker => faker.Movie.Ghostbusters.Actor());
         }
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Ghostbusters.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.Ghostbusters.Character());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Ghostbusters.Quote());
+            FakerForEveryLocale<string>(faker => faker.Movie.Ghostbusters.Quote());
         }
     }
     
     [TestClass]
-    public class Test_Movies_Hackers : FakerNUnitBase
+    public class Test_Movie_Hackers : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Hackers.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.Hackers.Character());
         }
         [TestMethod()]
         public void Test_Handle_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Hackers.Handle());
+            FakerForEveryLocale<string>(faker => faker.Movie.Hackers.Handle());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Hackers.Quote());
+            FakerForEveryLocale<string>(faker => faker.Movie.Hackers.Quote());
         }
     }
     
     [TestClass]
-    public class Test_Movies_HarryPotter : FakerNUnitBase
+    public class Test_Movie_HarryPotter : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Book_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HarryPotter.Book());
+            FakerForEveryLocale<string>(faker => faker.Movie.HarryPotter.Book());
         }
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HarryPotter.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.HarryPotter.Character());
         }
         [TestMethod()]
         public void Test_House_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HarryPotter.House());
+            FakerForEveryLocale<string>(faker => faker.Movie.HarryPotter.House());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HarryPotter.Location());
+            FakerForEveryLocale<string>(faker => faker.Movie.HarryPotter.Location());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HarryPotter.Quote());
+            FakerForEveryLocale<string>(faker => faker.Movie.HarryPotter.Quote());
         }
         [TestMethod()]
         public void Test_Spell_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HarryPotter.Spell());
+            FakerForEveryLocale<string>(faker => faker.Movie.HarryPotter.Spell());
         }
     }
     
     [TestClass]
-    public class Test_Movies_HitchhikersGuideToTheGalaxy : FakerNUnitBase
+    public class Test_Movie_HitchhikersGuideToTheGalaxy : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HitchhikersGuideToTheGalaxy.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.HitchhikersGuideToTheGalaxy.Character());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HitchhikersGuideToTheGalaxy.Location());
+            FakerForEveryLocale<string>(faker => faker.Movie.HitchhikersGuideToTheGalaxy.Location());
         }
         [TestMethod()]
         public void Test_MarvinQuote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HitchhikersGuideToTheGalaxy.MarvinQuote());
+            FakerForEveryLocale<string>(faker => faker.Movie.HitchhikersGuideToTheGalaxy.MarvinQuote());
         }
         [TestMethod()]
         public void Test_Planet_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HitchhikersGuideToTheGalaxy.Planet());
+            FakerForEveryLocale<string>(faker => faker.Movie.HitchhikersGuideToTheGalaxy.Planet());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HitchhikersGuideToTheGalaxy.Quote());
+            FakerForEveryLocale<string>(faker => faker.Movie.HitchhikersGuideToTheGalaxy.Quote());
         }
         [TestMethod()]
         public void Test_Specie_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HitchhikersGuideToTheGalaxy.Specie());
+            FakerForEveryLocale<string>(faker => faker.Movie.HitchhikersGuideToTheGalaxy.Specie());
         }
         [TestMethod()]
         public void Test_Starship_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HitchhikersGuideToTheGalaxy.Starship());
+            FakerForEveryLocale<string>(faker => faker.Movie.HitchhikersGuideToTheGalaxy.Starship());
         }
     }
     
     [TestClass]
-    public class Test_Movies_Hobbit : FakerNUnitBase
+    public class Test_Movie_Hobbit : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Hobbit.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.Hobbit.Character());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Hobbit.Location());
+            FakerForEveryLocale<string>(faker => faker.Movie.Hobbit.Location());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Hobbit.Quote());
+            FakerForEveryLocale<string>(faker => faker.Movie.Hobbit.Quote());
         }
         [TestMethod()]
         public void Test_ThorinsCompany_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Hobbit.ThorinsCompany());
+            FakerForEveryLocale<string>(faker => faker.Movie.Hobbit.ThorinsCompany());
         }
     }
     
     [TestClass]
-    public class Test_Movies_HowToTrainYourDragon : FakerNUnitBase
+    public class Test_Movie_HowToTrainYourDragon : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HowToTrainYourDragon.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.HowToTrainYourDragon.Character());
         }
         [TestMethod()]
         public void Test_Dragon_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HowToTrainYourDragon.Dragon());
+            FakerForEveryLocale<string>(faker => faker.Movie.HowToTrainYourDragon.Dragon());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.HowToTrainYourDragon.Location());
+            FakerForEveryLocale<string>(faker => faker.Movie.HowToTrainYourDragon.Location());
         }
     }
     
     [TestClass]
-    public class Test_Movies_Lebowski : FakerNUnitBase
+    public class Test_Movie_Lebowski : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Actor_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Lebowski.Actor());
+            FakerForEveryLocale<string>(faker => faker.Movie.Lebowski.Actor());
         }
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Lebowski.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.Lebowski.Character());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.Lebowski.Quote());
+            FakerForEveryLocale<string>(faker => faker.Movie.Lebowski.Quote());
         }
     }
     
     [TestClass]
-    public class Test_Movies_LordOfTheRings : FakerNUnitBase
+    public class Test_Movie_LordOfTheRings : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.LordOfTheRings.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.LordOfTheRings.Character());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.LordOfTheRings.Location());
+            FakerForEveryLocale<string>(faker => faker.Movie.LordOfTheRings.Location());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.LordOfTheRings.Quote());
+            FakerForEveryLocale<string>(faker => faker.Movie.LordOfTheRings.Quote());
         }
     }
     
     [TestClass]
-    public class Test_Movies_PrincessBride : FakerNUnitBase
+    public class Test_Movie_PrincessBride : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.PrincessBride.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.PrincessBride.Character());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.PrincessBride.Quote());
+            FakerForEveryLocale<string>(faker => faker.Movie.PrincessBride.Quote());
         }
     }
     
     [TestClass]
-    public class Test_Movies_StarWars : FakerNUnitBase
+    public class Test_Movie_Show : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_AdultMusical_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Movie.Show.AdultMusical());
+        }
+        [TestMethod()]
+        public void Test_KidsMusical_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Movie.Show.KidsMusical());
+        }
+        [TestMethod()]
+        public void Test_Play_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Movie.Show.Play());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Movie_StarWars : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_CallNumber_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.CallNumber());
+            FakerForEveryLocale<string>(faker => faker.Movie.StarWars.CallNumber());
         }
         [TestMethod()]
         public void Test_CallSign_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.CallSign());
+            FakerForEveryLocale<string>(faker => faker.Movie.StarWars.CallSign());
         }
         [TestMethod()]
         public void Test_CallSquadron_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.CallSquadron());
+            FakerForEveryLocale<string>(faker => faker.Movie.StarWars.CallSquadron());
         }
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.StarWars.Character());
         }
         [TestMethod()]
         public void Test_Droid_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.Droid());
+            FakerForEveryLocale<string>(faker => faker.Movie.StarWars.Droid());
         }
         [TestMethod()]
         public void Test_Planet_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.Planet());
+            FakerForEveryLocale<string>(faker => faker.Movie.StarWars.Planet());
         }
         #warning No implementation defined for method quote(string? character = null);
         [TestMethod()]
         public void Test_Specie_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.Specie());
+            FakerForEveryLocale<string>(faker => faker.Movie.StarWars.Specie());
         }
         [TestMethod()]
         public void Test_Vehicle_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.Vehicle());
+            FakerForEveryLocale<string>(faker => faker.Movie.StarWars.Vehicle());
         }
         [TestMethod()]
         public void Test_WookieeSentence_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.WookieeSentence());
+            FakerForEveryLocale<string>(faker => faker.Movie.StarWars.WookieeSentence());
         }
         [TestMethod()]
         public void Test_WookieeWord_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.StarWars.WookieeWord());
+            FakerForEveryLocale<string>(faker => faker.Movie.StarWars.WookieeWord());
         }
     }
     
     [TestClass]
-    public class Test_Movies_TheRoom : FakerNUnitBase
+    public class Test_Movie_TheRoom : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Actor_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.TheRoom.Actor());
+            FakerForEveryLocale<string>(faker => faker.Movie.TheRoom.Actor());
         }
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.TheRoom.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.TheRoom.Character());
         }
         [TestMethod()]
         public void Test_Location_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.TheRoom.Location());
+            FakerForEveryLocale<string>(faker => faker.Movie.TheRoom.Location());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.TheRoom.Quote());
+            FakerForEveryLocale<string>(faker => faker.Movie.TheRoom.Quote());
         }
     }
     
     [TestClass]
-    public class Test_Movies_Tron : FakerNUnitBase
-    {
-        #warning No implementation defined for method character();
-        #warning No implementation defined for method game();
-        #warning No implementation defined for method location();
-        #warning No implementation defined for method program();
-        #warning No implementation defined for method quote(string? character = null);
-        #warning No implementation defined for method tagline();
-        #warning No implementation defined for method user();
-        #warning No implementation defined for method vehicle();
-    }
-    
-    [TestClass]
-    public class Test_Movies_VForVendetta : FakerNUnitBase
+    public class Test_Movie_Tron : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Character_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.VForVendetta.Character());
+            FakerForEveryLocale<string>(faker => faker.Movie.Tron.Character());
+        }
+        [TestMethod()]
+        public void Test_Game_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Movie.Tron.Game());
+        }
+        [TestMethod()]
+        public void Test_Location_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Movie.Tron.Location());
+        }
+        [TestMethod()]
+        public void Test_Program_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Movie.Tron.Program());
+        }
+        #warning No implementation defined for method quote(string? character = null);
+        [TestMethod()]
+        public void Test_Tagline_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Movie.Tron.Tagline());
+        }
+        [TestMethod()]
+        public void Test_User_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Movie.Tron.User());
+        }
+        [TestMethod()]
+        public void Test_Vehicle_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Movie.Tron.Vehicle());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Movie_VForVendetta : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Character_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Movie.VForVendetta.Character());
         }
         [TestMethod()]
         public void Test_Quote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.VForVendetta.Quote());
+            FakerForEveryLocale<string>(faker => faker.Movie.VForVendetta.Quote());
         }
         [TestMethod()]
         public void Test_Speech_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Movies.VForVendetta.Speech());
+            FakerForEveryLocale<string>(faker => faker.Movie.VForVendetta.Speech());
         }
     }
     
@@ -3988,6 +3674,41 @@ namespace FakerNet.NUnit
         public void Test_Subgenres_Execute()
         {
             FakerForEveryLocale<string>(faker => faker.Music.Hiphop.Subgenres());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Music_Kpop : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_BoyBands_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Music.Kpop.BoyBands());
+        }
+        [TestMethod()]
+        public void Test_GirlGroups_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Music.Kpop.GirlGroups());
+        }
+        [TestMethod()]
+        public void Test_IGroups_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Music.Kpop.IGroups());
+        }
+        [TestMethod()]
+        public void Test_IiGroups_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Music.Kpop.IiGroups());
+        }
+        [TestMethod()]
+        public void Test_IiiGroups_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Music.Kpop.IiiGroups());
+        }
+        [TestMethod()]
+        public void Test_Solo_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Music.Kpop.Solo());
         }
     }
     
@@ -4237,122 +3958,6 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_Name : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_FemaleFirstName_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Name.FemaleFirstName());
-        }
-        [TestMethod()]
-        public void Test_FirstName_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Name.FirstName());
-        }
-        #warning No implementation defined for method initials(long number = 3);
-        [TestMethod()]
-        public void Test_LastName_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Name.LastName());
-        }
-        [TestMethod()]
-        public void Test_MaleFirstName_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Name.MaleFirstName());
-        }
-        [TestMethod()]
-        public void Test_Name_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Name.Name());
-        }
-        [TestMethod()]
-        public void Test_NameWithMiddle_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Name.NameWithMiddle());
-        }
-        [TestMethod()]
-        public void Test_NeutralFirstName_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Name.NeutralFirstName());
-        }
-        [TestMethod()]
-        public void Test_Prefix_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Name.Prefix());
-        }
-        [TestMethod()]
-        public void Test_Suffix_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Name.Suffix());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Nation : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_CapitalCity_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Nation.CapitalCity());
-        }
-        #warning No implementation defined for method flag();
-        [TestMethod()]
-        public void Test_Language_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Nation.Language());
-        }
-        [TestMethod()]
-        public void Test_NationalSport_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Nation.NationalSport());
-        }
-        [TestMethod()]
-        public void Test_Nationality_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Nation.Nationality());
-        }
-    }
-    
-    [TestClass]
-    public class Test_NationalHealthService : FakerNUnitBase
-    {
-        #warning No implementation defined for method british_number();
-        #warning No implementation defined for method check_digit(long number = 0);
-    }
-    
-    [TestClass]
-    public class Test_NatoPhoneticAlphabet : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_CodeWord_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.NatoPhoneticAlphabet.CodeWord());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Number : FakerNUnitBase
-    {
-        // Method : between : Can not generated test for method with required arguments.
-        #warning No implementation defined for method binary(long digits = 4);
-        // Method : decimal : Can not generated test for method with required arguments.
-        #warning No implementation defined for method decimal_part(long digits = 10);
-        #warning No implementation defined for method digit();
-        #warning Failed processing method generate
-        #warning Failed processing method greater_than_zero
-        #warning No implementation defined for method hexadecimal(long digits = 6);
-        #warning No implementation defined for method leading_zero_number(long digits = 10);
-        #warning Failed processing method less_than_zero
-        // Method : negative : Can not generated test for method with required arguments.
-        #warning No implementation defined for method non_zero_digit();
-        // Method : normal : Can not generated test for method with required arguments.
-        #warning No implementation defined for method number(long digits = 10);
-        // Method : positive : Can not generated test for method with required arguments.
-        #warning Failed processing method should_be
-        #warning No implementation defined for method within(UNKNOWN_Range? range = null);
-    }
-    
-    [TestClass]
     public class Test_Omniauth : FakerNUnitBase
     {
         // Method : apple : Can not generated test for method with required arguments.
@@ -4376,45 +3981,683 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_PhoneNumber : FakerNUnitBase
+    public class Test_People : FakerNUnitBase
+    {
+    }
+    
+    [TestClass]
+    public class Test_People_Ancient : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_God_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.Ancient.God());
+        }
+        [TestMethod()]
+        public void Test_Hero_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.Ancient.Hero());
+        }
+        [TestMethod()]
+        public void Test_Primordial_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.Ancient.Primordial());
+        }
+        [TestMethod()]
+        public void Test_Titan_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.Ancient.Titan());
+        }
+    }
+    
+    [TestClass]
+    public class Test_People_Artist : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Name_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.Artist.Name());
+        }
+    }
+    
+    [TestClass]
+    public class Test_People_FunnyName : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_FourWordName_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.FunnyName.FourWordName());
+        }
+        [TestMethod()]
+        public void Test_Name_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.FunnyName.Name());
+        }
+        [TestMethod()]
+        public void Test_NameWithInitial_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.FunnyName.NameWithInitial());
+        }
+        [TestMethod()]
+        public void Test_ThreeWordName_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.FunnyName.ThreeWordName());
+        }
+        [TestMethod()]
+        public void Test_TwoWordName_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.FunnyName.TwoWordName());
+        }
+    }
+    
+    [TestClass]
+    public class Test_People_GreekPhilosophers : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Name_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.GreekPhilosophers.Name());
+        }
+        [TestMethod()]
+        public void Test_Quote_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.GreekPhilosophers.Quote());
+        }
+    }
+    
+    [TestClass]
+    public class Test_People_Superhero : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Descriptor_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.Superhero.Descriptor());
+        }
+        [TestMethod()]
+        public void Test_Name_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.Superhero.Name());
+        }
+        [TestMethod()]
+        public void Test_Power_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.Superhero.Power());
+        }
+        [TestMethod()]
+        public void Test_Prefix_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.Superhero.Prefix());
+        }
+        [TestMethod()]
+        public void Test_Suffix_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.People.Superhero.Suffix());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Person : FakerNUnitBase
+    {
+    }
+    
+    [TestClass]
+    public class Test_Person_Address : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_BuildingNumber_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.BuildingNumber());
+        }
+        [TestMethod()]
+        public void Test_City_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.City());
+        }
+        [TestMethod()]
+        public void Test_CityPrefix_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.CityPrefix());
+        }
+        [TestMethod()]
+        public void Test_CitySuffix_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.CitySuffix());
+        }
+        [TestMethod()]
+        public void Test_Community_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.Community());
+        }
+        [TestMethod()]
+        public void Test_Country_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.Country());
+        }
+        [TestMethod()]
+        public void Test_CountryByCode_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.CountryByCode());
+        }
+        [TestMethod()]
+        public void Test_CountryCode_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.CountryCode());
+        }
+        [TestMethod()]
+        public void Test_CountryCodeLong_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.CountryCodeLong());
+        }
+        [TestMethod()]
+        public void Test_CountryNameToCode_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.CountryNameToCode());
+        }
+        [TestMethod()]
+        public void Test_Latitude_Execute()
+        {
+            FakerForEveryLocale<double>(faker => faker.Person.Address.Latitude());
+        }
+        [TestMethod()]
+        public void Test_Longitude_Execute()
+        {
+            FakerForEveryLocale<double>(faker => faker.Person.Address.Longitude());
+        }
+        [TestMethod()]
+        public void Test_MailBox_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.MailBox());
+        }
+        [TestMethod()]
+        public void Test_Postcode_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.Postcode());
+        }
+        [TestMethod()]
+        public void Test_SecondaryAddress_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.SecondaryAddress());
+        }
+        [TestMethod()]
+        public void Test_State_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.State());
+        }
+        [TestMethod()]
+        public void Test_StateAbbr_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.StateAbbr());
+        }
+        [TestMethod()]
+        public void Test_StreetAddress_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.StreetAddress());
+        }
+        [TestMethod()]
+        public void Test_StreetName_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.StreetName());
+        }
+        [TestMethod()]
+        public void Test_StreetSuffix_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.StreetSuffix());
+        }
+        [TestMethod()]
+        public void Test_TimeZone_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.TimeZone());
+        }
+        [TestMethod()]
+        public void Test_ZipCode_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Address.ZipCode());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Person_Avatar : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Image_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Avatar.Image());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Person_Blood : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Group_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Blood.Group());
+        }
+        [TestMethod()]
+        public void Test_RhFactor_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Blood.RhFactor());
+        }
+        [TestMethod()]
+        public void Test_Type_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Blood.Type());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Person_Demographic : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Demonym_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Demographic.Demonym());
+        }
+        [TestMethod()]
+        public void Test_EducationalAttainment_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Demographic.EducationalAttainment());
+        }
+        #warning No implementation defined for method height(UNKNOWN_Symbol? unit = null);
+        [TestMethod()]
+        public void Test_MaritalStatus_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Demographic.MaritalStatus());
+        }
+        [TestMethod()]
+        public void Test_Race_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Demographic.Race());
+        }
+        [TestMethod()]
+        public void Test_Sex_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Demographic.Sex());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Person_DrivingLicence : FakerNUnitBase
+    {
+        // Method : british_driving_licence : Can not generated test for method with required arguments.
+        #warning Failed processing method gb_licence_checksum
+        #warning Failed processing method gb_licence_padding
+        #warning Failed processing method gb_licence_year
+        #warning No implementation defined for method initialize();
+        #warning No implementation defined for method northern_irish_driving_licence();
+        #warning Failed processing method random_gender
+        // Method : uk_driving_licence : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_UsaDrivingLicence_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.DrivingLicence.UsaDrivingLicence());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Person_Gender : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_BinaryType_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Gender.BinaryType());
+        }
+        [TestMethod()]
+        public void Test_ShortBinaryType_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Gender.ShortBinaryType());
+        }
+        [TestMethod()]
+        public void Test_Type_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Gender.Type());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Person_IDNumber : FakerNUnitBase
+    {
+        #warning Failed processing method _translate
+        #warning No implementation defined for method brazilian_citizen_number(bool formatted = false);
+        #warning Failed processing method brazilian_citizen_number_checksum_digit
+        #warning Failed processing method brazilian_citizen_number_digit
+        #warning Failed processing method brazilian_document_checksum
+        #warning Failed processing method brazilian_document_digit
+        #warning No implementation defined for method brazilian_id(bool formatted = false);
+        #warning Failed processing method brazilian_id_checksum_digit
+        #warning Failed processing method brazilian_id_digit
+        #warning No implementation defined for method chilean_id();
+        #warning Failed processing method chilean_verification_code
+        #warning No implementation defined for method croatian_id(bool international = false);
+        #warning Failed processing method croatian_id_checksum_digit
+        #warning Failed processing method danish_control_digits
+        // Method : danish_id_number : Can not generated test for method with required arguments.
+        #warning No implementation defined for method french_insee_number();
+        #warning No implementation defined for method invalid();
+        #warning No implementation defined for method invalid_south_african_id_number();
+        #warning Failed processing method south_african_id_checksum_digit
+        #warning No implementation defined for method spanish_citizen_number();
+        #warning No implementation defined for method spanish_foreign_citizen_number();
+        #warning Failed processing method ssn_valid
+        #warning No implementation defined for method valid();
+        #warning No implementation defined for method valid_south_african_id_number();
+    }
+    
+    [TestClass]
+    public class Test_Person_Name : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_FemaleFirstName_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Name.FemaleFirstName());
+        }
+        [TestMethod()]
+        public void Test_FirstName_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Name.FirstName());
+        }
+        #warning No implementation defined for method initials(long number = 3);
+        [TestMethod()]
+        public void Test_LastName_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Name.LastName());
+        }
+        [TestMethod()]
+        public void Test_MaleFirstName_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Name.MaleFirstName());
+        }
+        [TestMethod()]
+        public void Test_Name_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Name.Name());
+        }
+        [TestMethod()]
+        public void Test_NameWithMiddle_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Name.NameWithMiddle());
+        }
+        [TestMethod()]
+        public void Test_NeutralFirstName_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Name.NeutralFirstName());
+        }
+        [TestMethod()]
+        public void Test_Prefix_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Name.Prefix());
+        }
+        [TestMethod()]
+        public void Test_Suffix_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Name.Suffix());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Person_PhoneNumber : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_AreaCode_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.PhoneNumber.AreaCode());
+            FakerForEveryLocale<string>(faker => faker.Person.PhoneNumber.AreaCode());
         }
         [TestMethod()]
         public void Test_CellPhone_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.PhoneNumber.CellPhone());
+            FakerForEveryLocale<string>(faker => faker.Person.PhoneNumber.CellPhone());
         }
         #warning No implementation defined for method cell_phone_in_e164();
         [TestMethod()]
         public void Test_CellPhoneWithCountryCode_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.PhoneNumber.CellPhoneWithCountryCode());
+            FakerForEveryLocale<string>(faker => faker.Person.PhoneNumber.CellPhoneWithCountryCode());
         }
         [TestMethod()]
         public void Test_CountryCode_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.PhoneNumber.CountryCode());
+            FakerForEveryLocale<string>(faker => faker.Person.PhoneNumber.CountryCode());
         }
         [TestMethod()]
         public void Test_ExchangeCode_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.PhoneNumber.ExchangeCode());
+            FakerForEveryLocale<string>(faker => faker.Person.PhoneNumber.ExchangeCode());
         }
         [TestMethod()]
         public void Test_PhoneNumber_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.PhoneNumber.PhoneNumber());
+            FakerForEveryLocale<string>(faker => faker.Person.PhoneNumber.PhoneNumber());
         }
         [TestMethod()]
         public void Test_PhoneNumberWithCountryCode_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.PhoneNumber.PhoneNumberWithCountryCode());
+            FakerForEveryLocale<string>(faker => faker.Person.PhoneNumber.PhoneNumberWithCountryCode());
         }
         #warning No implementation defined for method subscriber_number(long length = 4);
+    }
+    
+    [TestClass]
+    public class Test_Person_Relationship : FakerNUnitBase
+    {
+        #warning No implementation defined for method familial();
+        [TestMethod()]
+        public void Test_InLaw_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Relationship.InLaw());
+        }
+        [TestMethod()]
+        public void Test_Parent_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Relationship.Parent());
+        }
+        [TestMethod()]
+        public void Test_Sibling_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Relationship.Sibling());
+        }
+        [TestMethod()]
+        public void Test_Spouse_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Person.Relationship.Spouse());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Place : FakerNUnitBase
+    {
+    }
+    
+    [TestClass]
+    public class Test_Place_Australia : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Animal_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Australia.Animal());
+        }
+        [TestMethod()]
+        public void Test_Location_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Australia.Location());
+        }
+        [TestMethod()]
+        public void Test_State_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Australia.State());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Place_Dessert : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Flavor_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Dessert.Flavor());
+        }
+        [TestMethod()]
+        public void Test_Topping_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Dessert.Topping());
+        }
+        [TestMethod()]
+        public void Test_Variety_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Dessert.Variety());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Place_Mountain : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Name_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Mountain.Name());
+        }
+        [TestMethod()]
+        public void Test_Range_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Mountain.Range());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Place_Nation : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_CapitalCity_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Nation.CapitalCity());
+        }
+        #warning No implementation defined for method flag();
+        [TestMethod()]
+        public void Test_Language_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Nation.Language());
+        }
+        [TestMethod()]
+        public void Test_NationalSport_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Nation.NationalSport());
+        }
+        [TestMethod()]
+        public void Test_Nationality_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Nation.Nationality());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Place_SouthAfrica : FakerNUnitBase
+    {
+        #warning No implementation defined for method cell_phone();
+        #warning No implementation defined for method close_corporation_registration_number();
+        #warning No implementation defined for method id_number();
+        #warning No implementation defined for method invalid_id_number();
+        #warning No implementation defined for method listed_company_registration_number();
+        #warning No implementation defined for method phone_number();
+        #warning No implementation defined for method pty_ltd_registration_number();
+        #warning No implementation defined for method trust_registration_number();
+        #warning No implementation defined for method valid_id_number();
+        #warning No implementation defined for method vat_number();
+    }
+    
+    [TestClass]
+    public class Test_Place_Space : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Agency_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Space.Agency());
+        }
+        [TestMethod()]
+        public void Test_AgencyAbv_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Space.AgencyAbv());
+        }
+        [TestMethod()]
+        public void Test_Company_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Space.Company());
+        }
+        [TestMethod()]
+        public void Test_Constellation_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Space.Constellation());
+        }
+        [TestMethod()]
+        public void Test_DistanceMeasurement_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Space.DistanceMeasurement());
+        }
+        [TestMethod()]
+        public void Test_Galaxy_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Space.Galaxy());
+        }
+        [TestMethod()]
+        public void Test_LaunchVehicle_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Space.LaunchVehicle());
+        }
+        [TestMethod()]
+        public void Test_Meteorite_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Space.Meteorite());
+        }
+        [TestMethod()]
+        public void Test_Moon_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Space.Moon());
+        }
+        [TestMethod()]
+        public void Test_NasaSpaceCraft_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Space.NasaSpaceCraft());
+        }
+        [TestMethod()]
+        public void Test_Nebula_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Space.Nebula());
+        }
+        [TestMethod()]
+        public void Test_Planet_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Space.Planet());
+        }
+        [TestMethod()]
+        public void Test_Star_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Space.Star());
+        }
+        [TestMethod()]
+        public void Test_StarCluster_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.Space.StarCluster());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Place_University : FakerNUnitBase
+    {
+        #warning No implementation defined for method greek_alphabet();
+        #warning No implementation defined for method greek_organization();
+        [TestMethod()]
+        public void Test_Name_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.University.Name());
+        }
+        [TestMethod()]
+        public void Test_Prefix_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.University.Prefix());
+        }
+        [TestMethod()]
+        public void Test_Suffix_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Place.University.Suffix());
+        }
     }
     
     [TestClass]
@@ -4422,21 +4665,6 @@ namespace FakerNet.NUnit
     {
         #warning Failed processing method generate_color
         // Method : image : Can not generated test for method with required arguments.
-    }
-    
-    [TestClass]
-    public class Test_ProgrammingLanguage : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Creator_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.ProgrammingLanguage.Creator());
-        }
-        [TestMethod()]
-        public void Test_Name_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.ProgrammingLanguage.Name());
-        }
     }
     
     [TestClass]
@@ -4490,126 +4718,107 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_Quotes : FakerNUnitBase
+    public class Test_Quote_Chiquito : FakerNUnitBase
     {
-    }
-    
-    [TestClass]
-    public class Test_Quotes_Chiquito : FakerNUnitBase
-    {
-        #warning No implementation defined for method expression();
         [TestMethod()]
-        public void Test_Expressions_Execute()
+        public void Test_Expression_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Quotes.Chiquito.Expressions());
+            FakerForEveryLocale<string>(faker => faker.Quote.Chiquito.Expression());
         }
-        #warning No implementation defined for method joke();
+        [TestMethod()]
+        public void Test_Joke_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Quote.Chiquito.Joke());
+        }
         [TestMethod()]
         public void Test_Jokes_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Quotes.Chiquito.Jokes());
+            FakerForEveryLocale<string>(faker => faker.Quote.Chiquito.Jokes());
         }
-        #warning No implementation defined for method sentence();
+        [TestMethod()]
+        public void Test_Sentence_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Quote.Chiquito.Sentence());
+        }
         [TestMethod()]
         public void Test_Sentences_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Quotes.Chiquito.Sentences());
+            FakerForEveryLocale<string>(faker => faker.Quote.Chiquito.Sentences());
         }
-        #warning No implementation defined for method term();
+        [TestMethod()]
+        public void Test_Term_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Quote.Chiquito.Term());
+        }
         [TestMethod()]
         public void Test_Terms_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Quotes.Chiquito.Terms());
+            FakerForEveryLocale<string>(faker => faker.Quote.Chiquito.Terms());
         }
     }
     
     [TestClass]
-    public class Test_Quotes_Rajnikanth : FakerNUnitBase
+    public class Test_Quote_ChuckNorris : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Fact_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Quote.ChuckNorris.Fact());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Quote_Rajnikanth : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Joke_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Quotes.Rajnikanth.Joke());
+            FakerForEveryLocale<string>(faker => faker.Quote.Rajnikanth.Joke());
         }
     }
     
     [TestClass]
-    public class Test_Quotes_Shakespeare : FakerNUnitBase
+    public class Test_Quote_Shakespeare : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_AsYouLikeIt_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Quotes.Shakespeare.AsYouLikeIt());
+            FakerForEveryLocale<string>(faker => faker.Quote.Shakespeare.AsYouLikeIt());
         }
-        #warning No implementation defined for method as_you_like_it_quote();
+        [TestMethod()]
+        public void Test_AsYouLikeItQuote_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Quote.Shakespeare.AsYouLikeItQuote());
+        }
         [TestMethod()]
         public void Test_Hamlet_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Quotes.Shakespeare.Hamlet());
+            FakerForEveryLocale<string>(faker => faker.Quote.Shakespeare.Hamlet());
         }
-        #warning No implementation defined for method hamlet_quote();
+        [TestMethod()]
+        public void Test_HamletQuote_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Quote.Shakespeare.HamletQuote());
+        }
         [TestMethod()]
         public void Test_KingRichardIii_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Quotes.Shakespeare.KingRichardIii());
+            FakerForEveryLocale<string>(faker => faker.Quote.Shakespeare.KingRichardIii());
         }
-        #warning No implementation defined for method king_richard_iii_quote();
+        [TestMethod()]
+        public void Test_KingRichardIiiQuote_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Quote.Shakespeare.KingRichardIiiQuote());
+        }
         [TestMethod()]
         public void Test_RomeoAndJuliet_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Quotes.Shakespeare.RomeoAndJuliet());
-        }
-        #warning No implementation defined for method romeo_and_juliet_quote();
-    }
-    
-    [TestClass]
-    public class Test_Relationship : FakerNUnitBase
-    {
-        #warning No implementation defined for method familial();
-        [TestMethod()]
-        public void Test_InLaw_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Relationship.InLaw());
+            FakerForEveryLocale<string>(faker => faker.Quote.Shakespeare.RomeoAndJuliet());
         }
         [TestMethod()]
-        public void Test_Parent_Execute()
+        public void Test_RomeoAndJulietQuote_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Relationship.Parent());
-        }
-        [TestMethod()]
-        public void Test_Sibling_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Relationship.Sibling());
-        }
-        [TestMethod()]
-        public void Test_Spouse_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Relationship.Spouse());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Restaurant : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Description_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Restaurant.Description());
-        }
-        [TestMethod()]
-        public void Test_Name_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Restaurant.Name());
-        }
-        [TestMethod()]
-        public void Test_Review_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Restaurant.Review());
-        }
-        [TestMethod()]
-        public void Test_Type_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Restaurant.Type());
+            FakerForEveryLocale<string>(faker => faker.Quote.Shakespeare.RomeoAndJulietQuote());
         }
     }
     
@@ -4655,182 +4864,6 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_Show : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_AdultMusical_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Show.AdultMusical());
-        }
-        [TestMethod()]
-        public void Test_KidsMusical_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Show.KidsMusical());
-        }
-        [TestMethod()]
-        public void Test_Play_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Show.Play());
-        }
-    }
-    
-    [TestClass]
-    public class Test_SlackEmoji : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Activity_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.SlackEmoji.Activity());
-        }
-        [TestMethod()]
-        public void Test_Celebration_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.SlackEmoji.Celebration());
-        }
-        [TestMethod()]
-        public void Test_Custom_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.SlackEmoji.Custom());
-        }
-        [TestMethod()]
-        public void Test_Emoji_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.SlackEmoji.Emoji());
-        }
-        [TestMethod()]
-        public void Test_FoodAndDrink_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.SlackEmoji.FoodAndDrink());
-        }
-        [TestMethod()]
-        public void Test_Nature_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.SlackEmoji.Nature());
-        }
-        [TestMethod()]
-        public void Test_ObjectsAndSymbols_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.SlackEmoji.ObjectsAndSymbols());
-        }
-        [TestMethod()]
-        public void Test_People_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.SlackEmoji.People());
-        }
-        [TestMethod()]
-        public void Test_TravelAndPlaces_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.SlackEmoji.TravelAndPlaces());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Source : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_HelloWorld_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Source.HelloWorld());
-        }
-        // Method : print : Can not generated test for method with required arguments.
-        [TestMethod()]
-        public void Test_Print1To10_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Source.Print1To10());
-        }
-    }
-    
-    [TestClass]
-    public class Test_SouthAfrica : FakerNUnitBase
-    {
-        #warning No implementation defined for method cell_phone();
-        #warning No implementation defined for method close_corporation_registration_number();
-        #warning No implementation defined for method id_number();
-        #warning No implementation defined for method invalid_id_number();
-        #warning No implementation defined for method listed_company_registration_number();
-        #warning No implementation defined for method phone_number();
-        #warning No implementation defined for method pty_ltd_registration_number();
-        #warning No implementation defined for method trust_registration_number();
-        #warning No implementation defined for method valid_id_number();
-        #warning No implementation defined for method vat_number();
-    }
-    
-    [TestClass]
-    public class Test_Space : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Agency_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Space.Agency());
-        }
-        [TestMethod()]
-        public void Test_AgencyAbv_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Space.AgencyAbv());
-        }
-        [TestMethod()]
-        public void Test_Company_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Space.Company());
-        }
-        [TestMethod()]
-        public void Test_Constellation_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Space.Constellation());
-        }
-        [TestMethod()]
-        public void Test_DistanceMeasurement_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Space.DistanceMeasurement());
-        }
-        [TestMethod()]
-        public void Test_Galaxy_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Space.Galaxy());
-        }
-        [TestMethod()]
-        public void Test_LaunchVehicle_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Space.LaunchVehicle());
-        }
-        [TestMethod()]
-        public void Test_Meteorite_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Space.Meteorite());
-        }
-        [TestMethod()]
-        public void Test_Moon_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Space.Moon());
-        }
-        [TestMethod()]
-        public void Test_NasaSpaceCraft_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Space.NasaSpaceCraft());
-        }
-        [TestMethod()]
-        public void Test_Nebula_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Space.Nebula());
-        }
-        [TestMethod()]
-        public void Test_Planet_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Space.Planet());
-        }
-        [TestMethod()]
-        public void Test_Star_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Space.Star());
-        }
-        [TestMethod()]
-        public void Test_StarCluster_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Space.StarCluster());
-        }
-    }
-    
-    [TestClass]
     public class Test_Sport : FakerNUnitBase
     {
         [TestMethod()]
@@ -4867,275 +4900,481 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_Sports : FakerNUnitBase
-    {
-    }
-    
-    [TestClass]
-    public class Test_Sports_Basketball : FakerNUnitBase
+    public class Test_Sport_Basketball : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Coach_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Sports.Basketball.Coach());
+            FakerForEveryLocale<string>(faker => faker.Sport.Basketball.Coach());
         }
         [TestMethod()]
         public void Test_Player_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Sports.Basketball.Player());
+            FakerForEveryLocale<string>(faker => faker.Sport.Basketball.Player());
         }
         [TestMethod()]
         public void Test_Position_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Sports.Basketball.Position());
+            FakerForEveryLocale<string>(faker => faker.Sport.Basketball.Position());
         }
         [TestMethod()]
         public void Test_Team_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Sports.Basketball.Team());
+            FakerForEveryLocale<string>(faker => faker.Sport.Basketball.Team());
         }
     }
     
     [TestClass]
-    public class Test_Sports_Chess : FakerNUnitBase
+    public class Test_Sport_Chess : FakerNUnitBase
     {
         #warning No implementation defined for method federation();
         [TestMethod()]
         public void Test_Opening_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Sports.Chess.Opening());
+            FakerForEveryLocale<string>(faker => faker.Sport.Chess.Opening());
         }
         [TestMethod()]
         public void Test_Player_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Sports.Chess.Player());
+            FakerForEveryLocale<string>(faker => faker.Sport.Chess.Player());
         }
         #warning No implementation defined for method rating();
         [TestMethod()]
         public void Test_Title_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Sports.Chess.Title());
+            FakerForEveryLocale<string>(faker => faker.Sport.Chess.Title());
         }
         [TestMethod()]
         public void Test_Tournament_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Sports.Chess.Tournament());
+            FakerForEveryLocale<string>(faker => faker.Sport.Chess.Tournament());
         }
     }
     
     [TestClass]
-    public class Test_Sports_Football : FakerNUnitBase
+    public class Test_Sport_Esport : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Event_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.Esport.Event());
+        }
+        [TestMethod()]
+        public void Test_Game_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.Esport.Game());
+        }
+        [TestMethod()]
+        public void Test_League_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.Esport.League());
+        }
+        [TestMethod()]
+        public void Test_Player_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.Esport.Player());
+        }
+        [TestMethod()]
+        public void Test_Team_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.Esport.Team());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Sport_Football : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Coach_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Sports.Football.Coach());
+            FakerForEveryLocale<string>(faker => faker.Sport.Football.Coach());
         }
         [TestMethod()]
         public void Test_Competition_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Sports.Football.Competition());
+            FakerForEveryLocale<string>(faker => faker.Sport.Football.Competition());
         }
         [TestMethod()]
         public void Test_Player_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Sports.Football.Player());
+            FakerForEveryLocale<string>(faker => faker.Sport.Football.Player());
         }
         [TestMethod()]
         public void Test_Position_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Sports.Football.Position());
+            FakerForEveryLocale<string>(faker => faker.Sport.Football.Position());
         }
         [TestMethod()]
         public void Test_Team_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Sports.Football.Team());
+            FakerForEveryLocale<string>(faker => faker.Sport.Football.Team());
         }
     }
     
     [TestClass]
-    public class Test_Sports_Mountaineering : FakerNUnitBase
+    public class Test_Sport_Mountaineering : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Mountaineer_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Sports.Mountaineering.Mountaineer());
+            FakerForEveryLocale<string>(faker => faker.Sport.Mountaineering.Mountaineer());
         }
     }
     
     [TestClass]
-    public class Test_Sports_Volleyball : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Coach_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Sports.Volleyball.Coach());
-        }
-        [TestMethod()]
-        public void Test_Formation_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Sports.Volleyball.Formation());
-        }
-        [TestMethod()]
-        public void Test_Player_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Sports.Volleyball.Player());
-        }
-        [TestMethod()]
-        public void Test_Position_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Sports.Volleyball.Position());
-        }
-        [TestMethod()]
-        public void Test_Team_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Sports.Volleyball.Team());
-        }
-    }
-    
-    [TestClass]
-    public class Test_String : FakerNUnitBase
-    {
-        #warning No implementation defined for method char_space_ratio();
-        // Method : length : Can not generated test for method with required arguments.
-        // Method : lower : Can not generated test for method with required arguments.
-        [TestMethod()]
-        public void Test_RandomString_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.String.RandomString());
-        }
-        #warning No implementation defined for method select_a();
-        #warning No implementation defined for method space_or_utf8_char();
-        // Method : sub_string : Can not generated test for method with required arguments.
-        #warning No implementation defined for method utf8character();
-        #warning No implementation defined for method utf8string();
-    }
-    
-    [TestClass]
-    public class Test_Stripe : FakerNUnitBase
-    {
-        #warning No implementation defined for method ccv(string? cardType = null);
-        #warning No implementation defined for method invalid_card();
-        #warning No implementation defined for method month();
-        #warning No implementation defined for method valid_card(string? cardType = null);
-        #warning No implementation defined for method valid_token(string? cardType = null);
-        #warning No implementation defined for method year();
-    }
-    
-    [TestClass]
-    public class Test_Subscription : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_PaymentMethod_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Subscription.PaymentMethod());
-        }
-        [TestMethod()]
-        public void Test_PaymentTerm_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Subscription.PaymentTerm());
-        }
-        [TestMethod()]
-        public void Test_Plan_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Subscription.Plan());
-        }
-        [TestMethod()]
-        public void Test_Status_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Subscription.Status());
-        }
-        [TestMethod()]
-        public void Test_SubscriptionTerm_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Subscription.SubscriptionTerm());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Superhero : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_Descriptor_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Superhero.Descriptor());
-        }
-        [TestMethod()]
-        public void Test_Name_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Superhero.Name());
-        }
-        [TestMethod()]
-        public void Test_Power_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Superhero.Power());
-        }
-        [TestMethod()]
-        public void Test_Prefix_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Superhero.Prefix());
-        }
-        [TestMethod()]
-        public void Test_Suffix_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Superhero.Suffix());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Tea : FakerNUnitBase
-    {
-        #warning No implementation defined for method type();
-        [TestMethod()]
-        public void Test_Variety_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Tea.Variety());
-        }
-    }
-    
-    [TestClass]
-    public class Test_Team : FakerNUnitBase
+    public class Test_Sport_Team : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Creature_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Team.Creature());
+            FakerForEveryLocale<string>(faker => faker.Sport.Team.Creature());
         }
         [TestMethod()]
         public void Test_Mascot_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Team.Mascot());
+            FakerForEveryLocale<string>(faker => faker.Sport.Team.Mascot());
         }
         [TestMethod()]
         public void Test_Name_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Team.Name());
+            FakerForEveryLocale<string>(faker => faker.Sport.Team.Name());
         }
         [TestMethod()]
         public void Test_Sport_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Team.Sport());
+            FakerForEveryLocale<string>(faker => faker.Sport.Team.Sport());
         }
         [TestMethod()]
         public void Test_State_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Team.State());
+            FakerForEveryLocale<string>(faker => faker.Sport.Team.State());
         }
     }
     
     [TestClass]
-    public class Test_Time : FakerNUnitBase
+    public class Test_Sport_Volleyball : FakerNUnitBase
     {
-        // Method : backward : Can not generated test for method with required arguments.
-        // Method : between : Can not generated test for method with required arguments.
-        // Method : between_dates : Can not generated test for method with required arguments.
-        #warning Failed processing method date_with_random_time
-        // Method : forward : Can not generated test for method with required arguments.
-        #warning Failed processing method get_time_object
-        #warning Failed processing method hours
-        #warning Failed processing method minutes
-        #warning Failed processing method seconds
-        #warning Failed processing method time_with_format
+        [TestMethod()]
+        public void Test_Coach_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.Volleyball.Coach());
+        }
+        [TestMethod()]
+        public void Test_Formation_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.Volleyball.Formation());
+        }
+        [TestMethod()]
+        public void Test_Player_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.Volleyball.Player());
+        }
+        [TestMethod()]
+        public void Test_Position_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.Volleyball.Position());
+        }
+        [TestMethod()]
+        public void Test_Team_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.Volleyball.Team());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Sport_WorldCup : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_City_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.WorldCup.City());
+        }
+        [TestMethod()]
+        public void Test_Group_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.WorldCup.Group());
+        }
+        [TestMethod()]
+        public void Test_Roster_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.WorldCup.Roster());
+        }
+        [TestMethod()]
+        public void Test_Stadium_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.WorldCup.Stadium());
+        }
+        [TestMethod()]
+        public void Test_Team_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Sport.WorldCup.Team());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Things : FakerNUnitBase
+    {
+    }
+    
+    [TestClass]
+    public class Test_Things_Camera : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Brand_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Camera.Brand());
+        }
+        [TestMethod()]
+        public void Test_BrandWithModel_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Camera.BrandWithModel());
+        }
+        [TestMethod()]
+        public void Test_Model_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Camera.Model());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Things_Drone : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_BatteryCapacity_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.BatteryCapacity());
+        }
+        [TestMethod()]
+        public void Test_BatteryType_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.BatteryType());
+        }
+        [TestMethod()]
+        public void Test_BatteryVoltage_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.BatteryVoltage());
+        }
+        [TestMethod()]
+        public void Test_BatteryWeight_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.BatteryWeight());
+        }
+        [TestMethod()]
+        public void Test_ChargingTemperature_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.ChargingTemperature());
+        }
+        [TestMethod()]
+        public void Test_FlightTime_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.FlightTime());
+        }
+        [TestMethod()]
+        public void Test_Iso_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.Iso());
+        }
+        [TestMethod()]
+        public void Test_MaxAltitude_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.MaxAltitude());
+        }
+        [TestMethod()]
+        public void Test_MaxAngularVelocity_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.MaxAngularVelocity());
+        }
+        [TestMethod()]
+        public void Test_MaxAscentSpeed_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.MaxAscentSpeed());
+        }
+        [TestMethod()]
+        public void Test_MaxChargingPower_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.MaxChargingPower());
+        }
+        [TestMethod()]
+        public void Test_MaxDescentSpeed_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.MaxDescentSpeed());
+        }
+        [TestMethod()]
+        public void Test_MaxFlightDistance_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.MaxFlightDistance());
+        }
+        [TestMethod()]
+        public void Test_MaxResolution_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.MaxResolution());
+        }
+        [TestMethod()]
+        public void Test_MaxShutterSpeed_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.MaxShutterSpeed());
+        }
+        [TestMethod()]
+        public void Test_MaxSpeed_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.MaxSpeed());
+        }
+        [TestMethod()]
+        public void Test_MaxTiltAngle_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.MaxTiltAngle());
+        }
+        [TestMethod()]
+        public void Test_MaxWindResistance_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.MaxWindResistance());
+        }
+        [TestMethod()]
+        public void Test_MinShutterSpeed_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.MinShutterSpeed());
+        }
+        [TestMethod()]
+        public void Test_Name_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.Name());
+        }
+        [TestMethod()]
+        public void Test_OperatingTemperature_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.OperatingTemperature());
+        }
+        [TestMethod()]
+        public void Test_PhotoFormat_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.PhotoFormat());
+        }
+        [TestMethod()]
+        public void Test_ShutterSpeedRange_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.ShutterSpeedRange());
+        }
+        [TestMethod()]
+        public void Test_VideoFormat_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.VideoFormat());
+        }
+        [TestMethod()]
+        public void Test_Weight_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Drone.Weight());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Things_Hobby : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Activity_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Hobby.Activity());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Things_House : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Furniture_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.House.Furniture());
+        }
+        [TestMethod()]
+        public void Test_Room_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.House.Room());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Things_Vehicle : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_CarOptions_Execute()
+        {
+            FakerForEveryLocale<List<string>>(faker => faker.Things.Vehicle.CarOptions());
+        }
+        [TestMethod()]
+        public void Test_CarType_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Vehicle.CarType());
+        }
+        [TestMethod()]
+        public void Test_Color_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Vehicle.Color());
+        }
+        [TestMethod()]
+        public void Test_Doors_Execute()
+        {
+            FakerForEveryLocale<long>(faker => faker.Things.Vehicle.Doors());
+        }
+        [TestMethod()]
+        public void Test_DriveType_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Vehicle.DriveType());
+        }
+        [TestMethod()]
+        public void Test_Engine_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Vehicle.Engine());
+        }
+        [TestMethod()]
+        public void Test_FuelType_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Vehicle.FuelType());
+        }
+        [TestMethod()]
+        public void Test_LicensePlate_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Vehicle.LicensePlate());
+        }
+        [TestMethod()]
+        public void Test_Make_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Vehicle.Make());
+        }
+        #warning No implementation defined for method make_and_model();
+        [TestMethod()]
+        public void Test_Manufacture_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Vehicle.Manufacture());
+        }
+        // Method : mileage : Can not generated test for method with required arguments.
+        [TestMethod()]
+        public void Test_Model_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Vehicle.Model());
+        }
+        #warning Failed processing method singapore_checksum
+        #warning No implementation defined for method singapore_license_plate();
+        [TestMethod()]
+        public void Test_StandardSpecs_Execute()
+        {
+            FakerForEveryLocale<List<string>>(faker => faker.Things.Vehicle.StandardSpecs());
+        }
+        [TestMethod()]
+        public void Test_Style_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Vehicle.Style());
+        }
+        [TestMethod()]
+        public void Test_Transmission_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Vehicle.Transmission());
+        }
+        [TestMethod()]
+        public void Test_Version_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Things.Vehicle.Version());
+        }
+        #warning No implementation defined for method vin();
+        #warning No implementation defined for method year();
     }
     
     [TestClass]
@@ -5979,20 +6218,6 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_Twitter : FakerNUnitBase
-    {
-        #warning Failed processing method created_at
-        #warning Failed processing method id
-        #warning Failed processing method photo_entity
-        #warning No implementation defined for method screen_name();
-        // Method : status : Can not generated test for method with required arguments.
-        #warning Failed processing method status_entities
-        // Method : user : Can not generated test for method with required arguments.
-        #warning Failed processing method user_entities
-        #warning Failed processing method utc_offset
-    }
-    
-    [TestClass]
     public class Test_Types : FakerNUnitBase
     {
         #warning No implementation defined for method character();
@@ -6007,176 +6232,114 @@ namespace FakerNet.NUnit
     }
     
     [TestClass]
-    public class Test_University : FakerNUnitBase
+    public class Test_Words : FakerNUnitBase
     {
-        #warning No implementation defined for method greek_alphabet();
-        #warning No implementation defined for method greek_organization();
+    }
+    
+    [TestClass]
+    public class Test_Words_Adjective : FakerNUnitBase
+    {
         [TestMethod()]
-        public void Test_Name_Execute()
+        public void Test_Negative_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.University.Name());
+            FakerForEveryLocale<string>(faker => faker.Words.Adjective.Negative());
         }
         [TestMethod()]
-        public void Test_Prefix_Execute()
+        public void Test_Positive_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.University.Prefix());
-        }
-        [TestMethod()]
-        public void Test_Suffix_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.University.Suffix());
+            FakerForEveryLocale<string>(faker => faker.Words.Adjective.Positive());
         }
     }
     
     [TestClass]
-    public class Test_Vehicle : FakerNUnitBase
+    public class Test_Words_Emotion : FakerNUnitBase
     {
         [TestMethod()]
-        public void Test_CarOptions_Execute()
+        public void Test_Adjective_Execute()
         {
-            FakerForEveryLocale<List<string>>(faker => faker.Vehicle.CarOptions());
+            FakerForEveryLocale<string>(faker => faker.Words.Emotion.Adjective());
         }
         [TestMethod()]
-        public void Test_CarType_Execute()
+        public void Test_Noun_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Vehicle.CarType());
+            FakerForEveryLocale<string>(faker => faker.Words.Emotion.Noun());
         }
-        [TestMethod()]
-        public void Test_Color_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Vehicle.Color());
-        }
-        [TestMethod()]
-        public void Test_Doors_Execute()
-        {
-            FakerForEveryLocale<long>(faker => faker.Vehicle.Doors());
-        }
-        [TestMethod()]
-        public void Test_DriveType_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Vehicle.DriveType());
-        }
-        [TestMethod()]
-        public void Test_Engine_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Vehicle.Engine());
-        }
-        [TestMethod()]
-        public void Test_FuelType_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Vehicle.FuelType());
-        }
-        [TestMethod()]
-        public void Test_LicensePlate_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Vehicle.LicensePlate());
-        }
-        [TestMethod()]
-        public void Test_Make_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Vehicle.Make());
-        }
-        #warning No implementation defined for method make_and_model();
-        [TestMethod()]
-        public void Test_Manufacture_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Vehicle.Manufacture());
-        }
-        // Method : mileage : Can not generated test for method with required arguments.
-        [TestMethod()]
-        public void Test_Model_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Vehicle.Model());
-        }
-        #warning Failed processing method singapore_checksum
-        #warning No implementation defined for method singapore_license_plate();
-        [TestMethod()]
-        public void Test_StandardSpecs_Execute()
-        {
-            FakerForEveryLocale<List<string>>(faker => faker.Vehicle.StandardSpecs());
-        }
-        [TestMethod()]
-        public void Test_Style_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Vehicle.Style());
-        }
-        [TestMethod()]
-        public void Test_Transmission_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Vehicle.Transmission());
-        }
-        [TestMethod()]
-        public void Test_Version_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.Vehicle.Version());
-        }
-        #warning No implementation defined for method vin();
-        #warning No implementation defined for method year();
     }
     
     [TestClass]
-    public class Test_Verb : FakerNUnitBase
+    public class Test_Words_Hacker : FakerNUnitBase
+    {
+        [TestMethod()]
+        public void Test_Abbreviation_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Words.Hacker.Abbreviation());
+        }
+        [TestMethod()]
+        public void Test_Adjective_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Words.Hacker.Adjective());
+        }
+        [TestMethod()]
+        public void Test_Ingverb_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Words.Hacker.Ingverb());
+        }
+        [TestMethod()]
+        public void Test_Noun_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Words.Hacker.Noun());
+        }
+        [TestMethod()]
+        public void Test_SaySomethingSmart_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Words.Hacker.SaySomethingSmart());
+        }
+        [TestMethod()]
+        public void Test_Verb_Execute()
+        {
+            FakerForEveryLocale<string>(faker => faker.Words.Hacker.Verb());
+        }
+    }
+    
+    [TestClass]
+    public class Test_Words_Hipster : FakerNUnitBase
+    {
+        // Method : paragraph : Can not generated test for method with required arguments.
+        // Method : paragraph_by_chars : Can not generated test for method with required arguments.
+        // Method : paragraphs : Can not generated test for method with required arguments.
+        // Method : sentence : Can not generated test for method with required arguments.
+        // Method : sentences : Can not generated test for method with required arguments.
+        #warning No implementation defined for method word();
+        // Method : words : Can not generated test for method with required arguments.
+    }
+    
+    [TestClass]
+    public class Test_Words_Verb : FakerNUnitBase
     {
         [TestMethod()]
         public void Test_Base_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Verb.Base());
+            FakerForEveryLocale<string>(faker => faker.Words.Verb.Base());
         }
         [TestMethod()]
         public void Test_IngForm_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Verb.IngForm());
+            FakerForEveryLocale<string>(faker => faker.Words.Verb.IngForm());
         }
         [TestMethod()]
         public void Test_Past_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Verb.Past());
+            FakerForEveryLocale<string>(faker => faker.Words.Verb.Past());
         }
         [TestMethod()]
         public void Test_PastParticiple_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Verb.PastParticiple());
+            FakerForEveryLocale<string>(faker => faker.Words.Verb.PastParticiple());
         }
         [TestMethod()]
         public void Test_SimplePresent_Execute()
         {
-            FakerForEveryLocale<string>(faker => faker.Verb.SimplePresent());
-        }
-    }
-    
-    [TestClass]
-    public class Test_VulnerabilityIdentifier : FakerNUnitBase
-    {
-        #warning No implementation defined for method cve(long year = ::Date.today.year);
-    }
-    
-    [TestClass]
-    public class Test_WorldCup : FakerNUnitBase
-    {
-        [TestMethod()]
-        public void Test_City_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.WorldCup.City());
-        }
-        [TestMethod()]
-        public void Test_Group_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.WorldCup.Group());
-        }
-        [TestMethod()]
-        public void Test_Roster_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.WorldCup.Roster());
-        }
-        [TestMethod()]
-        public void Test_Stadium_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.WorldCup.Stadium());
-        }
-        [TestMethod()]
-        public void Test_Team_Execute()
-        {
-            FakerForEveryLocale<string>(faker => faker.WorldCup.Team());
+            FakerForEveryLocale<string>(faker => faker.Words.Verb.SimplePresent());
         }
     }
     

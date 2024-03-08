@@ -8,50 +8,80 @@
         xmlns:api="clr-namespace:Faker.Api"
         mc:Ignorable="d"
         x:Name="window"
-        d:DataContext="{d:DesignInstance Type=api:Implementation, IsDesignTimeCreatable=False}"
-        Title="ImplementationEditorWindow" Height="450" Width="800">
+        d:DataContext="{d:DesignInstance Type=api:ImplementationElement, IsDesignTimeCreatable=False}"
+        Title="ImplementationEditorWindow" Height="650" Width="1024">
     <Window.Resources>
         <local:ImplementationDataDescConverter x:Key="ImplementationDataDescConverter"/>
         <local:AllowableImplementationTypesConverter x:Key="AllowableImplementationTypesConverter"/>
     </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <DockPanel Margin="10"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" >
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Button Width="100" Height="27" Margin="5" Click="OK_Click">OK</Button>
-            <Button Width="100" Height="27" Margin="5" Click="Cancel_Click">Cancel</Button>
-        </StackPanel>
+        <DockPanel  Grid.Column="0" Margin="10"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" >
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Button Width="100" Height="27" Margin="5" Click="OK_Click">OK</Button>
+                <Button Width="100" Height="27" Margin="5" Click="Cancel_Click" IsCancel="true">Cancel</Button>
+            </StackPanel>
 
-        <TextBlock DockPanel.Dock="Top" Text="Platform"/>
-        <ComboBox DockPanel.Dock="Top" Name="PlatformCmb" Margin="15,3,0,7" ItemsSource="{Binding ElementName=window, Path=AllPlatforms}" SelectedValue="{Binding Platform}" VerticalAlignment="Stretch"/>
+            <TextBlock DockPanel.Dock="Top" Text="Platform"/>
+            <ComboBox DockPanel.Dock="Top" Name="PlatformCmb" Margin="15,3,0,7" ItemsSource="{Binding ElementName=window, Path=AllPlatforms}" SelectedValue="{Binding Platform}" VerticalAlignment="Stretch"/>
 
-        <TextBlock DockPanel.Dock="Top" Text="Implementation Type" />
-        <ComboBox DockPanel.Dock="Top" Name="TypeCmb" Margin="15,3,0,7" ItemsSource="{Binding InternalPlatform, Converter={StaticResource AllowableImplementationTypesConverter}}" Text="{Binding Type}" />
+            <TextBlock DockPanel.Dock="Top" Text="Implementation Type" />
+            <ComboBox DockPanel.Dock="Top" Name="TypeCmb" Margin="15,3,0,7" ItemsSource="{Binding InternalPlatform, Converter={StaticResource AllowableImplementationTypesConverter}}" Text="{Binding Type}" />
 
-        <TextBlock DockPanel.Dock="Top">
-            <TextBlock.Text>
-                <MultiBinding Converter="{StaticResource ImplementationDataDescConverter}" >
-                    <Binding Path="Type"/>
-                    <Binding Path="Platform"/>
-                </MultiBinding>
-            </TextBlock.Text>
-        </TextBlock>
+            <TextBlock DockPanel.Dock="Top">
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource ImplementationDataDescConverter}" >
+                        <Binding Path="Type"/>
+                        <Binding Path="Platform"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
 
-        <!--Data TextBox appears here-->
-        
-        <CheckBox DockPanel.Dock="Bottom" Margin="0,3,0,3" IsChecked="{Binding CharSubst, TargetNullValue=false}" Visibility="{Binding Type, Converter={StaticResource NotEqualsVisibilityConverter}, ConverterParameter={StaticResource ImplementationTypeNative}}" >
-            Apply char substitutions (? -> R)
-        </CheckBox>
+            <!--Data TextBox appears here-->
 
-        <CheckBox  DockPanel.Dock="Bottom" Margin="0,3,0,3" IsChecked="{Binding DigitSubst, TargetNullValue=false}" Visibility="{Binding Type, Converter={StaticResource NotEqualsVisibilityConverter}, ConverterParameter={StaticResource ImplementationTypeNative}}" >
-            Apply digit substitutions (# -> 4)
-        </CheckBox>
+            <CheckBox DockPanel.Dock="Bottom" Margin="0,3,0,3" IsChecked="{Binding CharSubst, TargetNullValue=false}" Visibility="{Binding Type, Converter={StaticResource NotEqualsVisibilityConverter}, ConverterParameter={StaticResource ImplementationTypeNative}}" >
+                Apply char substitutions (? -> R)
+            </CheckBox>
 
-        <CheckBox  DockPanel.Dock="Bottom" Margin="0,3,0,3" IsChecked="{Binding Translate, TargetNullValue=false}" Visibility="{Binding Type, Converter={StaticResource NotEqualsVisibilityConverter}, ConverterParameter={StaticResource ImplementationTypeNative}}">
-            Apply translation to result
-        </CheckBox>
+            <CheckBox  DockPanel.Dock="Bottom" Margin="0,3,0,3" IsChecked="{Binding DigitSubst, TargetNullValue=false}" Visibility="{Binding Type, Converter={StaticResource NotEqualsVisibilityConverter}, ConverterParameter={StaticResource ImplementationTypeNative}}" >
+                Apply digit substitutions (# -> 4)
+            </CheckBox>
 
-        <!-- Fills available space (has to be the last thing in the dockpanel -->
-        <TextBox Margin="15,3,0,7" Padding="3" Text="{Binding Data}" AcceptsReturn="True" AcceptsTab="True" TextWrapping="NoWrap" FontFamily="Courier New" MinHeight="60" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
-        
-    </DockPanel>
-</Window>
+            <CheckBox  DockPanel.Dock="Bottom" Margin="0,3,0,3" IsChecked="{Binding Translate, TargetNullValue=false}" Visibility="{Binding Type, Converter={StaticResource NotEqualsVisibilityConverter}, ConverterParameter={StaticResource ImplementationTypeNative}}">
+                Apply translation to result
+            </CheckBox>
+
+            <!-- Fills available space (has to be the last thing in the dockpanel -->
+            <TextBox Margin="15,3,0,7" Padding="3" Text="{Binding Data, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" AcceptsTab="True" TextWrapping="NoWrap" FontFamily="Courier New" MinHeight="60" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+
+        </DockPanel>
+
+
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+
+        <DockPanel Grid.Column="2">
+            <TextBlock DockPanel.Dock="Top" Text="Sample Data" />
+            <TextBox DockPanel.Dock="Top" IsReadOnly="True" Margin="15,3,0,7">
+                <TextBox.Text>
+                    <MultiBinding Converter="{StaticResource SampleDataConverter}" >
+                        <Binding ElementName="window" Path="FakerClassName" Mode="OneWay"/>
+                        <Binding Path="Type"/>
+                        <Binding Path="Data"/>
+                        <Binding Path="CharSubst"/>
+                        <Binding Path="DigitSubst"/>
+                        <Binding Path="Translate"/>
+                    </MultiBinding>
+                </TextBox.Text>
+            </TextBox>
+        </DockPanel>
+    </Grid>
+
+ </Window>

@@ -57,7 +57,8 @@ outputIndentPush();
     outputIndentPush();
     {
         for (const cls of config.classes) {
-            output('[FakerMethod("' + cls.name + '")]\n');
+            output('[FakerProperty]\n');
+            //            output('[FakerProperty("' + (cls.ruby_qualified_name ?? cls.name) + '")]\n');
             output('public ' + cls.name + 'Generator ' + cls.name + ' { get; }\n');
         }
         output('\n');
@@ -83,20 +84,21 @@ outputIndentPush();
 outputIndentPop();
 output('}\n');
 
-fs.writeFileSync('./FakerNet/Generators/FakerGenerators.cs', output_data.join(''));
+fs.writeFileSync('./FakerNet/Generators/FakerGenerators.cs', output_data.join('').replaceAll('\r', '').replaceAll('\n', '\r\n'));
 
 exit(0);
 
 function generateClass(cls) {
     writeDocsSummary(cls.descriptions);
     output('[GeneratedCode("Faker Code Generator", "1.0.0.0")]\n');
-    output('[FakerGenerator("' + cls.name + '")]\n');
+    output('[FakerGenerator("' + (cls.ruby_qualified_name ?? cls.name) + '")]\n');
     output('public partial class ' + cls.name + 'Generator : GeneratorBase\n');
     output('{\n');
     outputIndentPush();
     {
-        for (const nestedCls of cls.classes) {
-            output('[FakerMethod("' + nestedCls.name + '")]\n');
+        for (const nestedCls of cls.classes ?? []) {
+            //output('[FakerMethod("' + nestedCls.name + '")]\n');
+            output('[FakerProperty]\n');
             output('public ' + nestedCls.name + 'Generator ' + nestedCls.name + ' { get; }\n');
         }
 
@@ -105,7 +107,7 @@ function generateClass(cls) {
         output('{\n');
         outputIndentPush();
         {
-            for (const nestedCls of cls.classes) {
+            for (const nestedCls of cls.classes ?? []) {
                 output(nestedCls.name + ' = new ' + nestedCls.name + 'Generator(this.Faker);\n');
             }
         }
@@ -113,10 +115,10 @@ function generateClass(cls) {
         output('}\n');
         output('\n');
 
-        for (const clsChild of cls.classes)
+        for (const clsChild of cls.classes ?? [])
             generateClass(clsChild);
 
-        for (const method of cls.methods)
+        for (const method of cls.methods ?? [])
             writeMethod(method);
     }
     outputIndentPop();
@@ -154,15 +156,17 @@ function writeDocsReturn(method) {
     }
 }
 
-function writeDocsExamples(exanples) {
-    var example = exanples.find(d => d.platform == 'C#') ?? exanples.find(d => d.platform == null)
-    if (example && (isNullOrWhitespace(example.code) == false || isNullOrWhitespace(example.description) == false)) {
-        output('/// <example>\n');
-        if (isNullOrWhitespace(example.description) == false)
-            writeDocsString(example.description);
-        if (isNullOrWhitespace(example.code) == false)
-            writeDocsString('<code>' + example.code + '</code>');
-        output('/// </example>\n');
+function writeDocsExamples(examples) {
+    var csExamples = examples.filter(d => d.platform == 'C#' || d.platform == null)
+    for (const csExample of csExamples) {
+        if (isNullOrWhitespace(csExample.code) == false || isNullOrWhitespace(csExample.description) == false) {
+            output('/// <example>\n');
+            if (isNullOrWhitespace(csExample.description) == false)
+                writeDocsString(csExample.description);
+            if (isNullOrWhitespace(csExample.code) == false)
+                writeDocsString('<code>' + csExample.code + '</code>');
+            output('/// </example>\n');
+        }
     }
 }
 
@@ -193,12 +197,12 @@ function writeMethod(method) {
     const nativeMethodName = GetNativeMethodName(method.name);
     const rubyMethodType = method.return_type;
     const nativeMethodType = GetNativeType(rubyMethodType);
+    const hasNativeImplementation = impl.type == 'Native' && isNullOrWhitespace(impl.data);
 
     // if its already implmented in the native libraries then just make a note of it and move on
-    if (impl.type == 'Native' && isNullOrWhitespace(impl.data)) {
-        output('// Expecting native implementation of\n');
-        output('//      public ' + nativeMethodType + ' ' + nativeMethodName + '(' + getArgs(method.arguments) + ')\n');
-        return;
+    if (hasNativeImplementation) {
+        output('// Expecting native implementation\n');
+        output('/*\n');
     }
 
     writeDocsSummary(method.descriptions);
@@ -207,7 +211,16 @@ function writeMethod(method) {
     writeDocsExamples(method.examples);
     writeDocsVersion(method);
     output('[FakerMethod("' + method.name + '")]\n');
-    output('public ' + nativeMethodType + ' ' + nativeMethodName + '(' + getArgs(method.arguments) + ')\n');
+    if (method.Hidden == true)
+        output('internal ');
+    else
+        output('public ');
+    output(nativeMethodType + ' ' + nativeMethodName + '(' + getArgs(method.arguments) + ')\n');
+    if (hasNativeImplementation) {
+        output('*/\n');
+        return;
+    }
+
     output('{\n');
     outputIndentPush();
     for (const arg of method.arguments) {
@@ -237,9 +250,9 @@ function writeMethod(method) {
 
             var expr;
             if (impl.type == 'Expression')
-                expr = 'this.EvaluateExpression("' + implData + '", this)';
+                expr = 'this.EvaluateExpression("' + implData + '")';
             else
-                expr = 'this.ResolveYamlValue("' + implData + '", this)';
+                expr = 'this.ResolveYamlValue("' + implData + '")';
 
             if (impl.charSubst == true)
                 expr = 'this.Letterify(' + expr + ')';
@@ -447,7 +460,7 @@ function output(txt) {
     }
 }
 function output_internal(txt) {
-    process.stdout.write(txt);
+    // process.stdout.write(txt);
     output_data.push(txt);
 }
 

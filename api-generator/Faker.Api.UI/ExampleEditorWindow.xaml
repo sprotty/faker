@@ -27,7 +27,7 @@
 
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Button Width="100" Height="27" Margin="5" Click="OK_Click">OK</Button>
-            <Button Width="100" Height="27" Margin="5" Click="Cancel_Click">Cancel</Button>
+            <Button Width="100" Height="27" Margin="5" Click="Cancel_Click" IsCancel="true">Cancel</Button>
         </StackPanel>
     </DockPanel>
 </Window>

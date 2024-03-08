@@ -7,7 +7,7 @@
         xmlns:api="clr-namespace:Faker.Api" xmlns:sys="clr-namespace:System;assembly=netstandard"
         mc:Ignorable="d"
         x:Name="window"
-        Title="Faker Editor" Height="800" Width="1024" 
+        Title="Faker Editor" Height="1024" Width="1024" 
         d:DataContext="{d:DesignInstance Type=local:TestRoot, IsDesignTimeCreatable=True}" >
     <Window.Resources>
         <sys:String x:Key="NullPlatformText">All Platforms</sys:String>
@@ -22,6 +22,7 @@
             </MenuItem>
             <MenuItem Header="Tools">
                 <MenuItem Header="Validate" Click="Menu_Validate_Click" />
+                <MenuItem Header="Generate" Click="Menu_Generate_Click" />
             </MenuItem>
         </Menu>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
@@ -42,7 +43,7 @@
 
             <DockPanel Grid.Column="0" >
                 <TextBlock DockPanel.Dock="Top" FontSize="15" FontWeight="Bold">Classes</TextBlock>
-                <TreeView Name="ClassTree" ItemsSource="{Binding Path=Classes}">
+                <TreeView Name="ClassTree" ItemsSource="{Binding Path=Classes}" Drop="ClassTree_Drop" DragOver="ClassTree_DragOver" AllowDrop="True" PreviewMouseMove="ClassTree_PreviewMouseMove" PreviewMouseLeftButtonDown="ClassTree_PreviewMouseLeftButtonDown">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type api:ClassElement}" ItemsSource="{Binding Classes}">
                             <StackPanel Orientation="Horizontal">
@@ -67,7 +68,7 @@
                     <ListBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="New" Click="MethodsMenuItem_New_Click"/>
-                            <MenuItem Header="Delete" Click="MethodsMenuItem_Delete_Click" IsEnabled="{Binding ElementName=MethodList, Path=SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
+                            <MenuItem Header="Delete" Click="MethodsMenuItem_Delete_Click" IsEnabled="{Binding RelativeSource={RelativeSource  AncestorType={x:Type ListBox}}, Path=SelectedItem, Converter={StaticResource IsNotNullConverter}}"/>
                         </ContextMenu>
                     </ListBox.ContextMenu>
                 </ListBox>
@@ -84,9 +85,12 @@
 
                         <TextBlock>Name</TextBlock>
                         <TextBox  Margin="15,3,0,7" Text="{Binding ElementName=MethodList,Path=SelectedValue.Name, Mode=TwoWay}"></TextBox>
+
+                        <TextBlock>Name in Liquid Technologies - Test Data Generator</TextBlock>
+                        <TextBox  Margin="15,3,0,7" Text="{Binding ElementName=MethodList,Path=SelectedValue.LtTdgMethodName, Mode=TwoWay}"></TextBox>
                         
                         <TextBlock>New in Version</TextBlock>
-                        <TextBox  Margin="15,3,0,7" Text="{Binding ElementName=MethodList,Path=SelectedValue.Version, Mode=TwoWay}"></TextBox>
+                        <TextBox  Margin="15,3,0,7" Text="{Binding ElementName=MethodList,Path=SelectedValue.VersionIntroduced, Mode=TwoWay}"></TextBox>
 
                         <TextBlock >Method Description (All Platforms)</TextBlock>
                         <TextBox  Margin="15,3,0,7"
@@ -139,8 +143,12 @@
                                  Text="{Binding ElementName=MethodList, Path=SelectedValue.ReturnDesc, Mode=TwoWay}"
                                  TextWrapping="Wrap" Height="60" AcceptsReturn="True" />
 
-                        <CheckBox Margin="0,3,0,7" IsChecked="{Binding ElementName=MethodList, Path=SelectedValue.Hidden, Mode=TwoWay, TargetNullValue=false}">
+                        <CheckBox Margin="0,3,0,7" IsChecked="{Binding ElementName=MethodList, Path=SelectedValue.Hidden, Mode=TwoWay}">
                             Hide in public API
+                        </CheckBox>
+
+                        <CheckBox Margin="0,3,0,7" IsChecked="{Binding ElementName=MethodList, Path=SelectedValue.UsesLocale, Mode=TwoWay}">
+                            Uses locale (false if changing the locale has no effect)
                         </CheckBox>
 
                         <TextBlock>Arguments</TextBlock>
@@ -152,7 +160,14 @@
                         <TextBlock>Implementations</TextBlock>
                         <local:ImplementationsControl Margin="15,3,0,7"
                                         Implementations="{Binding ElementName=MethodList, Path=SelectedValue.Implementations}" 
-                                        CurrentPlatform="{Binding ElementName=PlatformCmb, Path=SelectedValue}"/>
+                                        CurrentPlatform="{Binding ElementName=PlatformCmb, Path=SelectedValue}">
+                            <local:ImplementationsControl.ClassPath>
+                                <MultiBinding Converter="{StaticResource GetClassPathConverter}" >
+                                    <Binding ElementName="ClassTree" Mode="OneWay"/>
+                                    <Binding ElementName="ClassTree" Path="SelectedValue" Mode="OneWay"/>
+                                </MultiBinding>
+                            </local:ImplementationsControl.ClassPath>
+                        </local:ImplementationsControl>
 
                         <TextBlock>Examples</TextBlock>
                         <local:ExamplesControl Margin="15,3,0,7"

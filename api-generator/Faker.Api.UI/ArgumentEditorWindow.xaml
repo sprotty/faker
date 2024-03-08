@@ -8,8 +8,8 @@
         xmlns:api="clr-namespace:Faker.Api"
         mc:Ignorable="d"
         x:Name="window"
-        d:DataContext="{d:DesignInstance Type=api:Argument, IsDesignTimeCreatable=False}"
-        Title="ArgumentEditorWindow" Height="450" Width="800">
+        d:DataContext="{d:DesignInstance Type=api:ArgumentModel, IsDesignTimeCreatable=False}"
+        Title="ArgumentEditorWindow" Height="550" Width="800">
     <Window.Resources>
     </Window.Resources>
 
@@ -21,11 +21,7 @@
             <TextBlock Text="Argument Type"/>
             <ComboBox Margin="15,3,0,7" Padding="3" ItemsSource="{Binding ElementName=window, Path=AllTypes}" SelectedValue="{Binding Type}"/>
 
-            <TextBlock Text="Default Value (empty for required/no default, nil for null)"/>
-            <TextBox Margin="15,3,0,7" Padding="3" Text="{Binding Default}" ToolTip="empty for required\nnil for null\n'text' for a string\n[5..10] for IntegerRange/DoubleRange"/>
-
-
-            <TextBlock >Default Description</TextBlock>
+            <TextBlock >All Platform Argument Description</TextBlock>
             <TextBox  Margin="15,3,0,7"
                        TextWrapping="Wrap" Height="60" AcceptsReturn="True" >
                 <TextBox.Text>
@@ -36,7 +32,7 @@
                 </TextBox.Text>
             </TextBox>
 
-            <TextBlock><TextBlock Text="{Binding ElementName=window, Path=CurrentPlatform}"/> Description</TextBlock>
+            <TextBlock><TextBlock Text="{Binding ElementName=window, Path=CurrentPlatform}"/> Argument Description</TextBlock>
             <Grid Margin="15,3,0,7">
                 <TextBox Name="PlatformDesc"
                              Padding="5"
@@ -64,6 +60,19 @@
                     </TextBlock.Style>
                 </TextBlock>
             </Grid>
+
+            <TextBlock Text="Default Value (empty for required/no default, nil for null)"/>
+            <TextBox Margin="15,3,0,7" Padding="3" Text="{Binding Default, UpdateSourceTrigger=PropertyChanged}" ToolTip="empty for required\nnil for null\n'text' for a string\n[5..10] for IntegerRange/DoubleRange"/>
+
+            <TextBlock Text="Default Value Description (what gets used when the value is not populated, if empty the default value is used)" Visibility="{Binding Path=Default, Converter={StaticResource IsNullOrWhiteSpaceVisibilityConverter}}"/>
+            <TextBox Name="DefaultValueDesc"
+                     Margin="15,3,0,7"
+                     Padding="5"
+                     Text="{Binding DefaultValueDesc, Mode=TwoWay}"
+                     Visibility="{Binding Path=Default, Converter={StaticResource IsNullOrWhiteSpaceVisibilityConverter}}"
+                     TextWrapping="Wrap" Height="60" AcceptsReturn="True">
+            </TextBox>
+
 
             <!--<ComboBox Name="PlatformCmb" Margin="15,3,0,7" ItemsSource="{Binding ElementName=window, Path=AllPlatforms}" SelectedValue="{Binding Platform}" VerticalAlignment="Stretch"/>-->
 
@@ -95,7 +104,7 @@
 
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Button Width="100" Height="27" Margin="5" Click="OK_Click">OK</Button>
-            <Button Width="100" Height="27" Margin="5" Click="Cancel_Click">Cancel</Button>
+            <Button Width="100" Height="27" Margin="5" Click="Cancel_Click" IsCancel="true">Cancel</Button>
         </StackPanel>
     </DockPanel>
 </Window>

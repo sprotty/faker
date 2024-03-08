@@ -24,13 +24,20 @@ namespace Faker.Api.UI
         public ImplementationsControl()
         {
             InitializeComponent();
-            ImplementationsList.Items.Filter = (o) => o is Implementation ex && (ex.Platform == FakerModel.AllPlatformsLiteral || ex.Platform == CurrentPlatform);
+            ImplementationsList.Items.Filter = (o) => o is ImplementationElement ex && (ex.Platform == FakerModel.AllPlatformsLiteral || ex.Platform == CurrentPlatform);
         }
 
-        public static readonly DependencyProperty ImplementationsProperty = DependencyProperty.Register(nameof(Implementations), typeof(ObservableCollection<Implementation>), typeof(ImplementationsControl));
-        public ObservableCollection<Implementation> Implementations
+        public static readonly DependencyProperty ClassProperty = DependencyProperty.Register(nameof(ClassPath), typeof(string), typeof(ImplementationsControl), new PropertyMetadata(""));
+        public string ClassPath
         {
-            get => (ObservableCollection<Implementation>)GetValue(ImplementationsProperty);
+            get => (string)GetValue(ClassProperty);
+            set => SetValue(ClassProperty, value);
+        }
+
+        public static readonly DependencyProperty ImplementationsProperty = DependencyProperty.Register(nameof(Implementations), typeof(ObservableCollection<ImplementationElement>), typeof(ImplementationsControl));
+        public ObservableCollection<ImplementationElement> Implementations
+        {
+            get => (ObservableCollection<ImplementationElement>)GetValue(ImplementationsProperty);
             set => SetValue(ImplementationsProperty, value);
         }
 
@@ -43,25 +50,25 @@ namespace Faker.Api.UI
 
         private void AddBnt_Click(object sender, RoutedEventArgs e)
         {
-            var implementation = new Implementation();
-            if (ImplementationEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, implementation, true))
+            var implementation = new ImplementationElement();
+            if (ImplementationEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, ClassPath, implementation, true))
                 this.Implementations.Add(implementation);
         }
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-            ImplementationEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, (Implementation)ImplementationsList.SelectedValue, true);
+            ImplementationEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, ClassPath, (ImplementationElement)ImplementationsList.SelectedValue, true);
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.Implementations.Remove((Implementation)ImplementationsList.SelectedValue);
+            this.Implementations.Remove((ImplementationElement)ImplementationsList.SelectedValue);
         }
 
         private void ImplementationsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (ImplementationsList.SelectedValue != null)
-                ImplementationEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, (Implementation)ImplementationsList.SelectedValue, true);
+                ImplementationEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, ClassPath, (ImplementationElement)ImplementationsList.SelectedValue, true);
         }
     }
 }

@@ -30,12 +30,20 @@ namespace Faker.Api.UI
             get => (string?[])GetValue(AllPlatformsProperty);
             set => SetValue(AllPlatformsProperty, value);
         }
+        
+        public static readonly DependencyProperty FakerClassNameProperty = DependencyProperty.Register(nameof(FakerClassName), typeof(string), typeof(ImplementationEditorWindow));
+        public string FakerClassName
+        {
+            get => (string)GetValue(FakerClassNameProperty);
+            set => SetValue(FakerClassNameProperty, value);
+        }
 
 
-        public static bool Edit(string?[] platforms, Implementation implementation, bool allowPlatformChange)
+        public static bool Edit(string?[] platforms, string fakerClassPath, ImplementationElement implementation, bool allowPlatformChange)
         {
             var frm = new ImplementationEditorWindow();
-            frm.DataContext = new Implementation(implementation);
+            frm.FakerClassName = fakerClassPath;
+            frm.DataContext = new ImplementationElement(implementation);
             frm.PlatformCmb.IsReadOnly = allowPlatformChange = false;
             frm.AllPlatforms = platforms;
             if (frm.ShowDialog() != true)
@@ -44,7 +52,7 @@ namespace Faker.Api.UI
             return true;
         }
 
-        private Implementation Implementation => (Implementation)this.DataContext;
+        private ImplementationElement Implementation => (ImplementationElement)this.DataContext;
 
         private void OK_Click(object sender, RoutedEventArgs e)
         {

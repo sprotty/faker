@@ -26,7 +26,8 @@ namespace FakerNet
         private YamlFileLoader _yamlFileCache = new YamlFileLoader();
         private ReadOnlyCollection<IValueResolver> _fakeValuesList;
         private Dictionary<Type, Dictionary<Tuple<string, int>, MethodInfo>> _methodLookup = new Dictionary<Type, Dictionary<Tuple<string, int>, MethodInfo>>();
-        private Dictionary<Type, Dictionary<string, PropertyInfo>> _propertyLookup = new Dictionary<Type, Dictionary<string, PropertyInfo>>();
+        //private Dictionary<Type, Dictionary<string, PropertyInfo>> _propertyLookup = new Dictionary<Type, Dictionary<string, PropertyInfo>>();
+        private Dictionary<string, GeneratorBase> _propertyLookup = new Dictionary<string, GeneratorBase>();
         private Faker? _fakerEn = null;
 
         #region Constructor
@@ -41,8 +42,7 @@ namespace FakerNet
         {
 
         }
-
-        public Faker(Random random)
+         public Faker(Random random)
             : this(CultureInfo.CurrentCulture, random)
         {
 
@@ -50,12 +50,24 @@ namespace FakerNet
         private Faker(Faker faker)
             : this(CultureInfo.CurrentCulture, faker.Random)
         {
-            this._yamlFileCache = faker._yamlFileCache;
-            this._fakeValuesList = new ReadOnlyCollection<IValueResolver>(faker._fakeValuesList.TakeLast(1).ToList());
-            this._methodLookup = faker._methodLookup;
-            this._propertyLookup = faker._propertyLookup;
-            this.Locale = UtilityMethods.EnglishCulture;
-            this.Logger = faker.Logger;
+
+        }
+
+        private class FakerEnImpl : Faker
+        {
+            public FakerEnImpl(Faker faker)
+            : base(UtilityMethods.EnglishCulture, faker.Random)
+            {
+                this._yamlFileCache = faker._yamlFileCache;
+                this._fakeValuesList = new ReadOnlyCollection<IValueResolver>(faker._fakeValuesList.TakeLast(2).ToList());
+                this._methodLookup = faker._methodLookup;
+                this._propertyLookup = faker._propertyLookup;
+                this.Locale = UtilityMethods.EnglishCulture;
+                this.Logger = faker.Logger;
+            }
+            protected override void Init(CultureInfo locale)
+            {
+            }
         }
 
         #region Init
@@ -77,7 +89,7 @@ namespace FakerNet
         /// </remarks>
         [MemberNotNull(nameof(_fakeValuesList))]
         [MemberNotNull(nameof(Locale))]
-        private void Init(CultureInfo locale)
+        protected virtual void Init(CultureInfo locale)
         {
             if (locale == null) throw new ArgumentNullException("locale is required");
             //if (locale.Name == "es-AR")
@@ -93,35 +105,49 @@ namespace FakerNet
 
             //locale = normalizeLocale(locale);
 
-            CultureInfo[] locales = locale.GetLocaleChain();
-            List<IValueResolver> all = new List<IValueResolver>(locales.Length);
+            CultureInfo[] localeChain = locale.GetLocaleChain();
+            List<IValueResolver> resolverChain = new List<IValueResolver>(localeChain.Length);
 
-            foreach (CultureInfo l in locales)
+            foreach (CultureInfo l in localeChain)
             {
                 bool isEnglish = l.Equals(UtilityMethods.EnglishCulture);
-                if (isEnglish)
+
+                // this captures all the files in the sub folders (en/address.yml, ja/address.yml, zh-CN/bank.yml)
+                ValueGroupResolver fakeValuesGrouping = new ValueGroupResolver(_yamlFileCache, l);
+                resolverChain.Add(fakeValuesGrouping);
+
+                // this captures all the root locale specific files
+                string yamlFilename = l.Name + ".yml";
+                if (_yamlFileCache.ContainsYamlResourceFile(yamlFilename))
+                    resolverChain.Add(new YamlValueResolver(_yamlFileCache, l, yamlFilename, ""));
+            }
+
+
+            ScanClass(this);
+
+
+            this.Locale = locale;
+            this._fakeValuesList = resolverChain.AsReadOnly();
+
+            void ScanClass(object target)
+            {
+                foreach (PropertyInfo p in target.GetType().GetProperties())
                 {
-                    ValueGroupResolver fakeValuesGrouping = new ValueGroupResolver();
-                    foreach (EnFile file in EnFile.AllFiles)
+                    var fakerMethodAttr = p.GetCustomAttribute<FakerPropertyAttribute>();
+                    if (fakerMethodAttr != null && p.GetValue(target) is GeneratorBase generator)
                     {
-                        fakeValuesGrouping.add(new YamlValueResolver(_yamlFileCache, l, file.getFile(), file.getPath()));
+                        _propertyLookup.Add(generator.GetType().GetCustomAttribute<FakerGeneratorAttribute>().FakerGeneratorName, generator);
+                        ScanClass(generator);
                     }
-                    all.Add(fakeValuesGrouping);
-                }
-                else
-                {
-                    all.Add(new YamlValueResolver(_yamlFileCache, l));
                 }
             }
 
-            this.Locale = locale;
-            this._fakeValuesList = all.AsReadOnly();
         }
         #endregion
         #endregion
 
         public CultureInfo Locale { get; private set; }
-        internal Random Random { get; set; }
+        public Random Random { get; set; }
         internal ILogger Logger = Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
         /// <summary>
         /// Gets a faker instance in the 'en' locale.
@@ -135,7 +161,7 @@ namespace FakerNet
                     if (this._fakeValuesList.Count == 1)
                         _fakerEn = this;
                     else
-                        _fakerEn = new Faker(this);
+                        _fakerEn = new FakerEnImpl(this);
                 }
 
                 return _fakerEn;
@@ -154,7 +180,8 @@ namespace FakerNet
         /// <returns></returns>
         public Dictionary<object, object> FetchYamlMap(string key)
         {
-            Object? o = this.FetchYamlObject(key);
+            object? yamlContext = null;
+            Object? o = this.FetchYamlObject(key, ref yamlContext);
             if (o is not Dictionary<object, object> map)
                 throw new InvalidOperationException($"Could not fetch the list '{key}' for locale {Locale.Name}.");
             return map;
@@ -171,7 +198,8 @@ namespace FakerNet
         /// <returns></returns>
         public List<object> FetchYamlList(string key)
         {
-            Object? o = this.FetchYamlObject(key);
+            object? yamlContext = null;
+            Object? o = this.FetchYamlObject(key, ref yamlContext);
             if (o is not List<object> list)
                 throw new InvalidOperationException($"Could not fetch the list '{key}' for locale {Locale.Name}.");
             return list;
@@ -186,9 +214,9 @@ namespace FakerNet
         /// </summary>
         /// <param name="key">the key to fetch from the YML structure.</param>
         /// <returns></returns>
-        public bool TryFetchYamlValue(string key, [NotNullWhen(true)] out string? result, [NotNullWhen(false)] out Exception? e)
+        public bool TryFetchYamlValue(string key, ref object? yamlContext, [NotNullWhen(true)] out string? result, [NotNullWhen(false)] out Exception? e)
         {
-            Object? o = this.FetchYamlObject(key);
+            Object? o = this.FetchYamlObject(key, ref yamlContext);
             if (o == null)
             {
                 result = null;
@@ -223,16 +251,24 @@ namespace FakerNet
                 return true;
             }
         }
-        public string? TryFetchYamlValue(string key)
+        public string? TryFetchYamlValue(string key, ref object? yamlContext)
         {
-            if (TryFetchYamlValue(key, out var result, out var e) == false)
+            if (TryFetchYamlValue(key, ref yamlContext, out var result, out var e) == false)
                 return null;
+            else
+                return result;
+        }
+        public string FetchYamlValue(string key, ref object? yamlContext)
+        {
+            if (TryFetchYamlValue(key, ref yamlContext, out var result, out var e) == false)
+                throw e;
             else
                 return result;
         }
         public string FetchYamlValue(string key)
         {
-            if (TryFetchYamlValue(key, out var result, out var e) == false)
+            object? yamlContext = null; 
+            if (TryFetchYamlValue(key, ref yamlContext, out var result, out var e) == false)
                 throw e;
             else
                 return result;
@@ -244,12 +280,13 @@ namespace FakerNet
         /// </summary>
         /// <param name="key">key key contains path to an object. Path segment is separated by dot.E.g.name.first_name</param>
         /// <returns></returns>
-        private Object? FetchYamlObject(string key)
+        private Object? FetchYamlObject(string key, ref object? yamlContext)
         {
             string[] path = key.Split('\\', '.');
 
             Object? result = null;
-            foreach (IValueResolver fakeValuesInterface in this._fakeValuesList)
+            object currentYamlConext = null;
+            foreach (object fakeValuesInterface in this._fakeValuesList.Append(yamlContext).Where(r=>r != null))
             {
                 Object? currentValue = fakeValuesInterface;
                 for (int p = 0; currentValue != null && p < path.Length; p++)
@@ -257,10 +294,12 @@ namespace FakerNet
                     string currentPath = path[p];
                     if (currentValue is Dictionary<object, object> map)
                     {
+                        currentYamlConext = map;
                         map.TryGetValue(currentPath, out currentValue);
                     }
                     else if (currentValue is IValueResolver values)
                     {
+                        currentYamlConext = values;
                         currentValue = values[currentPath];
                     }
                     else
@@ -274,6 +313,8 @@ namespace FakerNet
                     break;
                 }
             }
+            if (result != null)
+                yamlContext = currentYamlConext;
             return result;
         }
         #endregion
@@ -337,19 +378,19 @@ namespace FakerNet
                 _methodLookup[targetObject.GetType()] = methodMap;
             }
 
-            if (_propertyLookup.TryGetValue(targetObject.GetType(), out var propertyMap) == false)
-            {
-                propertyMap = new();
+            //if (_propertyLookup.TryGetValue(targetObject.GetType(), out var propertyMap) == false)
+            //{
+            //    propertyMap = new();
 
-                foreach (PropertyInfo p in targetObject.GetType().GetProperties())
-                {
-                    var fakerMethodAttr = p.GetCustomAttribute<FakerMethodAttribute>();
-                    if (fakerMethodAttr != null)
-                        propertyMap.Add(fakerMethodAttr.FakerMethodName, p);
-                }
+            //    foreach (PropertyInfo p in targetObject.GetType().GetProperties())
+            //    {
+            //        var fakerMethodAttr = p.GetCustomAttribute<FakerMethodAttribute>();
+            //        if (fakerMethodAttr != null)
+            //            propertyMap.Add(fakerMethodAttr.FakerMethodName, p);
+            //    }
 
-                _propertyLookup[targetObject.GetType()] = propertyMap;
-            }
+            //    _propertyLookup[targetObject.GetType()] = propertyMap;
+            //}
 
             if (methodMap.TryGetValue(new(rubyMethodName, methodArgs.Count), out var method))
             {
@@ -359,7 +400,7 @@ namespace FakerNet
                 else
                     return new InvokableNativeMethod(method, coercedArguments.ToArray());
             }
-            else if (propertyMap.TryGetValue(rubyMethodName, out var propertyInfo))
+            else if (_propertyLookup.TryGetValue(rubyMethodName, out var propertyInfo))
             {
                 Debug.Assert(methodArgs.Count == 0);
                 return new InvokableNativeProperty(propertyInfo);
@@ -452,37 +493,34 @@ namespace FakerNet
         /// <exception cref="Exception">if there's a problem invoking the method or it doesn't exist.</exception>
         internal string? ResolveFakerObjectAndMethod(string key, List<string> args)
         {
-            string[] classAndMethod = key.Split('.');
-            // wrong number of parts to be a [class name].[method]
-            if (classAndMethod.Length != 2)
+            int split = key.LastIndexOf(".");
+            if (split == -1)
                 return null;
 
-            //try
-            //{
-            string fakerMethodName = classAndMethod[0].Replace("_", "");
-            List<string> arguments = new List<string>();
-            IInvokableNativeMember? fakerAccessor = BuildInvokableNativeMember(this, fakerMethodName, arguments);
-            if (fakerAccessor == null)
-            {
-                Logger.Warning($"Can't find top level faker object named {fakerMethodName}.");
-                return null;
-            }
-            Object? objectWithMethodToInvoke = fakerAccessor.Invoke(this);
-            string nestedMethodName = classAndMethod[1];//.Replace("_", "");
-            IInvokableNativeMember? accessor = BuildInvokableNativeMember(objectWithMethodToInvoke, nestedMethodName, args);
-            if (accessor == null)
-            {
-                Logger.Information($"Failed to find method on {objectWithMethodToInvoke.GetType().Name} called '{nestedMethodName}'.");
-                return null;
-            }
-
-            return accessor.Invoke(objectWithMethodToInvoke)?.ToString();
-            //}
-            //catch (Exception e)
-            //{
-            //    _log.Error($"Failed to evaluate expression '{key}'.", e);
+            string classPath = key.Substring(0, split );
+            string propertyName = key.Substring(split + 1);
+            //// wrong number of parts to be a
+            ////      [class name].[method]
+            ////      [class name].[class name].[method]
+            //if (classAndMethod.ind.Length < 2)
             //    return null;
-            //}
+
+            //string nativePropertyName = rubyPropertyName.Replace("_", "");
+            IInvokableNativeMember? propertyInfo = BuildInvokableNativeMember(this, classPath, new List<string>());
+            if (propertyInfo == null)
+            {
+                Logger.Warning($"Can't find property ruby object {classPath} on {this.GetType().Name}.");
+                return null;
+            }
+            object target = propertyInfo.Invoke(this)!;
+
+            IInvokableNativeMember? methodInfo = BuildInvokableNativeMember(target, propertyName, args);
+            if (methodInfo == null)
+            {
+                Logger.Information($"Failed to find ruby method {propertyName}({args.Count} args) on {target.GetType().Name}.");
+                return null;
+            }
+            return methodInfo.Invoke(target)?.ToString();
         }
         #endregion
 
@@ -549,16 +587,16 @@ namespace FakerNet
         }
         private class InvokableNativeProperty : IInvokableNativeMember
         {
-            private PropertyInfo _property;
+            private GeneratorBase _property;
 
-            public InvokableNativeProperty(PropertyInfo p)
+            public InvokableNativeProperty(GeneratorBase p)
             {
                 this._property = p ?? throw new ArgumentNullException("method cannot be null");
             }
 
             public object? Invoke(Object on)
             {
-                return _property.GetValue(on);
+                return _property;//.GetValue(on);
             }
         }
         #endregion

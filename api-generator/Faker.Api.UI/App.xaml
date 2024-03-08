@@ -14,6 +14,8 @@
         <local:EqualsVisibilityConverter x:Key="EqualsVisibilityConverter" />
         <local:NotEqualsVisibilityConverter x:Key="NotEqualsVisibilityConverter" />
         <local:IsNullOrWhiteSpaceVisibilityConverter x:Key="IsNullOrWhiteSpaceVisibilityConverter"/>
+        <local:SampleDataConverter x:Key="SampleDataConverter"/>
+        <local:GetClassPathConverter x:Key="GetClassPathConverter"/>        
 
         <sys:String x:Key="NullPlatformText">All Platforms</sys:String>
         <sys:String x:Key="ImplementationTypeResolve">Resolve</sys:String>

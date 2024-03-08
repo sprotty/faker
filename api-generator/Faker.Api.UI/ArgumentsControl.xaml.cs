@@ -26,10 +26,10 @@ namespace Faker.Api.UI
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty ArgumentsProperty = DependencyProperty.Register(nameof(Arguments), typeof(ObservableCollection<Argument>), typeof(ArgumentsControl));
-        public ObservableCollection<Argument> Arguments
+        public static readonly DependencyProperty ArgumentsProperty = DependencyProperty.Register(nameof(Arguments), typeof(ObservableCollection<ArgumentModel>), typeof(ArgumentsControl));
+        public ObservableCollection<ArgumentModel> Arguments
         {
-            get => (ObservableCollection<Argument>)GetValue(ArgumentsProperty);
+            get => (ObservableCollection<ArgumentModel>)GetValue(ArgumentsProperty);
             set => SetValue(ArgumentsProperty, value);
         }
 
@@ -49,24 +49,24 @@ namespace Faker.Api.UI
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            var argument = new Argument();
+            var argument = new ArgumentModel();
             if (ArgumentEditorWindow.Edit(CurrentPlatform, AllTypes, argument))
                 this.Arguments.Add(argument);
         }
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-            ArgumentEditorWindow.Edit(CurrentPlatform, AllTypes, (Argument)ArgumentsList.SelectedValue);
+            ArgumentEditorWindow.Edit(CurrentPlatform, AllTypes, (ArgumentModel)ArgumentsList.SelectedValue);
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.Arguments.Remove((Argument)ArgumentsList.SelectedValue);
+            this.Arguments.Remove((ArgumentModel)ArgumentsList.SelectedValue);
         }
 
         private void ArgumentsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ArgumentEditorWindow.Edit(CurrentPlatform, AllTypes, (Argument)ArgumentsList.SelectedValue);
+            ArgumentEditorWindow.Edit(CurrentPlatform, AllTypes, (ArgumentModel)ArgumentsList.SelectedValue);
         }
     }
 }

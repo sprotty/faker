@@ -24,7 +24,7 @@ namespace Faker.Api.UI
         public ExamplesControl()
         {
             InitializeComponent();
-            ExamplesList.Items.Filter = (o) => o is Example ex && (ex.Platform == null || ex.Platform == CurrentPlatform);
+            ExamplesList.Items.Filter = (o) => o is Example ex && (ex.Platform == FakerModel.AllPlatformsLiteral || ex.Platform == CurrentPlatform);
         }
 
         public static readonly DependencyProperty ExamplesProperty = DependencyProperty.Register(nameof(Examples), typeof(ObservableCollection<Example>), typeof(ExamplesControl));

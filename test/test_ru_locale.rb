@@ -12,6 +12,7 @@ class TestRuLocale < Test::Unit::TestCase
   end
 
   def test_ru_address_methods
+    assert Faker::Address.street_name.is_a? String
     assert Faker::Address.country.is_a? String
     assert Faker::Address.building_number.is_a? String
     assert Faker::Address.street_suffix.is_a? String

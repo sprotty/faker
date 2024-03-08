@@ -49,10 +49,10 @@ namespace Faker.Api.UI
 
 
 
-        public static bool Edit(string currentPlatform, string[] allTypes, Argument argument)
+        public static bool Edit(string currentPlatform, string[] allTypes, ArgumentModel argument)
         {
             var frm = new ArgumentEditorWindow();
-            frm.DataContext = new Argument(argument);
+            frm.DataContext = new ArgumentModel(argument);
             frm.AllPlatforms = new string[] { FakerModel.AllPlatformsLiteral, currentPlatform }; ;
             frm.AllTypes = allTypes;
             frm.CurrentPlatform = currentPlatform;
@@ -62,7 +62,7 @@ namespace Faker.Api.UI
             return true;
         }
 
-        private Argument Argument => (Argument)this.DataContext;
+        private ArgumentModel Argument => (ArgumentModel)this.DataContext;
 
         private void OK_Click(object sender, RoutedEventArgs e)
         {

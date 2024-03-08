@@ -188,7 +188,10 @@ namespace FakerNet
         internal Faker FakerEn => Faker.FakerEn;
 
         #region EvaluateExpression
-        public string EvaluateExpression(string expression) => EvaluateExpression(expression, this);
+        public string EvaluateExpression(string expression)
+        {
+            return EvaluateExpression(expression, this, null);
+        }
 
         /// <summary>
         /// processes a expression in the style #{X.y} using the current objects as the 'current' location
@@ -211,7 +214,7 @@ namespace FakerNet
         /// <remarks>
         /// Recursive templates are supported.  if "#{x}" resolves to "#{Address.streetName}" then "#{x}" resolves to
         /// {@link Faker#address()}'s {@link Address#streetName()}.
-        public string EvaluateExpression(string expression, object current)
+        public string EvaluateExpression(string expression, object generatorContext, object? yamlContext)
         {
             MatchCollection matches;
             string result = expression;
@@ -222,6 +225,7 @@ namespace FakerNet
 
                 foreach (Match match in matches)
                 {
+                    object? yamlExprContext = yamlContext;
                     string escapedDirective = match.Groups[0].Value;
                     string directive = match.Groups[1].Value;
                     string arguments = match.Groups[2].Value;
@@ -230,18 +234,19 @@ namespace FakerNet
                     foreach (Match argMatch in argsMatcher)
                     {
                         string argExpr = argMatch.Groups[1].Value;
-                        string argValue = EvaluateExpression(argExpr, current);
+                        object? yamlArgContext = yamlContext;
+                        string argValue = EvaluateExpression(argExpr, generatorContext, yamlArgContext);
                         args.Add(argValue);
                     }
 
                     // resolve the expression and reprocess it to handle recursive templates
-                    string? resolved = EvaluateExpression(directive, args, current/*, root*/);
+                    string? resolved = EvaluateExpression(directive, args, generatorContext, ref yamlExprContext);
                     if (resolved == null)
                     {
                         throw new InvalidOperationException("Unable to resolve " + escapedDirective + " directive.");
                     }
 
-                    resolved = EvaluateExpression(resolved, current/*, root*/);
+                    resolved = EvaluateExpression(resolved, generatorContext, yamlExprContext);
                     result = result.ReplaceFirst(escapedDirective, resolved);
                 }
             } while (matches.Count > 0);
@@ -253,7 +258,7 @@ namespace FakerNet
         /// </summary>
         /// <param name="expression"></param>
         /// <param name="methodArgs"></param>
-        /// <param name="current"></param>
+        /// <param name="generatorContext"></param>
         /// <param name="root"></param>
         /// <returns>null if unable to resolve</returns>
         /// <remarks>
@@ -265,21 +270,21 @@ namespace FakerNet
         /// <li>Search for keys in yaml file by transforming object reference to yaml reference</li>
         /// </ul>
         /// </remarks>
-        private string? EvaluateExpression(string expression, List<string> methodArgs, object current)
+        private string? EvaluateExpression(string expression, List<string> methodArgs, object generatorContext, ref object? yamlContext)
         {
             //            throw new TodoException();
             // name.name (resolve locally)
             // Name.first_name (resolve to faker.name().firstName())
-            string simpleDirective = IsDotDirective(expression) || current == null
+            string simpleDirective = IsDotDirective(expression) || yamlContext != null
                                         ? expression
-                                        : ClassNameToYamlName(current) + "." + expression;
+                                        : ClassNameToYamlName(generatorContext) + "." + expression;
 
             string? resolved = null;
             // resolve method references on CURRENT object like #{number_between '1','10'} on Number or
             // #{ssn_valid} on IdNumber
             if (!IsDotDirective(expression))
             {
-                resolved = Faker.EvaluateUsingMethod(current, expression, methodArgs);
+                resolved = Faker.EvaluateUsingMethod(generatorContext, expression, methodArgs);
             }
 
             // simple fetch of a value from the yaml file. the directive may have been mutated
@@ -287,7 +292,7 @@ namespace FakerNet
             // car.wheel will be looked up in the YAML file.
             if (resolved == null)
             {
-                resolved = Faker.TryFetchYamlValue(simpleDirective);
+                resolved = Faker.TryFetchYamlValue(simpleDirective, ref yamlContext);
             }
 
             // resolve method references on faker object like #{regexify '[a-z]'}
@@ -309,7 +314,7 @@ namespace FakerNet
             // class.method_name (lowercase)
             if (resolved == null && IsDotDirective(expression))
             {
-                resolved = Faker.TryFetchYamlValue(NativeNameToYamlName(simpleDirective));
+                resolved = Faker.TryFetchYamlValue(NativeNameToYamlName(simpleDirective), ref yamlContext);
             }
 
             return resolved;
@@ -317,14 +322,18 @@ namespace FakerNet
         #endregion
 
         #region Resolve
-        public string ResolveYamlValue(string keyExpression) => ResolveYamlValue(keyExpression, this);
+        public string ResolveYamlValue(string keyExpression)
+        {
+            object? yamlContext = null;
+            return ResolveYamlValue(keyExpression, this, ref yamlContext);
+        }
 
         /// <summary>
         /// Resolves a key to an entry in the YAML files
         /// Any expressions within the key are resolved first, then the key is looked up.
         /// </summary>
         /// <param name="keyExpression">An expression that represents a key within the YAML files</param>
-        /// <param name="current"></param>
+        /// <param name="generatorContext"></param>
         /// <param name="root"></param>
         /// <returns></returns>
         /// <example>
@@ -332,13 +341,13 @@ namespace FakerNet
         ///     address.country_by_name.#{String.lower 'US'}
         /// </example>
         /// <exception cref="InvalidOperationException"></exception>
-        public string ResolveYamlValue(string keyExpression, object current)
+        public string ResolveYamlValue(string keyExpression, object generatorContext, ref object? yamlContext)
         {
-            string resolvedKey = EvaluateExpression(keyExpression, current);
+            string resolvedKey = EvaluateExpression(keyExpression, generatorContext, yamlContext);
 
-            string expression = Faker.FetchYamlValue(resolvedKey);
+            string expression = Faker.FetchYamlValue(resolvedKey, ref yamlContext);
 
-            return EvaluateExpression(expression, current/*, root*/);
+            return EvaluateExpression(expression, generatorContext, yamlContext);
         }
         #endregion
 

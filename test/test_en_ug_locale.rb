@@ -14,7 +14,7 @@ class TestEnUgLocale < Test::Unit::TestCase
 
   def test_en_ug_address_methods
     assert Faker::Address.default_country.is_a? String
-    assert Faker::Address.city_names.is_a? String
+    assert Faker::Address.city_name.is_a? String
     assert Faker::Address.district_names.is_a? String
     assert Faker::Address.regions.is_a? String
     assert Faker::Address.city.is_a? String
