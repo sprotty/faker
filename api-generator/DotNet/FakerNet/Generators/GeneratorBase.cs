@@ -20,7 +20,7 @@ namespace FakerNet
     /// </summary>
     public class GeneratorBase
     {
-        private static readonly Regex EXPRESSION_PATTERN = new Regex("#\\{([a-z0-9A-Z_.]+)\\s?((?:,?'([^']+)')*)\\}", RegexOptions.Compiled);
+        private static readonly Regex EXPRESSION_PATTERN = new Regex("#\\{([a-z0-9A-Z_.]+)\\s?((?:,?\\s*'([^']+)')*)\\}", RegexOptions.Compiled);
         private static readonly Regex EXPRESSION_ARGUMENTS_PATTERN = new Regex("(?:'(.*?)')", RegexOptions.Compiled);
         private static readonly Regex EXPRESSION_JAVA_TO_YML_NAME_PATTERN = new Regex("([A-Z])", RegexOptions.Compiled);
 

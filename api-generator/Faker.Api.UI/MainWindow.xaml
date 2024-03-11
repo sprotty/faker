@@ -45,10 +45,10 @@
                 <TextBlock DockPanel.Dock="Top" FontSize="15" FontWeight="Bold">Classes</TextBlock>
                 <TreeView Name="ClassTree" ItemsSource="{Binding Path=Classes}" Drop="ClassTree_Drop" DragOver="ClassTree_DragOver" AllowDrop="True" PreviewMouseMove="ClassTree_PreviewMouseMove" PreviewMouseLeftButtonDown="ClassTree_PreviewMouseLeftButtonDown">
                     <TreeView.Resources>
-                        <HierarchicalDataTemplate DataType="{x:Type api:ClassElement}" ItemsSource="{Binding Classes}">
+                        <HierarchicalDataTemplate DataType="{x:Type api:ClassModel}" ItemsSource="{Binding Classes}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="/WpfTutorialSamples;component/Images/group.png" Margin="0,0,5,0" />
-                                <TextBlock Text="{Binding Name}" />
+                                <TextBlock Text="{Binding Name}" Foreground="{Binding ExcludeCs, Converter={StaticResource ClassColorConverter}}" />
                             </StackPanel>
                         </HierarchicalDataTemplate>
                     </TreeView.Resources>
@@ -62,7 +62,7 @@
                 <ListBox Name="MethodList" ItemsSource="{Binding ElementName=ClassTree, Path=SelectedValue.Methods}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text="{Binding Name}"  Foreground="{Binding ExcludeCs, Converter={StaticResource ClassColorConverter}}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ContextMenu>
@@ -143,6 +143,112 @@
                                  Text="{Binding ElementName=MethodList, Path=SelectedValue.ReturnDesc, Mode=TwoWay}"
                                  TextWrapping="Wrap" Height="60" AcceptsReturn="True" />
 
+                        <CheckBox Margin="0,3,0,7" IsChecked="{Binding ElementName=MethodList, Path=SelectedValue.UsesLocale, Mode=TwoWay}">
+                            Uses locale (false if changing the locale has no effect)
+                        </CheckBox>
+                        <CheckBox Margin="0,3,0,7" IsChecked="{Binding ElementName=MethodList, Path=SelectedValue.Private, Mode=TwoWay}">
+                            'private' in API
+                        </CheckBox>
+                        <CheckBox  Margin="0,3,0,7" IsChecked="{Binding ElementName=MethodList,Path=SelectedValue.ExcludeCs, Mode=TwoWay}">
+                            Excluded In C#
+                        </CheckBox>
+
+                        <TextBlock>Arguments</TextBlock>
+                        <local:ArgumentsControl Margin="15,3,0,7"
+                                        Arguments="{Binding ElementName=MethodList, Path=SelectedValue.Arguments}" 
+                                        AllTypes="{Binding ElementName=window, Path=AllTypes}"
+                                        CurrentPlatform="{Binding ElementName=PlatformCmb, Path=SelectedValue}"/>
+
+                        <TextBlock>Implementations</TextBlock>
+                        <local:ImplementationsControl Margin="15,3,0,7"
+                                        Implementations="{Binding ElementName=MethodList, Path=SelectedValue.Implementations}" 
+                                        CurrentPlatform="{Binding ElementName=PlatformCmb, Path=SelectedValue}">
+                            <local:ImplementationsControl.ClassPath>
+                                <MultiBinding Converter="{StaticResource GetClassPathConverter}" >
+                                    <Binding ElementName="ClassTree" Mode="OneWay"/>
+                                    <Binding ElementName="ClassTree" Path="SelectedValue" Mode="OneWay"/>
+                                </MultiBinding>
+                            </local:ImplementationsControl.ClassPath>
+                        </local:ImplementationsControl>
+
+                        <TextBlock>Examples</TextBlock>
+                        <local:ExamplesControl Margin="15,3,0,7"
+                                        Examples="{Binding ElementName=MethodList, Path=SelectedValue.Examples}" 
+                                        CurrentPlatform="{Binding ElementName=PlatformCmb, Path=SelectedValue}"/>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
+
+            <DockPanel Grid.Column="4" 
+                       Margin="5"
+                       Visibility="{Binding ElementName=MethodList, Path=SelectedValue, Converter={StaticResource NotNullVisibilityConverter}}" >
+                <TextBlock DockPanel.Dock="Top" FontSize="15" FontWeight="Bold">Method Definition</TextBlock>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Vertical" Margin="10" >
+
+                        <TextBlock>Name</TextBlock>
+                        <TextBox  Margin="15,3,0,7" Text="{Binding ElementName=ClassTree,Path=SelectedItem.Name, Mode=TwoWay}"></TextBox>
+
+                        <TextBlock>Ruby Qualified Name (only needed if the YAML file has a different name to its position in the tree)</TextBlock>
+                        <TextBox  Margin="15,3,0,7" Text="{Binding ElementName=ClassTree,Path=SelectedItem.RubyQualifiedName, Mode=TwoWay}"></TextBox>
+
+                        <CheckBox  Margin="15,3,0,7" IsChecked="{Binding ElementName=ClassTree,Path=SelectedItem.ExcludeCs, Mode=TwoWay}">Excluded In C#</CheckBox>
+
+                        <!--<TextBlock>New in Version</TextBlock>
+                        <TextBox  Margin="15,3,0,7" Text="{Binding ElementName=MethodList,Path=SelectedValue.VersionIntroduced, Mode=TwoWay}"></TextBox>
+
+                        <TextBlock >Method Description (All Platforms)</TextBlock>
+                        <TextBox  Margin="15,3,0,7"
+                         TextWrapping="Wrap" Height="60" AcceptsReturn="True" >
+                            <TextBox.Text>
+                                <MultiBinding Converter="{StaticResource DescriptionConverter}" >
+                                    <Binding Source="{StaticResource NullPlatformText}" Mode="OneWay"/>
+                                    <Binding ElementName="MethodList" Path="SelectedValue.Descriptions" Mode="TwoWay"/>
+                                </MultiBinding>
+                            </TextBox.Text>
+                        </TextBox>
+
+                        <TextBlock>Method Description (<TextBlock Text="{Binding ElementName=PlatformCmb, Path=SelectedValue}"/>)</TextBlock>
+                        <Grid Margin="15,3,0,7">
+                            <TextBox Name="PlatformDesc"
+                             Padding="5"
+                             TextWrapping="Wrap" Height="60" AcceptsReturn="True">
+                                <TextBox.Text>
+                                    <MultiBinding Converter="{StaticResource DescriptionConverter}" >
+                                        <Binding ElementName="PlatformCmb" Path="SelectedValue" Mode="OneWay"/>
+                                        <Binding ElementName="MethodList" Path="SelectedValue.Descriptions" Mode="TwoWay"/>
+                                    </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
+                            <TextBlock IsHitTestVisible="False" 
+                               Padding="5"
+                               Text="Default Description will be used" 
+                               HorizontalAlignment="Left" Margin="0,0,0,0" Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=PlatformDesc}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+
+                        <TextBlock>Return Value Type</TextBlock>
+                        <ComboBox Margin="15,3,0,7"
+                          ItemsSource="{Binding ElementName=window, Path=AllTypes}" 
+                          SelectedValue="{Binding ElementName=MethodList, Path=SelectedValue.ReturnType, Mode=TwoWay}">
+                        </ComboBox>
+
+                        <TextBlock >Return Description</TextBlock>
+                        <TextBox Margin="15,3,0,7"
+                                 Text="{Binding ElementName=MethodList, Path=SelectedValue.ReturnDesc, Mode=TwoWay}"
+                                 TextWrapping="Wrap" Height="60" AcceptsReturn="True" />
+
                         <CheckBox Margin="0,3,0,7" IsChecked="{Binding ElementName=MethodList, Path=SelectedValue.Hidden, Mode=TwoWay}">
                             Hide in public API
                         </CheckBox>
@@ -172,11 +278,12 @@
                         <TextBlock>Examples</TextBlock>
                         <local:ExamplesControl Margin="15,3,0,7"
                                         Examples="{Binding ElementName=MethodList, Path=SelectedValue.Examples}" 
-                                        CurrentPlatform="{Binding ElementName=PlatformCmb, Path=SelectedValue}"/>
+                                        CurrentPlatform="{Binding ElementName=PlatformCmb, Path=SelectedValue}"/>-->
 
                     </StackPanel>
                 </ScrollViewer>
             </DockPanel>
+
         </Grid>
 
     </DockPanel>

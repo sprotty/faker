@@ -35,8 +35,8 @@ namespace Faker.Api.UI
 
             MultiBinding multiBinding = new MultiBinding();
             multiBinding.Converter = new AllTypesConverter();
-            multiBinding.Bindings.Add(new Binding(nameof(Root.Types)) { });
-            multiBinding.Bindings.Add(new Binding(nameof(Root.Enums)) { });
+            multiBinding.Bindings.Add(new Binding(nameof(RootModel.Types)) { });
+            multiBinding.Bindings.Add(new Binding(nameof(RootModel.Enums)) { });
             this.SetBinding(MainWindow.AllTypesProperty, multiBinding);
             //            < !--< Window.AllTypes >
             //    < MultiBinding Converter = "{StaticResource AllTypesConverter}" Mode = "OneWay" >
@@ -55,7 +55,7 @@ namespace Faker.Api.UI
 
         public string[] AllPlatforms { get; } = new string[] { "C#", "Ruby" };
         //public string[] AllTypes { get; } = new string[] { "String", "Integer", "Float", "Boolean" };
-        public Root? Faker => (Root)this.DataContext;
+        public RootModel? Faker => (RootModel)this.DataContext;
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -86,7 +86,7 @@ namespace Faker.Api.UI
         {
             using (var jtr = new FileStream(filename, FileMode.Open))
             {
-                Root? jFaker = JsonSerializer.Deserialize<Root>(jtr, new JsonSerializerOptions() { ReadCommentHandling = JsonCommentHandling.Skip });
+                RootModel? jFaker = JsonSerializer.Deserialize<RootModel>(jtr, new JsonSerializerOptions() { ReadCommentHandling = JsonCommentHandling.Skip });
                 this.DataContext = jFaker;
                 this._openFilename = filename;
 
@@ -265,7 +265,7 @@ namespace Faker.Api.UI
         {
             if (this.DataContext != null && _openFilename != null)
             {
-                string json = JsonSerializer.Serialize<Root>((Root)this.DataContext, new JsonSerializerOptions()
+                string json = JsonSerializer.Serialize<RootModel>((RootModel)this.DataContext, new JsonSerializerOptions()
                 {
                     ReadCommentHandling = JsonCommentHandling.Skip,
                     WriteIndented = true,
@@ -332,7 +332,7 @@ namespace Faker.Api.UI
 
 
 
-            void ValidateClass(string clsParentPath, ClassElement clsEntry)
+            void ValidateClass(string clsParentPath, ClassModel clsEntry)
             {
                 string clsQname = clsParentPath + clsEntry.Name;
                 string clsPath = clsParentPath + clsEntry.Name + ".";
@@ -379,7 +379,7 @@ namespace Faker.Api.UI
 
         private void MethodsMenuItem_New_Click(object sender, RoutedEventArgs e)
         {
-            if (this.ClassTree.SelectedItem is ClassElement parentClass)
+            if (this.ClassTree.SelectedItem is ClassModel parentClass)
             {
                 MethodModel methodToAdd = new MethodModel()
                 {
@@ -391,7 +391,7 @@ namespace Faker.Api.UI
         }
         private void MethodsMenuItem_Delete_Click(object sender, RoutedEventArgs e)
         {
-            if (this.MethodList.SelectedItem is MethodModel methodToDelete && this.ClassTree.SelectedItem is ClassElement parentClass)
+            if (this.MethodList.SelectedItem is MethodModel methodToDelete && this.ClassTree.SelectedItem is ClassModel parentClass)
             {
                 parentClass.Methods.Remove(methodToDelete);
             }
@@ -402,8 +402,8 @@ namespace Faker.Api.UI
         private void ClassTree_Drop(object sender, DragEventArgs e)
         {
             var screenPos = e.GetPosition(this.ClassTree); ;
-            var sourceCls = (ClassElement)e.Data.GetData("inadt");
-            var targetCls = GetItemAtLocation<ClassElement>(screenPos);
+            var sourceCls = (ClassModel)e.Data.GetData("inadt");
+            var targetCls = GetItemAtLocation<ClassModel>(screenPos);
             if (targetCls == null)
                 return;
 
@@ -417,7 +417,7 @@ namespace Faker.Api.UI
             targetCls.Classes.Add(sourceCls);
         }
 
-        public ClassElement? GetParentClass(ClassElement cls)
+        public ClassModel? GetParentClass(ClassModel cls)
         {
             if (this.Faker == null || this.Faker.Classes.Contains(cls))
                 return null;
@@ -444,8 +444,8 @@ namespace Faker.Api.UI
         private void ClassTree_DragOver(object sender, DragEventArgs e)
         {
             var screenPos = e.GetPosition(this.ClassTree);
-            var sourceCls = (ClassElement)e.Data.GetData("inadt");
-            var targetCls = GetItemAtLocation<ClassElement>(screenPos);
+            var sourceCls = (ClassModel)e.Data.GetData("inadt");
+            var targetCls = GetItemAtLocation<ClassModel>(screenPos);
             if (GetParentClass(targetCls) != null || targetCls == sourceCls)
                 e.Effects = DragDropEffects.None;
             else
@@ -479,7 +479,7 @@ namespace Faker.Api.UI
 
         private void StartDrag(MouseEventArgs e)
         {
-            ClassElement cls = (ClassElement)this.ClassTree.SelectedValue;
+            ClassModel cls = (ClassModel)this.ClassTree.SelectedValue;
             if (cls == null || cls.Classes.Count > 0)
                 return;
 
@@ -501,13 +501,13 @@ namespace Faker.Api.UI
         #endregion
     }
 
-    public class TestRoot : Root
+    public class TestRoot : RootModel
     {
         public TestRoot()
         {
             using (var jtr = new FileStream(@"C:\SourceCode\faker\api-generator\faker_api_metadata.json", FileMode.Open))
             {
-                var tmpRoot = JsonSerializer.Deserialize<Root>(jtr, new JsonSerializerOptions() { ReadCommentHandling = JsonCommentHandling.Skip });
+                var tmpRoot = JsonSerializer.Deserialize<RootModel>(jtr, new JsonSerializerOptions() { ReadCommentHandling = JsonCommentHandling.Skip });
                 this.Classes = tmpRoot.Classes;
                 this.Types = tmpRoot.Types;
             }

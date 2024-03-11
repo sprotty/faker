@@ -8,7 +8,7 @@
         xmlns:api="clr-namespace:Faker.Api"
         mc:Ignorable="d"
         x:Name="window"
-        d:DataContext="{d:DesignInstance Type=api:ImplementationElement, IsDesignTimeCreatable=False}"
+        d:DataContext="{d:DesignInstance Type=api:ImplementationModel, IsDesignTimeCreatable=False}"
         Title="ImplementationEditorWindow" Height="650" Width="1024">
     <Window.Resources>
         <local:ImplementationDataDescConverter x:Key="ImplementationDataDescConverter"/>

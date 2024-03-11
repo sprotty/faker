@@ -27,6 +27,18 @@ namespace Faker.Api.UI
             throw new NotImplementedException();
         }
     }
+    public class NotNullVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value == null ? Visibility.Visible: Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public class IsNullOrWhiteSpaceVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -136,13 +148,13 @@ namespace Faker.Api.UI
     }
     public class DescriptionConverter : IMultiValueConverter
     {
-        IList<DescriptionElement>? _descriptions;
+        IList<DescriptionModel>? _descriptions;
         private string? _platform;
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             string? platform = values[0] as string;
-            if (values[1] is IList<DescriptionElement> descriptions)
+            if (values[1] is IList<DescriptionModel> descriptions)
             {
                 _descriptions = descriptions;
                 _platform = platform;
@@ -164,7 +176,7 @@ namespace Faker.Api.UI
             if (entry == null && string.IsNullOrWhiteSpace(text) == false)
             {
                 // create entry
-                _descriptions.Add(new DescriptionElement() { Platform = _platform, Text = text });
+                _descriptions.Add(new DescriptionModel() { Platform = _platform, Text = text });
             }
             else if (string.IsNullOrWhiteSpace(text))
             {
@@ -189,14 +201,15 @@ namespace Faker.Api.UI
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values[0] is ObservableCollection<TypeElement> types &&
-                values[1] is ObservableCollection<EnumElement> enums)
+            if (values[0] is ObservableCollection<TypeModel> types &&
+                values[1] is ObservableCollection<EnumModel> enums)
             {
                 List<string> allTypes = new List<string>();
                 allTypes.Add("String");
                 allTypes.Add("Integer");
                 allTypes.Add("Float");
                 allTypes.Add("Boolean");
+                allTypes.Add("Binary");
                 allTypes.Add("IntegerRange");
                 allTypes.Add("DoubleRange");
                 allTypes.AddRange(types.Select(t => t.Name));
@@ -249,23 +262,22 @@ namespace Faker.Api.UI
 
                 void AppendLocaleSet(CultureInfo locale)
                 {
-                    throw new TodoException();
-                    //var faker = new FakerNet.Faker(locale);
-                    //GeneratorBase? generator = null;
-                    //object? generatorContainer = faker;
-                    //foreach (var genName in fakerClassPath.Split('/'))
-                    //{
-                    //    generator = (GeneratorBase)generatorContainer
-                    //        .GetType()
-                    //        .GetProperties()
-                    //        .First(p => p.GetCustomAttribute<FakerPropertyAttribute>()?.FakerMethodName == genName).GetValue(generatorContainer);
-                    //    generatorContainer = generator;
-                    //}
-                    ////var localeInst = new MySampleFakerGen();
-                    //sb.AppendLine();
-                    //sb.AppendLine($"Locale ({faker.Locale.Name})");
-                    //for (int i = 0; i < 5; i++)
-                    //    sb.AppendLine(GetFakerValue(generator, implType, data, charSubst, digitSubs, translate));
+                    var faker = new FakerNet.Faker(locale);
+                    GeneratorBase? generator = null;
+                    object? generatorContainer = faker;
+                    foreach (var genName in fakerClassPath.Split('/'))
+                    {
+                        generator = (GeneratorBase)generatorContainer
+                            .GetType()
+                            .GetProperties()
+                            .First(p => p.PropertyType.GetCustomAttribute<FakerGeneratorAttribute>()?.FakerGeneratorName == genName).GetValue(generatorContainer);
+                        generatorContainer = generator;
+                    }
+                    //var localeInst = new MySampleFakerGen();
+                    sb.AppendLine();
+                    sb.AppendLine($"Locale ({faker.Locale.Name})");
+                    for (int i = 0; i < 5; i++)
+                        sb.AppendLine(GetFakerValue(generator, implType, data, charSubst, digitSubs, translate));
                 }
                 return sb.ToString();
             }
@@ -329,15 +341,15 @@ namespace Faker.Api.UI
         {
             if (values[0] is TreeView treeView)
             {
-                ClassElement? cls = values[1] as ClassElement;
+                ClassModel? cls = values[1] as ClassModel;
                 if (cls == null)
                     return "";
 
                 var tvi = treeView.ItemContainerGenerator.ContainerFromItemRecursive(cls) as TreeViewItem;
-                if (tvi != null && treeView.ItemContainerGenerator.ItemFromContainer(GetSelectedTreeViewItemParent(tvi)) is ClassElement parentCls)
+                if (tvi != null && treeView.ItemContainerGenerator.ItemFromContainer(GetSelectedTreeViewItemParent(tvi)) is ClassModel parentCls)
                     return parentCls.Name + "/" + cls.Name;
                 else
-                return cls.Name;
+                    return cls.Name;
             }
             else
             {
@@ -362,5 +374,25 @@ namespace Faker.Api.UI
 
     }
 
+
+    public class ClassColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool exclude)
+            {
+                if (exclude)
+                    return Brushes.Gray;
+                else
+                    return Brushes.Black;
+            }
+            else
+            {
+                return Binding.DoNothing;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotSupportedException();
+    }
 
 }

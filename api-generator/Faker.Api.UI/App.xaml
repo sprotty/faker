@@ -7,6 +7,7 @@
     <Application.Resources>
         <local:AllTypesConverter x:Key="AllTypesConverter"/>
         <local:DescriptionConverter x:Key="DescriptionConverter" x:Shared="False" />
+        <local:NotNullVisibilityConverter x:Key="NotNullVisibilityConverter" />
         <local:NullVisibilityConverter x:Key="NullVisibilityConverter" />
         <local:IsNullConverter x:Key="IsNullConverter" />
         <local:IsNotNullConverter x:Key="IsNotNullConverter" />
@@ -15,7 +16,8 @@
         <local:NotEqualsVisibilityConverter x:Key="NotEqualsVisibilityConverter" />
         <local:IsNullOrWhiteSpaceVisibilityConverter x:Key="IsNullOrWhiteSpaceVisibilityConverter"/>
         <local:SampleDataConverter x:Key="SampleDataConverter"/>
-        <local:GetClassPathConverter x:Key="GetClassPathConverter"/>        
+        <local:GetClassPathConverter x:Key="GetClassPathConverter"/>
+        <local:ClassColorConverter x:Key="ClassColorConverter"/>
 
         <sys:String x:Key="NullPlatformText">All Platforms</sys:String>
         <sys:String x:Key="ImplementationTypeResolve">Resolve</sys:String>

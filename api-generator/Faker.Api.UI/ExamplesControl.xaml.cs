@@ -24,13 +24,13 @@ namespace Faker.Api.UI
         public ExamplesControl()
         {
             InitializeComponent();
-            ExamplesList.Items.Filter = (o) => o is Example ex && (ex.Platform == FakerModel.AllPlatformsLiteral || ex.Platform == CurrentPlatform);
+            ExamplesList.Items.Filter = (o) => o is ExampleModel ex && (ex.Platform == FakerModel.AllPlatformsLiteral || ex.Platform == CurrentPlatform);
         }
 
-        public static readonly DependencyProperty ExamplesProperty = DependencyProperty.Register(nameof(Examples), typeof(ObservableCollection<Example>), typeof(ExamplesControl));
-        public ObservableCollection<Example> Examples
+        public static readonly DependencyProperty ExamplesProperty = DependencyProperty.Register(nameof(Examples), typeof(ObservableCollection<ExampleModel>), typeof(ExamplesControl));
+        public ObservableCollection<ExampleModel> Examples
         {
-            get => (ObservableCollection<Example>)GetValue(ExamplesProperty);
+            get => (ObservableCollection<ExampleModel>)GetValue(ExamplesProperty);
             set => SetValue(ExamplesProperty, value);
         }
 
@@ -43,24 +43,24 @@ namespace Faker.Api.UI
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            var example = new Example();
+            var example = new ExampleModel();
             if (ExampleEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, example, true))
                 this.Examples.Add(example);
         }
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-            ExampleEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, (Example)ExamplesList.SelectedValue, true);
+            ExampleEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, (ExampleModel)ExamplesList.SelectedValue, true);
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.Examples.Remove((Example)ExamplesList.SelectedValue);
+            this.Examples.Remove((ExampleModel)ExamplesList.SelectedValue);
         }
 
         private void ExamplesList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ExampleEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, (Example)ExamplesList.SelectedValue, true);
+            ExampleEditorWindow.Edit(new string?[] { FakerModel.AllPlatformsLiteral, CurrentPlatform }, (ExampleModel)ExamplesList.SelectedValue, true);
         }
     }
 }

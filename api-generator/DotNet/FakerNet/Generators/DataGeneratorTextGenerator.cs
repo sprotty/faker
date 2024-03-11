@@ -5,7 +5,7 @@ namespace FakerNet
 {
     partial class DataGenerator
     {
-        partial class LoremGenerator
+        partial class TextGenerator
         {
             /// <summary>
             /// Generates three sentence paragraph.
@@ -164,6 +164,35 @@ namespace FakerNet
 
                 var wordsList = wordsExpr.Select(w => Translate(w)).Except(excludeWordList).ToList();
                 return string.Join(" ", Enumerable.Range(0, (int)wordCount).Select(i => Random.NextItem(wordsList)));
+            }
+
+            /// <summary>
+            /// Adds 0s to the start of the 'text' until it is 'length' long
+            /// </summary>
+            /// <param name="text">
+            /// The text to add pad
+            /// </param>
+            /// <param name="length">
+            /// The length the 'text' will be padded tote
+            /// </param>
+            [FakerMethod("zero_pad_left")]
+            public string ZeroPadLeft(string text, long length)
+            {
+                return text.PadLeft((int)length, '0');
+            }
+            /// <summary>
+            /// Adds 0s to the end of the 'text' until it is 'length' long
+            /// </summary>
+            /// <param name="text">
+            /// The text to add pad
+            /// </param>
+            /// <param name="length">
+            /// The length the 'text' will be padded to
+            /// </param>
+            [FakerMethod("zero_pad_right")]
+            public string ZeroPadRight(string text, long length)
+            {
+                return text.PadRight((int)length, '0');
             }
         }
     }

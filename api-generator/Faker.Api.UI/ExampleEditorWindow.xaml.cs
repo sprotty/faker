@@ -30,15 +30,15 @@ namespace Faker.Api.UI
             get => (string?[])GetValue(AllPlatformsProperty);
             set => SetValue(AllPlatformsProperty, value);
         }
-        public static bool Edit(string?[] platforms, Example example, bool allowPlatformChange)
+        public static bool Edit(string?[] platforms, ExampleModel example, bool allowPlatformChange)
         {
             var frm = new ExampleEditorWindow();
-            frm.DataContext = new Example(example);
+            frm.DataContext = new ExampleModel(example);
             frm.PlatformCmb.IsReadOnly = allowPlatformChange = false;
             frm.AllPlatforms = platforms;
             if (frm.ShowDialog() != true)
                 return false;
-            example.CopyFrom((Example)frm.DataContext);
+            example.CopyFrom((ExampleModel)frm.DataContext);
             return true;
         }
 

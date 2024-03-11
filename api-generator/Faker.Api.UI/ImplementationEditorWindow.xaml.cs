@@ -39,11 +39,11 @@ namespace Faker.Api.UI
         }
 
 
-        public static bool Edit(string?[] platforms, string fakerClassPath, ImplementationElement implementation, bool allowPlatformChange)
+        public static bool Edit(string?[] platforms, string fakerClassPath, ImplementationModel implementation, bool allowPlatformChange)
         {
             var frm = new ImplementationEditorWindow();
             frm.FakerClassName = fakerClassPath;
-            frm.DataContext = new ImplementationElement(implementation);
+            frm.DataContext = new ImplementationModel(implementation);
             frm.PlatformCmb.IsReadOnly = allowPlatformChange = false;
             frm.AllPlatforms = platforms;
             if (frm.ShowDialog() != true)
@@ -52,7 +52,7 @@ namespace Faker.Api.UI
             return true;
         }
 
-        private ImplementationElement Implementation => (ImplementationElement)this.DataContext;
+        private ImplementationModel Implementation => (ImplementationModel)this.DataContext;
 
         private void OK_Click(object sender, RoutedEventArgs e)
         {

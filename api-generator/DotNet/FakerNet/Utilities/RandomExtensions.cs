@@ -58,6 +58,13 @@ namespace FakerNet
         {
             return random.Next(2) == 0;
         }
+
+        public static byte[] NextBytes(this Random random, int length)
+        {
+            byte[] data = new byte[length];
+            random.NextBytes(data);
+            return data;
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -69,6 +76,10 @@ namespace FakerNet
             return random.NextDouble() < trueRatio;
         }
 
+        public static T NextEnum<T>(this Random random) where T : struct, Enum
+        {
+            return random.NextItem(Enum.GetValues<T>());
+        }
 
         public static T NextItem<T>(this Random random, IEnumerable<T> lst)
         {
