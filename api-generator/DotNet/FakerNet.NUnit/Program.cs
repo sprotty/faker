@@ -7,7 +7,7 @@ using System.Globalization;
 var faker = new Faker();
 for (int len = 1; len < 50; len++)
     for (int i = 0; i < 50; i++)
-        Debug.WriteLine(faker.Internet.Username(new IntegerRange(len, len)));
+        Debug.WriteLine(faker.Internet.Username(len, len));
 //Debug.WriteLine(faker.Internet.Username(new IntegerRange(10, 50)));
 //(new Test_Address()).Test_CitySuffix_Execute();
 //Console.WriteLine("Hello, World!");

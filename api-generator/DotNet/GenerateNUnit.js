@@ -136,9 +136,10 @@ function getArgInitalization(arg) {
     var argDefault = arg.default;
 
     if (Utils.isNullOrWhitespace(argDefault) == false && canDefault == false) {
-        if (argNativeType == 'IntegerRange')
-            return argNativeName + ' ??= IntegerRange.Parse(\"' + Utils.getNativeEscapedString(argDefault) + '\");';
-        else if (argNativeType.startsWith("UNKNOWN_"))
+        // if (argNativeType == 'IntegerRange')
+        //     return argNativeName + ' ??= IntegerRange.Parse(\"' + Utils.getNativeEscapedString(argDefault) + '\");';
+        // else 
+        if (argNativeType.startsWith("UNKNOWN_"))
             return '// ' + argNativeName + ' ??= ' + argNativeType + '.Parse(\"' + Utils.getNativeEscapedString(argDefault) + '\");';
         else if (argNativeType.startsWith("List<"))
             return '// ' + argNativeName + ' ??= ' + argNativeType + '.Parse(\"' + Utils.getNativeEscapedString(argDefault) + '\");';

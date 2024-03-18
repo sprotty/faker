@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -117,13 +118,39 @@ namespace FakerNet
         }
         #endregion
 
-        public static byte[] StringToByteArray(String hex)
+        //#region HexDecode
+        //public static byte[] HexDecode(string hex)
+        //{
+        //    int NumberChars = hex.Length;
+        //    byte[] bytes = new byte[NumberChars / 2];
+        //    for (int i = 0; i < NumberChars; i += 2)
+        //        bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+        //    return bytes;
+        //} 
+        //#endregion
+
+        #region IsEqual
+        /// <summary>
+        /// Determines if the contents of 2 arrays are the same
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool IsEqual(byte[] a, byte[] b)
         {
-            int NumberChars = hex.Length;
-            byte[] bytes = new byte[NumberChars / 2];
-            for (int i = 0; i < NumberChars; i += 2)
-                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
-            return bytes;
+            if (a == b)
+                return true;
+            if (a == null || a == null)
+                return false;
+            if (a.Length != b.Length)
+                return false;
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] != b[i])
+                    return false;
+            }
+            return true;
         }
+        #endregion
     }
 }

@@ -5,23 +5,28 @@
       "values": [
         {
           "name": "Robot",
-          "description": "A robot head and shoulders"
+          "description": "A robot head and shoulders",
+          "value": "set1"
         },
         {
           "name": "Monster",
-          "description": "A monster head and shoulders"
+          "description": "A monster head and shoulders",
+          "value": "set2"
         },
         {
           "name": "RobotHead",
-          "description": "A robot head"
+          "description": "A robot head",
+          "value": "set3"
         },
         {
           "name": "Cat",
-          "description": "A cute cat"
+          "description": "A cute cat",
+          "value": "set4"
         },
         {
           "name": "Person",
-          "description": "A person head and shoulders"
+          "description": "A person head and shoulders",
+          "value": "set5"
         }
       ]
     },
@@ -2522,7 +2527,6 @@
           "text": ""
         }
       ],
-      "exclude_cs": true,
       "methods": [],
       "classes": [
         {
@@ -2557,7 +2561,8 @@
                   "translate": true,
                   "data": "appliance.brand"
                 }
-              ]
+              ],
+              "lttdg_name": "Product.Appliance.Brand"
             },
             {
               "name": "equipment",
@@ -2583,7 +2588,8 @@
                   "translate": true,
                   "data": "appliance.equipment"
                 }
-              ]
+              ],
+              "lttdg_name": "Product.Appliance.Name"
             }
           ],
           "classes": []
@@ -2605,6 +2611,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "digits",
@@ -2634,7 +2641,7 @@
                 },
                 {
                   "type": "Expression",
-                  "data": "#{RandomString #{digits},#{digits},'0123456789'}"
+                  "data": "#{String.random_string '#{digits}','#{digits}','0123456789'}"
                 }
               ]
             },
@@ -2647,6 +2654,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [],
               "examples": [
                 {
@@ -2679,14 +2687,16 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "country_code",
                   "type": "String",
-                  "default": "'GB'",
+                  "default": "nil",
+                  "default_value_desc": "Random Country",
                   "descriptions": [
                     {
-                      "text": "Specifies what country prefix is used to generate the iban code. Providing ‘nil` will use a random country."
+                      "text": "Specifies what country prefix is used to generate the iban code."
                     }
                   ]
                 }
@@ -2717,6 +2727,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [],
               "examples": [
                 {
@@ -2775,6 +2786,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [],
               "examples": [
                 {
@@ -2807,6 +2819,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [],
               "examples": [
                 {
@@ -2839,6 +2852,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [],
               "examples": [
                 {
@@ -3249,7 +3263,8 @@
                   "type": "Native",
                   "data": ""
                 }
-              ]
+              ],
+              "lttdg_name": "Person.CreditCard.ExpiryDate|Commerce.CreditCard.ExpiryDate"
             },
             {
               "name": "credit_card_number",
@@ -3259,6 +3274,7 @@
                 }
               ],
               "return_type": "String",
+              "exclude_cs": true,
               "return_desc": "",
               "usesLocale": false,
               "arguments": [],
@@ -3287,6 +3303,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [],
               "examples": [
                 {
@@ -3302,7 +3319,8 @@
                   "translate": true,
                   "data": "business.credit_card_types"
                 }
-              ]
+              ],
+              "lttdg_name": "Person.CreditCard.CardType|Commerce.CreditCard.CardType"
             }
           ],
           "classes": []
@@ -3769,7 +3787,8 @@
                   "translate": true,
                   "data": "commerce.brand"
                 }
-              ]
+              ],
+              "lttdg_name": "Commerce.Company.TopBrands"
             },
             {
               "name": "categories",
@@ -3787,7 +3806,8 @@
                   "type": "Resolve",
                   "data": "commerce.department"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "color",
@@ -3813,7 +3833,8 @@
                   "translate": true,
                   "data": "color.name"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "department",
@@ -3860,7 +3881,8 @@
                   "translate": false,
                   "data": "(max: 3, fixed_amount: false)\n        num = max if fixed_amount\n        num ||= 1 + rand(max)\n\n        categories = categories(num)\n\n        if categories.is_a?(Array)\n          if categories.length > 1\n            merge_categories(categories)\n          else\n            categories[0]"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "material",
@@ -3886,7 +3908,8 @@
                   "translate": true,
                   "data": "commerce.product_name.material"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "merge_categories",
@@ -3907,7 +3930,8 @@
                   "translate": true,
                   "data": "separator"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "price",
@@ -3954,7 +3978,8 @@
                   "translate": false,
                   "data": "(range: 0..100.0, as_string: false)\n        price = (rand(range) * 100).floor / 100.0\n        if as_string\n          price_parts = price.to_s.split('.')\n          price = \"#{price_parts[0]}.#{price_parts[-1].ljust(2, '0')}\""
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "product_name",
@@ -3980,7 +4005,8 @@
                   "translate": true,
                   "data": "commerce.product_name.adjective"
                 }
-              ]
+              ],
+              "lttdg_name": "Commerce.Company.Product.Superlative|Commerce.Marketing.Superlative"
             },
             {
               "name": "promotion_code",
@@ -4017,7 +4043,8 @@
                   "translate": true,
                   "data": "commerce.promotion_code.adjective"
                 }
-              ]
+              ],
+              "lttdg_name": "Commerce.Company.PromotionalCode"
             },
             {
               "name": "vendor",
@@ -4043,7 +4070,8 @@
                   "translate": true,
                   "data": "commerce.vendor"
                 }
-              ]
+              ],
+              "lttdg_name": "Commerce.Company.Vendor"
             }
           ],
           "classes": []
@@ -4540,6 +4568,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [],
               "examples": [
                 {
@@ -4555,6 +4584,11 @@
                   "digitSubst": false,
                   "translate": false,
                   "data": "rand_num = rand(1..13)\n        \"https://pigment.github.io/fake-logos/logos/medium/color/#{rand_num}.png\""
+                },
+                {
+                  "platform": "C#",
+                  "type": "Resolve",
+                  "data": "company.logo"
                 }
               ]
             },
@@ -5265,6 +5299,7 @@
               "text": ""
             }
           ],
+          "exclude_cs": true,
           "methods": [
             {
               "name": "acronym",
@@ -5420,6 +5455,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [],
               "examples": [
                 {
@@ -5472,6 +5508,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [],
               "examples": [
                 {
@@ -5509,6 +5546,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "country",
@@ -5535,7 +5573,8 @@
                   "translate": true,
                   "data": "finance.condominium_fiscal_code.#{country}"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "credit_card",
@@ -5546,13 +5585,26 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
-                  "name": "types",
+                  "name": "card_type",
                   "type": "String",
+                  "default": "nil",
+                  "default_value_desc": "Random card type",
                   "descriptions": [
                     {
-                      "text": "Specific credit card type."
+                      "text": "Specific credit card type (see CreditCard.CardTypes)."
+                    }
+                  ]
+                },
+                {
+                  "name": "include_formatting",
+                  "type": "Boolean",
+                  "default": "true",
+                  "descriptions": [
+                    {
+                      "text": "includes formatting chars i.e. 3787-866288-08162"
                     }
                   ]
                 }
@@ -5570,8 +5622,14 @@
                   "digitSubst": true,
                   "translate": true,
                   "data": "finance.credit_card.#{type}"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
                 }
-              ]
+              ],
+              "lttdg_name": "Person.CreditCard.CardNumber|Commerce.CreditCard.CardNumber"
             },
             {
               "name": "stock_market",
@@ -5582,6 +5640,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [],
               "examples": [
                 {
@@ -5597,7 +5656,8 @@
                   "translate": true,
                   "data": "finance.stock_market"
                 }
-              ]
+              ],
+              "lttdg_name": "Commerce.StockMarket.Market"
             },
             {
               "name": "ticker",
@@ -5608,13 +5668,16 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
-                  "name": "markets",
+                  "name": "market",
                   "type": "String",
+                  "default": "nil",
+                  "default_value_desc": "Random Market",
                   "descriptions": [
                     {
-                      "text": "The name of the market to choose the ticker from (e.g. NYSE, NASDAQ)"
+                      "text": "The name of the market to choose the ticker from (e.g. NYSE, NASDAQ) \r\nSee Commerce.StockMarket.Market"
                     }
                   ]
                 }
@@ -5632,8 +5695,14 @@
                   "digitSubst": true,
                   "translate": true,
                   "data": "finance.ticker.#{market}"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
                 }
-              ]
+              ],
+              "lttdg_name": "Commerce.StockMarket.Ticker"
             },
             {
               "name": "vat_number",
@@ -5644,11 +5713,13 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
-                  "name": "country",
+                  "name": "country_code",
                   "type": "String",
-                  "default": "'BR'",
+                  "default": "nil",
+                  "default_value_desc": "Random Country",
                   "descriptions": [
                     {
                       "text": "Two capital letter country code to use for the vat number."
@@ -5669,8 +5740,14 @@
                   "digitSubst": true,
                   "translate": true,
                   "data": "finance.vat_number.#{country}"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
                 }
-              ]
+              ],
+              "lttdg_name": "Commerce.Company.VatNumber"
             },
             {
               "name": "vat_number_keys",
@@ -5692,7 +5769,8 @@
                   "translate": false,
                   "data": "translate('faker.finance.vat_number').keys"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             }
           ],
           "classes": []
@@ -5865,7 +5943,8 @@
                   "translate": true,
                   "data": "(from: 0, to: 0)\n        Faker::Base.rand_in_range(from, to).round(2)"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "calculate_weighted_sum",
@@ -5887,7 +5966,8 @@
                   "translate": false,
                   "data": "(base, weight_factors)\n        base.to_s.reverse.each_char.with_index.map do |digit, index|\n          digit.to_i * weight_factors.at(index % weight_factors.length)\n        end.reduce(:+) # reduce(:+) = sum() but with better ruby version support"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "creditor_reference",
@@ -5925,7 +6005,8 @@
                   "translate": false,
                   "data": "(ref: '')\n        ref = reference if ref.empty?\n\n        \"RF#{iban_checksum('RF', ref)}#{ref}\""
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "iban_checksum",
@@ -5969,7 +6050,8 @@
                   "translate": false,
                   "data": "(base)\n        weighted_sum = calculate_weighted_sum(base, [1, 2])\n        mod10_remainder(weighted_sum)"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "method_731",
@@ -5991,7 +6073,8 @@
                   "translate": false,
                   "data": "(base)\n        weighted_sum = calculate_weighted_sum(base, [7, 3, 1])\n        mod10_remainder(weighted_sum)"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "mod10_remainder",
@@ -6013,7 +6096,8 @@
                   "translate": false,
                   "data": "(number)\n        -number % 10"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "reference",
@@ -6048,7 +6132,8 @@
                   "type": "Native",
                   "data": "pattern = fetch('invoice.reference.pattern')\n\nref = Base.regexify(/#{pattern}/) if ref.empty?\n\n# If reference contains reserved '#' characters we need to calculate check_digits as well\ncheck_digit_match = ref.match(/#+/)\nif check_digit_match\n  # Get the method for selected language\n  check_digit_method = fetch('invoice.reference.check_digit_method')\n\n  # Calculate the check digit with matching method name\n  # Trim all '#' from the reference before calculating that\n  check_digit = send(check_digit_method, ref.tr('#', ''))\n\n  # Make sure that our check digit is as long as all of the '###' we found\n  check_digit = check_digit.to_s.rjust(check_digit_match[0].length, '0')\n\n  # Replace all of the\n  ref = ref.sub(check_digit_match[0], check_digit)\nend\n\nref"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             }
           ],
           "classes": []
@@ -6342,6 +6427,7 @@
                   "name": "card_type",
                   "type": "String",
                   "default": "nil",
+                  "default_value_desc": "Random card type",
                   "descriptions": [
                     {
                       "text": "Specific valid card type."
@@ -6363,8 +6449,14 @@
                   "digitSubst": false,
                   "translate": false,
                   "data": "(card_type: nil)\n        (card_type.to_s == 'amex' ? rand_in_range(1000, 9999) : rand_in_range(100, 999)).to_s"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
                 }
-              ]
+              ],
+              "lttdg_name": "Person.CreditCard.CCV|Commerce.CreditCard.CCV"
             },
             {
               "name": "invalid_card",
@@ -6390,8 +6482,14 @@
                   "digitSubst": false,
                   "translate": false,
                   "data": "(card_error: nil)\n        invalid_cards = translate('faker.stripe.invalid_cards').keys\n\n        if card_error.nil?\n          card_error = sample(invalid_cards).to_s\n        else\n          unless invalid_cards.include?(card_error.to_sym)\n            raise ArgumentError,\n                  \"Invalid credit cards argument can be left blank or include #{invalid_cards.join(', ')}\""
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
                 }
-              ]
+              ],
+              "lttdg_name": "Person.CreditCard.CardNumberInvalid|Commerce.CreditCard.CardNumberInvalid"
             },
             {
               "name": "month",
@@ -6418,7 +6516,8 @@
                   "translate": false,
                   "data": "format('%02d', rand_in_range(1, 12))"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "valid_card",
@@ -6456,7 +6555,8 @@
                   "translate": false,
                   "data": "(card_type: nil)\n        valid_cards = translate('faker.stripe.valid_cards').keys\n\n        if card_type.nil?\n          card_type = sample(valid_cards).to_s\n        else\n          unless valid_cards.include?(card_type.to_sym)\n            raise ArgumentError,\n                  \"Valid credit cards argument can be left blank or include #{valid_cards.join(', ')}\""
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "valid_token",
@@ -6494,7 +6594,8 @@
                   "translate": false,
                   "data": "(card_type: nil)\n        valid_tokens = translate('faker.stripe.valid_tokens').keys\n\n        if card_type.nil?\n          card_type = sample(valid_tokens).to_s\n        else\n          unless valid_tokens.include?(card_type.to_sym)\n            raise ArgumentError,\n                  \"Valid credit cards argument can be left blank or include #{valid_tokens.join(', ')}\""
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "year",
@@ -6521,7 +6622,8 @@
                   "translate": true,
                   "data": "start_year = ::Time.new.year + 1\n        rand_in_range(start_year, start_year + 5).to_s"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             }
           ],
           "classes": []
@@ -7519,7 +7621,7 @@
                 },
                 {
                   "type": "Expression",
-                  "data": "#{RandomString #{length},#{length},'abcdefghijklmnopqrstuvwxyz'}"
+                  "data": "#{String.random_string '#{length}','#{length}','abcdefghijklmnopqrstuvwxyz'}"
                 }
               ],
               "lttdg_name": "Data.Text.AlphaString"
@@ -7571,7 +7673,7 @@
                 },
                 {
                   "type": "Expression",
-                  "data": "#{RandomString #{length},#{length},'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'}"
+                  "data": "#{String.random_string '#{length}','#{length}','0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'}"
                 }
               ],
               "lttdg_name": "Data.Text.AlphaNumericString"
@@ -7596,8 +7698,8 @@
               "examples": [],
               "implementations": [
                 {
-                  "type": "Resolve",
-                  "data": "#{RandomString #{length},#{length},'0123456789ABCDEF'}"
+                  "type": "Expression",
+                  "data": "#{String.random_string '#{length}','#{length}','0123456789ABCDEF'}"
                 }
               ],
               "lttdg_name": "Data.Text.HexString"
@@ -7626,11 +7728,596 @@
               "examples": [],
               "implementations": [
                 {
-                  "type": "Resolve",
-                  "data": "#{RandomString #{length},#{length},'0123456789'}"
+                  "type": "Expression",
+                  "data": "#{String.random_string '#{length}','#{length}','0123456789'}"
                 }
               ],
               "lttdg_name": "Data.Text.NumericString"
+            }
+          ],
+          "classes": []
+        },
+        {
+          "name": "Binary",
+          "ruby_qualified_name": "Crypto",
+          "descriptions": [
+            {
+              "text": ""
+            }
+          ],
+          "methods": [
+            {
+              "name": "base64_decode",
+              "descriptions": [
+                {
+                  "text": "Decodes base64 data, producing binary data"
+                }
+              ],
+              "return_type": "Binary",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "base64_data",
+                  "type": "String",
+                  "descriptions": [
+                    {
+                      "text": "The base 64 data to decode"
+                    }
+                  ]
+                }
+              ],
+              "examples": [],
+              "implementations": [
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ],
+              "lttdg_name": ""
+            },
+            {
+              "name": "base64_encode",
+              "descriptions": [
+                {
+                  "text": "Encodes binary data as base64"
+                }
+              ],
+              "return_type": "String",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "binary_data",
+                  "type": "Binary",
+                  "default": "",
+                  "default_value_desc": "",
+                  "descriptions": [
+                    {
+                      "text": "The data to encode"
+                    }
+                  ]
+                }
+              ],
+              "examples": [],
+              "implementations": [
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ],
+              "lttdg_name": "Data.Binary.Base64Encode,Data.Text.Base64Encode"
+            },
+            {
+              "name": "binary",
+              "descriptions": [
+                {
+                  "text": "Gets some random binary data"
+                }
+              ],
+              "return_type": "Binary",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "min_len",
+                  "type": "Integer",
+                  "default": "4",
+                  "descriptions": [
+                    {
+                      "text": "The minimum number of bytes to return"
+                    }
+                  ]
+                },
+                {
+                  "name": "max_len",
+                  "type": "Integer",
+                  "default": "32",
+                  "descriptions": [
+                    {
+                      "text": "The maximum number of bytes to return"
+                    }
+                  ]
+                }
+              ],
+              "examples": [],
+              "implementations": [
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ]
+            },
+            {
+              "name": "hex_decode",
+              "descriptions": [
+                {
+                  "text": "Decodes hex data, producing binary data"
+                }
+              ],
+              "return_type": "Binary",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "hex_data",
+                  "type": "String",
+                  "descriptions": [
+                    {
+                      "text": "The hex data to decode"
+                    }
+                  ]
+                }
+              ],
+              "examples": [],
+              "implementations": [
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ],
+              "lttdg_name": ""
+            },
+            {
+              "name": "hex_encode",
+              "descriptions": [
+                {
+                  "text": "Encodes binary data as hex"
+                }
+              ],
+              "return_type": "String",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "binary_data",
+                  "type": "Binary",
+                  "default": "",
+                  "default_value_desc": "",
+                  "descriptions": [
+                    {
+                      "text": "The data to encode"
+                    }
+                  ]
+                }
+              ],
+              "examples": [],
+              "implementations": [
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ],
+              "lttdg_name": "Data.Binary.HexEncode,Data.Text.HexEncode"
+            },
+            {
+              "name": "md5",
+              "descriptions": [
+                {
+                  "text": "Produces an MD5 hash."
+                }
+              ],
+              "return_type": "Binary",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "binary_data",
+                  "type": "Binary",
+                  "default": "nil",
+                  "default_value_desc": "Random data",
+                  "descriptions": [
+                    {
+                      "text": "Binary data"
+                    }
+                  ]
+                }
+              ],
+              "examples": [
+                {
+                  "description": "",
+                  "code": "Faker::Crypto.md5 #=> \"6b5ed240042e8a65c55ddb826c3408e6\""
+                }
+              ],
+              "implementations": [
+                {
+                  "platform": "Ruby",
+                  "type": "Native",
+                  "charSubst": true,
+                  "digitSubst": true,
+                  "translate": true,
+                  "data": "OpenSSL::Digest::MD5.hexdigest(Lorem.characters)"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ]
+            },
+            {
+              "name": "md5_string",
+              "descriptions": [
+                {
+                  "text": "Produces an MD5 hash of a string."
+                }
+              ],
+              "return_type": "Binary",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "data",
+                  "type": "String",
+                  "default": "nil",
+                  "default_value_desc": "Random data",
+                  "descriptions": [
+                    {
+                      "text": "Binary data"
+                    }
+                  ]
+                },
+                {
+                  "name": "encoding",
+                  "type": "Encoding",
+                  "default": "nil",
+                  "default_value_desc": "UTF-8",
+                  "descriptions": [
+                    {
+                      "text": "The encoding to use to convert the string into binary data in order to hash it."
+                    }
+                  ]
+                }
+              ],
+              "examples": [
+                {
+                  "description": "",
+                  "code": "Faker::Crypto.md5 #=> \"6b5ed240042e8a65c55ddb826c3408e6\""
+                }
+              ],
+              "implementations": [
+                {
+                  "platform": "Ruby",
+                  "type": "Native",
+                  "charSubst": true,
+                  "digitSubst": true,
+                  "translate": true,
+                  "data": "OpenSSL::Digest::MD5.hexdigest(#{data})"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ]
+            },
+            {
+              "name": "sha1",
+              "descriptions": [
+                {
+                  "text": "Produces a SHA1 hash."
+                }
+              ],
+              "return_type": "Binary",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "binary_data",
+                  "type": "Binary",
+                  "default": "nil",
+                  "default_value_desc": "Random data",
+                  "descriptions": [
+                    {
+                      "text": "The binary data tohash"
+                    }
+                  ]
+                }
+              ],
+              "examples": [
+                {
+                  "description": "",
+                  "code": "Faker::Crypto.sha1 #=> \"4e99e31c51eef8b2d290e709f757f92e558a503f\""
+                }
+              ],
+              "implementations": [
+                {
+                  "platform": "Ruby",
+                  "type": "Native",
+                  "charSubst": true,
+                  "digitSubst": true,
+                  "translate": true,
+                  "data": "OpenSSL::Digest::SHA1.hexdigest(Lorem.characters)"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ]
+            },
+            {
+              "name": "sha1_string",
+              "descriptions": [
+                {
+                  "text": "Produces a SHA1 hash of a string."
+                }
+              ],
+              "return_type": "Binary",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "data",
+                  "type": "String",
+                  "default": "nil",
+                  "default_value_desc": "Random data",
+                  "descriptions": [
+                    {
+                      "text": "The binary data tohash"
+                    }
+                  ]
+                },
+                {
+                  "name": "encoding",
+                  "type": "Encoding",
+                  "default": "nil",
+                  "default_value_desc": "UTF-8",
+                  "descriptions": [
+                    {
+                      "text": "The encoding to use to convert the string into binary data in order to hash it."
+                    }
+                  ]
+                }
+              ],
+              "examples": [
+                {
+                  "description": "",
+                  "code": "Faker::Crypto.sha1 #=> \"4e99e31c51eef8b2d290e709f757f92e558a503f\""
+                }
+              ],
+              "implementations": [
+                {
+                  "platform": "Ruby",
+                  "type": "Native",
+                  "charSubst": true,
+                  "digitSubst": true,
+                  "translate": true,
+                  "data": "OpenSSL::Digest::SHA1.hexdigest(#{data})"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ]
+            },
+            {
+              "name": "sha256",
+              "descriptions": [
+                {
+                  "text": "Produces a SHA256 hash."
+                }
+              ],
+              "return_type": "Binary",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "binary_data",
+                  "type": "Binary",
+                  "default": "nil",
+                  "default_value_desc": "Random data",
+                  "descriptions": [
+                    {
+                      "text": "The binary data to hash"
+                    }
+                  ]
+                }
+              ],
+              "examples": [
+                {
+                  "description": "",
+                  "code": "Faker::Crypto.sha256 #=> \"51e4dbb424cd9db1ec5fb989514f2a35652ececef33f21c8dd1fd61bb8e3929d\""
+                }
+              ],
+              "implementations": [
+                {
+                  "platform": "Ruby",
+                  "type": "Native",
+                  "charSubst": true,
+                  "digitSubst": true,
+                  "translate": true,
+                  "data": "OpenSSL::Digest::SHA256.hexdigest(Lorem.characters)"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ]
+            },
+            {
+              "name": "sha256_string",
+              "descriptions": [
+                {
+                  "text": "Produces a SHA256 hash of a string."
+                }
+              ],
+              "return_type": "Binary",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "data",
+                  "type": "String",
+                  "default": "nil",
+                  "default_value_desc": "Random data",
+                  "descriptions": [
+                    {
+                      "text": "The binary data to hash"
+                    }
+                  ]
+                },
+                {
+                  "name": "encoding",
+                  "type": "Encoding",
+                  "default": "nil",
+                  "default_value_desc": "UTF-8",
+                  "descriptions": [
+                    {
+                      "text": "The encoding to use to convert the string into binary data in order to hash it."
+                    }
+                  ]
+                }
+              ],
+              "examples": [
+                {
+                  "description": "",
+                  "code": "Faker::Crypto.sha256 #=> \"51e4dbb424cd9db1ec5fb989514f2a35652ececef33f21c8dd1fd61bb8e3929d\""
+                }
+              ],
+              "implementations": [
+                {
+                  "platform": "Ruby",
+                  "type": "Native",
+                  "charSubst": true,
+                  "digitSubst": true,
+                  "translate": true,
+                  "data": "OpenSSL::Digest::SHA256.hexdigest(#{data})"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ]
+            },
+            {
+              "name": "sha512",
+              "descriptions": [
+                {
+                  "text": "Produces a SHA512 hash."
+                }
+              ],
+              "return_type": "Binary",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "binary_data",
+                  "type": "Binary",
+                  "default": "nil",
+                  "default_value_desc": "Random Data",
+                  "descriptions": [
+                    {
+                      "text": "The binary data to hash"
+                    }
+                  ]
+                }
+              ],
+              "examples": [
+                {
+                  "description": "",
+                  "code": "Faker::Crypto.sha512 #=> \"7b9fc82a6642874833d01b74a7b4fae3d15373193b55cfba47327f8f0afdc8d0ea155b58639a03a887009ef997dab8dd8d36767620d430f6e787e5996e26da80\""
+                }
+              ],
+              "implementations": [
+                {
+                  "platform": "Ruby",
+                  "type": "Native",
+                  "charSubst": true,
+                  "digitSubst": true,
+                  "translate": true,
+                  "data": "OpenSSL::Digest::SHA512.hexdigest(Lorem.characters)"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ]
+            },
+            {
+              "name": "sha512_string",
+              "descriptions": [
+                {
+                  "text": "Produces a SHA512 hash of a string."
+                }
+              ],
+              "return_type": "Binary",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "data",
+                  "type": "String",
+                  "default": "nil",
+                  "default_value_desc": "Random Data",
+                  "descriptions": [
+                    {
+                      "text": "The binary data to hash"
+                    }
+                  ]
+                },
+                {
+                  "name": "encoding",
+                  "type": "Encoding",
+                  "default": "nil",
+                  "default_value_desc": "UTF-8",
+                  "descriptions": [
+                    {
+                      "text": "The encoding to use to convert the string into binary data in order to hash it."
+                    }
+                  ]
+                }
+              ],
+              "examples": [
+                {
+                  "description": "",
+                  "code": "Faker::Crypto.sha512 #=> \"7b9fc82a6642874833d01b74a7b4fae3d15373193b55cfba47327f8f0afdc8d0ea155b58639a03a887009ef997dab8dd8d36767620d430f6e787e5996e26da80\""
+                }
+              ],
+              "implementations": [
+                {
+                  "platform": "Ruby",
+                  "type": "Native",
+                  "charSubst": true,
+                  "digitSubst": true,
+                  "translate": true,
+                  "data": "OpenSSL::Digest::SHA512.hexdigest(#{data})"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ]
             }
           ],
           "classes": []
@@ -7690,7 +8377,8 @@
                   "type": "Native",
                   "data": ""
                 }
-              ]
+              ],
+              "lttdg_name": "Boolean"
             }
           ],
           "classes": []
@@ -8060,413 +8748,6 @@
           "classes": []
         },
         {
-          "name": "Crypto",
-          "descriptions": [
-            {
-              "text": ""
-            }
-          ],
-          "methods": [
-            {
-              "name": "md5",
-              "descriptions": [
-                {
-                  "text": "Produces an MD5 hash."
-                }
-              ],
-              "return_type": "Binary",
-              "return_desc": "",
-              "arguments": [
-                {
-                  "name": "data",
-                  "type": "Binary",
-                  "default": "nil",
-                  "default_value_desc": "Random data",
-                  "descriptions": [
-                    {
-                      "text": "Binary data"
-                    }
-                  ]
-                }
-              ],
-              "examples": [
-                {
-                  "description": "",
-                  "code": "Faker::Crypto.md5 #=> \"6b5ed240042e8a65c55ddb826c3408e6\""
-                }
-              ],
-              "implementations": [
-                {
-                  "platform": "Ruby",
-                  "type": "Native",
-                  "charSubst": true,
-                  "digitSubst": true,
-                  "translate": true,
-                  "data": "OpenSSL::Digest::MD5.hexdigest(Lorem.characters)"
-                },
-                {
-                  "platform": "C#",
-                  "type": "Native",
-                  "data": ""
-                }
-              ]
-            },
-            {
-              "name": "md5_from_string",
-              "descriptions": [
-                {
-                  "text": "Produces an MD5 hash of a string."
-                }
-              ],
-              "return_type": "Binary",
-              "return_desc": "",
-              "arguments": [
-                {
-                  "name": "data",
-                  "type": "String",
-                  "default": "nil",
-                  "default_value_desc": "Random data",
-                  "descriptions": [
-                    {
-                      "text": "Binary data"
-                    }
-                  ]
-                },
-                {
-                  "name": "encoding",
-                  "type": "Encoding",
-                  "default": "nil",
-                  "default_value_desc": "UTF-8",
-                  "descriptions": [
-                    {
-                      "text": "The encoding to use to convert the string into binary data in order to hash it."
-                    }
-                  ]
-                }
-              ],
-              "examples": [
-                {
-                  "description": "",
-                  "code": "Faker::Crypto.md5 #=> \"6b5ed240042e8a65c55ddb826c3408e6\""
-                }
-              ],
-              "implementations": [
-                {
-                  "platform": "Ruby",
-                  "type": "Native",
-                  "charSubst": true,
-                  "digitSubst": true,
-                  "translate": true,
-                  "data": "OpenSSL::Digest::MD5.hexdigest(#{data})"
-                },
-                {
-                  "platform": "C#",
-                  "type": "Native",
-                  "data": ""
-                }
-              ]
-            },
-            {
-              "name": "sha1",
-              "descriptions": [
-                {
-                  "text": "Produces a SHA1 hash."
-                }
-              ],
-              "return_type": "Binary",
-              "return_desc": "",
-              "arguments": [
-                {
-                  "name": "data",
-                  "type": "Binary",
-                  "default": "nil",
-                  "default_value_desc": "Random data",
-                  "descriptions": [
-                    {
-                      "text": "The binary data tohash"
-                    }
-                  ]
-                }
-              ],
-              "examples": [
-                {
-                  "description": "",
-                  "code": "Faker::Crypto.sha1 #=> \"4e99e31c51eef8b2d290e709f757f92e558a503f\""
-                }
-              ],
-              "implementations": [
-                {
-                  "platform": "Ruby",
-                  "type": "Native",
-                  "charSubst": true,
-                  "digitSubst": true,
-                  "translate": true,
-                  "data": "OpenSSL::Digest::SHA1.hexdigest(Lorem.characters)"
-                },
-                {
-                  "platform": "C#",
-                  "type": "Native",
-                  "data": ""
-                }
-              ]
-            },
-            {
-              "name": "sha1_from_string",
-              "descriptions": [
-                {
-                  "text": "Produces a SHA1 hash of a string."
-                }
-              ],
-              "return_type": "Binary",
-              "return_desc": "",
-              "arguments": [
-                {
-                  "name": "data",
-                  "type": "String",
-                  "default": "nil",
-                  "default_value_desc": "Random data",
-                  "descriptions": [
-                    {
-                      "text": "The binary data tohash"
-                    }
-                  ]
-                },
-                {
-                  "name": "encoding",
-                  "type": "Encoding",
-                  "default": "nil",
-                  "default_value_desc": "UTF-8",
-                  "descriptions": [
-                    {
-                      "text": "The encoding to use to convert the string into binary data in order to hash it."
-                    }
-                  ]
-                }
-              ],
-              "examples": [
-                {
-                  "description": "",
-                  "code": "Faker::Crypto.sha1 #=> \"4e99e31c51eef8b2d290e709f757f92e558a503f\""
-                }
-              ],
-              "implementations": [
-                {
-                  "platform": "Ruby",
-                  "type": "Native",
-                  "charSubst": true,
-                  "digitSubst": true,
-                  "translate": true,
-                  "data": "OpenSSL::Digest::SHA1.hexdigest(#{data})"
-                },
-                {
-                  "platform": "C#",
-                  "type": "Native",
-                  "data": ""
-                }
-              ]
-            },
-            {
-              "name": "sha256",
-              "descriptions": [
-                {
-                  "text": "Produces a SHA256 hash."
-                }
-              ],
-              "return_type": "Binary",
-              "return_desc": "",
-              "arguments": [
-                {
-                  "name": "data",
-                  "type": "Binary",
-                  "default": "nil",
-                  "default_value_desc": "Random data",
-                  "descriptions": [
-                    {
-                      "text": "The binary data to hash"
-                    }
-                  ]
-                }
-              ],
-              "examples": [
-                {
-                  "description": "",
-                  "code": "Faker::Crypto.sha256 #=> \"51e4dbb424cd9db1ec5fb989514f2a35652ececef33f21c8dd1fd61bb8e3929d\""
-                }
-              ],
-              "implementations": [
-                {
-                  "platform": "Ruby",
-                  "type": "Native",
-                  "charSubst": true,
-                  "digitSubst": true,
-                  "translate": true,
-                  "data": "OpenSSL::Digest::SHA256.hexdigest(Lorem.characters)"
-                },
-                {
-                  "platform": "C#",
-                  "type": "Native",
-                  "data": ""
-                }
-              ]
-            },
-            {
-              "name": "sha256_from_string",
-              "descriptions": [
-                {
-                  "text": "Produces a SHA256 hash of a string."
-                }
-              ],
-              "return_type": "Binary",
-              "return_desc": "",
-              "arguments": [
-                {
-                  "name": "data",
-                  "type": "String",
-                  "default": "nil",
-                  "default_value_desc": "Random data",
-                  "descriptions": [
-                    {
-                      "text": "The binary data to hash"
-                    }
-                  ]
-                },
-                {
-                  "name": "encoding",
-                  "type": "Encoding",
-                  "default": "nil",
-                  "default_value_desc": "UTF-8",
-                  "descriptions": [
-                    {
-                      "text": "The encoding to use to convert the string into binary data in order to hash it."
-                    }
-                  ]
-                }
-              ],
-              "examples": [
-                {
-                  "description": "",
-                  "code": "Faker::Crypto.sha256 #=> \"51e4dbb424cd9db1ec5fb989514f2a35652ececef33f21c8dd1fd61bb8e3929d\""
-                }
-              ],
-              "implementations": [
-                {
-                  "platform": "Ruby",
-                  "type": "Native",
-                  "charSubst": true,
-                  "digitSubst": true,
-                  "translate": true,
-                  "data": "OpenSSL::Digest::SHA256.hexdigest(#{data})"
-                },
-                {
-                  "platform": "C#",
-                  "type": "Native",
-                  "data": ""
-                }
-              ]
-            },
-            {
-              "name": "sha512",
-              "descriptions": [
-                {
-                  "text": "Produces a SHA512 hash."
-                }
-              ],
-              "return_type": "Binary",
-              "return_desc": "",
-              "arguments": [
-                {
-                  "name": "data",
-                  "type": "Binary",
-                  "default": "nil",
-                  "default_value_desc": "Random Data",
-                  "descriptions": [
-                    {
-                      "text": "The binary data to hash"
-                    }
-                  ]
-                }
-              ],
-              "examples": [
-                {
-                  "description": "",
-                  "code": "Faker::Crypto.sha512 #=> \"7b9fc82a6642874833d01b74a7b4fae3d15373193b55cfba47327f8f0afdc8d0ea155b58639a03a887009ef997dab8dd8d36767620d430f6e787e5996e26da80\""
-                }
-              ],
-              "implementations": [
-                {
-                  "platform": "Ruby",
-                  "type": "Native",
-                  "charSubst": true,
-                  "digitSubst": true,
-                  "translate": true,
-                  "data": "OpenSSL::Digest::SHA512.hexdigest(Lorem.characters)"
-                },
-                {
-                  "platform": "C#",
-                  "type": "Native",
-                  "data": ""
-                }
-              ]
-            },
-            {
-              "name": "sha512_from_string",
-              "descriptions": [
-                {
-                  "text": "Produces a SHA512 hash of a string."
-                }
-              ],
-              "return_type": "Binary",
-              "return_desc": "",
-              "arguments": [
-                {
-                  "name": "data",
-                  "type": "String",
-                  "default": "nil",
-                  "default_value_desc": "Random Data",
-                  "descriptions": [
-                    {
-                      "text": "The binary data to hash"
-                    }
-                  ]
-                },
-                {
-                  "name": "encoding",
-                  "type": "Encoding",
-                  "default": "nil",
-                  "default_value_desc": "UTF-8",
-                  "descriptions": [
-                    {
-                      "text": "The encoding to use to convert the string into binary data in order to hash it."
-                    }
-                  ]
-                }
-              ],
-              "examples": [
-                {
-                  "description": "",
-                  "code": "Faker::Crypto.sha512 #=> \"7b9fc82a6642874833d01b74a7b4fae3d15373193b55cfba47327f8f0afdc8d0ea155b58639a03a887009ef997dab8dd8d36767620d430f6e787e5996e26da80\""
-                }
-              ],
-              "implementations": [
-                {
-                  "platform": "Ruby",
-                  "type": "Native",
-                  "charSubst": true,
-                  "digitSubst": true,
-                  "translate": true,
-                  "data": "OpenSSL::Digest::SHA512.hexdigest(#{data})"
-                },
-                {
-                  "platform": "C#",
-                  "type": "Native",
-                  "data": ""
-                }
-              ]
-            }
-          ],
-          "classes": []
-        },
-        {
           "name": "Date",
           "descriptions": [
             {
@@ -8483,6 +8764,7 @@
               ],
               "return_type": "DateTime",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "days",
@@ -8516,7 +8798,52 @@
                   "data": ""
                 }
               ],
-              "lttdg_name": "Past"
+              "lttdg_name": "PastDateTime"
+            },
+            {
+              "name": "backward_date",
+              "descriptions": [
+                {
+                  "text": "Produce a random date in the past (up to N days)."
+                }
+              ],
+              "return_type": "Date",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "days",
+                  "type": "Integer",
+                  "default": "365",
+                  "descriptions": [
+                    {
+                      "text": "The maximum number of days to go into the past."
+                    }
+                  ]
+                }
+              ],
+              "examples": [
+                {
+                  "description": "",
+                  "code": "Faker::Date.backward_date(days: 14) #=> #<Date: 2019-09-12>"
+                }
+              ],
+              "implementations": [
+                {
+                  "platform": "Ruby",
+                  "type": "Native",
+                  "charSubst": true,
+                  "digitSubst": true,
+                  "translate": true,
+                  "data": "(days: 365)\n        from = ::Date.today - days\n        to   = ::Date.today - 1\n\n        between(from: from, to: to).to_date"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ],
+              "lttdg_name": "PastDate"
             },
             {
               "name": "between",
@@ -8527,6 +8854,7 @@
               ],
               "return_type": "Date",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "from",
@@ -8640,15 +8968,17 @@
               "name": "birthday",
               "descriptions": [
                 {
-                  "text": "Produce a random date in the past (up to N days)."
+                  "text": "Produce a random date which would create a date of birth within the age range specified"
                 }
               ],
               "return_type": "Date",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "min_age",
                   "type": "Integer",
+                  "default": "18",
                   "descriptions": [
                     {
                       "text": "The minimum age that the birthday would imply."
@@ -8721,26 +9051,27 @@
               ],
               "return_type": "DateTime",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
-                  "name": "after",
+                  "name": "from",
                   "type": "DateTime",
                   "default": "1970-01-01",
                   "default_value_desc": "",
                   "descriptions": [
                     {
-                      "text": "The time generated will be after this value"
+                      "text": "The time generated will be equal to or after this value"
                     }
                   ]
                 },
                 {
-                  "name": "before",
+                  "name": "to",
                   "type": "DateTime",
                   "default": "2050-01-01",
                   "default_value_desc": "",
                   "descriptions": [
                     {
-                      "text": "The time generated will be before this value"
+                      "text": "The time generated will be equal to or before this value"
                     }
                   ]
                 }
@@ -8758,10 +9089,10 @@
               "name": "day",
               "descriptions": [
                 {
-                  "text": "A random day of the week"
+                  "text": "A random day of the week translated into the selected locale"
                 }
               ],
-              "return_type": "DayOfWeek",
+              "return_type": "String",
               "return_desc": "",
               "arguments": [],
               "examples": [],
@@ -8771,7 +9102,8 @@
                   "type": "Native",
                   "data": ""
                 }
-              ]
+              ],
+              "lttdg_name": ""
             },
             {
               "name": "forward",
@@ -8782,6 +9114,7 @@
               ],
               "return_type": "DateTime",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "days",
@@ -8823,7 +9156,60 @@
                   "data": ""
                 }
               ],
-              "lttdg_name": "Future"
+              "lttdg_name": "FutureDateTime"
+            },
+            {
+              "name": "forward_date",
+              "descriptions": [
+                {
+                  "text": "Produce a random date in the future (up to N days)."
+                }
+              ],
+              "return_type": "Date",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "days",
+                  "type": "Integer",
+                  "default": "365",
+                  "descriptions": [
+                    {
+                      "text": "The maximum number of days to go into the future."
+                    }
+                  ]
+                }
+              ],
+              "examples": [
+                {
+                  "description": "\n<p>if used with or without Rails (Active Support)</p>\n",
+                  "code": "Faker::Date.forward_date(days: 23) #=> #<Date: 2014-10-03>"
+                },
+                {
+                  "description": "\n<p>if used with Rails (Active Support)</p>\n",
+                  "code": "Faker::Date.forward_date(from: Date.current, days: 17) #=> #<Date: 2022-06-22>"
+                },
+                {
+                  "description": "\n<p>if used with or without Rails (Active Support)</p>\n",
+                  "code": "Faker::Date.forward_date(from: '2022-06-03', days: 10) #=> #<Date: 2022-10-13>"
+                }
+              ],
+              "implementations": [
+                {
+                  "platform": "Ruby",
+                  "type": "Native",
+                  "charSubst": true,
+                  "digitSubst": true,
+                  "translate": true,
+                  "data": "(from: ::Date.today, days: 365)\n        start_date = get_date_object(from)\n        since = start_date + 1\n        to = start_date + days\n\n        between(from: since, to: to).to_date"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ],
+              "lttdg_name": "FutureDate"
             },
             {
               "name": "get_date_object",
@@ -8971,35 +9357,55 @@
               "name": "time",
               "descriptions": [
                 {
-                  "text": "A random time within the range (if after is greater than before then before is considered to be the following day)."
+                  "text": "A random time within the range (if 'from' is greater than 'to' then 'to' is considered to be the following day)."
                 }
               ],
               "return_type": "Time",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
-                  "name": "after",
+                  "name": "from",
                   "type": "Time",
-                  "default": "nil",
-                  "default_value_desc": "Random",
+                  "default": "00:00:00",
+                  "default_value_desc": "",
                   "descriptions": [
                     {
-                      "text": "The time generated will be after this value"
+                      "text": "The time generated will be equal to or after this value"
                     }
                   ]
                 },
                 {
-                  "name": "before",
+                  "name": "to",
                   "type": "Time",
-                  "default": "nil",
-                  "default_value_desc": "Random",
+                  "default": "23:59:59",
+                  "default_value_desc": "",
                   "descriptions": [
                     {
-                      "text": "The time generated will be before this value"
+                      "text": "The time generated will be equal to or before this value"
                     }
                   ]
                 }
               ],
+              "examples": [],
+              "implementations": [
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ]
+            },
+            {
+              "name": "week_day",
+              "descriptions": [
+                {
+                  "text": "A random week day (Monday-Friday ) translated into the selected locale"
+                }
+              ],
+              "return_type": "String",
+              "return_desc": "",
+              "arguments": [],
               "examples": [],
               "implementations": [
                 {
@@ -9432,6 +9838,7 @@
               "return_type": "Numeric",
               "exclude_cs": true,
               "return_desc": "",
+              "private": true,
               "arguments": [
                 {
                   "name": "from",
@@ -9479,6 +9886,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "digits",
@@ -9523,6 +9931,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "whole_number_digits",
@@ -9729,6 +10138,7 @@
               ],
               "return_type": "Integer",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "min",
@@ -9760,7 +10170,8 @@
                   "type": "Native",
                   "data": ""
                 }
-              ]
+              ],
+              "lttdg_name": ""
             },
             {
               "name": "leading_zero_number",
@@ -9838,9 +10249,10 @@
               ],
               "return_type": "Float",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
-                  "name": "from",
+                  "name": "min",
                   "type": "Integer",
                   "default": "-1000000",
                   "descriptions": [
@@ -9850,7 +10262,7 @@
                   ]
                 },
                 {
-                  "name": "to",
+                  "name": "max",
                   "type": "Integer",
                   "default": "0",
                   "descriptions": [
@@ -9892,6 +10304,7 @@
               ],
               "return_type": "Integer",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [],
               "examples": [
                 {
@@ -9924,6 +10337,7 @@
               ],
               "return_type": "Float",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "mean",
@@ -9936,7 +10350,7 @@
                 },
                 {
                   "name": "standard_deviation",
-                  "type": "Numeric",
+                  "type": "Float",
                   "default": "3.5",
                   "descriptions": [
                     {
@@ -9965,7 +10379,8 @@
                   "type": "Native",
                   "data": ""
                 }
-              ]
+              ],
+              "lttdg_name": "StandardDeviation"
             },
             {
               "name": "number",
@@ -10015,9 +10430,10 @@
               ],
               "return_type": "Float",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
-                  "name": "from",
+                  "name": "min",
                   "type": "Integer",
                   "default": "0",
                   "descriptions": [
@@ -10027,7 +10443,7 @@
                   ]
                 },
                 {
-                  "name": "to",
+                  "name": "max",
                   "type": "Integer",
                   "default": "1000000",
                   "descriptions": [
@@ -10087,11 +10503,12 @@
               "name": "within",
               "descriptions": [
                 {
-                  "text": "Produces a number within two provided values.\n                            <p>Boundaries are inclusive or exclusive depending on the range passed.</p>"
+                  "text": "Produces a number within two provided values.\nBoundaries are inclusive or exclusive depending on the range passed."
                 }
               ],
               "return_type": "Float",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "min",
@@ -10135,7 +10552,7 @@
                   "data": ""
                 }
               ],
-              "lttdg_name": "Float"
+              "lttdg_name": "Real"
             }
           ],
           "classes": []
@@ -10181,6 +10598,7 @@
               "return_type": "Integer",
               "return_desc": "",
               "private": true,
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "text",
@@ -10211,6 +10629,7 @@
               "return_type": "String",
               "return_desc": "",
               "private": true,
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "text",
@@ -10240,6 +10659,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "text",
@@ -10287,6 +10707,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "text",
@@ -10334,7 +10755,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
-              "private": true,
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "min_length",
@@ -10381,7 +10802,8 @@
                   "platform": "C#",
                   "type": "Native"
                 }
-              ]
+              ],
+              "lttdg_name": "Data.String.String"
             },
             {
               "name": "select_a",
@@ -10438,7 +10860,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
-              "private": true,
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "text",
@@ -10618,82 +11040,6 @@
               ]
             },
             {
-              "name": "zero_pad_left",
-              "descriptions": [
-                {
-                  "text": "Adds 0s to the start of the 'text' until it is 'length' long"
-                }
-              ],
-              "return_type": "String",
-              "return_desc": "",
-              "arguments": [
-                {
-                  "name": "text",
-                  "type": "String",
-                  "descriptions": [
-                    {
-                      "text": "The text to add pad"
-                    }
-                  ]
-                },
-                {
-                  "name": "length",
-                  "type": "Integer",
-                  "descriptions": [
-                    {
-                      "text": "The length the 'text' will be padded to"
-                    }
-                  ]
-                }
-              ],
-              "examples": [],
-              "implementations": [
-                {
-                  "platform": "C#",
-                  "type": "Native",
-                  "data": ""
-                }
-              ]
-            },
-            {
-              "name": "zero_pad_right",
-              "descriptions": [
-                {
-                  "text": "Adds 0s to the end of the 'text' until it is 'length' long"
-                }
-              ],
-              "return_type": "String",
-              "return_desc": "",
-              "arguments": [
-                {
-                  "name": "text",
-                  "type": "String",
-                  "descriptions": [
-                    {
-                      "text": "The text to add pad"
-                    }
-                  ]
-                },
-                {
-                  "name": "length",
-                  "type": "Integer",
-                  "descriptions": [
-                    {
-                      "text": "The length the 'text' will be padded to"
-                    }
-                  ]
-                }
-              ],
-              "examples": [],
-              "implementations": [
-                {
-                  "platform": "C#",
-                  "type": "Native",
-                  "data": ""
-                }
-              ]
-            },
-            {
               "name": "paragraph",
               "descriptions": [
                 {
@@ -10771,7 +11117,7 @@
               "name": "paragraph_by_chars",
               "descriptions": [
                 {
-                  "text": "Generates paragraph with 256 characters."
+                  "text": "Generates paragraph with a given number of characters."
                 }
               ],
               "return_type": "String",
@@ -10981,7 +11327,7 @@
                 {
                   "name": "exclude_words",
                   "type": "String",
-                  "default": "nil",
+                  "default": "''",
                   "default_value_desc": "no excluded words",
                   "descriptions": [
                     {
@@ -11007,7 +11353,7 @@
                 },
                 {
                   "type": "Expression",
-                  "data": "#{words 1,#{exclude_words})"
+                  "data": "#{words '1','false','#{exclude_words}'}"
                 }
               ],
               "lttdg_name": ""
@@ -11077,6 +11423,84 @@
                 }
               ],
               "lttdg_name": ""
+            },
+            {
+              "name": "zero_pad_left",
+              "descriptions": [
+                {
+                  "text": "Adds 0s to the start of the 'text' until it is 'length' long"
+                }
+              ],
+              "return_type": "String",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "text",
+                  "type": "String",
+                  "descriptions": [
+                    {
+                      "text": "The text to add pad"
+                    }
+                  ]
+                },
+                {
+                  "name": "length",
+                  "type": "Integer",
+                  "descriptions": [
+                    {
+                      "text": "The length the 'text' will be padded to"
+                    }
+                  ]
+                }
+              ],
+              "examples": [],
+              "implementations": [
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ]
+            },
+            {
+              "name": "zero_pad_right",
+              "descriptions": [
+                {
+                  "text": "Adds 0s to the end of the 'text' until it is 'length' long"
+                }
+              ],
+              "return_type": "String",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "text",
+                  "type": "String",
+                  "descriptions": [
+                    {
+                      "text": "The text to add pad"
+                    }
+                  ]
+                },
+                {
+                  "name": "length",
+                  "type": "Integer",
+                  "descriptions": [
+                    {
+                      "text": "The length the 'text' will be padded to"
+                    }
+                  ]
+                }
+              ],
+              "examples": [],
+              "implementations": [
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ]
             }
           ],
           "classes": []
@@ -16690,7 +17114,6 @@
           "text": ""
         }
       ],
-      "exclude_cs": true,
       "methods": [
         {
           "name": "base64",
@@ -16758,7 +17181,8 @@
               "type": "Native",
               "data": ""
             }
-          ]
+          ],
+          "lttdg_name": "Data.Binary.MockBase64"
         },
         {
           "name": "bot_user_agent",
@@ -16977,9 +17401,10 @@
               "name": "name",
               "type": "String",
               "default": "nil",
+              "default_value_desc": "Random",
               "descriptions": [
                 {
-                  "text": ""
+                  "text": "The user name part of the address"
                 }
               ]
             },
@@ -16997,9 +17422,10 @@
               "name": "domain",
               "type": "String",
               "default": "nil",
+              "default_value_desc": "Random",
               "descriptions": [
                 {
-                  "text": ""
+                  "text": "The email domain to use"
                 }
               ]
             }
@@ -17024,7 +17450,8 @@
               "type": "Native",
               "data": ""
             }
-          ]
+          ],
+          "lttdg_name": "Internet.Email|Person.Email"
         },
         {
           "name": "ip_v4_address",
@@ -17054,7 +17481,7 @@
             },
             {
               "type": "Expression",
-              "data": "#{random_integer '0..255'}.#{random_integer '0..255'}.#{random_integer '0..255'}.#{random_integer '0..255'}"
+              "data": "#{Data.Number.integer '0','255'}.#{Data.Number.integer '0','255'}.#{Data.Number.integer '0','255'}.#{Data.Number.integer '0','255'}"
             }
           ]
         },
@@ -17081,7 +17508,7 @@
               "charSubst": false,
               "digitSubst": false,
               "translate": false,
-              "data": "#{ip_v4_address}/#{random_integer '1..31'}"
+              "data": "#{ip_v4_address}/#{Data.Number.integer '1','31'}"
             }
           ]
         },
@@ -17140,7 +17567,7 @@
               "charSubst": false,
               "digitSubst": false,
               "translate": false,
-              "data": "#{ip_v6_address}/#{random_integer '1..127'}"
+              "data": "#{ip_v6_address}/#{Data.Number.integer '1','127'}"
             }
           ]
         },
@@ -17153,6 +17580,7 @@
           ],
           "return_type": "String",
           "return_desc": "",
+          "usesLocale": false,
           "arguments": [],
           "examples": [
             {
@@ -17263,7 +17691,8 @@
               "type": "Native",
               "data": ""
             }
-          ]
+          ],
+          "lttdg_name": "Internet.Password|Person.Password"
         },
         {
           "name": "private_ip_v4_address",
@@ -17455,6 +17884,7 @@
             }
           ],
           "return_type": "hash",
+          "exclude_cs": true,
           "return_desc": "",
           "arguments": [],
           "examples": [
@@ -17530,14 +17960,25 @@
           ],
           "return_type": "String",
           "return_desc": "",
+          "usesLocale": false,
           "arguments": [
             {
-              "name": "length_range",
-              "type": "IntegerRange",
-              "default": "5..10",
+              "name": "min_len",
+              "type": "Integer",
+              "default": "4",
               "descriptions": [
                 {
-                  "text": "When int value passed it returns the username longer than specifier. Max value can be 10^6"
+                  "text": "The minimum length for the generated username"
+                }
+              ]
+            },
+            {
+              "name": "max_len",
+              "type": "Integer",
+              "default": "12",
+              "descriptions": [
+                {
+                  "text": "The maximum length for the generated username"
                 }
               ]
             },
@@ -17547,7 +17988,7 @@
               "default": "'._'",
               "descriptions": [
                 {
-                  "text": ""
+                  "text": "A string containig all characters that can be used to separate parts of the name."
                 }
               ]
             }
@@ -17555,7 +17996,7 @@
           "examples": [
             {
               "description": "",
-              "code": "Faker::Internet.username(specifier: 10)                     #=> \"lulu.goodwin\"\nFaker::Internet.username(specifier: 5..10)                  #=> \"morris\"\nFaker::Internet.username(specifier: 5..10)                  #=> \"berryberry\"\nFaker::Internet.username(specifier: 20, separators: ['_'])  #=> \"nikki_sawaynnikki_saway\""
+              "code": "Faker::Internet.username(10)          #=> \"lulu.goodwin\"\nFaker::Internet.username(5, 10)       #=> \"morris\"\nFaker::Internet.username(5, 10)       #=> \"berryberry\"\nFaker::Internet.username(5, 20, '_')  #=> \"nikki_sawaynnikki_saway\""
             }
           ],
           "implementations": [
@@ -17572,7 +18013,8 @@
               "type": "Native",
               "data": ""
             }
-          ]
+          ],
+          "lttdg_name": "Internet.Username|Person.Username"
         },
         {
           "name": "uuid",
@@ -17660,7 +18102,7 @@
                   "charSubst": false,
                   "digitSubst": false,
                   "translate": false,
-                  "data": "<code>#{Lorem.sentence(word_count: 1)}</code>"
+                  "data": "<code>#{Lorem.sentence '2','true','4'}</code>"
                 }
               ]
             },
@@ -17738,10 +18180,8 @@
               "implementations": [
                 {
                   "type": "Expression",
-                  "charSubst": true,
-                  "digitSubst": true,
                   "translate": true,
-                  "data": "<em>#{Faker::Lorem.paragraph(sentence_count: 1)}</em>"
+                  "data": "<em>#{Lorem.paragraph '1'}</em>"
                 }
               ]
             },
@@ -17954,7 +18394,8 @@
                   "translate": true,
                   "data": "(exclude: [])\n        method_list = available_methods\n        exclude.each { |ex| method_list.delete_if { |meth| meth == ex.to_sym } }\n        send(method_list[Faker::Config.random.rand(0..method_list.length - 1)])"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "sandwich",
@@ -18022,10 +18463,8 @@
               "implementations": [
                 {
                   "type": "Expression",
-                  "charSubst": true,
-                  "digitSubst": true,
                   "translate": true,
-                  "data": "<script src=\\\"#{Faker::Internet.url}.js\\\"></script>"
+                  "data": "<script src=\\\"#{Internet.url}.js\\\"></script>"
                 }
               ]
             },
@@ -18094,6 +18533,7 @@
               "text": ""
             }
           ],
+          "exclude_cs": true,
           "methods": [
             {
               "name": "status_code",
@@ -18139,6 +18579,11 @@
                   "digitSubst": false,
                   "translate": false,
                   "data": "(group: nil)\n          return STATUS_CODES[STATUS_CODES_GROUPS.sample].sample unless group\n\n          raise ArgumentError, 'Invalid HTTP status code group' unless STATUS_CODES_GROUPS.include?(group)\n\n          STATUS_CODES[group].sample"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
                 }
               ]
             }
@@ -18397,7 +18842,7 @@
                   "charSubst": false,
                   "digitSubst": false,
                   "translate": false,
-                  "data": "```ruby\\n#{Lorem.sentence(word_count: 1)}\\n```"
+                  "data": "```ruby\\n#{Lorem.sentence '2','true','4'}\\n```"
                 }
               ]
             },
@@ -18420,9 +18865,6 @@
               "implementations": [
                 {
                   "type": "Resolve",
-                  "charSubst": true,
-                  "digitSubst": true,
-                  "translate": true,
                   "data": "markdown.emphasis"
                 }
               ]
@@ -18475,7 +18917,7 @@
                   "charSubst": true,
                   "digitSubst": true,
                   "translate": true,
-                  "data": "`#{Faker::Lorem.sentence(word_count: 1)}`"
+                  "data": "`#{Lorem.sentence '5'}`"
                 }
               ]
             },
@@ -18536,7 +18978,8 @@
                   "translate": true,
                   "data": "(*args)\n        method_list = available_methods\n        args&.each { |ex| method_list.delete_if { |meth| meth == ex.to_sym } }\n        send(method_list[Faker::Config.random.rand(0..method_list.length - 1)])"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "sandwich",
@@ -18649,6 +19092,7 @@
               "text": ""
             }
           ],
+          "exclude_cs": true,
           "methods": [
             {
               "name": "created_at",
@@ -18990,32 +19434,62 @@
               "usesLocale": false,
               "arguments": [
                 {
-                  "name": "major",
-                  "type": "IntegerRange",
-                  "default": "1..9",
+                  "name": "minMajor",
+                  "type": "Integer",
+                  "default": "1",
                   "descriptions": [
                     {
-                      "text": "An integer to use or a range to pick the integer from."
+                      "text": "The minimum value major value in the version number (Major.Minor.Patch)"
                     }
                   ]
                 },
                 {
-                  "name": "minor",
-                  "type": "IntegerRange",
-                  "default": "1..9",
+                  "name": "maxMajor",
+                  "type": "Integer",
+                  "default": "9",
                   "descriptions": [
                     {
-                      "text": "An integer to use or a range to pick the integer from."
+                      "text": "The maximum value major value in the version number (Major.Minor.Patch)"
                     }
                   ]
                 },
                 {
-                  "name": "patch",
-                  "type": "IntegerRange",
-                  "default": "1..9",
+                  "name": "minMinor",
+                  "type": "Integer",
+                  "default": "1",
                   "descriptions": [
                     {
-                      "text": "An integer to use or a range to pick the integer from."
+                      "text": "The minimum value Minor value in the version number (Major.Minor.Patch)"
+                    }
+                  ]
+                },
+                {
+                  "name": "maxMinor",
+                  "type": "Integer",
+                  "default": "9",
+                  "descriptions": [
+                    {
+                      "text": "The maximum value Minor value in the version number (Major.Minor.Patch)"
+                    }
+                  ]
+                },
+                {
+                  "name": "minPatch",
+                  "type": "Integer",
+                  "default": "1",
+                  "descriptions": [
+                    {
+                      "text": "The minimum value Patch value in the version number (Major.Minor.Patch)"
+                    }
+                  ]
+                },
+                {
+                  "name": "maxPatch",
+                  "type": "Integer",
+                  "default": "9",
+                  "descriptions": [
+                    {
+                      "text": "The maximum value Patch value in the version number (Major.Minor.Patch)"
                     }
                   ]
                 }
@@ -19027,15 +19501,11 @@
                 },
                 {
                   "description": "",
-                  "code": "Faker::App.semantic_version(major: 42) #=> \"42.5.2\""
+                  "code": "Faker::App.semantic_version(maxMajor: 42) #=> \"42.5.2\""
                 },
                 {
                   "description": "",
-                  "code": "Faker::App.semantic_version(minor: 100..101) #=> \"42.100.4\""
-                },
-                {
-                  "description": "",
-                  "code": "Faker::App.semantic_version(patch: 5..6) #=> \"7.2.6\""
+                  "code": "Faker::App.semantic_version(minMinor: 100, maxMinor: 101) #=> \"42.100.4\""
                 }
               ],
               "implementations": [
@@ -19046,6 +19516,14 @@
                   "digitSubst": false,
                   "translate": false,
                   "data": "(major: 0..9, minor: 0..9, patch: 1..9)\n\t\t\t\t[major, minor, patch].map { |chunk| sample(Array(chunk)) }.join('.')"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "charSubst": false,
+                  "digitSubst": false,
+                  "translate": false,
+                  "data": ""
                 }
               ]
             },
@@ -19053,7 +19531,7 @@
               "name": "version",
               "descriptions": [
                 {
-                  "text": "Produces a version string."
+                  "text": "Produces a version string, possible formats ''#.#.#', #.#'"
                 }
               ],
               "return_type": "String",
@@ -27495,7 +27973,6 @@
           "text": ""
         }
       ],
-      "exclude_cs": true,
       "methods": [],
       "classes": [
         {
@@ -27535,7 +28012,8 @@
                   "translate": false,
                   "data": "address.building_number"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "city",
@@ -27561,7 +28039,8 @@
                   "translate": false,
                   "data": "address.city"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "city_prefix",
@@ -27587,7 +28066,8 @@
                   "translate": false,
                   "data": "address.city_prefix"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "city_suffix",
@@ -27613,7 +28093,8 @@
                   "translate": false,
                   "data": "address.city_suffix"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "community",
@@ -27639,7 +28120,8 @@
                   "translate": false,
                   "data": "address.community"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "country",
@@ -27665,7 +28147,8 @@
                   "translate": true,
                   "data": "address.country"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "country_by_code",
@@ -27703,7 +28186,8 @@
                   "translate": false,
                   "data": "address.country_by_code.#{code}"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "country_code",
@@ -27731,7 +28215,8 @@
                   "data": "address.country_code"
                 }
               ],
-              "lttdg_name": "CountryCodeAlpha2"
+              "lttdg_name": "CountryCodeAlpha2",
+              "lttdg_exclude": true
             },
             {
               "name": "country_code_long",
@@ -27758,7 +28243,8 @@
                   "data": "address.country_code_long"
                 }
               ],
-              "lttdg_name": "CountryCodeAlpha3"
+              "lttdg_name": "CountryCodeAlpha3",
+              "lttdg_exclude": true
             },
             {
               "name": "country_name_to_code",
@@ -27796,7 +28282,8 @@
                   "data": "address.country_by_name.#{String.lower '#{name}'}"
                 }
               ],
-              "lttdg_name": "CountryNameToAlpha2"
+              "lttdg_name": "CountryNameToAlpha2",
+              "lttdg_exclude": true
             },
             {
               "name": "latitude",
@@ -27820,7 +28307,8 @@
                   "type": "Expression",
                   "data": "#{random_float '-180..180'}"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "longitude",
@@ -27844,7 +28332,8 @@
                   "type": "Expression",
                   "data": "#{random_float '-180..180'}"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "mail_box",
@@ -27869,7 +28358,9 @@
                   "digitSubst": true,
                   "data": "address.mail_box"
                 }
-              ]
+              ],
+              "lttdg_name": "Person.Address.PoBox",
+              "lttdg_exclude": true
             },
             {
               "name": "postcode",
@@ -27895,7 +28386,8 @@
                   "translate": false,
                   "data": "address.postcode"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "secondary_address",
@@ -27916,12 +28408,13 @@
               "implementations": [
                 {
                   "type": "Resolve",
-                  "charSubst": false,
-                  "digitSubst": false,
+                  "charSubst": true,
+                  "digitSubst": true,
                   "translate": false,
                   "data": "address.secondary_address"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "state",
@@ -27931,7 +28424,9 @@
                 }
               ],
               "return_type": "String",
+              "exclude_cs": true,
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [],
               "examples": [
                 {
@@ -27945,7 +28440,8 @@
                   "data": "address.state"
                 }
               ],
-              "lttdg_name": "USState"
+              "lttdg_name": "USState",
+              "lttdg_exclude": true
             },
             {
               "name": "state_abbr",
@@ -27956,6 +28452,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [],
               "examples": [
                 {
@@ -28006,7 +28503,8 @@
                   "translate": true,
                   "data": "address.street_address"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "street_name",
@@ -28032,7 +28530,8 @@
                   "translate": true,
                   "data": "address.street_name"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "street_suffix",
@@ -28058,7 +28557,8 @@
                   "translate": false,
                   "data": "address.street_suffix"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             },
             {
               "name": "time_zone",
@@ -28084,7 +28584,9 @@
                   "translate": false,
                   "data": "address.time_zone"
                 }
-              ]
+              ],
+              "lttdg_name": "",
+              "lttdg_exclude": true
             },
             {
               "name": "zip_code",
@@ -28110,7 +28612,8 @@
                   "translate": false,
                   "data": "address.postcode"
                 }
-              ]
+              ],
+              "lttdg_exclude": true
             }
           ],
           "classes": []
@@ -28132,6 +28635,7 @@
               ],
               "return_type": "String",
               "return_desc": "",
+              "usesLocale": false,
               "arguments": [
                 {
                   "name": "name",
@@ -28166,7 +28670,7 @@
                 {
                   "name": "type",
                   "type": "AvatarType",
-                  "default": "AvatarType.Person",
+                  "default": "Person",
                   "descriptions": [
                     {
                       "text": "The avatar set to use (Robot, Monster, RobotHead, Cat, Person)"
@@ -28224,7 +28728,8 @@
                   "type": "Native",
                   "data": ""
                 }
-              ]
+              ],
+              "lttdg_name": "Person.AvatarImageUrl"
             }
           ],
           "classes": []
@@ -28805,7 +29310,7 @@
                   "charSubst": true,
                   "digitSubst": true,
                   "translate": true,
-                  "data": "driving_licence.usa.#{String.lower '#{String.replace #{state}, ' ', '_'}}}"
+                  "data": "driving_licence.usa.#{String.lower '#{String.replace '#{state}',' ','_'}'}"
                 }
               ]
             }
@@ -29876,7 +30381,8 @@
                   "translate": true,
                   "data": "phone_number.area_code"
                 }
-              ]
+              ],
+              "lttdg_name": "UsAreaCode"
             },
             {
               "name": "cell_phone",
@@ -29954,6 +30460,11 @@
                   "digitSubst": false,
                   "translate": false,
                   "data": "#{country_code} #{cell_phone}"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
                 }
               ]
             },
@@ -30007,7 +30518,8 @@
                   "translate": true,
                   "data": "phone_number.exchange_code"
                 }
-              ]
+              ],
+              "lttdg_name": "UsExchangeCode"
             },
             {
               "name": "phone_number",
@@ -30058,6 +30570,11 @@
                   "digitSubst": false,
                   "translate": false,
                   "data": "#{country_code} #{phone_number}"
+                },
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
                 }
               ]
             },

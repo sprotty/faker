@@ -210,7 +210,7 @@ namespace Faker.Api.UI
                 allTypes.Add("Float");
                 allTypes.Add("Boolean");
                 allTypes.Add("Binary");
-                allTypes.Add("IntegerRange");
+                //allTypes.Add("IntegerRange");
                 allTypes.Add("DoubleRange");
                 allTypes.AddRange(types.Select(t => t.Name));
                 allTypes.AddRange(enums.Select(t => t.Name));

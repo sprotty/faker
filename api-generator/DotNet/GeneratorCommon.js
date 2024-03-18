@@ -83,7 +83,7 @@ class Utils {
     }
 
     static getNativeEscapedString(txt) {
-        return txt.replaceAll('\\', '\\\\').replaceAll('"', '\\"');
+        return txt.replaceAll('\\', '\\\\').replaceAll('"', '\\"').replaceAll('\r', '').replaceAll('\n', '\\n');
     }
 
     static GetNativeArgName(rubyName) {
@@ -118,8 +118,8 @@ class Utils {
             return 'double.Parse(' + strExpr + ')';
         else if (rubyType == 'Integer')
             return 'long.Parse(' + strExpr + ')';
-        else if (rubyType == 'IntegerRange')
-            return 'IntegerRange.Parse(' + strExpr + ')';
+        // else if (rubyType == 'IntegerRange')
+        //     return 'IntegerRange.Parse(' + strExpr + ')';
         else if (rubyType == 'String')
             return strExpr;
         else if (rubyType == 'Binary')
@@ -127,11 +127,11 @@ class Utils {
         else if (rubyType == 'Encoding')
             return 'Encoding.GetEncoding(' + strExpr + ')';
         else if (rubyType == 'DateTime')
-            return 'DateTime.Parse(' + strExpr + ')';
+            return 'System.DateTime.Parse(' + strExpr + ')';
         else if (rubyType == 'Date')
-            return 'DateOnly.Parse(' + strExpr + ')';
+            return 'System.DateOnly.Parse(' + strExpr + ')';
         else if (rubyType == 'Time')
-            return 'TimeOnly.Parse(' + strExpr + ')';
+            return 'System.TimeOnly.Parse(' + strExpr + ')';
         else if (rubyType == 'DayOfWeek' ||
             config.enums.some(e => e.name == rubyType))
             return 'Enum.Parse<' + Utils.GetNativeEnumName(rubyType) + '>(' + strExpr + ')'; // its an enumeration    
@@ -148,8 +148,8 @@ class Utils {
             return 'double';
         else if (rubyType == 'Integer')
             return 'long';
-        else if (rubyType == 'IntegerRange')
-            return 'IntegerRange';
+        // else if (rubyType == 'IntegerRange')
+        //     return 'IntegerRange';
         else if (rubyType == 'String')
             return 'string';
         else if (rubyType == 'Binary')
@@ -181,8 +181,8 @@ class Utils {
             return true;
         else if (rubyType == 'Integer')
             return true;
-        else if (rubyType == 'IntegerRange')
-            return false;
+        // else if (rubyType == 'IntegerRange')
+        //     return false;
         else if (rubyType == 'String')
             return true;
         else if (rubyType == 'Binary')

@@ -16,23 +16,19 @@ namespace FakerNet
         /// <summary>
         /// Convert the specified locale into a chain of locales used for message resolution. For example:
         /// </summary>
-        /// <example>(fr_FR) -> [ fr_FR, anotherTest, en ]</example>
-        /// <param name="from"></param>
+        /// <example>(fr-FR) -> [ fr-FR, fr, en ]</example>
+        /// <param name="locale"></param>
         /// <returns>a list of <see cref="CultureInfo"/>} instance</returns>
-        internal static CultureInfo[] GetLocaleChain(this CultureInfo from)
+        internal static CultureInfo[] GetLocaleChain(this CultureInfo locale)
         {
-            if (EnglishCulture.Equals(from))
-            {
-                return new[] { EnglishCulture };
-            }
-            CultureInfo normalized = from;
-
             List<CultureInfo> chain = new List<CultureInfo>(3);
-            chain.Add(normalized);
-            if (normalized.GetCountry() != "" &&
-                EnglishCulture.GetLanguage() != normalized.GetLanguage())
+            if (EnglishCulture.Equals(locale) == false)
             {
-                chain.Add(new CultureInfo(normalized.GetLanguage()));
+                chain.Add(locale);
+                if (string.IsNullOrWhiteSpace(locale.GetCountry()) == false)
+                {
+                    chain.Add(new CultureInfo(locale.GetLanguage()));
+                }
             }
             chain.Add(EnglishCulture); // default
             return chain.ToArray();
@@ -41,8 +37,6 @@ namespace FakerNet
         public static string GetLanguage(this CultureInfo culture)
         {
             return culture.TwoLetterISOLanguageName;
-            //var r = new RegionInfo(culture.LCID);
-            //return r.TwoLetterISORegionName;
         }
         public static string? GetCountry(this CultureInfo culture)
         {
@@ -92,9 +86,7 @@ namespace FakerNet
         }
         #endregion
 
-        
-
-        public static string GetEnumValue(Enum value)
+        public static string GetEnumDisplayName(Enum value)
         {
             DisplayAttribute? displayAttr;
 
@@ -106,12 +98,36 @@ namespace FakerNet
             return value.ToString();
         }
 
+        public static string GetEnumDesc(Enum value)
+        {
+            DisplayAttribute? displayAttr;
+
+            var fieldInfo = value.GetType().GetField(value.ToString());
+
+            if ((displayAttr = fieldInfo?.GetCustomAttribute<DisplayAttribute>()) != null && displayAttr.Description != null)
+                return displayAttr.Description;
+
+            return value.ToString();
+        }
+
+        public static string GetEnumValue(Enum value)
+        {
+            DisplayAttribute? displayAttr;
+
+            var fieldInfo = value.GetType().GetField(value.ToString());
+
+            if ((displayAttr = fieldInfo?.GetCustomAttribute<DisplayAttribute>()) != null && displayAttr.ShortName != null)
+                return displayAttr.ShortName;
+
+            return value.ToString();
+        }
+
     }
 
-    public class UNKNWON_Hash { }
-    public class UNKNWON_Number { }
-    public class UNKNWON_Symbol { }
-    public class IntegerRange
+    //public class UNKNWON_Hash { }
+    //public class UNKNWON_Number { }
+    //public class UNKNWON_Symbol { }
+    internal class IntegerRange
     {
         public IntegerRange(long min, long max)
         {
@@ -145,33 +161,33 @@ namespace FakerNet
 
         public static implicit operator IntegerRange(string d) => Parse(d);
     }
-    public class FloatRange
-    {
-        public FloatRange(double min, double max)
-        {
-            Min = min;
-            Max = max;
-        }
+    //public class FloatRange
+    //{
+    //    public FloatRange(double min, double max)
+    //    {
+    //        Min = min;
+    //        Max = max;
+    //    }
 
-        public double Min { get; }
-        public double Max { get; }
+    //    public double Min { get; }
+    //    public double Max { get; }
 
-        public static FloatRange Parse(string numericRange)
-        {
-            int indexOfSep = numericRange.IndexOf("..");
-            if (indexOfSep <= 0 || indexOfSep >= numericRange.Length - 1)
-                throw new ArgumentException("Expected form is '0..1'");
+    //    public static FloatRange Parse(string numericRange)
+    //    {
+    //        int indexOfSep = numericRange.IndexOf("..");
+    //        if (indexOfSep <= 0 || indexOfSep >= numericRange.Length - 1)
+    //            throw new ArgumentException("Expected form is '0..1'");
 
-            double min = double.Parse(numericRange.Substring(0, indexOfSep));
-            double max = double.Parse(numericRange.Substring(indexOfSep + 2));
-            return new FloatRange(min, max);
-        }
+    //        double min = double.Parse(numericRange.Substring(0, indexOfSep));
+    //        double max = double.Parse(numericRange.Substring(indexOfSep + 2));
+    //        return new FloatRange(min, max);
+    //    }
 
-        public override string ToString()
-        {
-            return $"{Min}..{Max}";
-        }
+    //    public override string ToString()
+    //    {
+    //        return $"{Min}..{Max}";
+    //    }
 
-        public static implicit operator FloatRange(string d) => Parse(d);
-    }
+    //    public static implicit operator FloatRange(string d) => Parse(d);
+    //}
 }

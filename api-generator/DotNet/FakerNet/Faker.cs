@@ -94,14 +94,14 @@ namespace FakerNet
             if (locale == null) throw new ArgumentNullException("locale is required");
             //if (locale.Name == "es-AR")
             //    Debug.WriteLine("Local : " + locale.Name);
-            try
-            {
-                var r = new RegionInfo(locale.LCID);
-            }
-            catch (ArgumentException ae)
-            {
-                throw new ArgumentException("The culture must be associated with a region (i.e. 'en-GB')", nameof(locale), ae);
-            }
+            //try
+            //{
+            //    var r = new RegionInfo(locale.LCID);
+            //}
+            //catch (ArgumentException ae)
+            //{
+            //    throw new ArgumentException("The culture must be associated with a region (i.e. 'en-GB')", nameof(locale), ae);
+            //}
 
             //locale = normalizeLocale(locale);
 
@@ -238,9 +238,9 @@ namespace FakerNet
                     return true;
                 }
             }
-            else if (isSlashDelimitedRegex(o.ToString()!))
+            else if (IsSlashDelimitedRegex(o.ToString()!))
             {
-                result = $"#{{regexify '{trimRegexSlashesAndEscape(o.ToString()!)}'}}";
+                result = $"#{{regexify '{TrimRegexSlashesAndEscape(o.ToString()!)}'}}";
                 e = null;
                 return true;
             }
@@ -280,7 +280,7 @@ namespace FakerNet
         /// </summary>
         /// <param name="key">key key contains path to an object. Path segment is separated by dot.E.g.name.first_name</param>
         /// <returns></returns>
-        private Object? FetchYamlObject(string key, ref object? yamlContext)
+        internal Object? FetchYamlObject(string key, ref object? yamlContext)
         {
             string[] path = key.Split('\\', '.');
 
@@ -324,7 +324,7 @@ namespace FakerNet
         /// </summary>
         /// <param name="expression">expression input expression</param>
         /// <returns></returns>
-        private bool isSlashDelimitedRegex(string expression)
+        internal bool IsSlashDelimitedRegex(string expression)
         {
             return expression != null && expression.StartsWith("/") && expression.EndsWith("/");
         }
@@ -336,7 +336,7 @@ namespace FakerNet
         /// </summary>
         /// <param name="slashDelimitedRegex">a non null slash delimited regex (ex. {@code /[ab]/})</param>
         /// <returns>the regex without the slashes (ex. {@code [ab]})</returns>
-        private string trimRegexSlashesAndEscape(string slashDelimitedRegex)
+        internal string TrimRegexSlashesAndEscape(string slashDelimitedRegex)
         {
             return slashDelimitedRegex.Substring(1, slashDelimitedRegex.Length - 2).Replace("\'", "\\\'");
         }
@@ -493,26 +493,46 @@ namespace FakerNet
         /// <exception cref="Exception">if there's a problem invoking the method or it doesn't exist.</exception>
         internal string? ResolveFakerObjectAndMethod(string key, List<string> args)
         {
-            int split = key.LastIndexOf(".");
-            if (split == -1)
-                return null;
+//            int split = key.LastIndexOf(".");
+            //if (key.Contains(".") == false)
+            //    return null;
 
-            string classPath = key.Substring(0, split );
-            string propertyName = key.Substring(split + 1);
+            //string[] classPath = key.Substring(0, split );
+            //string propertyName = key.Substring(split + 1);
             //// wrong number of parts to be a
             ////      [class name].[method]
             ////      [class name].[class name].[method]
             //if (classAndMethod.ind.Length < 2)
             //    return null;
 
-            //string nativePropertyName = rubyPropertyName.Replace("_", "");
-            IInvokableNativeMember? propertyInfo = BuildInvokableNativeMember(this, classPath, new List<string>());
-            if (propertyInfo == null)
+            string[] classPath = key.Split('.').SkipLast(1).ToArray();
+            string propertyName = key.Split('.').Last();
+            object target = this;
+            foreach(var path in classPath)
             {
-                Logger.Warning($"Can't find property ruby object {classPath} on {this.GetType().Name}.");
-                return null;
+                IInvokableNativeMember? propertyInfo = BuildInvokableNativeMember(target, path, new List<string>());
+                if (propertyInfo == null)
+                {
+                    Logger.Warning($"Can't find property ruby object {classPath} on {this.GetType().Name}.");
+                    return null;
+                }
+                target = propertyInfo.Invoke(target)!;
+                if (target == null)
+                {
+                    Logger.Warning($"Property {path} on {this.GetType().Name} returned null.");
+                    return null;
+                }
             }
-            object target = propertyInfo.Invoke(this)!;
+
+
+            ////string nativePropertyName = rubyPropertyName.Replace("_", "");
+            //IInvokableNativeMember? propertyInfo = BuildInvokableNativeMember(this, classPath, new List<string>());
+            //if (propertyInfo == null)
+            //{
+            //    Logger.Warning($"Can't find property ruby object {classPath} on {this.GetType().Name}.");
+            //    return null;
+            //}
+            //object target = propertyInfo.Invoke(this)!;
 
             IInvokableNativeMember? methodInfo = BuildInvokableNativeMember(target, propertyName, args);
             if (methodInfo == null)

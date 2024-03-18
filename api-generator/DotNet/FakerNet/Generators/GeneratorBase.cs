@@ -145,27 +145,6 @@ namespace FakerNet
         }
 
         /// <summary>
-        /// Creates a random Integer number within the specified range
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        [FakerMethod("random_integer")]
-        public string RandomIntegerAsString(IntegerRange rng)
-        {
-            return RandomExtensions.NextInt64(Faker.Random, rng.Min, rng.Max).ToString(CultureInfo.InvariantCulture);
-        }
-
-        /// <summary>
-        /// Creates a random floating point number within the specified range
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        [FakerMethod("random_float")]
-        public string RandomFloatAsString(FloatRange rng)
-        {
-            return Faker.Random.NextDouble(rng.Min, rng.Max).ToString("R");
-        }
-        /// <summary>
         /// Gets a sequence of hex chars
         /// </summary>
         /// <param name="length">the number of chars (typically an even number)</param>

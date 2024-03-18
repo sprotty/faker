@@ -1,6 +1,16 @@
 ﻿const { Writer, Utils, config } = require('./GeneratorCommon.js');
 const { exit } = require('node:process');
 
+config.classes = config.classes.filter((cls) => cls.lttdg_exclude != true);
+config.classes.forEach(cls => cls.classes = cls.classes.filter((clsSub) => clsSub.lttdg_exclude != true));
+config.classes.forEach((cls) =>
+    cls.methods = cls.methods.filter(m =>
+        m.private != true && m.lttdg_exclude != true));
+config.classes.forEach(cls =>
+    cls.classes.forEach(clsSub =>
+        clsSub.methods = clsSub.methods.filter((m) =>
+            m.private != true && m.lttdg_exclude != true)));
+
 var myWriter = new Writer();
 
 myWriter.output('using LiquidTechnologies.MetaTypeSystem;\n');
@@ -59,16 +69,17 @@ function writeMethod(method, class_path) {
     }
 
     const fakerMethodName = Utils.GetNativeMethodName(method.name);
-    const nativeMethodName = Utils.isNullOrWhitespace(method.lttdg_name) ? fakerMethodName : method.lttdg_name;
+    const tdgMethodName = getTsgMethodName(method);
+    const tsgGroupName = getTsgGroupName(class_path, method);
     const rubyMethodType = method.return_type;
-    const nativeMethodType = Utils.GetNativeType(rubyMethodType);
+    const tsgMethodType = GetTdgType(rubyMethodType);
 
-    var methodDesc = method.descriptions.find(d => d.platform == 'C#') ?? method.descriptions.find(d => d.platform == null)?.text ?? '';
+    var methodDesc = method.descriptions.find(d => d.platform == 'C#')?.text ?? method.descriptions.find(d => d.platform == null)?.text ?? '';
 
-    const returnValueDesc = method.return_desc ?? ('The result of ' + nativeMethodName);
-    myWriter.output('[NativeFunction("' + Utils.getNativeEscapedString(nativeMethodName) + '", "' + Utils.getNativeEscapedString(methodDesc) + '", "' + class_path.map(g => Utils.getNativeEscapedString(g)).join('.') + '", "function-' + class_path.map(g => g.toLowerCase()).join('-') + '-' + nativeMethodName + '.png", AccessorType.Method)]\n');
+    const returnValueDesc = method.return_desc ?? ('The result of ' + tdgMethodName);
+    myWriter.output('[NativeFunction("' + Utils.getNativeEscapedString(tdgMethodName) + '", "' + Utils.getNativeEscapedString(methodDesc) + '", "' + tsgGroupName + '", "function-' + class_path.map(g => g.toLowerCase()).join('-') + '-' + tdgMethodName + '.png", AccessorType.Method)]\n');
     myWriter.output('[return: ArgumentProperty("Value", "' + Utils.getNativeEscapedString(returnValueDesc) + '")]\n')
-    myWriter.output('public static ' + nativeMethodType + ' ' + nativeMethodName + '(\n');
+    myWriter.output('public static ' + tsgMethodType + ' ' + tdgMethodName + '(\n');
     myWriter.outputIndentPush();
     {
         myWriter.output('  [ArgumentProperty("context", "internal use")] IEvaluationContext context');
@@ -81,11 +92,18 @@ function writeMethod(method, class_path) {
     myWriter.output('{\n');
     myWriter.outputIndentPush();
     {
+        var fn;
         if (method.usesLocale != false)
-            myWriter.output('return context.GetFakerInstance(locale).');
+            fn = 'context.GetFakerInstance(locale).';
         else
-            myWriter.output('return context.GetFakerInstance(new CultureInfo("en")).');
-        myWriter.output(class_path.join('.') + '.' + fakerMethodName + '(' + method.arguments.map(a => getArgValue(a)).join(', ') + ');\n');
+            fn = 'context.GetFakerInstance(CultureInfo.CurrentCulture).FakerEn.';
+
+        fn += class_path.join('.') + '.' + fakerMethodName + '(' + method.arguments.map(a => getArgValue(a)).join(', ') + ')';
+
+        if (rubyMethodType == 'Binary')
+            fn = 'new Binary(' + fn + ')';
+
+        myWriter.output('return ' + fn + ';\n');
     }
     myWriter.outputIndentPop();
     myWriter.output('}\n');
@@ -96,25 +114,31 @@ function getArgs(args) {
 }
 function getArg(arg) {
     // [ArgumentProperty("Gender", "The gender of the name to create", IsOptional = true, OptionalDesc = "Random Value")] GenderType? gender,
-    var argNativeName = Utils.GetNativeArgName(arg.name);
-    var argNativeType = Utils.GetNativeType(arg.type);
+    const argFakerName = Utils.GetNativeArgName(arg.name);
+    const argRubyType = arg.type;
+    // const argFakerType = Utils.GetNativeType(argRubyType);
+    var argTdgType = GetTdgType(argRubyType);
     var canDefault = Utils.CanDefaultValueType(arg.type);
-    var nameParam = '"' + Utils.getNativeEscapedString(argNativeName) + '"';
-    var descParam = ', "' + Utils.getNativeEscapedString(arg.text ?? '') + '"';
+    var nameParam = '"' + Utils.getNativeEscapedString(argFakerName) + '"';
+    var descParam = ', "' + Utils.getNativeEscapedString(arg.descriptions.find(d => d.platform == 'C#')?.text ?? arg.descriptions.find(d => d.platform == null)?.text ?? '') + '"';
     var argDefaultDecl = '';
     var optionalParam = '';
     var optionalDescParam = '';
+    var safeDefaultValue = arg.default == null ? null : arg.default == 'nil' ? 'null' : '"' + Utils.getNativeEscapedString(arg.default) + '"';
 
     if (Utils.isNullOrWhitespace(arg.default) == false) {
         optionalParam += ', IsOptional = true';
-        optionalDescParam += ', OptionalDesc = "' + Utils.getNativeEscapedString(arg.default) + '"';
+        if (Utils.isNullOrWhitespace(arg.default_value_desc) == false)
+            optionalDescParam += ', OptionalDesc = "' + Utils.getNativeEscapedString(arg.default_value_desc) + '"';
+        else
+            optionalDescParam += ', OptionalDesc = "' + Utils.getNativeEscapedString(safeDefaultValue) + '"';
 
         if (arg.default == 'nil') {
             // String Fn(ARG_TYPE? arg = null)
             //argDefaultDecl = '';
-            argNativeType += '?';
+            argTdgType += '?';
         }
-        else if (argNativeType == 'string' && arg.default.startsWith("'") && arg.default.endsWith("'")) {
+        else if (argTdgType == 'string' && arg.default.startsWith("'") && arg.default.endsWith("'")) {
             // String Fn(ARG_TYPE arg = 'DEFAULT_VALUE')
             argDefaultDecl = ', Default = "' + Utils.getNativeEscapedString(arg.default.substring(1, arg.default.length - 1)) + '"';
         }
@@ -124,32 +148,76 @@ function getArg(arg) {
             //  arg ??= DEFAULT_VALUE;
             // }
             // argDefaultDecl = '';
-            argNativeType += '?';
+            argTdgType += '?';
         }
         else {
             // String Fn(ARG_TYPE arg = DEFAULT_VALUE)
-            argDefaultDecl = ', Default = "' + arg.default + '"';
+            argDefaultDecl = ', Default = ' + safeDefaultValue;
         }
         // argDefaultDecl = ' = ' + argDefaultDecl;
     }
 
-    return '\n, [ArgumentProperty(' + nameParam + descParam + optionalParam + optionalDescParam + argDefaultDecl + ')] ' + argNativeType + ' ' + argNativeName; // + ' ' +  + argDefaultDecl;
+    return '\n, [ArgumentProperty(' + nameParam + descParam + optionalParam + optionalDescParam + argDefaultDecl + ')] ' + argTdgType + ' ' + argFakerName; // + ' ' +  + argDefaultDecl;
 }
 function getArgValue(arg) {
     var argNativeName = Utils.GetNativeArgName(arg.name);
-    var argNativeType = Utils.GetNativeType(arg.type);
+    var argRubyType = arg.type;
+    var argFakerType = Utils.GetNativeType(argRubyType);
     var canDefault = Utils.CanDefaultValueType(arg.type);
     var argDefault = arg.default;
+    var argExpr = argNativeName;
+
+
 
     if (Utils.isNullOrWhitespace(argDefault) == false && canDefault == false) {
-        if (argNativeType == 'IntegerRange')
-            return argNativeName + ' ??= IntegerRange.Parse(\"' + Utils.getNativeEscapedString(argDefault) + '\")';
-        else if (argNativeType.startsWith('UNKNOWN_'))
-            return '// ' + argNativeName + ' ??= ' + argNativeType + '.Parse("' + Utils.getNativeEscapedString(argDefault) + '")';
-        else if (argNativeType.startsWith('List<'))
-            return '// ' + argNativeName + ' ??= ' + argNativeType + '.Parse("' + Utils.getNativeEscapedString(argDefault) + '")';
+        const strLiteral = '"' + Utils.getNativeEscapedString(argDefault) + '"';
+
+        // if (argFakerType == 'IntegerRange')
+        //     argExpr = argNativeName + ' ?? IntegerRange.Parse(' + strLiteral + ')';
+        // else 
+        if (argFakerType.startsWith('UNKNOWN_'))
+            argExpr = argNativeName + ' ?? ' + argFakerType + '.Parse(' + strLiteral + ')';
+        else if (argFakerType.startsWith('List<'))
+            argExpr = argNativeName + ' ?? ' + argFakerType + '.Parse(' + strLiteral + ')';
         else
-            throw new Error('Missing initilization code for ' + argNativeType);
+            argExpr = argNativeName + ' ?? ' + Utils.GetCastStringToCode(strLiteral, arg.type);
+        // else
+        //     throw new Error('Missing initilization code for ' + argNativeType);
     }
-    return argNativeName;
+
+    if (argRubyType == 'Binary') {
+        // convert from byte[] to Binary
+        argExpr = argExpr + '?.Data';
+    }
+
+    return argExpr;
+}
+function GetTdgType(rubyType) {
+    if (rubyType == "Binary")
+        return 'Binary';
+    else
+        return Utils.GetNativeType(rubyType);
+}
+
+function getTsgMethodName(method) {
+    if (Utils.isNullOrWhitespace(method.lttdg_name))
+        return Utils.GetNativeMethodName(method.name);
+    else {
+        const index = method.lttdg_name.lastIndexOf('.');
+        if (index >= 0)
+            return method.lttdg_name.substring(index + 1);
+        else
+            return method.lttdg_name;
+    }
+}
+function getTsgGroupName(class_path, method) {
+    if (Utils.isNullOrWhitespace(method.lttdg_name)) {
+        return class_path.map(g => Utils.getNativeEscapedString(g)).join('.');
+    }
+    else {
+        return method.lttdg_name
+            .split('|')
+            .map(g => (g.lastIndexOf('.') < 0) ? class_path.map(g => Utils.getNativeEscapedString(g)).join('.') : g.substring(0, g.lastIndexOf('.')))
+            .join('|');
+    }
 }

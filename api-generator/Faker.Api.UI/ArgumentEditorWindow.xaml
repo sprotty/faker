@@ -62,7 +62,7 @@
             </Grid>
 
             <TextBlock Text="Default Value (empty for required/no default, nil for null)"/>
-            <TextBox Margin="15,3,0,7" Padding="3" Text="{Binding Default, UpdateSourceTrigger=PropertyChanged}" ToolTip="empty for required\nnil for null\n'text' for a string\n[5..10] for IntegerRange/DoubleRange"/>
+            <TextBox Margin="15,3,0,7" Padding="3" Text="{Binding Default, UpdateSourceTrigger=PropertyChanged}" ToolTip="empty for required\nnil for null\n'text' for a string\n5 for Integer/Double etc"/>
 
             <TextBlock Text="Default Value Description (what gets used when the value is not populated, if empty the default value is used)" Visibility="{Binding Path=Default, Converter={StaticResource IsNullOrWhiteSpaceVisibilityConverter}}"/>
             <TextBox Name="DefaultValueDesc"

@@ -67,7 +67,7 @@ namespace FakerNet
             /// A value less than or equal to this will be generated
             /// (default value "1000000")
             /// </param>
-            [FakerMethod("Integer")]
+            [FakerMethod("integer")]
             public long Integer(long min = 0, long max = 1000000)
             {
                 if (min < 0) throw new ArgumentException("Must be greater than or equal to 0", "min");
@@ -92,7 +92,7 @@ namespace FakerNet
             [FakerMethod("negative")]
             public double Negative(long min = -1000000, long max = 0)
             {
-                if (min < 0) throw new ArgumentException("Must be greater than or equal to 0", "min");
+                if (max > 0) throw new ArgumentException("Must be less than or equal to 0", "max");
                 if (min > max) throw new ArgumentException("min must be less than max", "min");
                 return Random.NextDouble(min, max);
             }
@@ -173,7 +173,6 @@ namespace FakerNet
             [FakerMethod("within")]
             public double Within(double min = -10000, double max = 10000)
             {
-                if (min < 0) throw new ArgumentException("Must be greater than or equal to 0", "min");
                 if (min > max) throw new ArgumentException("min must be less than max", "min");
                 return Random.NextDouble(min, max);
             }

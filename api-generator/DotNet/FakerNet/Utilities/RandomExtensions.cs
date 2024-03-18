@@ -18,10 +18,10 @@ namespace FakerNet
         {
             return random.Next(max - min + 1) + min;
         }
-        public static int NextInt32(this Random random, IntegerRange rng)
-        {
-            return random.NextInt32((int)rng.Min, (int)rng.Max);
-        }
+        //public static int NextInt32(this Random random, IntegerRange rng)
+        //{
+        //    return random.NextInt32((int)rng.Min, (int)rng.Max);
+        //}
 
         public static long NextInt64(this Random random, long min, long max)
         {

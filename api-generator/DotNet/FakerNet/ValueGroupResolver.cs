@@ -42,7 +42,7 @@ namespace FakerNet
                 Dictionary<object, object>? result = null;
                 foreach (YamlValueResolver fakeValues in fakeValuesList)
                 {
-                    if (string.IsNullOrWhiteSpace(fakeValues.FakerCategory) || fakeValues.FakerCategory == key)
+                    //if (string.IsNullOrWhiteSpace(fakeValues.FakerCategory) || fakeValues.FakerCategory == key)
                     {
                         if (result != null)
                         {

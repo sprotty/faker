@@ -8,6 +8,7 @@ namespace Faker.Api
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Text.Json.Serialization;
+    using System.Windows.Documents;
 
     public class FakerModel : INotifyPropertyChanged
     {
@@ -115,6 +116,7 @@ namespace Faker.Api
         private string? _ltTdgMethodName;
         private bool _private = false;
         private bool _excludeCs = false;
+        private bool _ltTdgExclude = false;
 
         /// <summary>
         /// The name of the function as it is used internally (snake case). Plaform implementaions
@@ -160,11 +162,11 @@ namespace Faker.Api
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [JsonPropertyName("usesLocale"), JsonPropertyOrder(7)]
-        [Browsable(false)]  
-        public virtual bool? UsesLocaleInternal { get => _usesLocale==true?null: _usesLocale; set { _usesLocale = value; OnPropertyChanged(); } }
+        [Browsable(false)]
+        public virtual bool? UsesLocaleInternal { get => _usesLocale == true ? null : _usesLocale; set { _usesLocale = value; OnPropertyChanged(); } }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public virtual bool UsesLocale { get => _usesLocale??true; set { _usesLocale = value; OnPropertyChanged(); } }
+        public virtual bool UsesLocale { get => _usesLocale ?? true; set { _usesLocale = value; OnPropertyChanged(); } }
 
         /// <summary>
         /// Ignores the method in C#
@@ -193,6 +195,13 @@ namespace Faker.Api
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [JsonPropertyName("lttdg_name"), JsonPropertyOrder(103)]
         public virtual string? LtTdgMethodName { get => _ltTdgMethodName; set { _ltTdgMethodName = value; OnPropertyChanged(); } }
+        
+        /// <summary>
+        /// indicates that the function should be excluded from the liquid test data generator interface
+        /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        [JsonPropertyName("lttdg_exclude"), JsonPropertyOrder(104)]
+        public virtual bool LtTdgExclude { get => _ltTdgExclude; set { _ltTdgExclude = value; OnPropertyChanged(); } }
 
     }
 
@@ -387,7 +396,7 @@ namespace Faker.Api
         {
             get => _data; set
             {
-                string indentedText = (value??"").Replace("\r\n", "\n");
+                string indentedText = (value ?? "").Replace("\r\n", "\n");
                 int indent = Utilities.GetCommonIndent(indentedText, 4);
                 if (indent > 0)
                 {
@@ -398,7 +407,7 @@ namespace Faker.Api
                         indentedText = indentedText.Substring(0, indentedText.Length - 1);
                 }
 
-                _data = indentedText; 
+                _data = indentedText;
                 OnPropertyChanged();
             }
         }
@@ -431,6 +440,7 @@ namespace Faker.Api
     {
         private string _name = "";
         private string _description = "";
+        private string? _value = null;
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [JsonPropertyName("name"), JsonPropertyOrder(0)]
@@ -439,6 +449,10 @@ namespace Faker.Api
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [JsonPropertyName("description"), JsonPropertyOrder(1)]
         public virtual string Descriptions { get => _description; set { _description = value; OnPropertyChanged(); } }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("value"), JsonPropertyOrder(2)]
+        public virtual string? Value { get => _value; set { _value = value; OnPropertyChanged(); } }
     }
 
 }

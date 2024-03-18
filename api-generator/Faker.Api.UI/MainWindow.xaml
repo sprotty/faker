@@ -86,7 +86,7 @@
                         <TextBlock>Name</TextBlock>
                         <TextBox  Margin="15,3,0,7" Text="{Binding ElementName=MethodList,Path=SelectedValue.Name, Mode=TwoWay}"></TextBox>
 
-                        <TextBlock>Name in Liquid Technologies - Test Data Generator</TextBlock>
+                        <TextBlock>Name in Liquid Technologies (Lt-TDG)</TextBlock>
                         <TextBox  Margin="15,3,0,7" Text="{Binding ElementName=MethodList,Path=SelectedValue.LtTdgMethodName, Mode=TwoWay}"></TextBox>
                         
                         <TextBlock>New in Version</TextBlock>
@@ -150,7 +150,10 @@
                             'private' in API
                         </CheckBox>
                         <CheckBox  Margin="0,3,0,7" IsChecked="{Binding ElementName=MethodList,Path=SelectedValue.ExcludeCs, Mode=TwoWay}">
-                            Excluded In C#
+                            Excluded In C# Faker API
+                        </CheckBox>
+                        <CheckBox  Margin="0,3,0,7" IsChecked="{Binding ElementName=MethodList,Path=SelectedValue.LtTdgExclude, Mode=TwoWay}">
+                            Excluded In Lt-TDG
                         </CheckBox>
 
                         <TextBlock>Arguments</TextBlock>

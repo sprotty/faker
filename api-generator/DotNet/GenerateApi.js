@@ -29,7 +29,7 @@ myWriter.outputIndentPush();
                     writeDocsString(enmVal.description);
                     myWriter.output('/// </summary>\n');
                 }
-                myWriter.output('[Display(Name = "' + (enmVal.value ?? enmVal.name) + '")]\n');
+                myWriter.output('[Display(Name = "' + (enmVal.value ?? enmVal.name) + '", Description = "' + (enmVal.description ?? enmVal.name) + '", ShortName = "' + (enmVal.value ?? enmVal.name) + '")]\n');
                 myWriter.output(Utils.GetNativeEnumValue(enmVal.name) + ',\n');
             }
         }
@@ -133,11 +133,24 @@ function writeDocsArgs(args) {
         if (desc && Utils.isNullOrWhitespace(desc.text) == false) {
             writeDocsString(desc.text);
         }
-        if (Utils.isNullOrWhitespace(arg.default) == false)
-            writeDocsString('(default value "' + arg.default + '")');
-        myWriter.output('/// </param>\n');
+        if (Utils.isNullOrWhitespace(arg.default) == false) {
+            {
+                var docs = '(default value ';
+                if (arg.default == 'nil')
+                    docs += 'null';
+                else
+                    docs += '"' + arg.default + '"';
+                if (Utils.isNullOrWhitespace(arg.default_value_desc) == false) {
+                    docs += ' [' + arg.default_value_desc + ']';
+                }
+                docs += ')';
+                writeDocsString(docs);
+            }
+            myWriter.output('/// </param>\n');
+        }
     }
 }
+
 function writeDocsReturn(method) {
     if (Utils.isNullOrWhitespace(method.return_desc) == false) {
         myWriter.output('/// <return>\n');
@@ -305,9 +318,10 @@ function getArgInitalization(arg) {
     var argDefault = arg.default;
 
     if (Utils.isNullOrWhitespace(argDefault) == false && canDefault == false) {
-        if (argNativeType == 'IntegerRange')
-            return argNativeName + ' ??= IntegerRange.Parse(\"' + Utils.getNativeEscapedString(argDefault) + '\");';
-        else if (argNativeType.startsWith('UNKNOWN_'))
+        // if (argNativeType == 'IntegerRange')
+        //     return argNativeName + ' ??= IntegerRange.Parse(\"' + Utils.getNativeEscapedString(argDefault) + '\");';
+        // else 
+        if (argNativeType.startsWith('UNKNOWN_'))
             return '// ' + argNativeName + ' ??= ' + argNativeType + '.Parse("' + Utils.getNativeEscapedString(argDefault) + '");';
         else if (argNativeType.startsWith('List<'))
             return '// ' + argNativeName + ' ??= ' + argNativeType + '.Parse("' + Utils.getNativeEscapedString(argDefault) + '");';
