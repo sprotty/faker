@@ -70,9 +70,26 @@ namespace FakerNet
             [FakerMethod("integer")]
             public long Integer(long min = 0, long max = 1000000)
             {
-                if (min < 0) throw new ArgumentException("Must be greater than or equal to 0", "min");
                 if (min > max) throw new ArgumentException("min must be less than max", "min");
                 return Random.NextInt64(min, max);
+            }
+
+            /// <summary>
+            /// Creates a random floating point number
+            /// </summary>
+            /// <param name="min">
+            /// A value greater than or equal to this will be generated
+            /// (default value "-100000")
+            /// </param>
+            /// <param name="max">
+            /// A value less than or equal to this will be generated
+            /// (default value "1000000")
+            /// </param>
+            [FakerMethod("float")]
+            public double Float(double min = -100000, double max = 1000000)
+            {
+                if (min > max) throw new ArgumentException("min must be less than max", "min");
+                return Random.NextDouble(min, max);
             }
 
             /// <summary>

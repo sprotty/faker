@@ -1962,6 +1962,22 @@ namespace FakerNet
             // Expecting native implementation
             /*
             /// <summary>
+            /// Creates a random floating point number
+            /// </summary>
+            /// <param name="min">
+            /// A value greater than or equal to this will be generated
+            /// (default value "-100000")
+            /// </param>
+            /// <param name="max">
+            /// A value less than or equal to this will be generated
+            /// (default value "1000000")
+            /// </param>
+            [FakerMethod("float")]
+            public double Float(double min = -100000, double max = 1000000)
+            */
+            // Expecting native implementation
+            /*
+            /// <summary>
             /// Creates a random integer number
             /// </summary>
             /// <param name="min">
@@ -1972,7 +1988,7 @@ namespace FakerNet
             /// A value less than or equal to this will be generated
             /// (default value "1000000")
             /// </param>
-            [FakerMethod("Integer")]
+            [FakerMethod("integer")]
             public long Integer(long min = 0, long max = 1000000)
             */
             // Expecting native implementation
@@ -3057,7 +3073,7 @@ namespace FakerNet
             [FakerMethod("latitude")]
             public double Latitude()
             {
-                return double.Parse(this.EvaluateExpression("#{random_float '-180..180'}"));
+                return double.Parse(this.EvaluateExpression("#{Data.Number.float '-180','180'}"));
             }
             /// <summary>
             /// Produces a longitude.
@@ -3068,7 +3084,7 @@ namespace FakerNet
             [FakerMethod("longitude")]
             public double Longitude()
             {
-                return double.Parse(this.EvaluateExpression("#{random_float '-180..180'}"));
+                return double.Parse(this.EvaluateExpression("#{Data.Number.float '-180','180'}"));
             }
             /// <summary>
             /// Produces a mail box number.

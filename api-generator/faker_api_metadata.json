@@ -10045,6 +10045,50 @@
               ]
             },
             {
+              "name": "float",
+              "descriptions": [
+                {
+                  "text": "Creates a random floating point number"
+                }
+              ],
+              "return_type": "Float",
+              "return_desc": "",
+              "usesLocale": false,
+              "arguments": [
+                {
+                  "name": "min",
+                  "type": "Float",
+                  "default": "-100000",
+                  "default_value_desc": "",
+                  "descriptions": [
+                    {
+                      "text": "A value greater than or equal to this will be generated"
+                    }
+                  ]
+                },
+                {
+                  "name": "max",
+                  "type": "Float",
+                  "default": "1000000",
+                  "default_value_desc": "",
+                  "descriptions": [
+                    {
+                      "text": "A value less than or equal to this will be generated"
+                    }
+                  ]
+                }
+              ],
+              "examples": [],
+              "implementations": [
+                {
+                  "platform": "C#",
+                  "type": "Native",
+                  "data": ""
+                }
+              ],
+              "lttdg_name": ""
+            },
+            {
               "name": "generate",
               "descriptions": [
                 {
@@ -10130,7 +10174,7 @@
               ]
             },
             {
-              "name": "Integer",
+              "name": "integer",
               "descriptions": [
                 {
                   "text": "Creates a random integer number"
@@ -28305,7 +28349,7 @@
               "implementations": [
                 {
                   "type": "Expression",
-                  "data": "#{random_float '-180..180'}"
+                  "data": "#{Data.Number.float '-180','180'}"
                 }
               ],
               "lttdg_exclude": true
@@ -28330,7 +28374,7 @@
               "implementations": [
                 {
                   "type": "Expression",
-                  "data": "#{random_float '-180..180'}"
+                  "data": "#{Data.Number.float '-180','180'}"
                 }
               ],
               "lttdg_exclude": true

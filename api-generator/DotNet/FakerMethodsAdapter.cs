@@ -1083,6 +1083,15 @@ namespace LiquidTechnologies.SampleDataGeneratorModel
         {
             return context.GetFakerInstance(CultureInfo.CurrentCulture).FakerEn.Data.Number.Decimal(wholeNumberDigits, factionalDigits);
         }
+        [NativeFunction("Float", "Creates a random floating point number", "Data.Number", "function-data-number-Float.png", AccessorType.Method)]
+        [return: ArgumentProperty("Value", "")]
+        public static double Float(
+              [ArgumentProperty("context", "internal use")] IEvaluationContext context
+            , [ArgumentProperty("min", "A value greater than or equal to this will be generated", IsOptional = true, OptionalDesc = "\"-100000\"", Default = "-100000")] double min
+            , [ArgumentProperty("max", "A value less than or equal to this will be generated", IsOptional = true, OptionalDesc = "\"1000000\"", Default = "1000000")] double max)
+        {
+            return context.GetFakerInstance(CultureInfo.CurrentCulture).FakerEn.Data.Number.Float(min, max);
+        }
         [NativeFunction("Integer", "Creates a random integer number", "Data.Number", "function-data-number-Integer.png", AccessorType.Method)]
         [return: ArgumentProperty("Value", "")]
         public static long Integer(

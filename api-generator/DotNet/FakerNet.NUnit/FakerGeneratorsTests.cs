@@ -730,6 +730,11 @@ namespace FakerNet.NUnit
             FakerForEveryLocale<string>(faker => faker.Data.Number.Decimal());
         }
         [TestMethod()]
+        public void Test_Float_Execute()
+        {
+            FakerForEveryLocale<double>(faker => faker.Data.Number.Float());
+        }
+        [TestMethod()]
         public void Test_Integer_Execute()
         {
             FakerForEveryLocale<long>(faker => faker.Data.Number.Integer());
