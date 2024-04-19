@@ -6,6 +6,7 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<SignAssembly>True</SignAssembly>
+		<AssemblyOriginatorKeyFile>..\faker.snk</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -24,15 +25,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-			<_Parameter1>$(MSBuildProjectName).NUnit</_Parameter1>
-		</AssemblyAttribute>
-		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-			<_Parameter1>Faker.Api.UI</_Parameter1>
-		</AssemblyAttribute>
-		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-			<_Parameter1>LiquidTechnologies.SampleDataGeneratorModel</_Parameter1>
-		</AssemblyAttribute>
+		<InternalsVisibleTo Include="FakerNet.NUnit, PublicKey=0024000004800000940000000602000000240000525341310004000001000100556c16e6212d442ac0653b352c6b69ff5a3094f6698a9980ada8a490993310831206ce5782d43ca0ffd2411d484f67a1bde5a80ed63cd27bcf29dd86fa3b15387e885dba46bb70c04b0bcdd5f788412734b74c32b07be8885a6806abf2df981d646bf5de48566a6461d8b66431c82443a30fdd03e55b5635b682bc24dd0a89e0" />
+		<InternalsVisibleTo Include="Faker.Api.UI, PublicKey=0024000004800000940000000602000000240000525341310004000001000100556c16e6212d442ac0653b352c6b69ff5a3094f6698a9980ada8a490993310831206ce5782d43ca0ffd2411d484f67a1bde5a80ed63cd27bcf29dd86fa3b15387e885dba46bb70c04b0bcdd5f788412734b74c32b07be8885a6806abf2df981d646bf5de48566a6461d8b66431c82443a30fdd03e55b5635b682bc24dd0a89e0" />
+		<InternalsVisibleTo Include="LiquidTechnologies.SampleDataGeneratorModel, PublicKey=002400000480000094000000060200000024000052534131000400000100010093ef43b3ef708dca3fc5cf4b6c33c0626e8e799a54e0b4667376e1cccd53575f74d3fbb24ed1e9c4b6259fe2110e976a2314a1a6273a83f68d5b6337a6fef30e026e0f3fddf47349ab11d26d8743f225e14ba2da6f26adbdcac50506817b4f2dbc6b761cd9edeec1beb5da67a834c1179358e0177adbdc545625bc74a4233ab9" />
 	</ItemGroup>
 
 	<ItemGroup>

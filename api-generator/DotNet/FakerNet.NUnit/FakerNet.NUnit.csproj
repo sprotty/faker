@@ -8,6 +8,10 @@
     <IsPackable>false</IsPackable>
 
     <OutputType>WinExe</OutputType>
+
+    <SignAssembly>True</SignAssembly>
+
+    <AssemblyOriginatorKeyFile>..\faker.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>

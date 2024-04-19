@@ -1,3 +1,4 @@
+#pragma warning disable CS1030 // #warning directive
 using LiquidTechnologies.MetaTypeSystem;
 using FakerNet;
 using System.Diagnostics.CodeAnalysis;
@@ -843,7 +844,7 @@ namespace LiquidTechnologies.SampleDataGeneratorModel
               [ArgumentProperty("context", "internal use")] IEvaluationContext context
             , [ArgumentProperty("binaryData", "The data to encode")] Binary binaryData)
         {
-            return context.GetFakerInstance(CultureInfo.CurrentCulture).FakerEn.Data.Binary.Base64Encode(binaryData?.Data);
+            return context.GetFakerInstance(CultureInfo.CurrentCulture).FakerEn.Data.Binary.Base64Encode(binaryData.Data);
         }
         [NativeFunction("Binary", "Gets some random binary data", "Data.Binary", "function-data-binary-Binary.png", AccessorType.Method)]
         [return: ArgumentProperty("Value", "")]
@@ -1716,32 +1717,33 @@ namespace LiquidTechnologies.SampleDataGeneratorModel
     [NativeContainer]
     public partial class FakerAdapterPersonIDNumber
     {
-        #warning Failed processing method _translate : method has no name or return type.
-        #warning No implementation defined for method brazilian_citizen_number
-        #warning Failed processing method brazilian_citizen_number_checksum_digit : method has no name or return type.
-        #warning Failed processing method brazilian_citizen_number_digit : method has no name or return type.
-        #warning Failed processing method brazilian_document_checksum : method has no name or return type.
-        #warning Failed processing method brazilian_document_digit : method has no name or return type.
-        #warning No implementation defined for method brazilian_id
-        #warning Failed processing method brazilian_id_checksum_digit : method has no name or return type.
-        #warning Failed processing method brazilian_id_digit : method has no name or return type.
-        #warning No implementation defined for method chilean_id
-        #warning Failed processing method chilean_verification_code : method has no name or return type.
-        #warning No implementation defined for method croatian_id
-        #warning Failed processing method croatian_id_checksum_digit : method has no name or return type.
-        #warning Failed processing method danish_control_digits : method has no name or return type.
-        #warning No implementation defined for method danish_id_number
-        #warning No implementation defined for method french_insee_number
-        #warning No implementation defined for method invalid
-        #warning No implementation defined for method invalid_south_african_id_number
-        #warning Failed processing method south_african_id_checksum_digit : method has no name or return type.
-        #warning No implementation defined for method spanish_citizen_number
-        #warning No implementation defined for method spanish_foreign_citizen_number
-        #warning Failed processing method ssn_valid : method has no name or return type.
-        #warning No implementation defined for method valid
-        #warning No implementation defined for method valid_south_african_id_number
+#warning Failed processing method _translate : method has no name or return type.
+#warning No implementation defined for method brazilian_citizen_number
+#warning Failed processing method brazilian_citizen_number_checksum_digit : method has no name or return type.
+#warning Failed processing method brazilian_citizen_number_digit : method has no name or return type.
+#warning Failed processing method brazilian_document_checksum : method has no name or return type.
+
+#warning Failed processing method brazilian_document_digit : method has no name or return type.
+#warning No implementation defined for method brazilian_id
+#warning Failed processing method brazilian_id_checksum_digit : method has no name or return type.
+#warning Failed processing method brazilian_id_digit : method has no name or return type.
+#warning No implementation defined for method chilean_id
+#warning Failed processing method chilean_verification_code : method has no name or return type.
+#warning No implementation defined for method croatian_id
+#warning Failed processing method croatian_id_checksum_digit : method has no name or return type.
+#warning Failed processing method danish_control_digits : method has no name or return type.
+#warning No implementation defined for method danish_id_number
+#warning No implementation defined for method french_insee_number
+#warning No implementation defined for method invalid
+#warning No implementation defined for method invalid_south_african_id_number
+#warning Failed processing method south_african_id_checksum_digit : method has no name or return type.
+#warning No implementation defined for method spanish_citizen_number
+#warning No implementation defined for method spanish_foreign_citizen_number
+#warning Failed processing method ssn_valid : method has no name or return type.
+#warning No implementation defined for method valid
+#warning No implementation defined for method valid_south_african_id_number
     }
-    
+
     [GeneratedCode("Faker Code Generator", "1.0.0.0")]
     [NativeContainer]
     public partial class FakerAdapterPersonName
@@ -1925,3 +1927,4 @@ namespace LiquidTechnologies.SampleDataGeneratorModel
     }
     
 }
+#pragma warning restore CS1030 // #warning directive
